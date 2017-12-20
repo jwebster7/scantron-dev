@@ -17,10 +17,6 @@ namespace Scantron
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GUI());
-
-            TestScanner test_scanner;
-            Scanner scanner;
-            List<Student> students = new List<Student>();
         }
     }
 }

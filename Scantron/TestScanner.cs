@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace Scantron
+public class Class1
 {
-    public class TestScanner
-    {
-        public TestScanner()
-        {
-        }
-    }
+	public Class1()
+	{
+	}
 }
