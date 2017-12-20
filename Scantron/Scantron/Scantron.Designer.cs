@@ -1,6 +1,6 @@
 ﻿namespace Scantron
 {
-    partial class GUI
+    partial class Scantron
     {
         /// <summary>
         /// Required designer variable.
@@ -30,6 +30,7 @@
         {
             this.uxReadFiles = new System.Windows.Forms.Button();
             this.uxCreateFile = new System.Windows.Forms.Button();
+            this.uxTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // uxReadFiles
@@ -52,16 +53,25 @@
             this.uxCreateFile.Text = "Generate Answer File";
             this.uxCreateFile.UseVisualStyleBackColor = true;
             // 
+            // uxTextBox
+            // 
+            this.uxTextBox.Location = new System.Drawing.Point(12, 126);
+            this.uxTextBox.Name = "uxTextBox";
+            this.uxTextBox.Size = new System.Drawing.Size(199, 20);
+            this.uxTextBox.TabIndex = 2;
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(226, 122);
+            this.ClientSize = new System.Drawing.Size(223, 171);
+            this.Controls.Add(this.uxTextBox);
             this.Controls.Add(this.uxCreateFile);
             this.Controls.Add(this.uxReadFiles);
             this.Name = "GUI";
             this.Text = "File Generator";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,6 +79,7 @@
 
         private System.Windows.Forms.Button uxReadFiles;
         private System.Windows.Forms.Button uxCreateFile;
+        private System.Windows.Forms.TextBox uxTextBox;
     }
 }
 
