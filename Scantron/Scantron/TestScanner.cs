@@ -9,8 +9,7 @@ namespace Scantron
 {
     class TestScanner
     {
-        private SerialPort serial_port = new SerialPort("COM1");
-        private Thread read_thread;
+        private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         private string raw_scantron_output;
 
         public TestScanner()
@@ -18,12 +17,24 @@ namespace Scantron
 
         }
 
-        public void Scan()
+        public string Scan()
         {
+            char character;
+            int ascii;
+            raw_scantron_output = "";
+
             serial_port.Open();
-            read_thread.Start();
-            raw_scantron_output = serial_port.ReadLine();
+
+            for (int i = 0; i < 200; i++)
+            {
+                ascii = serial_port.ReadChar();
+                character = (char) ascii;
+                raw_scantron_output += character;
+            }
+
             serial_port.Close();
+
+            return raw_scantron_output;
         }
     }
 }

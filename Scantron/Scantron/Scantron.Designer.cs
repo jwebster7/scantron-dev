@@ -30,7 +30,8 @@
         {
             this.uxReadFiles = new System.Windows.Forms.Button();
             this.uxCreateFile = new System.Windows.Forms.Button();
-            this.uxTextBox = new System.Windows.Forms.TextBox();
+            this.uxStatusBox = new System.Windows.Forms.TextBox();
+            this.uxDataBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // uxReadFiles
@@ -42,33 +43,47 @@
             this.uxReadFiles.TabIndex = 0;
             this.uxReadFiles.Text = "Read Scantron Sheets";
             this.uxReadFiles.UseVisualStyleBackColor = true;
+            this.uxReadFiles.Click += new System.EventHandler(this.uxReadFiles_Click);
             // 
             // uxCreateFile
             // 
             this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxCreateFile.Location = new System.Drawing.Point(12, 63);
+            this.uxCreateFile.Location = new System.Drawing.Point(218, 12);
             this.uxCreateFile.Name = "uxCreateFile";
             this.uxCreateFile.Size = new System.Drawing.Size(200, 45);
             this.uxCreateFile.TabIndex = 1;
-            this.uxCreateFile.Text = "Generate Answer File";
+            this.uxCreateFile.Text = "Clear Text";
             this.uxCreateFile.UseVisualStyleBackColor = true;
+            this.uxCreateFile.Click += new System.EventHandler(this.uxCreateFile_Click);
             // 
-            // uxTextBox
+            // uxStatusBox
             // 
-            this.uxTextBox.Location = new System.Drawing.Point(12, 126);
-            this.uxTextBox.Name = "uxTextBox";
-            this.uxTextBox.Size = new System.Drawing.Size(199, 20);
-            this.uxTextBox.TabIndex = 2;
+            this.uxStatusBox.Location = new System.Drawing.Point(12, 63);
+            this.uxStatusBox.Name = "uxStatusBox";
+            this.uxStatusBox.ReadOnly = true;
+            this.uxStatusBox.Size = new System.Drawing.Size(404, 20);
+            this.uxStatusBox.TabIndex = 2;
+            this.uxStatusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // GUI
+            // uxDataBox
+            // 
+            this.uxDataBox.Location = new System.Drawing.Point(12, 89);
+            this.uxDataBox.Multiline = true;
+            this.uxDataBox.Name = "uxDataBox";
+            this.uxDataBox.ReadOnly = true;
+            this.uxDataBox.Size = new System.Drawing.Size(404, 195);
+            this.uxDataBox.TabIndex = 3;
+            // 
+            // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(223, 171);
-            this.Controls.Add(this.uxTextBox);
+            this.ClientSize = new System.Drawing.Size(428, 296);
+            this.Controls.Add(this.uxDataBox);
+            this.Controls.Add(this.uxStatusBox);
             this.Controls.Add(this.uxCreateFile);
             this.Controls.Add(this.uxReadFiles);
-            this.Name = "GUI";
+            this.Name = "Scantron";
             this.Text = "File Generator";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -79,7 +94,8 @@
 
         private System.Windows.Forms.Button uxReadFiles;
         private System.Windows.Forms.Button uxCreateFile;
-        private System.Windows.Forms.TextBox uxTextBox;
+        private System.Windows.Forms.TextBox uxStatusBox;
+        private System.Windows.Forms.TextBox uxDataBox;
     }
 }
 
