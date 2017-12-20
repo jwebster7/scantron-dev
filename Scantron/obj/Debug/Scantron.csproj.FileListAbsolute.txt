@@ -1,0 +1,3 @@
+C:\Users\Caleb\Source\Repos\scantron-dev\Scantron\obj\Debug\Scantron.Properties.Resources.resources
+C:\Users\Caleb\Source\Repos\scantron-dev\Scantron\obj\Debug\Scantron.csproj.GenerateResource.Cache
+C:\Users\Caleb\Source\Repos\scantron-dev\Scantron\obj\Debug\Scantron.csproj.CoreCompileInputs.cache
