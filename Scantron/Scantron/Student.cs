@@ -38,7 +38,7 @@ namespace Scantron
         public string answers;
 
         /// <summary>
-        /// Public constructor creates Student objects from the properties of the sheets read in from the Scanner class
+        /// Public constructor builds Student objects from the properties of the sheets read in from the Scanner class
         /// </summary>
         /// <param name="wid">The students unique, 9-digit id number</param>
         /// <param name="grant_permission">The student granting permission to post the grades</param>
