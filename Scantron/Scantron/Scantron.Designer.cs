@@ -32,7 +32,6 @@
             this.uxCreateFile = new System.Windows.Forms.Button();
             this.uxStatusBox = new System.Windows.Forms.TextBox();
             this.uxDataBox = new System.Windows.Forms.TextBox();
-            this.uxMaxCharactersBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // uxReadFiles
@@ -62,7 +61,7 @@
             this.uxStatusBox.Location = new System.Drawing.Point(12, 63);
             this.uxStatusBox.Name = "uxStatusBox";
             this.uxStatusBox.ReadOnly = true;
-            this.uxStatusBox.Size = new System.Drawing.Size(200, 20);
+            this.uxStatusBox.Size = new System.Drawing.Size(404, 20);
             this.uxStatusBox.TabIndex = 2;
             this.uxStatusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -78,20 +77,11 @@
             this.uxDataBox.Size = new System.Drawing.Size(404, 195);
             this.uxDataBox.TabIndex = 3;
             // 
-            // uxMaxCharactersBox
-            // 
-            this.uxMaxCharactersBox.Location = new System.Drawing.Point(218, 63);
-            this.uxMaxCharactersBox.Name = "uxMaxCharactersBox";
-            this.uxMaxCharactersBox.Size = new System.Drawing.Size(198, 20);
-            this.uxMaxCharactersBox.TabIndex = 4;
-            this.uxMaxCharactersBox.TextChanged += new System.EventHandler(this.uxMaxCharactersBox_TextChanged);
-            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(428, 296);
-            this.Controls.Add(this.uxMaxCharactersBox);
             this.Controls.Add(this.uxDataBox);
             this.Controls.Add(this.uxStatusBox);
             this.Controls.Add(this.uxCreateFile);
@@ -109,7 +99,6 @@
         private System.Windows.Forms.Button uxCreateFile;
         private System.Windows.Forms.TextBox uxStatusBox;
         private System.Windows.Forms.TextBox uxDataBox;
-        private System.Windows.Forms.TextBox uxMaxCharactersBox;
     }
 }
 

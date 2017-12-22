@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Scantron",
-    "\\Scantron\\Scantron"
+    "\\Scantron\\Scantron",
+    "\\TS-SCAN"
   ],
-  "SelectedNode": "\\Scantron\\Scantron.sln",
+  "SelectedNode": "\\TS-SCAN",
   "PreviewInSolutionExplorer": false
 }
