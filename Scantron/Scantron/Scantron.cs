@@ -27,14 +27,16 @@ namespace Scantron
         {
             cards = raw_scantron_output.Split('$').ToList<string>();
 
-            foreach (string card in cards)
+            for(int i = 0; i < cards.Count - 1; i++)
             {
-                students.Add(new Student(card));
+                students.Add(new Student(cards[i]));
             }
         }
 
         private void uxStart_Click(object sender, EventArgs e)
         {
+            students = new List<Student>();
+            raw_scantron_output = "";
             uxStatusBox.Text = "Press Start on Scantron";
             serial_port.Open();
             serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
@@ -48,6 +50,7 @@ namespace Scantron
 
         private void uxStop_Click(object sender, EventArgs e)
         {
+            uxStatusBox.Text = "";
             serial_port.Close();
             uxDataBox.Text += raw_scantron_output + Environment.NewLine;
         }
@@ -59,7 +62,14 @@ namespace Scantron
 
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
+            uxDataBox.Text = "";
+            uxStatusBox.Text = "Creating Students";
             CreateStudents();
+
+            for(int i = 0; i < students.Count; i++)
+            {
+                uxDataBox.Text += "Student " + (i + 1) + ": " + students[i].ToString() + Environment.NewLine;
+            }
         }
     }
 }

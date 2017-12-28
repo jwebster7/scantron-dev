@@ -1,8 +1,4 @@
-﻿/* Authors: Joe Webster, Caleb Schweer, & William McCreight
- * Helpdesk Dev: Scantron
- * 12/21/2017
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,13 +18,34 @@ namespace Scantron
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;
+            RemoveBackSide();
         }
 
+        private void RemoveBackSide()
+        {
+            int start;
+            int length;
 
+            while (raw_student_data.Contains("b"))
+            {
+                start = raw_student_data.IndexOf("b");
+
+                if (raw_student_data.IndexOf("a", start) != -1)
+                {
+                    length = raw_student_data.IndexOf("a", start) - start;
+                }
+                else
+                {
+                    length = raw_student_data.Length - start;
+                }
+
+                raw_student_data = raw_student_data.Remove(start, length);
+            }
+        }
 
         public override string ToString()
         {
-            return (wid + ", " + grant_permission + 1 + test_version + sheet_number + ", '" + answers + "'");
+            return raw_student_data;
         }
     }
 }
