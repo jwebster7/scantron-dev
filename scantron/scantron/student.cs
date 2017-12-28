@@ -37,22 +37,11 @@ namespace Scantron
         /// </summary>
         public string answers;
 
-        /// <summary>
-        /// Public constructor builds Student objects from the properties of the sheets read in from the Scanner class
-        /// </summary>
-        /// <param name="wid">The students unique, 9-digit id number</param>
-        /// <param name="grant_permission">The student granting permission to post the grades</param>
-        /// <param name="test_version">The version of the exam the student took</param>
-        /// <param name="sheet_number">The sheet_number; May be insignificant for our needs</param>
-        /// <param name="answers">The answers of the exam; Typically, a maximum of 50 answers are on each sheet</param>
-        public Student(string wid, char grant_permission, char test_version, char sheet_number, string answers)
+        public Student(List<string> cards)
         {
-            this.wid = wid;
-            this.grant_permission = grant_permission;
-            this.test_version = test_version;
-            this.sheet_number = sheet_number;
-            this.answers = answers;
+
         }
+
 
         /// <summary>
         /// This function conversts the info of student into a string with the correct format
