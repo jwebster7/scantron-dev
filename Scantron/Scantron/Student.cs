@@ -42,7 +42,6 @@ namespace Scantron
 
         }
 
-
         /// <summary>
         /// This function conversts the info of student into a string with the correct format
         /// </summary>

@@ -51,6 +51,7 @@ namespace Scantron
                 char[] firstFiveAnswers = FirstFiveAnswers(tempSheets[i].Substring(11, 5), tempSheets[i].Substring(18, 5),
                                                            tempSheets[i].Substring(24, 5), tempSheets[i].Substring(32, 5),
                                                            tempSheets[i].Substring(38, 5));
+
             }
         }
 
