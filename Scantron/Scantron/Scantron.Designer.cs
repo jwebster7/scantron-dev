@@ -55,7 +55,7 @@
             this.uxClearText.TabIndex = 1;
             this.uxClearText.Text = "Clear Text";
             this.uxClearText.UseVisualStyleBackColor = true;
-            this.uxClearText.Click += new System.EventHandler(this.uxCreateFile_Click);
+            this.uxClearText.Click += new System.EventHandler(this.uxClearText_Click);
             // 
             // uxStatusBox
             // 

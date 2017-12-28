@@ -23,18 +23,18 @@ namespace Scantron
         private void uxStart_Click(object sender, EventArgs e)
         {
             uxStatusBox.Text = "Press Start on Scantron";
-            test_scanner.Open();
-            test_scanner.Scan();
+            uxDataBox.Text += test_scanner.Open();
+            uxDataBox.Text += test_scanner.Scan();
         }
 
         private void uxStop_Click(object sender, EventArgs e)
         {
-            test_scanner.Close();
+            uxDataBox.Text += test_scanner.Close();
             uxStatusBox.Text = "";
             uxDataBox.Text += test_scanner.Print() + Environment.NewLine;
         }
 
-        private void uxCreateFile_Click(object sender, EventArgs e)
+        private void uxClearText_Click(object sender, EventArgs e)
         {
             uxDataBox.Text = "";
         }

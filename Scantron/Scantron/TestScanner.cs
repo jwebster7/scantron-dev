@@ -13,19 +13,21 @@ namespace Scantron
         List<Student> students = new List<Student>();   //A list for the Student objects; generated from the sheets list
 
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+        private char character;
+        private int ascii;
         private string raw_scantron_output;
-        private char positive = '+';        //This is sent back when a Scantron card is read correctly.
-        private char negative = '-';        //This is sent back when a Scantron card is not read correctly.
-        private char start_of_record = '!'; //This is sent back at the beginning of a scantron card.
-        private char end_of_record = '$';   //This is sent back at the end of a scantron card.
-        private char initiate = '@';        //Use this to send start signal to Scantron.
-        private char start = '<';           //Use this to raise the tray the scantron cards lay on.
-        private char stop = '>';            //Use this to lower the tray the scantron cards lay on.
-        private char release = '%';         //Use this to clear the communication buffer for the next scantron card.
-        private char status = 's';          //Use this to get the scantron machine's statu
-        private string end_of_line = "#\\F";   //This is sent back at the end of a line. It is the compression code
-                                               //for 28 F's in a row. This is because the scanner is reading the 
-                                               //empty space to the right of the card and it is completely black.
+        private char positive = '+';            //This is sent back when a Scantron card is read correctly.
+        private char negative = '-';            //This is sent back when a Scantron card is not read correctly.
+        private char start_of_record = '!';     //This is sent back at the beginning of a scantron card.
+        private char end_of_record = '$';       //This is sent back at the end of a scantron card.
+        private char initiate = '@';            //Use this to send start signal to Scantron.
+        private char start = '<';               //Use this to raise the tray the scantron cards lay on.
+        private char stop = '>';                //Use this to lower the tray the scantron cards lay on.
+        private char release = '%';             //Use this to clear the communication buffer for the next scantron card.
+        private char status = 's';              //Use this to get the scantron machine's statu
+        private string end_of_line = "#\\F";    //This is sent back at the end of a line. It is the compression code
+                                                //for 28 F's in a row. This is because the scanner is reading the 
+                                                //empty space to the right of the card and it is completely black.
 
         /// <summary>
         /// This method intends to sort the raw_scantron_output string into seperate sheets for 
@@ -113,33 +115,50 @@ namespace Scantron
             serial_port.ReadBufferSize = 20000000;
         }
 
-        public void Open()
+        public string Open()
         {
             serial_port.Open();
+            return "Port open\n";
         }
 
-        public void Scan()
+        public string Scan()
         {
-            char character;
-            int ascii;
             raw_scantron_output = "";
+            return "Port scan\n";
 
+            /*
+            while (serial_port.IsOpen)
+            {
+                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+            }
+            */
+
+            /*
             while (serial_port.IsOpen)
             {
                 ascii = serial_port.ReadChar();
                 character = (char)ascii;
                 raw_scantron_output += character;
             }
+            */
         }
 
-        public void Close()
+        public string Close()
         {
             serial_port.Close();
+            return "Port closed\n";
         }
 
         public string Print()
         {
             return raw_scantron_output;
+        }
+
+        private void DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            ascii = serial_port.ReadChar();
+            character = (char)ascii;
+            raw_scantron_output += character;
         }
     }
 }
