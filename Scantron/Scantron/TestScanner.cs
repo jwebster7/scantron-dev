@@ -118,20 +118,17 @@ namespace Scantron
         public string Open()
         {
             serial_port.Open();
-            return "Port open\n";
+            return "Port open";
         }
 
         public string Scan()
         {
             raw_scantron_output = "";
-            return "Port scan\n";
-
-            /*
+            
             while (serial_port.IsOpen)
             {
                 serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
             }
-            */
 
             /*
             while (serial_port.IsOpen)
@@ -141,12 +138,14 @@ namespace Scantron
                 raw_scantron_output += character;
             }
             */
+
+            return "Port scanned";
         }
 
         public string Close()
         {
             serial_port.Close();
-            return "Port closed\n";
+            return "Port closed";
         }
 
         public string Print()

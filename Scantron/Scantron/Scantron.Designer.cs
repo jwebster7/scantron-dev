@@ -33,6 +33,7 @@
             this.uxStatusBox = new System.Windows.Forms.TextBox();
             this.uxDataBox = new System.Windows.Forms.TextBox();
             this.uxStop = new System.Windows.Forms.Button();
+            this.uxCreateFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // uxStart
@@ -40,7 +41,7 @@
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.uxStart.Location = new System.Drawing.Point(12, 12);
             this.uxStart.Name = "uxStart";
-            this.uxStart.Size = new System.Drawing.Size(133, 45);
+            this.uxStart.Size = new System.Drawing.Size(98, 45);
             this.uxStart.TabIndex = 0;
             this.uxStart.Text = "Start";
             this.uxStart.UseVisualStyleBackColor = true;
@@ -49,9 +50,9 @@
             // uxClearText
             // 
             this.uxClearText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxClearText.Location = new System.Drawing.Point(285, 12);
+            this.uxClearText.Location = new System.Drawing.Point(209, 12);
             this.uxClearText.Name = "uxClearText";
-            this.uxClearText.Size = new System.Drawing.Size(133, 45);
+            this.uxClearText.Size = new System.Drawing.Size(100, 45);
             this.uxClearText.TabIndex = 1;
             this.uxClearText.Text = "Clear Text";
             this.uxClearText.UseVisualStyleBackColor = true;
@@ -81,19 +82,31 @@
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.uxStop.Location = new System.Drawing.Point(150, 12);
+            this.uxStop.Location = new System.Drawing.Point(116, 12);
             this.uxStop.Name = "uxStop";
-            this.uxStop.Size = new System.Drawing.Size(133, 45);
+            this.uxStop.Size = new System.Drawing.Size(87, 45);
             this.uxStop.TabIndex = 4;
             this.uxStop.Text = "Stop";
             this.uxStop.UseVisualStyleBackColor = true;
             this.uxStop.Click += new System.EventHandler(this.uxStop_Click);
+            // 
+            // uxCreateFile
+            // 
+            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.uxCreateFile.Location = new System.Drawing.Point(315, 12);
+            this.uxCreateFile.Name = "uxCreateFile";
+            this.uxCreateFile.Size = new System.Drawing.Size(101, 45);
+            this.uxCreateFile.TabIndex = 5;
+            this.uxCreateFile.Text = "Create File";
+            this.uxCreateFile.UseVisualStyleBackColor = true;
+            this.uxCreateFile.Click += new System.EventHandler(this.uxCreateFile_Click);
             // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(428, 296);
+            this.Controls.Add(this.uxCreateFile);
             this.Controls.Add(this.uxStop);
             this.Controls.Add(this.uxDataBox);
             this.Controls.Add(this.uxStatusBox);
@@ -113,6 +126,7 @@
         private System.Windows.Forms.TextBox uxStatusBox;
         private System.Windows.Forms.TextBox uxDataBox;
         private System.Windows.Forms.Button uxStop;
+        private System.Windows.Forms.Button uxCreateFile;
     }
 }
 
