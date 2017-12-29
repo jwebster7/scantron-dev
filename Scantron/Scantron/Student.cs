@@ -10,7 +10,7 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private char grant_permission;
+        private char grant_permission = '0';
         private char test_version;
         private char sheet_number;
         private string answers;
@@ -110,18 +110,23 @@ namespace Scantron
             char[] splitter = new char[] {','};
             card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
+            // get WID
             for (i = 0; i < 9; i++)
             {
                 char[] line = card_lines[i].Reverse().ToArray();
                 wid += Array.IndexOf(line, line.Max());
             }
-
-
+            
+            // check grant permission bubble
+            if ((int)card_lines[11][13] > 3)
+            {
+                grant_permission = '1';
+            }
         }
 
         public override string ToString()
         {
-            return raw_student_data + Environment.NewLine + wid;
+            return raw_student_data + Environment.NewLine + wid + Environment.NewLine + grant_permission;
         }
     }
 }
