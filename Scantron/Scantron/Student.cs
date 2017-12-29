@@ -20,8 +20,8 @@ namespace Scantron
             this.raw_student_data = raw_student_data;
             RemoveBackSide();
             Uncompress();
-            TrimData();
             Format();
+            TranslateData();
         }
 
         private void RemoveBackSide()
@@ -68,24 +68,59 @@ namespace Scantron
             }
         }
 
-        private void TrimData()
-        {
-            string empty_space = "FFFFFFFFFFFFFFFFFFFFFFFFFFFF"; // 28 F's
-
-            while (raw_student_data.Contains(empty_space))
-            {
-                raw_student_data = raw_student_data.Replace(empty_space, "");
-            }
-        }
-
         private void Format()
         {
-            raw_student_data = raw_student_data.Replace("a", Environment.NewLine + "a");
+            int i;
+            List<string> card_lines = new List<string>();
+            char[] splitter = new char[] {'a'};
+            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+
+            // remove space above bubbles
+            card_lines.RemoveAt(0);
+            card_lines.RemoveAt(0);
+
+            // trim WID section
+            for (i = 0; i < 9; i++)
+            {
+                card_lines[i] = card_lines[i].Substring(0, 10);
+            }
+
+            // trim quetions 1-5 and extra options section
+            card_lines[9] = card_lines[9].Substring(0, 11);
+            card_lines[10] = card_lines[10].Substring(0, 8);
+            card_lines[11] = card_lines[11].Substring(0, 14);
+            card_lines[12] = card_lines[12].Substring(0, 8);
+            card_lines[13] = card_lines[13].Substring(0, 11);
+
+            //trim questions 6-50
+            for (i = 14; i < card_lines.Count; i++)
+            {
+                card_lines[i] = card_lines[i].Substring(0, 15);
+            }
+
+            raw_student_data = string.Join(Environment.NewLine, card_lines);
+        }
+
+        private void TranslateData()
+        {
+            wid = "";
+
+            int i;
+            List<string> card_lines = new List<string>();
+            char[] splitter = new char[] {'\n'};
+            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+
+            for (i = 0; i < 9; i++)
+            {
+                card_lines[i].Reverse();
+                card_lines[i].IndexOf(card_lines[i].Max());
+                card_lines[i].Reverse();
+            }
         }
 
         public override string ToString()
         {
-            return raw_student_data;
+            return raw_student_data + Environment.NewLine + wid;
         }
     }
 }
