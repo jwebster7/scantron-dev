@@ -19,6 +19,7 @@ namespace Scantron
         {
             this.raw_student_data = raw_student_data;
             RemoveBackSide();
+            Uncompress();
         }
 
         private void RemoveBackSide()
@@ -40,6 +41,28 @@ namespace Scantron
                 }
 
                 raw_student_data = raw_student_data.Remove(start, length);
+            }
+        }
+
+        private void Uncompress()
+        {
+            int hashtag_location;
+            char amount_character;
+            char character;
+            int amount;
+            string uncompressed_string;
+
+            while (raw_student_data.Contains("#"))
+            {
+                uncompressed_string = "";
+                hashtag_location = raw_student_data.IndexOf("#");
+                amount_character = raw_student_data[hashtag_location + 1];
+                character = raw_student_data[hashtag_location + 2];
+                amount = (int)amount_character - 64;
+
+                uncompressed_string = uncompressed_string.PadRight(amount, character);
+
+                raw_student_data = raw_student_data.Replace("#" + amount_character + character, uncompressed_string);
             }
         }
 
