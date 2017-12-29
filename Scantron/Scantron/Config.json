@@ -1,1 +1,56 @@
-﻿
+﻿{
+	"Serial_Config_Basic" : 
+	{
+		"port_name" : ,
+		"baud_rate" : ,
+		"parity" : ,
+		"stop_bits" :
+	}
+	
+	"Serial_Config_Avd" :
+	{
+		"data_bits" : ,
+		"discard_null" : ,
+		"dtr_enable" : ,
+		"encoding" : ,
+		"handshake" : ,
+		"new_line" : ,
+		"parity_replace" : ,
+		"read_buffer_size" : ,
+		"read_timeout" : ,
+		"recieved_bytes_threshold" : ,
+		"rts_enable" : ,
+		"site" : ,
+		"write_buffer_size" : ,
+		"write_timeout" :
+	}
+	
+	"Scantron_Config" :
+	{
+		"start_of_record" : ,
+		"end_of_record" : ,
+		"end_of_document" : ,
+		"compress" : ,
+		"record_length" : ,
+		"initate" : ,
+		"positive" : ,
+		"negitive" : ,
+		"x_on" : ,
+		"x_off" : ,
+		"start" : ,
+		"stop" : ,
+		"release" : ,
+		"status" : ,
+		"select_stacker" : ,
+		"download" : ,
+		"runtime" : ,
+		"status" : ,
+		"scanner_control" : ,
+		"print_position" : ,
+		"print_data" : ,
+		"display_ data" : ,
+		"end_of_info" : ,
+		"end_of_batch" : ,
+		"ocr" :
+	}
+}
