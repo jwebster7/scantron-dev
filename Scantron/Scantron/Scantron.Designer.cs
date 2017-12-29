@@ -76,6 +76,7 @@
             this.uxDataBox.Multiline = true;
             this.uxDataBox.Name = "uxDataBox";
             this.uxDataBox.ReadOnly = true;
+            this.uxDataBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.uxDataBox.Size = new System.Drawing.Size(404, 195);
             this.uxDataBox.TabIndex = 3;
             // 

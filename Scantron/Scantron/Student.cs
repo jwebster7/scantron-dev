@@ -20,6 +20,8 @@ namespace Scantron
             this.raw_student_data = raw_student_data;
             RemoveBackSide();
             Uncompress();
+            TrimData();
+            Format();
         }
 
         private void RemoveBackSide()
@@ -64,6 +66,21 @@ namespace Scantron
 
                 raw_student_data = raw_student_data.Replace("#" + amount_character + character, uncompressed_string);
             }
+        }
+
+        private void TrimData()
+        {
+            string empty_space = "FFFFFFFFFFFFFFFFFFFFFFFFFFFF"; // 28 F's
+
+            while (raw_student_data.Contains(empty_space))
+            {
+                raw_student_data = raw_student_data.Replace(empty_space, "");
+            }
+        }
+
+        private void Format()
+        {
+            raw_student_data = raw_student_data.Replace("a", Environment.NewLine + "a");
         }
 
         public override string ToString()
