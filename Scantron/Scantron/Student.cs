@@ -10,10 +10,10 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private char grant_permission = '0';
-        private char test_version;
-        private char sheet_number;
-        private string answers;
+        private int grant_permission = 0; // not sure if this will be - or 0
+        private int test_version;
+        private int sheet_number;
+        private int[] answers  = new int[50];
         
         public Student(string raw_student_data)
         {
@@ -86,11 +86,11 @@ namespace Scantron
             }
 
             // trim quetions 1-5 and extra options section
-            card_lines[9] = card_lines[9].Substring(0, 11);
-            card_lines[10] = card_lines[10].Substring(0, 8);
-            card_lines[11] = card_lines[11].Substring(0, 14);
-            card_lines[12] = card_lines[12].Substring(0, 8);
-            card_lines[13] = card_lines[13].Substring(0, 11);
+            card_lines[9]   = card_lines[9].Substring(0, 11);
+            card_lines[10]  = card_lines[10].Substring(0, 8);
+            card_lines[11]  = card_lines[11].Substring(0, 14);
+            card_lines[12]  = card_lines[12].Substring(0, 8);
+            card_lines[13]  = card_lines[13].Substring(0, 11);
 
             //trim questions 6-50
             for (i = 14; i < card_lines.Count; i++)
@@ -103,15 +103,12 @@ namespace Scantron
 
         private void TranslateData()
         {
-            wid = "";
-
-            int i;
             List<string> card_lines = new List<string>();
             char[] splitter = new char[] {','};
             card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
             // get WID
-            for (i = 0; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 char[] line = card_lines[i].Reverse().ToArray();
                 wid += Array.IndexOf(line, line.Max());
@@ -120,13 +117,77 @@ namespace Scantron
             // check grant permission bubble
             if ((int)card_lines[11][13] > 3)
             {
-                grant_permission = '1';
+                grant_permission = 1;
             }
+
+            // check test version number
+            int test_version_one    = card_lines[9][10];
+            int test_version_two    = card_lines[11][10];
+            int test_version_three  = card_lines[13][10];
+
+            test_version = GetMaxOfThree(test_version_one, test_version_two, test_version_three);
+
+            // check answer sheet number
+            int sheet_number_one    = card_lines[9][7];
+            int sheet_number_two    = card_lines[10][7];
+            int sheet_number_three  = card_lines[11][7];
+            int sheet_number_four   = card_lines[12][7];
+            int sheet_number_five   = card_lines[13][7];
+
+            sheet_number = GetMaxOfFive(sheet_number_one, sheet_number_two, sheet_number_three, 
+                sheet_number_four, sheet_number_five);
+
+            // get answers
+        }
+
+        private int GetMaxOfThree(int a, int b, int c)
+        {
+            if (a > b && a > c)
+            {
+                return 1;
+            }
+            if (b > a && b > c)
+            {
+                return 2;
+            }
+            if (c > a && c > b)
+            {
+                return 3;
+            }
+
+            return 0;
+        }
+
+        private int GetMaxOfFive(int a, int b, int c, int d, int e)
+        {
+            if (a > b && a > c && a> d && a >e)
+            {
+                return 1;
+            }
+            if (b > a && b > c && b > d && b > e)
+            {
+                return 2;
+            }
+            if (c > a && c > b && c > d && c > e)
+            {
+                return 3;
+            }
+            if (d > a && d > b && d > c && d > e)
+            {
+                return 4;
+            }
+            if (e > a && e > b && e > c && e > d)
+            {
+                return 5;
+            }
+
+            return 0;
         }
 
         public override string ToString()
         {
-            return raw_student_data + Environment.NewLine + wid + Environment.NewLine + grant_permission;
+            return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
+                sheet_number + "--" + ",";
         }
     }
 }
