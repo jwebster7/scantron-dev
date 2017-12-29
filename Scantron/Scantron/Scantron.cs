@@ -16,7 +16,7 @@ namespace Scantron
         private List<string> cards = new List<string>();
         private List<Student> students = new List<Student>();
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
-        private string raw_scantron_output;
+        private string raw_scantron_output = "a000b000b000a000a000b000$a0#BFa#DF0b#FF0b0#C0a000#\\F$";
 
         public Scantron()
         {
