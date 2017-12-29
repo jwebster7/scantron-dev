@@ -98,7 +98,7 @@ namespace Scantron
                 card_lines[i] = card_lines[i].Substring(0, 15);
             }
 
-            raw_student_data = string.Join(Environment.NewLine, card_lines);
+            raw_student_data = string.Join(",", card_lines);
         }
 
         private void TranslateData()
@@ -107,15 +107,16 @@ namespace Scantron
 
             int i;
             List<string> card_lines = new List<string>();
-            char[] splitter = new char[] {'\n'};
+            char[] splitter = new char[] {','};
             card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
             for (i = 0; i < 9; i++)
             {
-                card_lines[i].Reverse();
-                card_lines[i].IndexOf(card_lines[i].Max());
-                card_lines[i].Reverse();
+                char[] line = card_lines[i].Reverse().ToArray();
+                wid += Array.IndexOf(line, line.Max());
             }
+
+
         }
 
         public override string ToString()

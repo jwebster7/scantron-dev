@@ -17,7 +17,7 @@ namespace Scantron
         private List<Student> students = new List<Student>();
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         //private string raw_scantron_output;
-        private string raw_scantron_output = "b0F30F0FF#F0#DF00#\\Fa3F00F0FF#F0#DF00#\\Fb#T0#\\Fa3#S0#\\Fb#T0#\\Fa7#H0F#J0#\\Fb#T0#\\Fb#T0#\\Fa5#H0F#J0#\\Fb#T0#\\Fa33#G0F#J0#\\Fb#T0#\\Fa3#H0F#J0#\\Fb#T0#\\Fa03#G0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fa3#H0F#J0#\\Fb#T0#\\Fa3003#F0E#I0#\\Fb#T0#\\Fa3#F0F#L0#\\Fb#T0#\\Fa#M0E#F0#\\Fb#T0#\\Fa#G0D#L0#\\Fb#T0#\\Fa#J0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#N0D#E0#\\Fb#T0#\\Fa#N0D#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0D#E0#\\Fa#N0C#E0#\\Fb#T0#\\Fb#T0#\\Fa#N0F#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0B#E0#\\Fa#N0B#E0#\\Fb#T0#\\Fb#T0#\\Fa#N0C#E0#\\Fb#T0#\\Fa#N0C#E0#\\Fb#T0#\\Fa#N0F#E0#\\Fb#S04#\\Fa#N0F#E0#\\Fa#N0F#D04#\\F$";
+        private string raw_scantron_output = "b0F30F0FF#F0#DF00#\\Fa3F00F0FF#F0#DF00#\\Fb#T0#\\Fa3#S0#\\Fb#T0#\\Fa7#G0F0#J0#\\Fb#T0#\\Fb#T0#\\Fa5#H0F#J0#\\Fb#T0#\\Fa33#G0F#J0#\\Fb#T0#\\Fa3#H0F#J0#\\Fb#T0#\\Fa03#G0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fb#T0#\\Fa#I0F#J0#\\Fa3#H0F#J0#\\Fb#T0#\\Fa3003#F0E#I0#\\Fb#T0#\\Fa3#F0F#L0#\\Fb#T0#\\Fa#M0E#F0#\\Fb#T0#\\Fa#G0D#L0#\\Fb#T0#\\Fa#J0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#N0D#E0#\\Fb#T0#\\Fa#N0D#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0D#E0#\\Fa#N0C#E0#\\Fb#T0#\\Fb#T0#\\Fa#N0F#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0E#E0#\\Fb#T0#\\Fa#N0B#E0#\\Fa#N0B#E0#\\Fb#T0#\\Fb#T0#\\Fa#N0C#E0#\\Fb#T0#\\Fa#N0C#E0#\\Fb#T0#\\Fa#N0F#E0#\\Fb#S04#\\Fa#N0F#E0#\\Fa#N0F#D04#\\F$";
 
         public Scantron()
         {
