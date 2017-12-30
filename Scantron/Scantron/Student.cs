@@ -10,10 +10,10 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private int grant_permission = 0; // not sure if this will be - or 0
-        private int test_version;
-        private int sheet_number;
-        private int[] answers  = new int[50];
+        private char grant_permission = '0'; // not sure if this will be - or 0
+        private char test_version;
+        private char sheet_number;
+        private string answers;
         
         public Student(string raw_student_data)
         {
@@ -117,7 +117,7 @@ namespace Scantron
             // check grant permission bubble
             if ((int)card_lines[11][13] > 3)
             {
-                grant_permission = 1;
+                grant_permission = '1';
             }
 
             // check test version number
@@ -138,56 +138,64 @@ namespace Scantron
                 sheet_number_four, sheet_number_five);
 
             // get answers
+            for (int i = 14; i < 29; i += 5)
+            {
+                for (int j = 14; j > 0; j--)
+                {
+                    answers += GetMaxOfFive(card_lines[i][j], card_lines[i + 1][j], card_lines[i + 2][j],
+                        card_lines[i + 3][j], card_lines[i + 4][j]);
+                }
+            }
         }
 
-        private int GetMaxOfThree(int a, int b, int c)
+        private char GetMaxOfThree(int a, int b, int c)
         {
             if (a > b && a > c)
             {
-                return 1;
+                return '1';
             }
             if (b > a && b > c)
             {
-                return 2;
+                return '2';
             }
             if (c > a && c > b)
             {
-                return 3;
+                return '3';
             }
 
-            return 0;
+            return '0';
         }
 
-        private int GetMaxOfFive(int a, int b, int c, int d, int e)
+        private char GetMaxOfFive(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
             {
-                return 1;
+                return '1';
             }
             if (b > a && b > c && b > d && b > e)
             {
-                return 2;
+                return '2';
             }
             if (c > a && c > b && c > d && c > e)
             {
-                return 3;
+                return '3';
             }
             if (d > a && d > b && d > c && d > e)
             {
-                return 4;
+                return '4';
             }
             if (e > a && e > b && e > c && e > d)
             {
-                return 5;
+                return '5';
             }
 
-            return 0;
+            return '0';
         }
 
         public override string ToString()
         {
             return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
-                sheet_number + "--" + ",";
+                sheet_number + "--" + "," + "'" + answers + "'";
         }
     }
 }
