@@ -14,7 +14,47 @@ namespace Scantron
         private char test_version;
         private char sheet_number;
         private string[] answers = new string[5];
-        
+
+        public string WID
+        {
+            get
+            {
+                return wid;
+            }
+        }
+
+        public char GrantPermission
+        {
+            get
+            {
+                return grant_permission;
+            }
+        }
+
+        public char TestVersion
+        {
+            get
+            {
+                return test_version;
+            }
+        }
+
+        public char SheetNumber
+        {
+            get
+            {
+                return sheet_number;
+            }
+        }
+
+        public string[] Answers
+        {
+            get
+            {
+                return answers;
+            }
+        }
+
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;

@@ -72,6 +72,50 @@ namespace Scantron
                 uxDataBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine 
                     + students[i].ToString() + Environment.NewLine;
             }
+
+            WriteToFile();  //Method writes to a file
+        }
+
+        //Function for writing and saving text to a file
+        private void WriteToFile()
+        {
+            string file = "";
+            //we want to write to a file and use what StudentExamInfo returns to print to a file
+            foreach (Student student in students)
+            {
+                file += StudentExamInfo(student);
+            }
+
+            SaveFileDialog file_dialog = new SaveFileDialog();
+            //Opens save dialog box
+            if (file_dialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
+
+        //Method for storing the StudentExamInfo in the correct format for the text file
+        private string StudentExamInfo(Student student)
+        {
+            string student_info = "";
+            student_info += student.WID + ", ";
+            student_info += student.GrantPermission + student.TestVersion + student.TestVersion + ", ";
+
+            string answer_container = "";
+
+            //Row 5
+            answer_container += ",5, " + "'" + student.Answers[4] + "'\n";
+
+            //Rows 4, 3, 2, 1
+            string spaces = "                ";
+            for (int i = 3; i >= 0; i--)
+            {
+                answer_container += spaces + ',' + (i + 1) + ", '" + student.Answers[i] + "'\n";
+            }
+
+            student_info += answer_container;
+
+            return student_info;
         }
     }
 }
