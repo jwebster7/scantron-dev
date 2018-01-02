@@ -10,16 +10,18 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private char grant_permission;
+        private char grant_permission = '-';
         private char test_version;
         private char sheet_number;
-        private string answers;
+        private string[] answers = new string[5];
         
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;
             RemoveBackSide();
             Uncompress();
+            Format();
+            TranslateData();
         }
 
         private void RemoveBackSide()
@@ -66,9 +68,166 @@ namespace Scantron
             }
         }
 
+        private void Format()
+        {
+            int i;
+            List<string> card_lines = new List<string>();
+            char[] splitter = new char[] {'a'};
+            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+
+            // remove space above bubbles
+            card_lines.RemoveAt(0);
+            card_lines.RemoveAt(0);
+
+            // trim WID section
+            for (i = 0; i < 9; i++)
+            {
+                card_lines[i] = card_lines[i].Substring(0, 10);
+            }
+
+            // trim quetions 1-5 and extra options section
+            card_lines[9]   = card_lines[9].Substring(0, 11);
+            card_lines[10]  = card_lines[10].Substring(0, 8);
+            card_lines[11]  = card_lines[11].Substring(0, 14);
+            card_lines[12]  = card_lines[12].Substring(0, 8);
+            card_lines[13]  = card_lines[13].Substring(0, 11);
+
+            //trim questions 6-50
+            for (i = 14; i < card_lines.Count; i++)
+            {
+                card_lines[i] = card_lines[i].Substring(0, 15);
+            }
+
+            raw_student_data = string.Join(",", card_lines);
+        }
+
+        private void TranslateData()
+        {
+            List<string> card_lines = new List<string>();
+            char[] splitter = new char[] {','};
+            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+
+            // get WID
+            for (int i = 0; i < 9; i++)
+            {
+                char[] line = card_lines[i].Reverse().ToArray();
+                wid += Array.IndexOf(line, line.Max());
+            }
+            
+            // check grant permission bubble
+            if ((int)card_lines[11][13] > 3)
+            {
+                grant_permission = '1';
+            }
+
+            // check test version number
+            int test_version_one    = card_lines[9][10];
+            int test_version_two    = card_lines[11][10];
+            int test_version_three  = card_lines[13][10];
+
+            test_version = GetDarkestBubble(test_version_one, test_version_two, test_version_three);
+
+            // check answer sheet number
+            int sheet_number_one    = card_lines[9][7];
+            int sheet_number_two    = card_lines[10][7];
+            int sheet_number_three  = card_lines[11][7];
+            int sheet_number_four   = card_lines[12][7];
+            int sheet_number_five   = card_lines[13][7];
+
+            sheet_number = GetDarkestBubble(sheet_number_one, sheet_number_two, sheet_number_three, 
+                sheet_number_four, sheet_number_five);
+
+            // get answers
+            int count = 0;
+            int index;
+
+            for (int i = 9; i < 29; i++)
+            {
+                index = count % 5;
+
+                if (i < 14)
+                {
+                    for (int j = 4; j >= 0; j--)
+                    {
+                        if (card_lines[i][j] > 51)
+                        {
+                            answers[index] += index + 1;
+                        }
+                        else
+                        {
+                            answers[index] += " ";
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 14; j >= 0; j--)
+                    {
+                        if (card_lines[i][j] > 51)
+                        {
+                            answers[index] += index + 1;
+                        }
+                        else
+                        {
+                            answers[index] += " ";
+                        }
+                    }
+                }
+
+                count++;
+            }
+        }
+
+        private char GetDarkestBubble(int a, int b, int c)
+        {
+            if (a > b && a > c)
+            {
+                return '1';
+            }
+            if (b > a && b > c)
+            {
+                return '2';
+            }
+            if (c > a && c > b)
+            {
+                return '3';
+            }
+
+            return '-';
+        }
+
+        private char GetDarkestBubble(int a, int b, int c, int d, int e)
+        {
+            if (a > b && a > c && a> d && a >e)
+            {
+                return '1';
+            }
+            if (b > a && b > c && b > d && b > e)
+            {
+                return '2';
+            }
+            if (c > a && c > b && c > d && c > e)
+            {
+                return '3';
+            }
+            if (d > a && d > b && d > c && d > e)
+            {
+                return '4';
+            }
+            if (e > a && e > b && e > c && e > d)
+            {
+                return '5';
+            }
+
+            return '-';
+        }
+
         public override string ToString()
         {
-            return raw_student_data;
+            return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
+                sheet_number + "--" + "," + Environment.NewLine + "'" + answers[0] + "'" + Environment.NewLine + 
+                "'" + answers[1] + "'" + Environment.NewLine + "'" + answers[2] + "'" + Environment.NewLine + "'" + 
+                answers[3] + "'" + Environment.NewLine + "'" + answers[4] + "'";
         }
     }
 }
