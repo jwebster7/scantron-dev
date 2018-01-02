@@ -10,10 +10,10 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private char grant_permission = '0'; // not sure if this will be - or 0
+        private char grant_permission = '-';
         private char test_version;
         private char sheet_number;
-        private string answers;
+        private string[] answers = new string[5];
         
         public Student(string raw_student_data)
         {
@@ -125,7 +125,7 @@ namespace Scantron
             int test_version_two    = card_lines[11][10];
             int test_version_three  = card_lines[13][10];
 
-            test_version = GetMaxOfThree(test_version_one, test_version_two, test_version_three);
+            test_version = GetDarkestBubble(test_version_one, test_version_two, test_version_three);
 
             // check answer sheet number
             int sheet_number_one    = card_lines[9][7];
@@ -134,21 +134,51 @@ namespace Scantron
             int sheet_number_four   = card_lines[12][7];
             int sheet_number_five   = card_lines[13][7];
 
-            sheet_number = GetMaxOfFive(sheet_number_one, sheet_number_two, sheet_number_three, 
+            sheet_number = GetDarkestBubble(sheet_number_one, sheet_number_two, sheet_number_three, 
                 sheet_number_four, sheet_number_five);
 
             // get answers
-            for (int i = 14; i < 29; i += 5)
+            int count = 0;
+            int index;
+
+            for (int i = 9; i < 29; i++)
             {
-                for (int j = 14; j > 0; j--)
+                index = count % 5;
+
+                if (i < 14)
                 {
-                    answers += GetMaxOfFive(card_lines[i][j], card_lines[i + 1][j], card_lines[i + 2][j],
-                        card_lines[i + 3][j], card_lines[i + 4][j]);
+                    for (int j = 4; j >= 0; j--)
+                    {
+                        if (card_lines[i][j] > 51)
+                        {
+                            answers[index] += index + 1;
+                        }
+                        else
+                        {
+                            answers[index] += " ";
+                        }
+                    }
                 }
+                else
+                {
+                    for (int j = 14; j >= 0; j--)
+                    {
+                        if (card_lines[i][j] > 51)
+                        {
+                            answers[index] += index + 1;
+                        }
+                        else
+                        {
+                            answers[index] += " ";
+                        }
+                    }
+                }
+
+                count++;
             }
         }
 
-        private char GetMaxOfThree(int a, int b, int c)
+        private char GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
             {
@@ -163,10 +193,10 @@ namespace Scantron
                 return '3';
             }
 
-            return '0';
+            return '-';
         }
 
-        private char GetMaxOfFive(int a, int b, int c, int d, int e)
+        private char GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
             {
@@ -189,13 +219,15 @@ namespace Scantron
                 return '5';
             }
 
-            return '0';
+            return '-';
         }
 
         public override string ToString()
         {
             return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
-                sheet_number + "--" + "," + "'" + answers + "'";
+                sheet_number + "--" + "," + Environment.NewLine + "'" + answers[0] + "'" + Environment.NewLine + 
+                "'" + answers[1] + "'" + Environment.NewLine + "'" + answers[2] + "'" + Environment.NewLine + "'" + 
+                answers[3] + "'" + Environment.NewLine + "'" + answers[4] + "'";
         }
     }
 }
