@@ -127,18 +127,18 @@ namespace Scantron
         {
             string student_info = "";
             student_info += student.WID + ", ";
-            student_info += student.GrantPermission + student.TestVersion + student.TestVersion + ", ";
+            student_info += student.TestVersion + student.SheetNumber + student.GrantPermission + "--,";
 
             string answer_container = "";
 
             //Row 5
-            answer_container += ",5, " + "'" + student.Answers[4] + "'\n";
+            answer_container += "5, " + "'" + student.Answers[4] + "'\r\n";
 
             //Rows 4, 3, 2, 1
-            string spaces = "                ";
+            string spaces = "         ,      ";
             for (int i = 3; i >= 0; i--)
             {
-                answer_container += spaces + ',' + (i + 1) + ", '" + student.Answers[i] + "'\n";
+                answer_container += spaces + ',' + (i + 1) + ", '" + student.Answers[i] + "'\r\n";
             }
 
             student_info += answer_container;
