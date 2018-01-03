@@ -90,6 +90,7 @@ namespace Scantron
                 
                 if (path.Equals(""))  //checks if the path and name are an empty string
                 {
+                    MessageBox.Show("You must enter a filename!");
                     throw new FileNotFoundException();
                 }
                 else
