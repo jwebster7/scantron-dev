@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using System.IO.Ports;
 
 namespace Scantron
@@ -73,11 +74,43 @@ namespace Scantron
                     + students[i].ToString() + Environment.NewLine;
             }
 
-            WriteToFile();  //Method writes to a file
+            #region Code for writing the students list to a file
+            
+            string file = WriteFile();  //Method "WriteFile" creates a string that is correctly formatted for output
+            
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog(); //Then we have to start a file dialog to save the string to a file
+            uxSaveFileDialog.InitialDirectory = "c:\\desktop";  //could be used to select the default directory ex. "C:\Users\Public\Desktop"
+            uxSaveFileDialog.Filter = "doc files (*.doc)|*.doc|All files (*.*)|*.*";  //Filter is the default file extensions seen by the user
+            uxSaveFileDialog.FilterIndex = 2;  //FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".doc"
+
+            //Opens save dialog box
+            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = uxSaveFileDialog.FileName;  //This stores the location of the file we want to save; use filenames for multiple
+                
+                if (path.Equals(""))  //checks if the path and name are an empty string
+                {
+                    throw new FileNotFoundException();
+                }
+                else
+                {
+                    //"using" opens and close the StreamWriter
+                    using (StreamWriter file_generator = new StreamWriter(path))
+                    {
+                        file_generator.Write(file);  //writes everything in file to the file found at "path"
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+
+            #endregion Code for writing the students list to a file
         }
 
-        //Function for writing and saving text to a file
-        private void WriteToFile()
+        //Function for writing the student info to a string for us in the streamwriter
+        private string WriteFile()
         {
             string file = "";
             //we want to write to a file and use what StudentExamInfo returns to print to a file
@@ -85,13 +118,7 @@ namespace Scantron
             {
                 file += StudentExamInfo(student);
             }
-
-            SaveFileDialog file_dialog = new SaveFileDialog();
-            //Opens save dialog box
-            if (file_dialog.ShowDialog() == DialogResult.OK)
-            {
-
-            }
+            return file;
         }
 
         //Method for storing the StudentExamInfo in the correct format for the text file
