@@ -181,7 +181,7 @@ namespace Scantron
                 {
                     for (int j = 4; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        if (card_lines[i][j] > 51)
                         {
                             answers[index] += index + 1;
                         }
@@ -195,7 +195,7 @@ namespace Scantron
                 {
                     for (int j = 14; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        if (card_lines[i][j] > 51)
                         {
                             answers[index] += index + 1;
                         }
@@ -216,18 +216,18 @@ namespace Scantron
         {
             if (a > b && a > c)
             {
-                return "1";
+                return '1';
             }
             if (b > a && b > c)
             {
-                return "2";
+                return '2';
             }
             if (c > a && c > b)
             {
-                return "3";
+                return '3';
             }
 
-            return "-";
+            return '-';
         }
 
         // Does the same as the above method, but for five bubbles.
@@ -235,26 +235,26 @@ namespace Scantron
         {
             if (a > b && a > c && a> d && a >e)
             {
-                return "1";
+                return '1';
             }
             if (b > a && b > c && b > d && b > e)
             {
-                return "2";
+                return '2';
             }
             if (c > a && c > b && c > d && c > e)
             {
-                return "3";
+                return '3';
             }
             if (d > a && d > b && d > c && d > e)
             {
-                return "4";
+                return '4';
             }
             if (e > a && e > b && e > c && e > d)
             {
-                return "5";
+                return '5';
             }
 
-            return "-";
+            return '-';
         }
 
         // Translates the student's data to a string.
