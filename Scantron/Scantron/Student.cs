@@ -12,14 +12,9 @@ namespace Scantron
         private string raw_student_data;
         // The student's WID.
         private string wid;
-        // Holds whether the grant permission bubble is filled.
         private string grant_permission = "-";
-        // Holds which of the three test version bubbles is filled.
         private string test_version;
-        // Holds which of the five sheet number bubbles is filled.
         private string sheet_number;
-        // Holds the answer bubbles formatted to be written to the output file correctly. For more information refer 
-        // to the github repository's readme.
         private string[] answers = new string[5];
 
         // Properties to access the Student fields.
@@ -29,8 +24,6 @@ namespace Scantron
         public string SheetNumber { get { return sheet_number; } }
         public string[] Answers { get { return answers; } }
 
-        // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
-        // fields.
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;
@@ -147,7 +140,7 @@ namespace Scantron
             // Checks the grant permission bubble.
             if ((int)card_lines[11][13] > 6)
             {
-                grant_permission = "1";
+                grant_permission ="1";
             }
 
             // Checks the test version bubbles.
@@ -210,51 +203,48 @@ namespace Scantron
             }
         }
 
-        // Returns which bubble from a group of three is the darkest. Darkness is given by the scantorn machine on a 
-        // scale of 0 to F. If no bubble is clearly the darkest, a dash is returned instead.
         private string GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
             {
-                return '1';
+                return "1";
             }
             if (b > a && b > c)
             {
-                return '2';
+                return "2";
             }
             if (c > a && c > b)
             {
-                return '3';
+                return "3";
             }
 
-            return '-';
+            return "-";
         }
 
-        // Does the same as the above method, but for five bubbles.
         private string GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
             {
-                return '1';
+                return "1";
             }
             if (b > a && b > c && b > d && b > e)
             {
-                return '2';
+                return "2";
             }
             if (c > a && c > b && c > d && c > e)
             {
-                return '3';
+                return "3";
             }
             if (d > a && d > b && d > c && d > e)
             {
-                return '4';
+                return "4";
             }
             if (e > a && e > b && e > c && e > d)
             {
-                return '5';
+                return "5";
             }
 
-            return '-';
+            return "-";
         }
 
         // Translates the student's data to a string.
