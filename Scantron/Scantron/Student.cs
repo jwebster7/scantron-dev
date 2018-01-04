@@ -3,10 +3,10 @@
 // Property of the Kansas State University IT Help Desk
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
 // 
-// More in-depth explanations of each method and the overall architecture of this program can be found on the github 
+// An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev
 // 
-// This class hold an individual student's information that will be used to write to a file. The translation of the 
+// This class holds an individual student's information that will be used to write to a file. The translation of the 
 // raw data read in from the scantron machine occurs here.
 
 using System;
