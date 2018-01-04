@@ -14,6 +14,7 @@ namespace Scantron
 {
     public partial class Scantron : Form
     {
+       
         private List<string> cards = new List<string>();
         private List<Student> students = new List<Student>();
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
