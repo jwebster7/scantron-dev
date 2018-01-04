@@ -12,18 +12,16 @@ namespace Scantron
         private string raw_student_data;
         // The student's WID.
         private string wid;
+        // Holds if the grant permission bubble is filled.
         private string grant_permission = "-";
+        // Holds which of the three test version bubble is filled.
         private string test_version;
+        // Holds which of the five sheet number bubbles is filled.
         private string sheet_number;
+        // Holds which answer bubbles.
         private string[] answers = new string[5];
 
-        // Properties to access the Student fields.
-        public string WID { get { return wid; } }
-        public string GrantPermission { get { return grant_permission; } }
-        public string TestVersion { get { return test_version; } }
-        public string SheetNumber { get { return sheet_number; } }
-        public string[] Answers { get { return answers; } }
-
+        // Student constructor. Translates the raw data and assigns it to the appropriate fields.
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;
@@ -203,6 +201,8 @@ namespace Scantron
             }
         }
 
+        // Returns which of three bubbles is the darkest. The scantrons reads each bubble on a darkness scale of 
+        // 0 to F. If no bubble is clearly the darkest, a dash is returned.
         private string GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
@@ -221,6 +221,7 @@ namespace Scantron
             return "-";
         }
 
+        // The same as the other GetDarkestBubble method, but with five bubbles.
         private string GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
@@ -250,10 +251,19 @@ namespace Scantron
         // Translates the student's data to a string.
         public override string ToString()
         {
-            return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
-                sheet_number + "--" + "," + Environment.NewLine + "'" + answers[0] + "'" + Environment.NewLine + 
-                "'" + answers[1] + "'" + Environment.NewLine + "'" + answers[2] + "'" + Environment.NewLine + "'" + 
-                answers[3] + "'" + Environment.NewLine + "'" + answers[4] + "'";
+            string student_info = "";
+
+            student_info += wid + ", ";
+            student_info += test_version + sheet_number + grant_permission + "--,";
+            student_info += "5, " + "'" + answers[4] + "'\r\n";
+            
+            string spaces = "         ,      ";
+            for (int i = 3; i >= 0; i--)
+            {
+                student_info += spaces + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
+            }
+
+            return student_info;
         }
     }
 }
