@@ -1,4 +1,14 @@
-﻿using System;
+﻿// Student.cs
+//
+// Property of the Kansas State University IT Help Desk
+// Written by: William McCreight, Caleb Schweer, and Joseph Webster
+// 
+// An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
+// repository: https://github.com/prometheus1994/scantron-dev
+//
+// This class is used for creating Student objects with their associated fields, methods, and properties
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
