@@ -23,6 +23,13 @@ namespace Scantron
         public Scantron()
         {
             InitializeComponent();
+            uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
+                                    "Then click on the 'Start Button'" + Environment.NewLine +
+                                    "Now press Start on the Machine to begin scanning";
+            uxStart.Enabled = true;
+            uxStop.Enabled = false;
+            uxDebug.Enabled = false;
+            uxCreateFile.Enabled = false;
         }
 
         private void CreateStudents()
@@ -39,9 +46,12 @@ namespace Scantron
         {
             students = new List<Student>();
             raw_scantron_output = "";
-            uxStatusBox.Text = "Press Start on Scantron";
             serial_port.Open();
             serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+            uxStart.Enabled = false;
+            uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
+                                    "Press the 'Stop Button'";
+            uxStop.Enabled = true;
         }
 
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -52,25 +62,25 @@ namespace Scantron
 
         private void uxStop_Click(object sender, EventArgs e)
         {
-            uxStatusBox.Text = "";
             serial_port.Close();
-            uxDataBox.Text += raw_scantron_output + Environment.NewLine;
-        }
-
-        private void uxClearText_Click(object sender, EventArgs e)
-        {
-            uxDataBox.Text = "";
+            uxStop.Enabled = false;
+            uxStart.Enabled = false;
+            uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
+                                    "Then press 'Create File' to create and save" + Environment.NewLine +
+                                    "a file onto the USB drive";
+            uxCreateFile.Enabled = true;
         }
 
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
-            uxDataBox.Text = "";
-            uxStatusBox.Text = "Creating Students";
+            uxInstructionBox.Text = "Please check your file to ensure all" + Environment.NewLine + 
+                                    "Scantron cards have been scanned and stored correctly" + Environment.NewLine +
+                                    "If not, please start over";
             CreateStudents();
 
             for(int i = 0; i < students.Count; i++)
             {
-                uxDataBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine 
+                uxInstructionBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine 
                     + students[i].ToString() + Environment.NewLine;
             }
 
@@ -108,6 +118,21 @@ namespace Scantron
             }
 
             #endregion Code for writing the students list to a file
+            uxStart.Enabled = true;
+            uxStop.Enabled = false;
+            uxCreateFile.Enabled = false;
+            uxDebug.Enabled = false;
+        }
+
+        private void uxDebug_Click(object sender, EventArgs e)
+        {
+            string debug_output = raw_scantron_output;
+            uxInstructionBox.Text = "Here is the output of the cards: " + Environment.NewLine +
+                                     debug_output.ToString();
+            uxStart.Enabled = true;
+            uxStop.Enabled = false;
+            uxCreateFile.Enabled = false;
+            uxDebug.Enabled = false;
         }
 
         //Function for writing the student info to a string for us in the streamwriter
@@ -145,5 +170,6 @@ namespace Scantron
 
             return student_info;
         }
+
     }
 }

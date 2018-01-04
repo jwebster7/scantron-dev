@@ -10,9 +10,9 @@ namespace Scantron
     {
         private string raw_student_data;
         private string wid;
-        private string grant_permission = "-";
-        private string test_version;
-        private string sheet_number;
+        private char grant_permission = '-';
+        private char test_version;
+        private char sheet_number;
         private string[] answers = new string[5];
 
         public string WID
@@ -23,7 +23,7 @@ namespace Scantron
             }
         }
 
-        public string GrantPermission
+        public char GrantPermission
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Scantron
             }
         }
 
-        public string TestVersion
+        public char TestVersion
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Scantron
             }
         }
 
-        public string SheetNumber
+        public char SheetNumber
         {
             get
             {
@@ -155,9 +155,9 @@ namespace Scantron
             }
             
             // check grant permission bubble
-            if ((int)card_lines[11][13] > 6)
+            if ((int)card_lines[11][13] > 3)
             {
-                grant_permission ="1";
+                grant_permission = '1';
             }
 
             // check test version number
@@ -189,7 +189,7 @@ namespace Scantron
                 {
                     for (int j = 4; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        if (card_lines[i][j] > 51)
                         {
                             answers[index] += index + 1;
                         }
@@ -203,7 +203,7 @@ namespace Scantron
                 {
                     for (int j = 14; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        if (card_lines[i][j] > 51)
                         {
                             answers[index] += index + 1;
                         }
@@ -218,48 +218,48 @@ namespace Scantron
             }
         }
 
-        private string GetDarkestBubble(int a, int b, int c)
+        private char GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
             {
-                return "1";
+                return '1';
             }
             if (b > a && b > c)
             {
-                return "2";
+                return '2';
             }
             if (c > a && c > b)
             {
-                return "3";
+                return '3';
             }
 
-            return "-";
+            return '-';
         }
 
-        private string GetDarkestBubble(int a, int b, int c, int d, int e)
+        private char GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
             {
-                return "1";
+                return '1';
             }
             if (b > a && b > c && b > d && b > e)
             {
-                return "2";
+                return '2';
             }
             if (c > a && c > b && c > d && c > e)
             {
-                return "3";
+                return '3';
             }
             if (d > a && d > b && d > c && d > e)
             {
-                return "4";
+                return '4';
             }
             if (e > a && e > b && e > c && e > d)
             {
-                return "5";
+                return '5';
             }
 
-            return "-";
+            return '-';
         }
 
         public override string ToString()
