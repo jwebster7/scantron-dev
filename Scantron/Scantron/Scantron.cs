@@ -14,6 +14,7 @@ namespace Scantron
 {
     public partial class Scantron : Form
     {
+       
         private List<string> cards = new List<string>();
         private List<Student> students = new List<Student>();
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
@@ -142,34 +143,9 @@ namespace Scantron
             //we want to write to a file and use what StudentExamInfo returns to print to a file
             foreach (Student student in students)
             {
-                file += StudentExamInfo(student);
+                file += student.ToString();
             }
             return file;
         }
-
-        //Method for storing the StudentExamInfo in the correct format for the text file
-        private string StudentExamInfo(Student student)
-        {
-            string student_info = "";
-            student_info += student.WID + ", ";
-            student_info += student.TestVersion + student.SheetNumber + student.GrantPermission + "--,";
-
-            string answer_container = "";
-
-            //Row 5
-            answer_container += "5, " + "'" + student.Answers[4] + "'\r\n";
-
-            //Rows 4, 3, 2, 1
-            string spaces = "         ,      ";
-            for (int i = 3; i >= 0; i--)
-            {
-                answer_container += spaces + ',' + (i + 1) + ", '" + student.Answers[i] + "'\r\n";
-            }
-
-            student_info += answer_container;
-
-            return student_info;
-        }
-
     }
 }
