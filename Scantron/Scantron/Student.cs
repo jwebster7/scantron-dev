@@ -270,7 +270,7 @@ namespace Scantron
             // Row 5
             student_info += "5, " + "'" + answers[4] + "'\r\n";
 
-            //Rows 4, 3, 2, 1
+            // Rows 4, 3, 2, 1
             string spaces = "         ,      ";
             for (int i = 3; i >= 0; i--)
             {
