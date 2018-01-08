@@ -4,7 +4,7 @@
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
 // 
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
-// repository: https://github.com/prometheus1994/scantron-dev
+// repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class is used for creating Student objects with their associated fields, methods, and properties
 
@@ -29,7 +29,7 @@ namespace Scantron
         // Holds which of the five sheet number bubbles is filled.
         private string sheet_number;
         // Holds the answer bubbles formatted to be written to the output file correctly. For more information refer 
-        // to the github repository's readme.
+        // to the github repository.
         private string[] answers = new string[5];
 
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
@@ -70,7 +70,7 @@ namespace Scantron
         }
 
         // Looks for the compression character, '#', and uncompresses the characer after it. For more information on 
-        // scantron compress, refer to the github repository's readme.
+        // scantron compress, refer to the github repository.
         private void Uncompress()
         {
             int hashtag_location;
