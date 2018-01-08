@@ -5,9 +5,8 @@
 // 
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev
-// 
-// This class holds an individual student's information that will be used to write to a file. The translation of the 
-// raw data read in from the scantron machine occurs here.
+//
+// This class is used for creating Student objects with their associated fields, methods, and properties
 
 using System;
 using System.Collections.Generic;
@@ -23,16 +22,25 @@ namespace Scantron
         private string raw_student_data;
         // The student's WID.
         private string wid;
-        // Holds if the grant permission bubble is filled.
+        // Holds whether the grant permission bubble is filled.
         private string grant_permission = "-";
-        // Holds which of the three test version bubble is filled.
+        // Holds which of the three test version bubbles is filled.
         private string test_version;
         // Holds which of the five sheet number bubbles is filled.
         private string sheet_number;
-        // Holds which answer bubbles.
+        // Holds the answer bubbles formatted to be written to the output file correctly. For more information refer 
+        // to the github repository's readme.
         private string[] answers = new string[5];
 
-        // Student constructor. Translates the raw data and assigns it to the appropriate fields.
+        // Properties to access the Student fields.
+        public string WID { get { return wid; } }
+        public string GrantPermission { get { return grant_permission; } }
+        public string TestVersion { get { return test_version; } }
+        public string SheetNumber { get { return sheet_number; } }
+        public string[] Answers { get { return answers; } }
+
+        // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
+        // fields.
         public Student(string raw_student_data)
         {
             this.raw_student_data = raw_student_data;
@@ -149,7 +157,7 @@ namespace Scantron
             // Checks the grant permission bubble.
             if ((int)card_lines[11][13] > 6)
             {
-                grant_permission ="1";
+                grant_permission = "1";
             }
 
             // Checks the test version bubbles.
@@ -183,7 +191,7 @@ namespace Scantron
                 {
                     for (int j = 4; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 51)
+                        if (card_lines[i][j] > 54)
                         {
                             answers[index] += index + 1;
                         }
@@ -197,7 +205,7 @@ namespace Scantron
                 {
                     for (int j = 14; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 51)
+                        if (card_lines[i][j] > 54)
                         {
                             answers[index] += index + 1;
                         }
@@ -212,8 +220,8 @@ namespace Scantron
             }
         }
 
-        // Returns which of three bubbles is the darkest. The scantrons reads each bubble on a darkness scale of 
-        // 0 to F. If no bubble is clearly the darkest, a dash is returned.
+        // Returns which bubble from a group of three is the darkest. Darkness is given by the scantorn machine on a 
+        // scale of 0 to F. If no bubble is clearly the darkest, a dash is returned instead.
         private string GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
@@ -232,7 +240,7 @@ namespace Scantron
             return "-";
         }
 
-        // The same as the other GetDarkestBubble method, but with five bubbles.
+        // Does the same as the above method, but for five bubbles.
         private string GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
@@ -262,19 +270,10 @@ namespace Scantron
         // Translates the student's data to a string.
         public override string ToString()
         {
-            string student_info = "";
-
-            student_info += wid + ", ";
-            student_info += test_version + sheet_number + grant_permission + "--,";
-            student_info += "5, " + "'" + answers[4] + "'\r\n";
-            
-            string spaces = "         ,      ";
-            for (int i = 3; i >= 0; i--)
-            {
-                student_info += spaces + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
-            }
-
-            return student_info;
+            return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
+                sheet_number + "--" + "," + Environment.NewLine + "'" + answers[0] + "'" + Environment.NewLine + 
+                "'" + answers[1] + "'" + Environment.NewLine + "'" + answers[2] + "'" + Environment.NewLine + "'" + 
+                answers[3] + "'" + Environment.NewLine + "'" + answers[4] + "'";
         }
     }
 }
