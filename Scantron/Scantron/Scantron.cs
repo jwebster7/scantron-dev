@@ -57,12 +57,10 @@ namespace Scantron
             raw_scantron_output = "";
             serial_port.Open();
             serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-            uxStart.Enabled = false;
 
-            // Displays new instructions into the instruction box
             uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
                                     "Press the 'Stop Button'";
-
+            uxStart.Enabled = false;
             uxStop.Enabled = true;
         }
 
@@ -79,12 +77,12 @@ namespace Scantron
         private void uxStop_Click(object sender, EventArgs e)
         {
             serial_port.Close();
-            uxStop.Enabled = false;
-            uxStart.Enabled = false;
+
             uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
                                     "Then press 'Create File' to create and save" + Environment.NewLine +
                                     "a file onto the USB drive";
-            // Enables the 'Create File' button
+            uxStart.Enabled = false;
+            uxStop.Enabled = false;
             uxCreateFile.Enabled = true;
         }
 
