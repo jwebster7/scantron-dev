@@ -62,18 +62,22 @@ namespace Scantron
         private void uxStart_Click(object sender, EventArgs e)
         {
             students = new List<Student>();
-            raw_scantron_output = "";
-            serial_port.Open();
-            serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+            //raw_scantron_output = ""; old
+            //serial_port.Open();
+            //serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
 
             if (debug)
             {
                 uxInstructionBox.Text = debug_header + "Click 'Stop' once all cards are scanned to view the raw output";
+                serial_port.Open();
+                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
             }
             else
             {
                 uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
                                         "Press the 'Stop Button'";
+                serial_port.Open();
+                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
                 uxStart.Enabled = false;
                 uxStop.Enabled = true;
                 uxCreateFile.Enabled = false;
