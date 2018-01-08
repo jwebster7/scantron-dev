@@ -4,7 +4,7 @@
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
 // 
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
-// repository: https://github.com/prometheus1994/scantron-dev
+// repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This file is for the Scantron GUI 
 
