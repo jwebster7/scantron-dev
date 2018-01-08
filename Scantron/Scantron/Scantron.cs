@@ -50,19 +50,6 @@ namespace Scantron
             uxCreateFile.Enabled = false;
         }
 
-        // This method creates student objects and adds them to the list, 'students'
-        private void CreateStudents()
-        {
-            // Sets each reference value in 'cards' equal to exactly one scantron card
-            cards = raw_scantron_output.Split('$').ToList<string>();
-
-            // For each index/value in 'cards', create a student object and add to the list 'students'
-            for (int i = 0; i < cards.Count - 1; i++)
-            {
-                students.Add(new Student(cards[i]));
-            }
-        }
-
         // The event handler opens the serial port and begins reading data from the scantron machine
         private void uxStart_Click(object sender, EventArgs e)
         {
@@ -163,6 +150,19 @@ namespace Scantron
             uxStop.Enabled = false;
             uxCreateFile.Enabled = false;
             uxDebug.Enabled = false;
+        }
+
+        // This method creates student objects and adds them to the list, 'students'
+        private void CreateStudents()
+        {
+            // Sets each reference value in 'cards' equal to exactly one scantron card
+            cards = raw_scantron_output.Split('$').ToList<string>();
+
+            // For each index/value in 'cards', create a student object and add to the list 'students'
+            for (int i = 0; i < cards.Count - 1; i++)
+            {
+                students.Add(new Student(cards[i]));
+            }
         }
 
         // Event handler for the 'Debug' button
