@@ -4,9 +4,9 @@
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
 // 
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
-// repository: https://github.com/prometheus1994/scantron-dev
+// repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This class is used for creating Student objects with their associated fields, methods, and properties
+// This class is used for creating Student objects with their associated fields, methods, and properties.
 
 using System;
 using System.Collections.Generic;
@@ -18,18 +18,18 @@ namespace Scantron
 {
     class Student
     {
-        // Holds the raw data stream initially read in from the scantron machine.
+        // Stores the raw data stream initially read in from the scantron machine.
         private string raw_student_data;
         // The student's WID.
         private string wid;
-        // Holds whether the grant permission bubble is filled.
+        // Storess whether the grant permission bubble is filled.
         private string grant_permission = "-";
-        // Holds which of the three test version bubbles is filled.
+        // Stores which of the three test version bubbles is filled.
         private string test_version;
-        // Holds which of the five sheet number bubbles is filled.
+        // Stores which of the five sheet number bubbles is filled.
         private string sheet_number;
-        // Holds the answer bubbles formatted to be written to the output file correctly. For more information refer 
-        // to the github repository's readme.
+        // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
+        // to the github repository.
         private string[] answers = new string[5];
 
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
@@ -69,8 +69,8 @@ namespace Scantron
             }
         }
 
-        // Looks for the compression character, '#', and uncompresses the characer after it. For more information on 
-        // scantron compress, refer to the github repository's readme.
+        // Looks for the compression character, "#", and uncompresses the characer after it. For more information on 
+        // scantron compress, refer to the github repository.
         private void Uncompress()
         {
             int hashtag_location;
