@@ -263,10 +263,21 @@ namespace Scantron
         // Translates the student's data to a string.
         public override string ToString()
         {
-            return raw_student_data + Environment.NewLine + wid + "," + grant_permission + test_version + 
-                sheet_number + "--" + "," + Environment.NewLine + "'" + answers[0] + "'" + Environment.NewLine + 
-                "'" + answers[1] + "'" + Environment.NewLine + "'" + answers[2] + "'" + Environment.NewLine + "'" + 
-                answers[3] + "'" + Environment.NewLine + "'" + answers[4] + "'";
+            string student_info = "";
+            student_info += wid + ", ";
+            student_info += test_version + sheet_number + grant_permission + "--,";
+
+            // Row 5
+            student_info += "5, " + "'" + answers[4] + "'\r\n";
+
+            //Rows 4, 3, 2, 1
+            string spaces = "         ,      ";
+            for (int i = 3; i >= 0; i--)
+            {
+                student_info += spaces + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
+            }
+
+            return student_info;
         }
     }
 }
