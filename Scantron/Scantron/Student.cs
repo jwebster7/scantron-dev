@@ -32,13 +32,6 @@ namespace Scantron
         // to the github repository's readme.
         private string[] answers = new string[5];
 
-        // Properties to access the Student fields.
-        public string WID { get { return wid; } }
-        public string GrantPermission { get { return grant_permission; } }
-        public string TestVersion { get { return test_version; } }
-        public string SheetNumber { get { return sheet_number; } }
-        public string[] Answers { get { return answers; } }
-
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
         // fields.
         public Student(string raw_student_data)
