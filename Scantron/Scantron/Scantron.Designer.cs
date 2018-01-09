@@ -59,9 +59,10 @@
             this.uxInstructionBox.Multiline = true;
             this.uxInstructionBox.Name = "uxInstructionBox";
             this.uxInstructionBox.ReadOnly = true;
+            this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.uxInstructionBox.Size = new System.Drawing.Size(580, 245);
             this.uxInstructionBox.TabIndex = 3;
-            this.uxInstructionBox.TabStop = false;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // uxStop
