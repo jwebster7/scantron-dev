@@ -35,8 +35,7 @@ namespace Scantron
         // Uncomment below assignment for example card data.
         // private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
         // Header text for the Debug Mode
-        private string debug_header = "Debug Mode On" +
-                                       Environment.NewLine +
+        private string debug_header = "Debug Mode On" + Environment.NewLine +
                                        "Click Debug again to exit" +
                                        Environment.NewLine;
         // Flag for toggling Debug Mode
@@ -73,15 +72,22 @@ namespace Scantron
             }
             else
             {
-                uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                        "Press the 'Stop Button'";
-                raw_scantron_output = "";
-                students = new List<Student>();
-                serial_port.Open();
-                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-                uxStart.Enabled = false;
-                uxStop.Enabled = true;
-                uxCreateFile.Enabled = false;
+                try
+                {
+                    uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
+                                            "Press the 'Stop Button'";
+                    raw_scantron_output = "";
+                    students = new List<Student>();
+                    serial_port.Open();
+                    serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                    uxStart.Enabled = false;
+                    uxStop.Enabled = true;
+                    uxCreateFile.Enabled = false;
+                }
+                catch (InvalidOperationException)
+                {
+                    // Do nothing, here to keep the error message window from populating
+                }
             }
         }
 
@@ -166,6 +172,7 @@ namespace Scantron
                 uxInstructionBox.Font = new Font("Courier New", 9, FontStyle.Regular);
                 uxInstructionBox.Text = debug_header;
                 uxInstructionBox.ScrollBars = ScrollBars.Vertical;
+                uxInstructionBox.ReadOnly = false;
                 uxStart.Enabled = true;
                 uxStop.Enabled = true;
                 uxCreateFile.Enabled = true;
@@ -177,6 +184,7 @@ namespace Scantron
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
                                         "Now press Start on the Machine to begin scanning";
+                uxInstructionBox.ReadOnly = true;
                 uxInstructionBox.ScrollBars = ScrollBars.None;
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
@@ -205,6 +213,26 @@ namespace Scantron
             // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
             uxSaveFileDialog.FilterIndex = 1;
 
+            try
+            {
+                uxSaveFileDialog.ShowDialog();
+                // Stores the location of the file we want to save; use filenames for multiple
+                string path = uxSaveFileDialog.FileName;
+                
+                // "using" opens and close the StreamWriter
+                using (StreamWriter file_generator = new StreamWriter(path))
+                {
+                    // Adds everything in the 'file' given to the streamwriter
+                    file_generator.Write(file);
+                }
+                
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("Something went wrong. Please restart the program");
+            }
+
+            /* PRIOR FILE DIALOG EXCEPTION HANDLING
             // Opens save dialog box
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -230,8 +258,9 @@ namespace Scantron
             }
             else
             {
-                throw new Exception();
+                throw new IOException();
             }
+            */
         }
     }
 }
