@@ -264,17 +264,14 @@ namespace Scantron
         public override string ToString()
         {
             string student_info = "";
-            student_info += wid + ", ";
-            student_info += test_version + sheet_number + grant_permission + "--,";
 
-            // Row 5
-            student_info += "5, " + "'" + answers[4] + "'\r\n";
+            // Raw 5
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--," + "5, " + "'" + answers[4] + "'\r\n";
 
             // Rows 4, 3, 2, 1
-            string spaces = "         ,      ";
             for (int i = 3; i >= 0; i--)
             {
-                student_info += spaces + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
+                student_info += "         ,      " + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
             }
 
             return student_info;
