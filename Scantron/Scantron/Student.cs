@@ -175,7 +175,7 @@ namespace Scantron
             int index;
 
             // These for loops are set up so that they read all 50 questions in order, which makes the indexing 
-            // difficult.
+            // difficult. This page details these loops https://github.com/prometheus1994/scantron-dev/wiki/Student.cs.
             for (int i = 9; i < 29; i++)
             {
                 index = count % 5;
@@ -264,17 +264,14 @@ namespace Scantron
         public override string ToString()
         {
             string student_info = "";
-            student_info += wid + ", ";
-            student_info += test_version + sheet_number + grant_permission + "--,";
 
-            // Row 5
-            student_info += "5, " + "'" + answers[4] + "'\r\n";
+            // Raw 5
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--," + "5, " + "'" + answers[4] + "'\r\n";
 
             // Rows 4, 3, 2, 1
-            string spaces = "         ,      ";
             for (int i = 3; i >= 0; i--)
             {
-                student_info += spaces + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
+                student_info += "         ,      " + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
             }
 
             return student_info;
