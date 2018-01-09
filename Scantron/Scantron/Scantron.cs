@@ -61,8 +61,7 @@ namespace Scantron
         // The event handler opens the serial port and begins reading data from the scantron machine
         private void uxStart_Click(object sender, EventArgs e)
         {
-            students = new List<Student>();
-            //raw_scantron_output = ""; old
+            //raw_scantron_output = "";
             //serial_port.Open();
             //serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
 
@@ -76,6 +75,8 @@ namespace Scantron
             {
                 uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
                                         "Press the 'Stop Button'";
+                raw_scantron_output = "";
+                students = new List<Student>();
                 serial_port.Open();
                 serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
                 uxStart.Enabled = false;
@@ -121,7 +122,7 @@ namespace Scantron
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
             CreateStudents();
-            WriteFile();
+            uxInstructionBox.Text = debug_header;
 
             if (debug)
             {
@@ -134,6 +135,7 @@ namespace Scantron
             }
             else
             {
+                WriteFile();
                 uxInstructionBox.Text = "Please check your file to ensure all" + Environment.NewLine +
                                         "Scantron cards have been scanned and stored correctly" + Environment.NewLine +
                                         "If not, please start over";
@@ -201,7 +203,7 @@ namespace Scantron
             // Filter is the default file extensions seen by the user
             uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
-            uxSaveFileDialog.FilterIndex = 2;
+            uxSaveFileDialog.FilterIndex = 1;
 
             // Opens save dialog box
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)

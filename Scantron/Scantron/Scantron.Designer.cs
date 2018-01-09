@@ -60,8 +60,7 @@
             this.uxInstructionBox.Name = "uxInstructionBox";
             this.uxInstructionBox.ReadOnly = true;
             this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxInstructionBox.Size = new System.Drawing.Size(580, 245);
+            this.uxInstructionBox.Size = new System.Drawing.Size(576, 245);
             this.uxInstructionBox.TabIndex = 3;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -102,13 +101,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 336);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(600, 332);
             this.Controls.Add(this.uxDebug);
             this.Controls.Add(this.uxCreateFile);
             this.Controls.Add(this.uxStop);
             this.Controls.Add(this.uxInstructionBox);
             this.Controls.Add(this.uxStart);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(620, 375);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(620, 375);
             this.Name = "Scantron";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
             this.ResumeLayout(false);
             this.PerformLayout();
