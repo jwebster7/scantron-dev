@@ -114,7 +114,7 @@ namespace Scantron
                 card_lines[i] = card_lines[i].Substring(0, 10);
             }
 
-            // Trims the useless space to the right of the miscellaneous options and first five questions. 
+            // Trims useless space to the right of the miscellaneous options and first five questions. 
             card_lines[9]   = card_lines[9].Substring(0, 11);
             card_lines[10]  = card_lines[10].Substring(0, 8);
             card_lines[11]  = card_lines[11].Substring(0, 14);
