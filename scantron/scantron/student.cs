@@ -114,7 +114,7 @@ namespace Scantron
                 card_lines[i] = card_lines[i].Substring(0, 10);
             }
 
-            // Trims the useless space to the right of the miscellaneous options and first five questions. 
+            // Trims useless space to the right of the miscellaneous options and first five questions. 
             card_lines[9]   = card_lines[9].Substring(0, 11);
             card_lines[10]  = card_lines[10].Substring(0, 8);
             card_lines[11]  = card_lines[11].Substring(0, 14);
@@ -175,7 +175,7 @@ namespace Scantron
             int index;
 
             // These for loops are set up so that they read all 50 questions in order, which makes the indexing 
-            // difficult.
+            // difficult. This page details these loops https://github.com/prometheus1994/scantron-dev/wiki/Student.cs.
             for (int i = 9; i < 29; i++)
             {
                 index = count % 5;
