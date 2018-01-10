@@ -6,7 +6,7 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This file is for the Scantron GUI 
+// This class handles button click events on the GUI.
 
 using System;
 using System.Collections.Generic;
