@@ -52,7 +52,6 @@
             this.uxInstructionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uxInstructionBox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.uxInstructionBox.Enabled = false;
             this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxInstructionBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.uxInstructionBox.Location = new System.Drawing.Point(12, 12);
@@ -60,7 +59,8 @@
             this.uxInstructionBox.Name = "uxInstructionBox";
             this.uxInstructionBox.ReadOnly = true;
             this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.uxInstructionBox.Size = new System.Drawing.Size(576, 245);
+            this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.uxInstructionBox.Size = new System.Drawing.Size(580, 245);
             this.uxInstructionBox.TabIndex = 3;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
