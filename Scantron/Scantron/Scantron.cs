@@ -226,7 +226,7 @@ namespace Scantron
             // Could be used to select the default directory ex. "C:\Users\Public\Desktop"
             uxSaveFileDialog.InitialDirectory = "c:\\desktop";
             // Filter is the default file extensions seen by the user
-            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
             // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
             uxSaveFileDialog.FilterIndex = 1;
 
