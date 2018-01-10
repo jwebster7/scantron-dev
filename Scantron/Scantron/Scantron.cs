@@ -134,8 +134,8 @@ namespace Scantron
                 else
                 {
                     uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                        "Then press 'Create File' to create and save" + Environment.NewLine +
-                        "a file onto the USB drive";
+                                            "Then press 'Create File' to create and save" + Environment.NewLine +
+                                            "a file onto the USB drive";
                     uxStart.Enabled = false;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = true;
@@ -170,9 +170,9 @@ namespace Scantron
                     // Error message handled in the WriteFile() & CreateStudents() method
                     // could catch IOExceptions and NullArgumentExceptions
                 }
-                uxInstructionBox.Text = "Please check your file to ensure all" + Environment.NewLine +
-                                        "Scantron cards have been scanned and stored correctly" + Environment.NewLine +
-                                        "If not, please start over";
+                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
+                                        "Then click on the 'Start Button'" + Environment.NewLine +
+                                        "Now press Start on the Machine to begin scanning";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
@@ -197,9 +197,9 @@ namespace Scantron
             if (students.Count == 0)
             {
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                    Environment.NewLine +
-                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                    "backwards, or reversed and reload the hopper.");
+                                Environment.NewLine +
+                                "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                "backwards, or reversed and reload the hopper.");
 
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
