@@ -24,47 +24,40 @@ namespace Scantron
 {
     public partial class Scantron : Form
     {
-        // Holds the raw data split up by card
+        // Holds the raw data split up by card.
         private List<string> cards = new List<string>();
-        // Holds students; data derived from 'cards'
+        // Holds students; data derived from 'cards'.
         private List<Student> students = new List<Student>();
-        // Serial port object used to read in the data stream
+        // Serial port object used to read in the data stream.
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
-        // Holds the read in Scantron data
+        // Holds the read in Scantron data.
         // private string raw_scantron_output;
         // Uncomment below assignment for example card data.
         private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
-        // Header text for the Debug Mode
+        // Header text for the Debug Mode.
         private string debug_header = "Debug Mode On" + Environment.NewLine +
                                       "Click Debug again to exit" +
                                       Environment.NewLine;
-        // Flag for toggling Debug Mode
+        // Flag for toggling Debug Mode.
         private bool debug = false;
 
-        // The default constructor for the scantron GUI
+        // The default constructor for the scantron GUI.
         public Scantron()
         {
-            // Initializes the form
+            // Initializes the form.
             InitializeComponent();
-            // Displays initial instructions into the instruction box
             uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                     "Then click on the 'Start Button'" + Environment.NewLine +
                                     "Now press Start on the Machine to begin scanning";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
-            // Debug button will always need to be enabled
             uxDebug.Enabled = true;
             uxCreateFile.Enabled = false;
         }
 
-        // The event handler opens the serial port and begins reading data from the scantron machine
+        // The event handler opens the serial port and begins reading data from the scantron machine.
         private void uxStart_Click(object sender, EventArgs e)
-        {
-            //raw_scantron_output = "";
-            //serial_port.Open();
-            //serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-
-            if (debug)
+        {if (debug)
             {
                 uxInstructionBox.Text = debug_header + "Click 'Stop' once all cards are scanned to view the raw output";
                 serial_port.Open();
@@ -86,21 +79,21 @@ namespace Scantron
                 }
                 catch (IOException)
                 {
-                    // Do nothing, here to keep the error message window from populating
+                    // Do nothing. This is to prevent an error message about the port already being open.
                 }
             }
         }
 
-        // This method is an event handler for the serialport
+        // This method is an event handler for the serialport.
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            // Sets serial_port to the event object value
+            // Sets serial_port to the event object value.
             serial_port = (SerialPort)sender;
-            // Appends the values from the scantron machine into the 'raw_scantron_ouput'
+            // Appends the values from the scantron machine into the raw_scantron_ouput.
             raw_scantron_output += serial_port.ReadExisting();
         }
 
-        // Event handler for the 'Stop' button; closes the serial port; enables the 'Create File' button
+        // Event handler for the stop button; closes the serial port; enables the create file button.
         private void uxStop_Click(object sender, EventArgs e)
         {
             serial_port.Close();
@@ -115,8 +108,8 @@ namespace Scantron
             }
             else
             {
-                // We cannot create students if "raw_scantron_output" is empty
-                // Sets the program to initial state of the program
+                // We cannot create students if raw_scantron_output is empty.
+                // Sets the program to initial state of the program.
                 if (raw_scantron_output.Equals(""))
                 {
                     MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
@@ -143,7 +136,7 @@ namespace Scantron
             }
         }
 
-        // Event handler for 'Create File' button
+        // Event handler for create file button.
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
             if (debug)
@@ -179,13 +172,13 @@ namespace Scantron
             }
         }
 
-        // This method creates student objects and adds them to the list, 'students'
+        // This method creates student objects and adds them to the list, students.
         private void CreateStudents()
         {
-            // Sets each reference value in 'cards' equal to exactly one scantron card
+            // Sets each reference value in cards equal to exactly one scantron card.
             cards = raw_scantron_output.Split('$').ToList<string>();
 
-            // For each index/value in 'cards', create a student object and add to the list 'students'
+            // For each index/value in cards, create a student object and add to the list students.
             for (int i = 0; i < cards.Count - 1; i++)
             {
                 students.Add(new Student(cards[i]));
@@ -193,7 +186,7 @@ namespace Scantron
 
             // If no students were created, (this should already be taken care 
             // of in the Stop event handler), we want to set the state back to 
-            // the start button and start over
+            // the start button and start over.
             if (students.Count == 0)
             {
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
@@ -210,31 +203,31 @@ namespace Scantron
             }
         }
 
-        // Function for writing the student info to a string for us in the streamwriter
+        // Function for writing the student info to a string for us in the streamwriter.
         private void WriteFile()
         {
             string file = "";
 
-            // We want to write to a file and use what StudentExamInfo returns to print to a file
+            // We want to write to a file and use what StudentExamInfo returns to print to a file.
             foreach (Student student in students)
             {
                 file += student.ToString();
             }
 
-            // Then we have to start a file dialog to save the string to a file
+            // Then we have to start a file dialog to save the string to a file.
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
-            // Could be used to select the default directory ex. "C:\Users\Public\Desktop"
+            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
             uxSaveFileDialog.InitialDirectory = "c:\\desktop";
             // Filter is the default file extensions seen by the user
             uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
-            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
+            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
             uxSaveFileDialog.FilterIndex = 1;
 
             
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string path = uxSaveFileDialog.FileName;
-                // Stores the location of the file we want to save; use filenames for multiple
+                // Stores the location of the file we want to save; use filenames for multiple.
                 if (path.Equals(""))
                 {
                     MessageBox.Show("You must enter a filename and select" + Environment.NewLine + 
@@ -243,10 +236,10 @@ namespace Scantron
                 }
                 else
                 {
-                    // "using" opens and close the StreamWriter
+                    // "using" opens and close the StreamWriter.
                     using (StreamWriter file_generator = new StreamWriter(path))
                     {
-                        // Adds everything in the 'file' given to the streamwriter
+                        // Adds everything in the 'file' given to the streamwriter.
                         file_generator.Write(file);
                     }
                 }
@@ -264,7 +257,7 @@ namespace Scantron
             }
         }
 
-        // Event handler for the 'Debug' button
+        // Event handler for the 'Debug' button.
         private void uxDebug_Click(object sender, EventArgs e)
         {
             if (!debug)
