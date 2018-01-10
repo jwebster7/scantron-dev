@@ -134,8 +134,8 @@ namespace Scantron
                 else
                 {
                     uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                        "Then press 'Create File' to create and save" + Environment.NewLine +
-                        "a file onto the USB drive";
+                                            "Then press 'Create File' to create and save" + Environment.NewLine +
+                                            "a file onto the USB drive";
                     uxStart.Enabled = false;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = true;
@@ -146,8 +146,6 @@ namespace Scantron
         // Event handler for 'Create File' button
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
-            uxInstructionBox.Text = debug_header;
-
             if (debug)
             {
                 uxInstructionBox.Text = debug_header;
@@ -172,9 +170,9 @@ namespace Scantron
                     // Error message handled in the WriteFile() & CreateStudents() method
                     // could catch IOExceptions and NullArgumentExceptions
                 }
-                uxInstructionBox.Text = "Please check your file to ensure all" + Environment.NewLine +
-                                        "Scantron cards have been scanned and stored correctly" + Environment.NewLine +
-                                        "If not, please start over";
+                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
+                                        "Then click on the 'Start Button'" + Environment.NewLine +
+                                        "Now press Start on the Machine to begin scanning";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
@@ -199,9 +197,9 @@ namespace Scantron
             if (students.Count == 0)
             {
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                    Environment.NewLine +
-                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                    "backwards, or reversed and reload the hopper.");
+                                Environment.NewLine +
+                                "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                "backwards, or reversed and reload the hopper.");
 
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
@@ -228,7 +226,7 @@ namespace Scantron
             // Could be used to select the default directory ex. "C:\Users\Public\Desktop"
             uxSaveFileDialog.InitialDirectory = "c:\\desktop";
             // Filter is the default file extensions seen by the user
-            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
             // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
             uxSaveFileDialog.FilterIndex = 1;
 
@@ -256,6 +254,8 @@ namespace Scantron
             else 
             {
                 MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
+                                "The format for filenames should not include" + Environment.NewLine +
+                                "slashes, parentheticals, or symbols" +
                                 Environment.NewLine +
                                 "Please reload the hopper and ensure the" + Environment.NewLine +
                                 "cards are not stuck together, backwards," + Environment.NewLine +
