@@ -36,8 +36,8 @@ namespace Scantron
         // private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
         // Header text for the Debug Mode
         private string debug_header = "Debug Mode On" + Environment.NewLine +
-                                       "Click Debug again to exit" +
-                                       Environment.NewLine;
+                                      "Click Debug again to exit" +
+                                      Environment.NewLine;
         // Flag for toggling Debug Mode
         private bool debug = false;
 
@@ -84,7 +84,7 @@ namespace Scantron
                     uxStop.Enabled = true;
                     uxCreateFile.Enabled = false;
                 }
-                catch (InvalidOperationException)
+                catch (IOException)
                 {
                     // Do nothing, here to keep the error message window from populating
                 }
@@ -115,19 +115,37 @@ namespace Scantron
             }
             else
             {
-                uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                                        "Then press 'Create File' to create and save" + Environment.NewLine +
-                                        "a file onto the USB drive";
-                uxStart.Enabled = false;
-                uxStop.Enabled = false;
-                uxCreateFile.Enabled = true;
+                // We cannot create students if "raw_scantron_output" is empty
+                // Sets the program to initial state of the program
+                if (raw_scantron_output.Equals(""))
+                {
+                    MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                    Environment.NewLine + 
+                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                    "backwards, or reversed and reload the hopper.");
+
+                    uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
+                                            "Then click on the 'Start Button'" + Environment.NewLine +
+                                            "Now press Start on the Machine to begin scanning";
+                    uxStart.Enabled = true;
+                    uxStop.Enabled = false;
+                    uxCreateFile.Enabled = false;
+                }
+                else
+                {
+                    uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
+                        "Then press 'Create File' to create and save" + Environment.NewLine +
+                        "a file onto the USB drive";
+                    uxStart.Enabled = false;
+                    uxStop.Enabled = false;
+                    uxCreateFile.Enabled = true;
+                }
             }
         }
 
         // Event handler for 'Create File' button
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
-            CreateStudents();
             uxInstructionBox.Text = debug_header;
 
             if (debug)
@@ -141,7 +159,19 @@ namespace Scantron
             }
             else
             {
-                WriteFile();
+                try
+                {
+                    // Throws NullArgumentException if students is empty
+                    CreateStudents();
+                    // Throws IOException if SaveFileDialog fails, or if
+                    // the user does not select a filename
+                    WriteFile();
+                }
+                catch (Exception)
+                {
+                    // Error message handled in the WriteFile() & CreateStudents() method
+                    // could catch IOExceptions and NullArgumentExceptions
+                }
                 uxInstructionBox.Text = "Please check your file to ensure all" + Environment.NewLine +
                                         "Scantron cards have been scanned and stored correctly" + Environment.NewLine +
                                         "If not, please start over";
@@ -161,6 +191,76 @@ namespace Scantron
             for (int i = 0; i < cards.Count - 1; i++)
             {
                 students.Add(new Student(cards[i]));
+            }
+
+            // If no students were created, (this should already be taken care 
+            // of in the Stop event handler), we want to set the state back to 
+            // the start button and start over
+            if (students.Count == 0)
+            {
+                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                    Environment.NewLine +
+                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                    "backwards, or reversed and reload the hopper.");
+
+                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
+                                        "Then click on the 'Start Button'" + Environment.NewLine +
+                                        "Now press Start on the Machine to begin scanning";
+                uxStart.Enabled = true;
+                uxStop.Enabled = false;
+                uxCreateFile.Enabled = false;
+            }
+        }
+
+        // Function for writing the student info to a string for us in the streamwriter
+        private void WriteFile()
+        {
+            string file = "";
+
+            // We want to write to a file and use what StudentExamInfo returns to print to a file
+            foreach (Student student in students)
+            {
+                file += student.ToString();
+            }
+
+            // Then we have to start a file dialog to save the string to a file
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
+            // Could be used to select the default directory ex. "C:\Users\Public\Desktop"
+            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
+            // Filter is the default file extensions seen by the user
+            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
+            uxSaveFileDialog.FilterIndex = 1;
+
+            
+            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = uxSaveFileDialog.FileName;
+                // Stores the location of the file we want to save; use filenames for multiple
+                if (path.Equals(""))
+                {
+                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine + 
+                                    "a file path for the exam record!");
+                    throw new IOException();
+                }
+                else
+                {
+                    // "using" opens and close the StreamWriter
+                    using (StreamWriter file_generator = new StreamWriter(path))
+                    {
+                        // Adds everything in the 'file' given to the streamwriter
+                        file_generator.Write(file);
+                    }
+                }
+            }
+            else 
+            {
+                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
+                                Environment.NewLine +
+                                "Please reload the hopper and ensure the" + Environment.NewLine +
+                                "cards are not stuck together, backwards," + Environment.NewLine +
+                                "or reversed. ");
+                throw new IOException();
             }
         }
 
@@ -191,76 +291,6 @@ namespace Scantron
                 uxCreateFile.Enabled = false;
                 debug = false;
             }
-        }
-
-        // Function for writing the student info to a string for us in the streamwriter
-        private void WriteFile()
-        {
-            string file = "";
-
-            // We want to write to a file and use what StudentExamInfo returns to print to a file
-            foreach (Student student in students)
-            {
-                file += student.ToString();
-            }
-
-            // Then we have to start a file dialog to save the string to a file
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
-            // Could be used to select the default directory ex. "C:\Users\Public\Desktop"
-            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
-            // Filter is the default file extensions seen by the user
-            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt"
-            uxSaveFileDialog.FilterIndex = 1;
-
-            try
-            {
-                uxSaveFileDialog.ShowDialog();
-                // Stores the location of the file we want to save; use filenames for multiple
-                string path = uxSaveFileDialog.FileName;
-                
-                // "using" opens and close the StreamWriter
-                using (StreamWriter file_generator = new StreamWriter(path))
-                {
-                    // Adds everything in the 'file' given to the streamwriter
-                    file_generator.Write(file);
-                }
-                
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("Something went wrong. Please restart the program");
-            }
-
-            /* PRIOR FILE DIALOG EXCEPTION HANDLING
-            // Opens save dialog box
-            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                // Stores the location of the file we want to save; use filenames for multiple
-                string path = uxSaveFileDialog.FileName;
-
-                // Checks if the path and name are an empty string
-                if (path.Equals(""))
-                {
-                    // displays an error; no file name given
-                    MessageBox.Show("You must enter a filename!");
-                    throw new FileNotFoundException();
-                }
-                else
-                {
-                    // "using" opens and close the StreamWriter
-                    using (StreamWriter file_generator = new StreamWriter(path))
-                    {
-                        // Adds everything in the 'file' given to the streamwriter
-                        file_generator.Write(file);
-                    }
-                }
-            }
-            else
-            {
-                throw new IOException();
-            }
-            */
         }
     }
 }
