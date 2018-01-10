@@ -146,8 +146,6 @@ namespace Scantron
         // Event handler for 'Create File' button
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
-            uxInstructionBox.Text = debug_header;
-
             if (debug)
             {
                 uxInstructionBox.Text = debug_header;
@@ -256,6 +254,8 @@ namespace Scantron
             else 
             {
                 MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
+                                "The format for filenames should not include" + Environment.NewLine +
+                                "slashes, parentheticals, or symbols" +
                                 Environment.NewLine +
                                 "Please reload the hopper and ensure the" + Environment.NewLine +
                                 "cards are not stuck together, backwards," + Environment.NewLine +
