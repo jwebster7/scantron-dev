@@ -152,16 +152,16 @@ namespace Scantron
             {
                 try
                 {
-                    // Throws NullArgumentException if students is empty
+                    // Throws NullArgumentException if students is empty.
                     CreateStudents();
                     // Throws IOException if SaveFileDialog fails, or if
-                    // the user does not select a filename
+                    // the user does not select a filename.
                     WriteFile();
                 }
                 catch (Exception)
                 {
                     // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions and NullArgumentExceptions
+                    // could catch IOExceptions and NullArgumentExceptions.
                 }
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
@@ -218,7 +218,7 @@ namespace Scantron
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
             // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
             uxSaveFileDialog.InitialDirectory = "c:\\desktop";
-            // Filter is the default file extensions seen by the user
+            // Filter is the default file extensions seen by the user.
             uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
             // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
             uxSaveFileDialog.FilterIndex = 1;
