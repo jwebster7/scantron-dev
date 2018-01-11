@@ -78,7 +78,8 @@ namespace Scantron
                     uxStop.Enabled = true;
                     uxCreateFile.Enabled = false;
                 }
-                catch (IOException)
+                // SystemException is the superclass containing IOException and InvalidOperationException
+                catch (SystemException)
                 {
                     // Do nothing. This is to prevent an error message about the port already being open.
                 }
@@ -113,17 +114,17 @@ namespace Scantron
                 // Sets the program to initial state of the program.
                 if (raw_scantron_output.Equals(""))
                 {
-                    MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                    Environment.NewLine + 
-                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                    "backwards, or reversed and reload the hopper.");
-
                     uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                             "Then click on the 'Start Button'" + Environment.NewLine +
                                             "Now press Start on the Machine to begin scanning";
                     uxStart.Enabled = true;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = false;
+
+                    MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                    Environment.NewLine +
+                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                    "backwards, or reversed and reload the hopper.");
                 }
                 else
                 {
@@ -140,6 +141,8 @@ namespace Scantron
         // Event handler for create file button.
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
+            CreateStudents();
+
             if (debug)
             {
                 uxInstructionBox.Text = debug_header;
@@ -153,16 +156,14 @@ namespace Scantron
             {
                 try
                 {
-                    // Throws NullArgumentException if students is empty.
-                    CreateStudents();
                     // Throws IOException if SaveFileDialog fails, or if
                     // the user does not select a filename.
                     WriteFile();
                 }
-                catch (Exception)
+                catch (IOException)
                 {
                     // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions and NullArgumentExceptions.
+                    // could catch IOExceptions
                 }
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
@@ -190,17 +191,17 @@ namespace Scantron
             // the start button and start over.
             if (students.Count == 0)
             {
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
                                         "Then click on the 'Start Button'" + Environment.NewLine +
                                         "Now press Start on the Machine to begin scanning";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
+
+                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                Environment.NewLine +
+                                "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                "backwards, or reversed and reload the hopper.");
             }
         }
 
