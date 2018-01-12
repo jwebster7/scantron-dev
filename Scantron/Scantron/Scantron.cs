@@ -47,7 +47,7 @@ namespace Scantron
             // Initializes the form.
             InitializeComponent();
             uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                    "Then click on the 'Start Button'" + Environment.NewLine +
+                                    "Then click on 'Start' within this window" + Environment.NewLine +
                                     "Now press Start on the Machine to begin scanning";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
@@ -115,7 +115,7 @@ namespace Scantron
                 if (raw_scantron_output.Equals(""))
                 {
                     uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                            "Then click on the 'Start Button'" + Environment.NewLine +
+                                            "Then click on 'Start' within this window" + Environment.NewLine +
                                             "Now press Start on the Machine to begin scanning";
                     uxStart.Enabled = true;
                     uxStop.Enabled = false;
@@ -166,7 +166,7 @@ namespace Scantron
                     // could catch IOExceptions
                 }
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                        "Then click on the 'Start Button'" + Environment.NewLine +
+                                        "Then click on 'Start' within this window" + Environment.NewLine +
                                         "Now press Start on the Machine to begin scanning";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
@@ -192,7 +192,7 @@ namespace Scantron
             if (students.Count == 0)
             {
                 uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                        "Then click on the 'Start Button'" + Environment.NewLine +
+                                        "Then click on 'Start' within this window" + Environment.NewLine +
                                         "Now press Start on the Machine to begin scanning";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
@@ -244,6 +244,9 @@ namespace Scantron
                         // Adds everything in the 'file' given to the streamwriter.
                         file_generator.Write(file);
                     }
+                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
+                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
+                                    "using the file generated.");
                 }
             }
             else 
