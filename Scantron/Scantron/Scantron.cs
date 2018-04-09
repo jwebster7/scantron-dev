@@ -46,9 +46,8 @@ namespace Scantron
         {
             // Initializes the form.
             InitializeComponent();
-            uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                    "Then click on 'Start' within this window" + Environment.NewLine +
-                                    "Now press Start on the Machine to begin scanning";
+            uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                    "then click on 'Start' within this window.";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
             uxDebug.Enabled = true;
@@ -68,8 +67,9 @@ namespace Scantron
             {
                 try
                 {
-                    uxInstructionBox.Text = "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                            "Press the 'Stop Button'";
+                    uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
+                                            "Once all the cards have successfully scanned, " + Environment.NewLine +
+                                            "press the 'Stop' within this window.";
                     raw_scantron_output = "";
                     students = new List<Student>();
                     serial_port.Open();
@@ -114,9 +114,8 @@ namespace Scantron
                 // Sets the program to initial state of the program.
                 if (raw_scantron_output.Equals(""))
                 {
-                    uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                            "Then click on 'Start' within this window" + Environment.NewLine +
-                                            "Now press Start on the Machine to begin scanning";
+                    uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                            "then click on 'Start' within this window.";
                     uxStart.Enabled = true;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = false;
@@ -165,9 +164,8 @@ namespace Scantron
                     // Error message handled in the WriteFile() & CreateStudents() method
                     // could catch IOExceptions
                 }
-                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                        "Then click on 'Start' within this window" + Environment.NewLine +
-                                        "Now press Start on the Machine to begin scanning";
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
@@ -191,9 +189,8 @@ namespace Scantron
             // the start button and start over.
             if (students.Count == 0)
             {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                        "Then click on 'Start' within this window" + Environment.NewLine +
-                                        "Now press Start on the Machine to begin scanning";
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
@@ -279,9 +276,8 @@ namespace Scantron
             else
             {
                 uxInstructionBox.Font = new Font("Microsoft Sans Serif", (float)17.5, FontStyle.Regular);
-                uxInstructionBox.Text = "Please load the hopper of the Scantron" + Environment.NewLine +
-                                        "Then click on the 'Start Button'" + Environment.NewLine +
-                                        "Now press Start on the Machine to begin scanning";
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
                 uxInstructionBox.ReadOnly = true;
                 uxInstructionBox.ScrollBars = ScrollBars.None;
                 uxStart.Enabled = true;
