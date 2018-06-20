@@ -301,7 +301,7 @@ namespace Scantron
 
                 if (count == 5)
                 {
-                    student_info += "*";
+                    student_info += "-";
                 }
             }
 
