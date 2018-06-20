@@ -32,13 +32,14 @@
             this.uxInstructionBox = new System.Windows.Forms.TextBox();
             this.uxStop = new System.Windows.Forms.Button();
             this.uxCreateFile = new System.Windows.Forms.Button();
-            this.uxDebug = new System.Windows.Forms.Button();
+            this.uxAdmin = new System.Windows.Forms.Button();
+            this.uxCanConvert = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // uxStart
             // 
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStart.Location = new System.Drawing.Point(12, 263);
+            this.uxStart.Location = new System.Drawing.Point(5, 281);
             this.uxStart.Name = "uxStart";
             this.uxStart.Size = new System.Drawing.Size(140, 65);
             this.uxStart.TabIndex = 0;
@@ -54,20 +55,21 @@
             this.uxInstructionBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxInstructionBox.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.uxInstructionBox.Location = new System.Drawing.Point(12, 12);
+            this.uxInstructionBox.Location = new System.Drawing.Point(5, 30);
+            this.uxInstructionBox.MaximumSize = new System.Drawing.Size(580, 245);
             this.uxInstructionBox.Multiline = true;
             this.uxInstructionBox.Name = "uxInstructionBox";
             this.uxInstructionBox.ReadOnly = true;
             this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxInstructionBox.Size = new System.Drawing.Size(580, 245);
+            this.uxInstructionBox.Size = new System.Drawing.Size(578, 245);
             this.uxInstructionBox.TabIndex = 3;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(158, 263);
+            this.uxStop.Location = new System.Drawing.Point(151, 281);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(140, 65);
             this.uxStop.TabIndex = 4;
@@ -77,42 +79,53 @@
             // 
             // uxCreateFile
             // 
-            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
-            this.uxCreateFile.Location = new System.Drawing.Point(304, 263);
+            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.uxCreateFile.Location = new System.Drawing.Point(297, 282);
             this.uxCreateFile.Name = "uxCreateFile";
             this.uxCreateFile.Size = new System.Drawing.Size(140, 65);
             this.uxCreateFile.TabIndex = 5;
-            this.uxCreateFile.Text = "Create File";
+            this.uxCreateFile.Text = "Create File (Canvas)";
             this.uxCreateFile.UseVisualStyleBackColor = true;
             this.uxCreateFile.Click += new System.EventHandler(this.uxCreateFile_Click);
             // 
-            // uxDebug
+            // uxAdmin
             // 
-            this.uxDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxDebug.Location = new System.Drawing.Point(452, 263);
-            this.uxDebug.Name = "uxDebug";
-            this.uxDebug.Size = new System.Drawing.Size(140, 65);
-            this.uxDebug.TabIndex = 6;
-            this.uxDebug.Text = "Debug";
-            this.uxDebug.UseVisualStyleBackColor = true;
-            this.uxDebug.Click += new System.EventHandler(this.uxDebug_Click);
+            this.uxAdmin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.uxAdmin.Location = new System.Drawing.Point(5, 5);
+            this.uxAdmin.Name = "uxAdmin";
+            this.uxAdmin.Size = new System.Drawing.Size(53, 22);
+            this.uxAdmin.TabIndex = 6;
+            this.uxAdmin.Text = "Admin";
+            this.uxAdmin.UseVisualStyleBackColor = true;
+            this.uxAdmin.Click += new System.EventHandler(this.uxAdmin_Click);
+            // 
+            // uxCanConvert
+            // 
+            this.uxCanConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.uxCanConvert.Location = new System.Drawing.Point(443, 282);
+            this.uxCanConvert.Name = "uxCanConvert";
+            this.uxCanConvert.Size = new System.Drawing.Size(140, 65);
+            this.uxCanConvert.TabIndex = 7;
+            this.uxCanConvert.Text = "Create File (CanConvert)";
+            this.uxCanConvert.UseVisualStyleBackColor = true;
+            this.uxCanConvert.Click += new System.EventHandler(this.uxCanConvert_Click);
             // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(600, 332);
-            this.Controls.Add(this.uxDebug);
+            this.ClientSize = new System.Drawing.Size(585, 349);
+            this.Controls.Add(this.uxCanConvert);
+            this.Controls.Add(this.uxAdmin);
             this.Controls.Add(this.uxCreateFile);
             this.Controls.Add(this.uxStop);
             this.Controls.Add(this.uxInstructionBox);
             this.Controls.Add(this.uxStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(620, 375);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(620, 375);
+            this.MinimumSize = new System.Drawing.Size(600, 375);
             this.Name = "Scantron";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
@@ -127,7 +140,8 @@
         private System.Windows.Forms.TextBox uxInstructionBox;
         private System.Windows.Forms.Button uxStop;
         private System.Windows.Forms.Button uxCreateFile;
-        private System.Windows.Forms.Button uxDebug;
+        private System.Windows.Forms.Button uxAdmin;
+        private System.Windows.Forms.Button uxCanConvert;
     }
 }
 

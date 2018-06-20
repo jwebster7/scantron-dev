@@ -26,14 +26,14 @@ namespace Scantron
     {
         // Holds the raw data split up by card.
         private List<string> cards = new List<string>();
-        // Holds students; data derived from 'cards'.
+        // Holds students; data derived from cards.
         private List<Student> students = new List<Student>();
         // Serial port object used to read in the data stream.
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         // Holds the read in Scantron data.
         private string raw_scantron_output;
         // Uncomment below assignment for example card data.
-        // private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
+        //private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
         // Header text for the Debug Mode.
         private string debug_header = "Debug Mode On" + Environment.NewLine +
                                       "Click Debug again to exit" +
@@ -50,8 +50,9 @@ namespace Scantron
                                     "then click on 'Start' within this window.";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
-            uxDebug.Enabled = true;
+            uxAdmin.Enabled = true;
             uxCreateFile.Enabled = false;
+            uxCanConvert.Enabled = false;
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.
@@ -77,6 +78,7 @@ namespace Scantron
                     uxStart.Enabled = false;
                     uxStop.Enabled = true;
                     uxCreateFile.Enabled = false;
+                    uxCanConvert.Enabled = false;
                 }
                 // SystemException is the superclass containing IOException and InvalidOperationException
                 catch (SystemException)
@@ -119,6 +121,7 @@ namespace Scantron
                     uxStart.Enabled = true;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = false;
+                    uxCanConvert.Enabled = false;
 
                     MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
                                     Environment.NewLine +
@@ -133,11 +136,12 @@ namespace Scantron
                     uxStart.Enabled = false;
                     uxStop.Enabled = false;
                     uxCreateFile.Enabled = true;
+                    uxCanConvert.Enabled = true;
                 }
             }
         }
 
-        // Event handler for create file button.
+        // Event handler for 'Create File (Canvas)' button.
         private void uxCreateFile_Click(object sender, EventArgs e)
         {
             CreateStudents();
@@ -149,6 +153,18 @@ namespace Scantron
                 {
                     uxInstructionBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine
                         + students[i].ToString() + Environment.NewLine;
+                }
+
+                try
+                {
+                    // Throws IOException if SaveFileDialog fails, or if
+                    // the user does not select a filename.
+                    WriteFile();
+                }
+                catch (IOException)
+                {
+                    // Error message handled in the WriteFile() & CreateStudents() method
+                    // could catch IOExceptions
                 }
             }
             else
@@ -169,10 +185,60 @@ namespace Scantron
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
+                uxCanConvert.Enabled = false;
             }
         }
 
-        // This method creates student objects and adds them to the list, students.
+        // Event handler for the 'Create File (CanConvert)' button. This is a temporary button for people too stubborn
+        // to move on from CanConvert.
+        private void uxCanConvert_Click(object sender, EventArgs e)
+        {
+            CreateStudents();
+
+            if (debug)
+            {
+                uxInstructionBox.Text = debug_header;
+                for (int i = 0; i < students.Count; i++)
+                {
+                    uxInstructionBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine
+                        + students[i].ToCanConvertString() + Environment.NewLine;
+                }
+
+                try
+                {
+                    // Throws IOException if SaveFileDialog fails, or if
+                    // the user does not select a filename.
+                    WriteCanConvertFile();
+                }
+                catch (IOException)
+                {
+                    // Error message handled in the WriteFile() & CreateStudents() method
+                    // could catch IOExceptions
+                }
+            }
+            else
+            {
+                try
+                {
+                    // Throws IOException if SaveFileDialog fails, or if
+                    // the user does not select a filename.
+                    WriteCanConvertFile();
+                }
+                catch (IOException)
+                {
+                    // Error message handled in the WriteFile() & CreateStudents() method
+                    // could catch IOExceptions
+                }
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
+                uxStart.Enabled = true;
+                uxStop.Enabled = false;
+                uxCreateFile.Enabled = false;
+                uxCanConvert.Enabled = false;
+            }
+        }
+
+        // This method creates student objects and adds them to the students list.
         private void CreateStudents()
         {
             // Sets each reference value in cards equal to exactly one scantron card.
@@ -194,6 +260,7 @@ namespace Scantron
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
+                uxCanConvert.Enabled = false;
 
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
                                 Environment.NewLine +
@@ -258,9 +325,66 @@ namespace Scantron
                 throw new IOException();
             }
         }
+         
+        // Temporary method for people too stubborn to move on from CanConvert.
+        private void WriteCanConvertFile()
+        {
+            string file = "";
 
-        // Event handler for the 'Debug' button.
-        private void uxDebug_Click(object sender, EventArgs e)
+            // We want to write to a file and use what StudentExamInfo returns to print to a file.
+            foreach (Student student in students)
+            {
+                file += student.ToCanConvertString();
+            }
+
+            // Then we have to start a file dialog to save the string to a file.
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
+            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
+            // Filter is the default file extensions seen by the user.
+            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
+            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+            uxSaveFileDialog.FilterIndex = 1;
+
+
+            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = uxSaveFileDialog.FileName;
+                // Stores the location of the file we want to save; use filenames for multiple.
+                if (path.Equals(""))
+                {
+                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine +
+                                    "a file path for the exam record!");
+                    throw new IOException();
+                }
+                else
+                {
+                    // "using" opens and close the StreamWriter.
+                    using (StreamWriter file_generator = new StreamWriter(path))
+                    {
+                        // Adds everything in the 'file' given to the streamwriter.
+                        file_generator.Write(file);
+                    }
+                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
+                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
+                                    "using the file generated.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
+                                "The format for filenames should not include" + Environment.NewLine +
+                                "slashes, parentheticals, or symbols" +
+                                Environment.NewLine +
+                                "Please reload the hopper and ensure the" + Environment.NewLine +
+                                "cards are not stuck together, backwards," + Environment.NewLine +
+                                "or reversed. ");
+                throw new IOException();
+            }
+        }
+
+        // Event handler for the 'Admin' button.
+        private void uxAdmin_Click(object sender, EventArgs e)
         {
             if (!debug)
             {
@@ -271,6 +395,7 @@ namespace Scantron
                 uxStart.Enabled = true;
                 uxStop.Enabled = true;
                 uxCreateFile.Enabled = true;
+                uxCanConvert.Enabled = true;
                 debug = true;
             }
             else
@@ -283,6 +408,7 @@ namespace Scantron
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
                 uxCreateFile.Enabled = false;
+                uxCanConvert.Enabled = false;
                 debug = false;
             }
         }

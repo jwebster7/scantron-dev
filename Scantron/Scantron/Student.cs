@@ -265,14 +265,47 @@ namespace Scantron
         {
             string student_info = "";
 
-            // Raw 5
-            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--," + "5, " + "'" + answers[4] + "'\r\n";
+            // Row 5
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,5, '" + answers[4] + "'\r\n";
 
             // Rows 4, 3, 2, 1
             for (int i = 3; i >= 0; i--)
             {
                 student_info += "         ,      " + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
             }
+
+            return student_info;
+        }
+
+        // Temporary method for people too stubborn to move on from CanConvert.
+        public string ToCanConvertString()
+        {
+            int count;
+            string student_info = "";
+
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,   '";
+
+            for (int i = 0; i < answers[0].Length; i++)
+            {
+                count = 0;
+
+                while(count < 5)
+                {
+                    if (answers[count][i] != ' ')
+                    {
+                        student_info += answers[count][i];
+                        count = 5;
+                    }
+                    count++;
+                }
+
+                if (count == 5)
+                {
+                    student_info += "*";
+                }
+            }
+
+            student_info += "'\r\n";
 
             return student_info;
         }
