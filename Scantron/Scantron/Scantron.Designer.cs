@@ -34,6 +34,7 @@
             this.uxCreateFile = new System.Windows.Forms.Button();
             this.uxAdmin = new System.Windows.Forms.Button();
             this.uxCanConvert = new System.Windows.Forms.Button();
+            this.uxRestart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // uxStart
@@ -41,7 +42,7 @@
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxStart.Location = new System.Drawing.Point(5, 281);
             this.uxStart.Name = "uxStart";
-            this.uxStart.Size = new System.Drawing.Size(140, 65);
+            this.uxStart.Size = new System.Drawing.Size(85, 65);
             this.uxStart.TabIndex = 0;
             this.uxStart.Tag = "";
             this.uxStart.Text = "Start";
@@ -69,9 +70,9 @@
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(151, 281);
+            this.uxStop.Location = new System.Drawing.Point(96, 281);
             this.uxStop.Name = "uxStop";
-            this.uxStop.Size = new System.Drawing.Size(140, 65);
+            this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
             this.uxStop.Text = "Stop";
             this.uxStop.UseVisualStyleBackColor = true;
@@ -79,10 +80,10 @@
             // 
             // uxCreateFile
             // 
-            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.uxCreateFile.Location = new System.Drawing.Point(297, 282);
+            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.uxCreateFile.Location = new System.Drawing.Point(187, 281);
             this.uxCreateFile.Name = "uxCreateFile";
-            this.uxCreateFile.Size = new System.Drawing.Size(140, 65);
+            this.uxCreateFile.Size = new System.Drawing.Size(130, 65);
             this.uxCreateFile.TabIndex = 5;
             this.uxCreateFile.Text = "Create File (Canvas)";
             this.uxCreateFile.UseVisualStyleBackColor = true;
@@ -101,14 +102,25 @@
             // 
             // uxCanConvert
             // 
-            this.uxCanConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.uxCanConvert.Location = new System.Drawing.Point(443, 282);
+            this.uxCanConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.uxCanConvert.Location = new System.Drawing.Point(323, 281);
             this.uxCanConvert.Name = "uxCanConvert";
-            this.uxCanConvert.Size = new System.Drawing.Size(140, 65);
+            this.uxCanConvert.Size = new System.Drawing.Size(130, 65);
             this.uxCanConvert.TabIndex = 7;
             this.uxCanConvert.Text = "Create File (CanConvert)";
             this.uxCanConvert.UseVisualStyleBackColor = true;
             this.uxCanConvert.Click += new System.EventHandler(this.uxCanConvert_Click);
+            // 
+            // uxRestart
+            // 
+            this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
+            this.uxRestart.Location = new System.Drawing.Point(459, 281);
+            this.uxRestart.Name = "uxRestart";
+            this.uxRestart.Size = new System.Drawing.Size(124, 65);
+            this.uxRestart.TabIndex = 8;
+            this.uxRestart.Text = "Restart";
+            this.uxRestart.UseVisualStyleBackColor = true;
+            this.uxRestart.Click += new System.EventHandler(this.uxRestart_Click);
             // 
             // Scantron
             // 
@@ -116,6 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(585, 349);
+            this.Controls.Add(this.uxRestart);
             this.Controls.Add(this.uxCanConvert);
             this.Controls.Add(this.uxAdmin);
             this.Controls.Add(this.uxCreateFile);
@@ -142,6 +155,7 @@
         private System.Windows.Forms.Button uxCreateFile;
         private System.Windows.Forms.Button uxAdmin;
         private System.Windows.Forms.Button uxCanConvert;
+        private System.Windows.Forms.Button uxRestart;
     }
 }
 
