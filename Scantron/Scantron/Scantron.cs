@@ -413,10 +413,6 @@ namespace Scantron
             uxStop.Enabled = false;
             uxCreateFile.Enabled = false;
             uxCanConvert.Enabled = false;
-
-            /*
-             * Add code to actually reset all the parameters.
-             */
         }
     }
 }
