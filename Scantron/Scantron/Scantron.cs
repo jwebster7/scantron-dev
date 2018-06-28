@@ -30,10 +30,11 @@ namespace Scantron
         private List<Student> students = new List<Student>();
         // Serial port object used to read in the data stream.
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
-        // Holds the read in Scantron data.
-        //private string raw_scantron_output;
-        // Uncomment below assignment for example card data.
-        private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
+        // List of question panels.
+        private List<Control> question_panels = new List<Control>();
+        // Class for grading CanConvert version.
+        private string[] answer_key = new string[5];
+
         // Header text for the Debug Mode.
         private string debug_header = "Debug Mode On" + Environment.NewLine +
                                       "Click Debug again to exit" +
@@ -41,18 +42,22 @@ namespace Scantron
         // Flag for toggling Debug Mode.
         private bool debug = false;
 
+        // Holds the read in Scantron data.
+        //private string raw_scantron_output;
+        // Uncomment below assignment for example card data.
+        private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
+
+
         // The default constructor for the scantron GUI.
         public Scantron()
         {
             // Initializes the form.
             InitializeComponent();
-            uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                    "then click on 'Start' within this window.";
-            uxStart.Enabled = true;
-            uxStop.Enabled = false;
-            uxAdmin.Enabled = true;
-            uxCreateFile.Enabled = false;
-            uxCanConvert.Enabled = false;
+            foreach (Control c in uxAnswerKeyPanel.Controls)
+            {
+                question_panels.Add(c);
+            }
+            StartProgram();
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.
@@ -407,12 +412,89 @@ namespace Scantron
         // Click event for the 'Restart" button.
         private void uxRestart_Click(object sender, EventArgs e)
         {
+            StartProgram();
+        }
+
+        // Initial program state
+        private void StartProgram()
+        {
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
+                                    "then click on 'Start' within this window.";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
+            uxAdmin.Enabled = true;
             uxCreateFile.Enabled = false;
             uxCanConvert.Enabled = false;
+        }
+
+        private void uxEnter_Click(object sender, EventArgs e)
+        {
+            uxAnswerKeyPanel.Controls.Clear();
+            int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
+
+            if (number_of_questions <= 150 && number_of_questions > 0)
+            {
+                for(int i = 0; i < number_of_questions; i++)
+                {
+                    Panel panel = new Panel();
+                    panel.Name = "panel" + i;
+                    panel.BackColor = Color.MediumPurple;
+                    panel.Location = new Point(3, 3 + 26 * i);
+                    panel.Size = new Size(268, 22);
+                    
+                    for (int j = 0; j < 5; j++)
+                    {
+                        CheckBox checkbox = new CheckBox();
+                        checkbox.Name = "checkbox" + i + ((char)(j + 65)).ToString();
+                        checkbox.Location = new Point(73 + 39 * j, 3);
+                        checkbox.Size = new Size(33, 17);
+                        checkbox.Text = ((char)(j + 65)).ToString();
+                        panel.Controls.Add(checkbox);
+                    }
+
+                    Label label = new Label(); // Label is added last so checkboxes are indices 0-4.
+                    label.Location = new Point(3, 3);
+                    label.Size = new Size(70, 13);
+                    label.Text = "Question" + (i + 1);
+                    panel.Controls.Add(label);
+
+                    uxAnswerKeyPanel.Controls.Add(panel);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Enter a number from 1-150.");
+            }
+        }
+
+        private void uxCreateAnswerKey_Click(object sender, EventArgs e)
+        {
+            int number_of_questions = 0;
+            CheckBox checkbox;
+
+            foreach (Control c in uxAnswerKeyPanel.Controls)
+            {
+                if(c.Visible == true)
+                {
+                    number_of_questions++;
+                }
+            }
+
+            for (int i = 0; i < uxAnswerKeyPanel.Controls.Count; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[j];
+                    if(checkbox.Checked == true)
+                    {
+                        answer_key[j] += j + 1;
+                    }
+                    else
+                    {
+                        answer_key[j] += " ";
+                    }
+                }
+            }
         }
     }
 }
