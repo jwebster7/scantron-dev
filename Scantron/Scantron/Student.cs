@@ -22,7 +22,7 @@ namespace Scantron
         private string raw_student_data;
         // The student's WID.
         private string wid;
-        // Stores whether the grant permission bubble is filled.
+        // Storess whether the grant permission bubble is filled.
         private string grant_permission = "-";
         // Stores which of the three test version bubbles is filled.
         private string test_version;
@@ -31,39 +31,6 @@ namespace Scantron
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
         private string[] answers = new string[5];
-        // Stores grade on exam
-        private int[] grade;
-
-        // WID property.
-        public string WID
-        {
-            get
-            {
-                return wid;
-            }
-        }
-
-        // Answers property.
-        public string[] Answers
-        {
-            get
-            {
-                return answers;
-            }
-        }
-
-        // Grade property.
-        public int[] Grade
-        {
-            get
-            {
-                return grade;
-            }
-            set
-            {
-                grade = value;
-            }
-        }
 
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
         // fields.

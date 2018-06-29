@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Scantron Scanner" Language="1033" Version="1.0.0.0" Manufacturer="Kansas State University Help Desk" UpgradeCode="bf957f22-f22e-4764-984d-d659300df205">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <!-- EmbedCab takes files and adds them to the MSI-->
+		<MediaTemplate EmbedCab ="yes"/>
+
+		<Feature Id="ProductFeature" Title="Scantron_Msi" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+   
+  
+	</Product>
+
+  
+	<Fragment>
+    <!-- Defines the Install Dir-->
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Will Install to the program x32 Folder-->
+			<Directory Id="ProgramFilesFolder">
+        <!-- Name of the Install Folder-->
+				<Directory Id="INSTALLFOLDER" Name="KSU Scanner" />
+			</Directory>
+    
+        <!--Defines the Shortcut Dir-->
+      <Directory Id="ProgramMenuFolder">
+         <Directory Id="ShortcutsDir" Name="KSU Scanner" />
+      </Directory>
+		</Directory>
+    
+	</Fragment>
+
+  
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- Adds the Scanner exe to the install folder-->
+			<Component Id="CMP_ScannerEXE" Guid="*">
+				<File Id="FILE_ProgramDir_ScannerEXE" 
+              Name="$(var.Scantron.TargetFileName)" 
+              Source="$(var.Scantron.TargetPath)" 
+              KeyPath="yes" />
+        <Shortcut Id="ScannerEXE_STARTMENU" 
+                  Name="KSU Scanner" 
+                  Description="Launches the KSU Scanner application"
+                  Advertise ="yes"
+                  Directory="ShortcutsDir"/>
+         <RemoveFolder Id="RemoveShortcutsDir" Directory="ShortcutsDir" On="uninstall"/>
+			</Component>
+      <!-- Adds the Config to the install folder-->
+      <Component Id="CMP_Config.JSON" Guid="*">
+        <File Id="FILE_ProgramDir_ConfigJSON" 
+              Source="$(var.Scantron.ProjectDir)\Config.json" 
+              KeyPath="yes" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+
+</Wix>
