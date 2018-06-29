@@ -34,6 +34,7 @@ namespace Scantron
         private List<Control> question_panels = new List<Control>();
         // Class for grading CanConvert version.
         private string[] answer_key = new string[5];
+        Grader grader = new Grader();
 
         // Header text for the Debug Mode.
         private string debug_header = "Debug Mode On" + Environment.NewLine +
@@ -53,9 +54,9 @@ namespace Scantron
         {
             // Initializes the form.
             InitializeComponent();
-            foreach (Control c in uxAnswerKeyPanel.Controls)
+            foreach (Control control in uxAnswerKeyPanel.Controls)
             {
-                question_panels.Add(c);
+                question_panels.Add(control);
             }
             StartProgram();
         }
@@ -379,6 +380,63 @@ namespace Scantron
             }
         }
 
+        // Temporary method for people too stubborn to move on from CanConvert.
+        private void WriteCSVFile()
+        {
+            string file = "";
+
+            // We want to write to a file and use what StudentExamInfo returns to print to a file.
+            foreach (Student student in students)
+            {
+                file += grader.ToString();
+            }
+
+            // Then we have to start a file dialog to save the string to a file.
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
+            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
+            // Filter is the default file extensions seen by the user.
+            uxSaveFileDialog.Filter = "csv files (*.csv)|*.csv";
+            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+            uxSaveFileDialog.FilterIndex = 1;
+
+
+            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = uxSaveFileDialog.FileName;
+                // Stores the location of the file we want to save; use filenames for multiple.
+                if (path.Equals(""))
+                {
+                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine +
+                                    "a file path for the exam record!");
+                    throw new IOException();
+                }
+                else
+                {
+                    // "using" opens and close the StreamWriter.
+                    using (StreamWriter file_generator = new StreamWriter(path))
+                    {
+                        // Adds everything in the 'file' given to the streamwriter.
+                        file_generator.Write(file);
+                    }
+                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
+                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
+                                    "using the file generated.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
+                                "The format for filenames should not include" + Environment.NewLine +
+                                "slashes, parentheticals, or symbols" +
+                                Environment.NewLine +
+                                "Please reload the hopper and ensure the" + Environment.NewLine +
+                                "cards are not stuck together, backwards," + Environment.NewLine +
+                                "or reversed. ");
+                throw new IOException();
+            }
+        }
+
         // Event handler for the 'Admin' button.
         private void uxAdmin_Click(object sender, EventArgs e)
         {
@@ -469,12 +527,13 @@ namespace Scantron
 
         private void uxCreateAnswerKey_Click(object sender, EventArgs e)
         {
+            answer_key = new string[5];
             int number_of_questions = 0;
             CheckBox checkbox;
 
-            foreach (Control c in uxAnswerKeyPanel.Controls)
+            foreach (Control control in uxAnswerKeyPanel.Controls)
             {
-                if(c.Visible == true)
+                if(control.Visible == true)
                 {
                     number_of_questions++;
                 }
@@ -495,6 +554,13 @@ namespace Scantron
                     }
                 }
             }
+        }
+
+        private void Grade_Click(object sender, EventArgs e)
+        {
+            grader = new Grader(students, answer_key);
+            grader.Grade();
+            WriteCSVFile();
         }
     }
 }

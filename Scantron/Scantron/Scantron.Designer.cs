@@ -37,27 +37,11 @@
             this.uxRestart = new System.Windows.Forms.Button();
             this.uxMainPanel = new System.Windows.Forms.Panel();
             this.uxAnswerKeyPanel = new System.Windows.Forms.Panel();
-            this.uxQuestionPanel1 = new System.Windows.Forms.Panel();
-            this.uxQuestionLabel1 = new System.Windows.Forms.Label();
-            this.uxQuestionPanel1A = new System.Windows.Forms.CheckBox();
-            this.uxQuestionPanel1B = new System.Windows.Forms.CheckBox();
-            this.uxQuestionPanel1C = new System.Windows.Forms.CheckBox();
-            this.uxQuestionPanel1D = new System.Windows.Forms.CheckBox();
-            this.uxQuestionPanel1E = new System.Windows.Forms.CheckBox();
             this.uxNumberOfQuestions = new System.Windows.Forms.TextBox();
             this.uxEnter = new System.Windows.Forms.Button();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.Grade = new System.Windows.Forms.Button();
             this.uxMainPanel.SuspendLayout();
-            this.uxAnswerKeyPanel.SuspendLayout();
-            this.uxQuestionPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // uxStart
@@ -160,96 +144,21 @@
             // uxAnswerKeyPanel
             // 
             this.uxAnswerKeyPanel.AutoScroll = true;
-            this.uxAnswerKeyPanel.Controls.Add(this.panel1);
-            this.uxAnswerKeyPanel.Controls.Add(this.uxQuestionPanel1);
             this.uxAnswerKeyPanel.Location = new System.Drawing.Point(586, 0);
             this.uxAnswerKeyPanel.Name = "uxAnswerKeyPanel";
             this.uxAnswerKeyPanel.Size = new System.Drawing.Size(334, 349);
             this.uxAnswerKeyPanel.TabIndex = 10;
             // 
-            // uxQuestionPanel1
-            // 
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionLabel1);
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionPanel1A);
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionPanel1B);
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionPanel1C);
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionPanel1D);
-            this.uxQuestionPanel1.Controls.Add(this.uxQuestionPanel1E);
-            this.uxQuestionPanel1.Location = new System.Drawing.Point(3, 3);
-            this.uxQuestionPanel1.Name = "uxQuestionPanel1";
-            this.uxQuestionPanel1.Size = new System.Drawing.Size(268, 22);
-            this.uxQuestionPanel1.TabIndex = 0;
-            this.uxQuestionPanel1.Visible = false;
-            // 
-            // uxQuestionLabel1
-            // 
-            this.uxQuestionLabel1.AutoSize = true;
-            this.uxQuestionLabel1.Location = new System.Drawing.Point(3, 3);
-            this.uxQuestionLabel1.Name = "uxQuestionLabel1";
-            this.uxQuestionLabel1.Size = new System.Drawing.Size(64, 13);
-            this.uxQuestionLabel1.TabIndex = 0;
-            this.uxQuestionLabel1.Text = "Question 15";
-            // 
-            // uxQuestionPanel1A
-            // 
-            this.uxQuestionPanel1A.AutoSize = true;
-            this.uxQuestionPanel1A.Location = new System.Drawing.Point(73, 3);
-            this.uxQuestionPanel1A.Name = "uxQuestionPanel1A";
-            this.uxQuestionPanel1A.Size = new System.Drawing.Size(33, 17);
-            this.uxQuestionPanel1A.TabIndex = 1;
-            this.uxQuestionPanel1A.Text = "A";
-            this.uxQuestionPanel1A.UseVisualStyleBackColor = true;
-            // 
-            // uxQuestionPanel1B
-            // 
-            this.uxQuestionPanel1B.AutoSize = true;
-            this.uxQuestionPanel1B.Location = new System.Drawing.Point(112, 3);
-            this.uxQuestionPanel1B.Name = "uxQuestionPanel1B";
-            this.uxQuestionPanel1B.Size = new System.Drawing.Size(33, 17);
-            this.uxQuestionPanel1B.TabIndex = 2;
-            this.uxQuestionPanel1B.Text = "B";
-            this.uxQuestionPanel1B.UseVisualStyleBackColor = true;
-            // 
-            // uxQuestionPanel1C
-            // 
-            this.uxQuestionPanel1C.AutoSize = true;
-            this.uxQuestionPanel1C.Location = new System.Drawing.Point(151, 3);
-            this.uxQuestionPanel1C.Name = "uxQuestionPanel1C";
-            this.uxQuestionPanel1C.Size = new System.Drawing.Size(33, 17);
-            this.uxQuestionPanel1C.TabIndex = 3;
-            this.uxQuestionPanel1C.Text = "C";
-            this.uxQuestionPanel1C.UseVisualStyleBackColor = true;
-            // 
-            // uxQuestionPanel1D
-            // 
-            this.uxQuestionPanel1D.AutoSize = true;
-            this.uxQuestionPanel1D.Location = new System.Drawing.Point(190, 3);
-            this.uxQuestionPanel1D.Name = "uxQuestionPanel1D";
-            this.uxQuestionPanel1D.Size = new System.Drawing.Size(34, 17);
-            this.uxQuestionPanel1D.TabIndex = 4;
-            this.uxQuestionPanel1D.Text = "D";
-            this.uxQuestionPanel1D.UseVisualStyleBackColor = true;
-            // 
-            // uxQuestionPanel1E
-            // 
-            this.uxQuestionPanel1E.AutoSize = true;
-            this.uxQuestionPanel1E.Location = new System.Drawing.Point(230, 3);
-            this.uxQuestionPanel1E.Name = "uxQuestionPanel1E";
-            this.uxQuestionPanel1E.Size = new System.Drawing.Size(33, 17);
-            this.uxQuestionPanel1E.TabIndex = 5;
-            this.uxQuestionPanel1E.Text = "E";
-            this.uxQuestionPanel1E.UseVisualStyleBackColor = true;
-            // 
             // uxNumberOfQuestions
             // 
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(456, 394);
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(926, 12);
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
             this.uxNumberOfQuestions.Size = new System.Drawing.Size(100, 20);
             this.uxNumberOfQuestions.TabIndex = 11;
             // 
             // uxEnter
             // 
-            this.uxEnter.Location = new System.Drawing.Point(456, 420);
+            this.uxEnter.Location = new System.Drawing.Point(926, 38);
             this.uxEnter.Name = "uxEnter";
             this.uxEnter.Size = new System.Drawing.Size(75, 23);
             this.uxEnter.TabIndex = 12;
@@ -259,7 +168,7 @@
             // 
             // uxCreateAnswerKey
             // 
-            this.uxCreateAnswerKey.Location = new System.Drawing.Point(456, 449);
+            this.uxCreateAnswerKey.Location = new System.Drawing.Point(926, 67);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
             this.uxCreateAnswerKey.Size = new System.Drawing.Size(75, 39);
             this.uxCreateAnswerKey.TabIndex = 13;
@@ -267,78 +176,15 @@
             this.uxCreateAnswerKey.UseVisualStyleBackColor = true;
             this.uxCreateAnswerKey.Click += new System.EventHandler(this.uxCreateAnswerKey_Click);
             // 
-            // panel1
+            // Grade
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Controls.Add(this.checkBox2);
-            this.panel1.Controls.Add(this.checkBox3);
-            this.panel1.Controls.Add(this.checkBox4);
-            this.panel1.Controls.Add(this.checkBox5);
-            this.panel1.Location = new System.Drawing.Point(3, 29);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 22);
-            this.panel1.TabIndex = 6;
-            this.panel1.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Question 1";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(73, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(33, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "A";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(112, 3);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(33, 17);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "B";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(151, 3);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(33, 17);
-            this.checkBox3.TabIndex = 3;
-            this.checkBox3.Text = "C";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(190, 3);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(34, 17);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "D";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(230, 3);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(33, 17);
-            this.checkBox5.TabIndex = 5;
-            this.checkBox5.Text = "E";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.Grade.Location = new System.Drawing.Point(926, 112);
+            this.Grade.Name = "Grade";
+            this.Grade.Size = new System.Drawing.Size(75, 23);
+            this.Grade.TabIndex = 14;
+            this.Grade.Text = "Grade";
+            this.Grade.UseVisualStyleBackColor = true;
+            this.Grade.Click += new System.EventHandler(this.Grade_Click);
             // 
             // Scantron
             // 
@@ -346,6 +192,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1197, 668);
+            this.Controls.Add(this.Grade);
             this.Controls.Add(this.uxCreateAnswerKey);
             this.Controls.Add(this.uxEnter);
             this.Controls.Add(this.uxNumberOfQuestions);
@@ -360,11 +207,6 @@
             this.Text = "File Generator";
             this.uxMainPanel.ResumeLayout(false);
             this.uxMainPanel.PerformLayout();
-            this.uxAnswerKeyPanel.ResumeLayout(false);
-            this.uxQuestionPanel1.ResumeLayout(false);
-            this.uxQuestionPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,23 +223,10 @@
         private System.Windows.Forms.Button uxRestart;
         private System.Windows.Forms.Panel uxMainPanel;
         private System.Windows.Forms.Panel uxAnswerKeyPanel;
-        private System.Windows.Forms.Panel uxQuestionPanel1;
-        private System.Windows.Forms.CheckBox uxQuestionPanel1E;
-        private System.Windows.Forms.CheckBox uxQuestionPanel1D;
-        private System.Windows.Forms.CheckBox uxQuestionPanel1C;
-        private System.Windows.Forms.CheckBox uxQuestionPanel1B;
-        private System.Windows.Forms.CheckBox uxQuestionPanel1A;
-        private System.Windows.Forms.Label uxQuestionLabel1;
         private System.Windows.Forms.TextBox uxNumberOfQuestions;
         private System.Windows.Forms.Button uxEnter;
         private System.Windows.Forms.Button uxCreateAnswerKey;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.Button Grade;
     }
 }
 
