@@ -18,20 +18,25 @@ namespace Scantron
 {
     class Grader
     {
+        // Holds the students to be graded.
         private List<Student> students = new List<Student>();
+        // Holds the answer key to compare to student responses.
         private string[] answer_key = new string[5];
 
+        // Default constructor for the grader.
         public Grader()
         {
 
         }
-
+        
+        // Real constructor for the grader.
         public Grader(List<Student> students, string[] answer_key)
         {
             this.students = students;
             this.answer_key = answer_key;
         }
 
+        // Method for grading the student responses.
         public void Grade()
         {
             foreach (Student student in students)
@@ -40,6 +45,7 @@ namespace Scantron
             }
         }
 
+        // Check each student answer to each answer key answer.
         private int[] CheckAnswers(string[] answers, string[] answer_key)
         {
             int[] score = new int[answer_key.Length];
@@ -59,6 +65,7 @@ namespace Scantron
             return score;
         }
 
+        // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
         public override string ToString()
         {
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Length + Environment.NewLine +

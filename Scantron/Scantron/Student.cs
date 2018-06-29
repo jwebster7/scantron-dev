@@ -34,6 +34,7 @@ namespace Scantron
         // Stores grade on exam
         private int[] grade;
 
+        // WID property.
         public string WID
         {
             get
@@ -42,6 +43,7 @@ namespace Scantron
             }
         }
 
+        // Answers property.
         public string[] Answers
         {
             get
@@ -50,6 +52,7 @@ namespace Scantron
             }
         }
 
+        // Grade property.
         public int[] Grade
         {
             get

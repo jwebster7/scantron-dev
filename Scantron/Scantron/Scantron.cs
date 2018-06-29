@@ -380,7 +380,8 @@ namespace Scantron
             }
         }
 
-        // Temporary method for people too stubborn to move on from CanConvert.
+        // Temporary method for people too stubborn to move on from CanConvert. There has to be a way to consolidate all of
+        // the write file methods.
         private void WriteCSVFile()
         {
             string file = "";
@@ -467,7 +468,7 @@ namespace Scantron
             }
         }
 
-        // Click event for the 'Restart" button.
+        // Click event for the 'Restart' button.
         private void uxRestart_Click(object sender, EventArgs e)
         {
             StartProgram();
@@ -485,6 +486,7 @@ namespace Scantron
             uxCanConvert.Enabled = false;
         }
 
+        // Event handler for the 'Enter' button.
         private void uxEnter_Click(object sender, EventArgs e)
         {
             uxAnswerKeyPanel.Controls.Clear();
@@ -525,6 +527,7 @@ namespace Scantron
             }
         }
 
+        // Event handler for the 'Create Answer Key' button.
         private void uxCreateAnswerKey_Click(object sender, EventArgs e)
         {
             answer_key = new string[5];
@@ -556,6 +559,7 @@ namespace Scantron
             }
         }
 
+        // Event handler for the 'Grade' button.
         private void Grade_Click(object sender, EventArgs e)
         {
             grader = new Grader(students, answer_key);
