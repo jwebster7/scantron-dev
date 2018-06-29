@@ -565,6 +565,67 @@ namespace Scantron
             grader = new Grader(students, answer_key);
             grader.Grade();
             WriteCSVFile();
+
+            uxStudentSelector.Items.Clear();
+            foreach (Student student in students)
+            {
+                uxStudentSelector.Items.Add(student.WID);
+            }
+        }
+
+        private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (Student student in students)
+            {
+                if (uxStudentSelector.Text.Equals(student.WID))
+                {
+                    uxStudentAnswerPanel.Controls.Clear();
+
+                    for (int i = 0; i < answer_key[0].Length; i++)
+                    {
+                        Panel panel = new Panel();
+                        panel.Name = "panel" + i;
+                        panel.BackColor = Color.Green;
+                        panel.Location = new Point(3, 3 + 26 * i);
+                        panel.Size = new Size(268, 22);
+
+                        for (int j = 0; j < 5; j++)
+                        {
+                            CheckBox checkbox = new CheckBox();
+                            checkbox.Name = "checkbox" + i + ((char)(j + 65)).ToString();
+                            if (student.Answers[j][i] != ' ')
+                            {
+                                checkbox.Checked = true;
+                            }
+                            checkbox.Enabled = false;
+                            checkbox.Location = new Point(73 + 39 * j, 3);
+                            checkbox.Size = new Size(33, 17);
+                            checkbox.Text = ((char)(j + 65)).ToString();
+                            panel.Controls.Add(checkbox);
+                        }
+
+                        Label label = new Label(); // Label is added last so checkboxes are indices 0-4.
+                        label.Location = new Point(3, 3);
+                        label.Size = new Size(70, 13);
+                        label.Text = "Question" + (i + 1);
+                        panel.Controls.Add(label);
+
+                        for (int k = 0; k < 5; k++)
+                        {
+                            CheckBox checkbox1 = (CheckBox) panel.Controls[k];
+                            CheckBox checkbox2 = (CheckBox) uxAnswerKeyPanel.Controls[i].Controls[k];
+
+                            if (checkbox1.Checked != checkbox2.Checked)
+                            {
+                                panel.BackColor = Color.Red;
+                                break;
+                            }
+                        }
+
+                        uxStudentAnswerPanel.Controls.Add(panel);
+                    }
+                }
+            }
         }
     }
 }

@@ -48,17 +48,20 @@ namespace Scantron
         // Check each student answer to each answer key answer.
         private int[] CheckAnswers(string[] answers, string[] answer_key)
         {
-            int[] score = new int[answer_key.Length];
+            int[] score = new int[answer_key[0].Length];
 
-            for (int i = 0; i < answer_key.Length; i++)
+            for (int i = 0; i < answer_key[0].Length; i++)
             {
-                if (answers[i] == answer_key[i])
+                for (int j = 0; j < answer_key.Length; j++)
                 {
-                    score[i] = 1;
-                }
-                else
-                {
-                    score[i] = 0;
+                    if (answers[j][i] == answer_key[j][i])
+                    {
+                        score[i] = 1; // This loop needs fixed.
+                    }
+                    else
+                    {
+                        score[i] = 0;
+                    }
                 }
             }
 
@@ -68,8 +71,8 @@ namespace Scantron
         // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
         public override string ToString()
         {
-            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Length + Environment.NewLine +
-                            "Points Possible,,,,," + answer_key.Length + Environment.NewLine;
+            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key[0].Length + Environment.NewLine +
+                            "Points Possible,,,,," + answer_key[0].Length + Environment.NewLine;
             int count = 1;
 
             foreach (Student student in students)
