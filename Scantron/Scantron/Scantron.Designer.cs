@@ -41,6 +41,8 @@
             this.uxEnter = new System.Windows.Forms.Button();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
             this.Grade = new System.Windows.Forms.Button();
+            this.uxStudentAnswerPanel = new System.Windows.Forms.Panel();
+            this.uxStudentSelector = new System.Windows.Forms.ComboBox();
             this.uxMainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,19 +148,19 @@
             this.uxAnswerKeyPanel.AutoScroll = true;
             this.uxAnswerKeyPanel.Location = new System.Drawing.Point(586, 0);
             this.uxAnswerKeyPanel.Name = "uxAnswerKeyPanel";
-            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(334, 349);
+            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(312, 349);
             this.uxAnswerKeyPanel.TabIndex = 10;
             // 
             // uxNumberOfQuestions
             // 
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(926, 12);
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(586, 355);
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
             this.uxNumberOfQuestions.Size = new System.Drawing.Size(100, 20);
             this.uxNumberOfQuestions.TabIndex = 11;
             // 
             // uxEnter
             // 
-            this.uxEnter.Location = new System.Drawing.Point(926, 38);
+            this.uxEnter.Location = new System.Drawing.Point(586, 381);
             this.uxEnter.Name = "uxEnter";
             this.uxEnter.Size = new System.Drawing.Size(75, 23);
             this.uxEnter.TabIndex = 12;
@@ -168,7 +170,7 @@
             // 
             // uxCreateAnswerKey
             // 
-            this.uxCreateAnswerKey.Location = new System.Drawing.Point(926, 67);
+            this.uxCreateAnswerKey.Location = new System.Drawing.Point(586, 410);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
             this.uxCreateAnswerKey.Size = new System.Drawing.Size(75, 39);
             this.uxCreateAnswerKey.TabIndex = 13;
@@ -178,7 +180,7 @@
             // 
             // Grade
             // 
-            this.Grade.Location = new System.Drawing.Point(926, 112);
+            this.Grade.Location = new System.Drawing.Point(586, 455);
             this.Grade.Name = "Grade";
             this.Grade.Size = new System.Drawing.Size(75, 23);
             this.Grade.TabIndex = 14;
@@ -186,12 +188,32 @@
             this.Grade.UseVisualStyleBackColor = true;
             this.Grade.Click += new System.EventHandler(this.Grade_Click);
             // 
+            // uxStudentAnswerPanel
+            // 
+            this.uxStudentAnswerPanel.AutoScroll = true;
+            this.uxStudentAnswerPanel.Location = new System.Drawing.Point(904, 0);
+            this.uxStudentAnswerPanel.Name = "uxStudentAnswerPanel";
+            this.uxStudentAnswerPanel.Size = new System.Drawing.Size(312, 349);
+            this.uxStudentAnswerPanel.TabIndex = 15;
+            // 
+            // uxStudentSelector
+            // 
+            this.uxStudentSelector.FormattingEnabled = true;
+            this.uxStudentSelector.Location = new System.Drawing.Point(904, 355);
+            this.uxStudentSelector.Name = "uxStudentSelector";
+            this.uxStudentSelector.Size = new System.Drawing.Size(153, 21);
+            this.uxStudentSelector.TabIndex = 16;
+            this.uxStudentSelector.Text = "Choose Student...";
+            this.uxStudentSelector.SelectedIndexChanged += new System.EventHandler(this.uxStudentSelector_SelectedIndexChanged);
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1197, 668);
+            this.ClientSize = new System.Drawing.Size(1256, 668);
+            this.Controls.Add(this.uxStudentSelector);
+            this.Controls.Add(this.uxStudentAnswerPanel);
             this.Controls.Add(this.Grade);
             this.Controls.Add(this.uxCreateAnswerKey);
             this.Controls.Add(this.uxEnter);
@@ -227,6 +249,8 @@
         private System.Windows.Forms.Button uxEnter;
         private System.Windows.Forms.Button uxCreateAnswerKey;
         private System.Windows.Forms.Button Grade;
+        private System.Windows.Forms.Panel uxStudentAnswerPanel;
+        private System.Windows.Forms.ComboBox uxStudentSelector;
     }
 }
 
