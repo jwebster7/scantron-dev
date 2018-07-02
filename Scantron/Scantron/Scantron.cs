@@ -15,7 +15,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; //Requires .Net 4
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;

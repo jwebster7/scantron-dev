@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<Bundle Name="K-State Scanner" Version="1.0.0.0" UpgradeCode="fa1bd271-e64f-4785-ba33-3e752ae42ffb"
+          Manufacturer="Kansas State University Help Desk" 
+          HelpTelephone="785-532-7722"
+          DisableModify="yes">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication LicenseFile="ScantronEULA.rtf"
+                                              LogoFile="ScantronPNG.png"/>
+    </BootstrapperApplicationRef>
+
+		<Chain>
+      <PackageGroupRef Id="NetFx40Web"/>
+      <MsiPackage SourceFile="$(var.Scantron Msi.TargetPath)" />
+		</Chain>
+	</Bundle>
+</Wix>

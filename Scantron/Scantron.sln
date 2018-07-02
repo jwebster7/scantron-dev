@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scantron", "Scantron\Scantr
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Scantron Msi", "Scantron Msi\Scantron Msi.wixproj", "{ADD993E7-0600-481D-8FCA-BAE17A00DF16}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Project Bootstrapper", "Project Bootstrapper\Project Bootstrapper.wixproj", "{FA1BD271-E64F-4785-BA33-3E752AE42FFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,7 +18,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FA7E8847-CE4C-47CD-9D7C-BB0914761825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA7E8847-CE4C-47CD-9D7C-BB0914761825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7E8847-CE4C-47CD-9D7C-BB0914761825}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{FA7E8847-CE4C-47CD-9D7C-BB0914761825}.Debug|x86.Build.0 = Debug|Any CPU
 		{FA7E8847-CE4C-47CD-9D7C-BB0914761825}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,6 +30,12 @@ Global
 		{ADD993E7-0600-481D-8FCA-BAE17A00DF16}.Release|Any CPU.ActiveCfg = Release|x86
 		{ADD993E7-0600-481D-8FCA-BAE17A00DF16}.Release|x86.ActiveCfg = Release|x86
 		{ADD993E7-0600-481D-8FCA-BAE17A00DF16}.Release|x86.Build.0 = Release|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Debug|x86.ActiveCfg = Debug|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Debug|x86.Build.0 = Debug|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Release|Any CPU.ActiveCfg = Release|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Release|x86.ActiveCfg = Release|x86
+		{FA1BD271-E64F-4785-BA33-3E752AE42FFB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
