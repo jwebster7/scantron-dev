@@ -12,7 +12,9 @@
     </BootstrapperApplicationRef>
 
 		<Chain>
+      <!-- Runs a webinstall of .Net 4 if target computer does not have it-->
       <PackageGroupRef Id="NetFx40Web"/>
+      <!-- Will add the Scantron MSI to the bundle-->
       <MsiPackage SourceFile="$(var.Scantron Msi.TargetPath)" />
 		</Chain>
 	</Bundle>

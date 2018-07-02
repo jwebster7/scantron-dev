@@ -46,7 +46,9 @@
                   Name="KSU Scanner" 
                   Description="Launches the KSU Scanner application"
                   Advertise ="yes"
-                  Directory="ShortcutsDir"/>
+                  Directory="ShortcutsDir">
+         <!-- <Icon Id="ScannerIcon" SourceFile="$(var.Scantron.ProjectDir)\scantron.ico"/>  -->      
+        </Shortcut>
          <RemoveFolder Id="RemoveShortcutsDir" Directory="ShortcutsDir" On="uninstall"/>
 			</Component>
       <!-- Adds the Config to the install folder-->
