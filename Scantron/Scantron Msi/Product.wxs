@@ -15,6 +15,10 @@
   
 	</Product>
 
+  <Fragment>
+    <Icon Id="scantron.ico" SourceFile="$(var.SolutionDir)\Media Files\scantron.ico"/>
+    <Property Id="ARPPrODUCTION" Value="scantron.ico" />
+  </Fragment>
   
 	<Fragment>
     <!-- Defines the Install Dir-->
@@ -25,10 +29,13 @@
 				<Directory Id="INSTALLFOLDER" Name="KSU Scanner" />
 			</Directory>
     
-        <!--Defines the Shortcut Dir-->
+        <!--Defines the StarMenu shortcut Dir-->
       <Directory Id="ProgramMenuFolder">
-         <Directory Id="ShortcutsDir" Name="KSU Scanner" />
+         <Directory Id="StartMenuShortcutsDir" Name="KSU Scanner" />
       </Directory>
+    
+      <Directory Id="DesktopFolder" SourceName="Desktop" />
+    
 		</Directory>
     
 	</Fragment>
@@ -36,22 +43,29 @@
   
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <!-- Adds the Scanner exe to the install folder-->
+      <!-- Adds the Scanner exe to the install folder -->
 			<Component Id="CMP_ScannerEXE" Guid="*">
 				<File Id="FILE_ProgramDir_ScannerEXE" 
               Name="$(var.Scantron.TargetFileName)" 
               Source="$(var.Scantron.TargetPath)" 
               KeyPath="yes" />
+        <!-- Start Menu Shortcut -->
         <Shortcut Id="ScannerEXE_STARTMENU" 
                   Name="KSU Scanner" 
                   Description="Launches the KSU Scanner application"
-                  Advertise ="yes"
-                  Directory="ShortcutsDir">
-         <!-- <Icon Id="ScannerIcon" SourceFile="$(var.Scantron.ProjectDir)\scantron.ico"/>  -->      
-        </Shortcut>
-         <RemoveFolder Id="RemoveShortcutsDir" Directory="ShortcutsDir" On="uninstall"/>
+                  Advertise="yes"
+                  Directory="StartMenuShortcutsDir" 
+                  Icon="scantron.ico"/>        
+         <RemoveFolder Id="RemoveShortcutsDir" Directory="StartMenuShortcutsDir" On="uninstall"/>
+         <!-- Desktop Shortcut -->
+         <Shortcut Id="ScannerEXE_DESKTOP"
+                   Name="KSU Scanner"
+                   Description="Launches the KSU Scanner application"
+                   Advertise="yes"
+                   Directory="DesktopFolder"
+                   Icon="scantron.ico"/>
 			</Component>
-      <!-- Adds the Config to the install folder-->
+      <!-- Adds the Config to the install folder -->
       <Component Id="CMP_Config.JSON" Guid="*">
         <File Id="FILE_ProgramDir_ConfigJSON" 
               Source="$(var.Scantron.ProjectDir)\Config.json" 
