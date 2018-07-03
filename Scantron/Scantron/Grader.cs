@@ -22,6 +22,8 @@ namespace Scantron
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
         private string[] answer_key = new string[5];
+        // Hold a list of which questions are given partial credit.
+        private bool[] partial_credit;
 
         // Default constructor for the grader.
         public Grader()
@@ -45,22 +47,27 @@ namespace Scantron
             }
         }
 
-        // Check each student answer to each answer key answer.
+        // Check student answers against the answer key.
         private int[] CheckAnswers(string[] answers, string[] answer_key)
         {
             int[] score = new int[answer_key[0].Length];
 
             for (int i = 0; i < answer_key[0].Length; i++)
             {
-                for (int j = 0; j < answer_key.Length; j++)
+                if (partial_credit[i])
                 {
-                    if (answers[j][i] == answer_key[j][i])
+                    // insert code here
+                }
+                else
+                {
+                    for (int j = 0; j < answer_key.Length; j++)
                     {
-                        score[i] = 1; // This loop needs fixed.
-                    }
-                    else
-                    {
-                        score[i] = 0;
+                        if (answers[j][i] != answer_key[j][i])
+                        {
+                            score[i] = 0;
+                            break;
+                        }
+                        score[i] = 1;
                     }
                 }
             }
