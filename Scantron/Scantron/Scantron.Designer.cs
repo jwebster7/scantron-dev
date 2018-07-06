@@ -70,14 +70,14 @@
             this.uxInstructionBox.ReadOnly = true;
             this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxInstructionBox.Size = new System.Drawing.Size(578, 245);
+            this.uxInstructionBox.Size = new System.Drawing.Size(351, 245);
             this.uxInstructionBox.TabIndex = 3;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(94, 279);
+            this.uxStop.Location = new System.Drawing.Point(3, 350);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
@@ -88,7 +88,7 @@
             // uxCreateFile
             // 
             this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxCreateFile.Location = new System.Drawing.Point(185, 279);
+            this.uxCreateFile.Location = new System.Drawing.Point(94, 279);
             this.uxCreateFile.Name = "uxCreateFile";
             this.uxCreateFile.Size = new System.Drawing.Size(130, 65);
             this.uxCreateFile.TabIndex = 5;
@@ -110,7 +110,7 @@
             // uxCanConvert
             // 
             this.uxCanConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxCanConvert.Location = new System.Drawing.Point(321, 279);
+            this.uxCanConvert.Location = new System.Drawing.Point(94, 350);
             this.uxCanConvert.Name = "uxCanConvert";
             this.uxCanConvert.Size = new System.Drawing.Size(130, 65);
             this.uxCanConvert.TabIndex = 7;
@@ -121,7 +121,7 @@
             // uxRestart
             // 
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(457, 279);
+            this.uxRestart.Location = new System.Drawing.Point(230, 311);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -140,7 +140,7 @@
             this.uxMainPanel.Controls.Add(this.uxCreateFile);
             this.uxMainPanel.Location = new System.Drawing.Point(-1, 0);
             this.uxMainPanel.Name = "uxMainPanel";
-            this.uxMainPanel.Size = new System.Drawing.Size(585, 349);
+            this.uxMainPanel.Size = new System.Drawing.Size(585, 422);
             this.uxMainPanel.TabIndex = 9;
             // 
             // uxAnswerKeyPanel
