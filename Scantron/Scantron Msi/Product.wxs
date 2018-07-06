@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Property of the Kansas State University IT Help Desk -->
+<!-- Written by: William McCreight, Caleb Schweer, and Joseph Webster -->
+
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="*" Name="Scantron Scanner" Language="1033" Version="1.0.0.0" Manufacturer="Kansas State University Help Desk" UpgradeCode="bf957f22-f22e-4764-984d-d659300df205">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -34,6 +37,7 @@
          <Directory Id="StartMenuShortcutsDir" Name="KSU Scanner" />
       </Directory>
     
+      <!-- Defines the Desktop shortcut Dir-->
       <Directory Id="DesktopFolder" SourceName="Desktop" />
     
 		</Directory>
@@ -56,14 +60,14 @@
                   Advertise="yes"
                   Directory="StartMenuShortcutsDir" 
                   Icon="scantron.ico"/>        
-         <RemoveFolder Id="RemoveShortcutsDir" Directory="StartMenuShortcutsDir" On="uninstall"/>
-         <!-- Desktop Shortcut -->
-         <Shortcut Id="ScannerEXE_DESKTOP"
-                   Name="KSU Scanner"
-                   Description="Launches the KSU Scanner application"
-                   Advertise="yes"
-                   Directory="DesktopFolder"
-                   Icon="scantron.ico"/>
+        <RemoveFolder Id="RemoveShortcutsDir" Directory="StartMenuShortcutsDir" On="uninstall"/>
+        <!-- Desktop Shortcut -->
+        <Shortcut Id="ScannerEXE_DESKTOP"
+                  Name="KSU Scanner"
+                  Description="Launches the KSU Scanner application"
+                  Advertise="yes"
+                  Directory="DesktopFolder"
+                  Icon="scantron.ico"/>
 			</Component>
       <!-- Adds the Config to the install folder -->
       <Component Id="CMP_Config.JSON" Guid="*">
