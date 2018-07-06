@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scantron", "Scantron\Scantr
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Scantron Msi", "Scantron Msi\Scantron Msi.wixproj", "{ADD993E7-0600-481D-8FCA-BAE17A00DF16}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Project Bootstrapper", "Project Bootstrapper\Project Bootstrapper.wixproj", "{FA1BD271-E64F-4785-BA33-3E752AE42FFB}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "K-State Scanner Installer", "Project Bootstrapper\K-State Scanner Installer.wixproj", "{FA1BD271-E64F-4785-BA33-3E752AE42FFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Media Files", "Media Files", "{28232785-23C5-47D7-93FD-BE5BC351072A}"
 	ProjectSection(SolutionItems) = preProject
