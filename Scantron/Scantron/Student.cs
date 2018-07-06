@@ -32,7 +32,7 @@ namespace Scantron
         // to the github repository.
         private string[] answers = new string[5];
         // Stores grade on exam
-        private int[] grade;
+        private float[] grade;
 
         // WID property.
         public string WID
@@ -53,7 +53,7 @@ namespace Scantron
         }
 
         // Grade property.
-        public int[] Grade
+        public float[] Grade
         {
             get
             {

@@ -140,27 +140,27 @@
             this.uxMainPanel.Controls.Add(this.uxCreateFile);
             this.uxMainPanel.Location = new System.Drawing.Point(-1, 0);
             this.uxMainPanel.Name = "uxMainPanel";
-            this.uxMainPanel.Size = new System.Drawing.Size(585, 422);
+            this.uxMainPanel.Size = new System.Drawing.Size(363, 422);
             this.uxMainPanel.TabIndex = 9;
             // 
             // uxAnswerKeyPanel
             // 
             this.uxAnswerKeyPanel.AutoScroll = true;
-            this.uxAnswerKeyPanel.Location = new System.Drawing.Point(586, 0);
+            this.uxAnswerKeyPanel.Location = new System.Drawing.Point(368, 0);
             this.uxAnswerKeyPanel.Name = "uxAnswerKeyPanel";
-            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(312, 349);
+            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(442, 349);
             this.uxAnswerKeyPanel.TabIndex = 10;
             // 
             // uxNumberOfQuestions
             // 
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(586, 355);
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(368, 355);
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
             this.uxNumberOfQuestions.Size = new System.Drawing.Size(100, 20);
             this.uxNumberOfQuestions.TabIndex = 11;
             // 
             // uxEnter
             // 
-            this.uxEnter.Location = new System.Drawing.Point(586, 381);
+            this.uxEnter.Location = new System.Drawing.Point(368, 381);
             this.uxEnter.Name = "uxEnter";
             this.uxEnter.Size = new System.Drawing.Size(75, 23);
             this.uxEnter.TabIndex = 12;
@@ -170,7 +170,7 @@
             // 
             // uxCreateAnswerKey
             // 
-            this.uxCreateAnswerKey.Location = new System.Drawing.Point(586, 410);
+            this.uxCreateAnswerKey.Location = new System.Drawing.Point(368, 410);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
             this.uxCreateAnswerKey.Size = new System.Drawing.Size(75, 39);
             this.uxCreateAnswerKey.TabIndex = 13;
@@ -180,7 +180,7 @@
             // 
             // Grade
             // 
-            this.Grade.Location = new System.Drawing.Point(586, 455);
+            this.Grade.Location = new System.Drawing.Point(368, 455);
             this.Grade.Name = "Grade";
             this.Grade.Size = new System.Drawing.Size(75, 23);
             this.Grade.TabIndex = 14;
@@ -191,9 +191,9 @@
             // uxStudentAnswerPanel
             // 
             this.uxStudentAnswerPanel.AutoScroll = true;
-            this.uxStudentAnswerPanel.Location = new System.Drawing.Point(904, 0);
+            this.uxStudentAnswerPanel.Location = new System.Drawing.Point(816, 0);
             this.uxStudentAnswerPanel.Name = "uxStudentAnswerPanel";
-            this.uxStudentAnswerPanel.Size = new System.Drawing.Size(312, 349);
+            this.uxStudentAnswerPanel.Size = new System.Drawing.Size(440, 349);
             this.uxStudentAnswerPanel.TabIndex = 15;
             // 
             // uxStudentSelector

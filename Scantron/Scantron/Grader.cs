@@ -32,10 +32,11 @@ namespace Scantron
         }
         
         // Real constructor for the grader.
-        public Grader(List<Student> students, string[] answer_key)
+        public Grader(List<Student> students, string[] answer_key, bool[] partial_credit)
         {
             this.students = students;
             this.answer_key = answer_key;
+            this.partial_credit = partial_credit;
         }
 
         // Method for grading the student responses.
@@ -47,20 +48,45 @@ namespace Scantron
             }
         }
 
-        // Check student answers against the answer key.
-        private int[] CheckAnswers(string[] answers, string[] answer_key)
+        // Check student answers against the answer key. Canvas grading
+        private float[] CheckAnswers(string[] answers, string[] answer_key)
         {
-            int[] score = new int[answer_key[0].Length];
+            int number_of_questions = answer_key[0].Length;
+            float[] score = new float[number_of_questions];
 
-            for (int i = 0; i < answer_key[0].Length; i++)
+            for (int i = 0; i < number_of_questions; i++)
             {
                 if (partial_credit[i])
                 {
-                    // insert code here
+                    float total_answers = 0;
+                    float correct_answers = 0;
+                    float incorrect_answers = 0;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (answer_key[j][i] != ' ')
+                        {
+                            total_answers++;
+
+                            if (answers[j][i] == answer_key[j][i])
+                            {
+                                correct_answers++;
+                            }
+                        }
+                        else
+                        {
+                            if (answers[j][i] != answer_key[j][i])
+                            {
+                                incorrect_answers++;
+                            }
+                        }
+                    }
+
+                    score[i] = correct_answers / total_answers - incorrect_answers / total_answers;
                 }
                 else
                 {
-                    for (int j = 0; j < answer_key.Length; j++)
+                    for (int j = 0; j < 5; j++)
                     {
                         if (answers[j][i] != answer_key[j][i])
                         {

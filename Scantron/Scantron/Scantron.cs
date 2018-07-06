@@ -32,9 +32,11 @@ namespace Scantron
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         // List of question panels.
         private List<Control> question_panels = new List<Control>();
+        
         // Class for grading CanConvert version.
-        private string[] answer_key = new string[5];
         Grader grader = new Grader();
+        private string[] answer_key;
+        private bool[] partial_credit;
 
         // Header text for the Debug Mode.
         private string debug_header = "Debug Mode On" + Environment.NewLine +
@@ -278,15 +280,17 @@ namespace Scantron
             }
 
             // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
-            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
-            // Filter is the default file extensions seen by the user.
-            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
-            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-            uxSaveFileDialog.FilterIndex = 1;
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
+            {
+                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+                InitialDirectory = "c:\\desktop",
+                // Filter is the default file extensions seen by the user.
+                Filter = "txt files (*.txt)|*.txt",
+                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+                FilterIndex = 1
+            };
 
-            
+
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string path = uxSaveFileDialog.FileName;
@@ -335,13 +339,15 @@ namespace Scantron
             }
 
             // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
-            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
-            // Filter is the default file extensions seen by the user.
-            uxSaveFileDialog.Filter = "txt files (*.txt)|*.txt";
-            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-            uxSaveFileDialog.FilterIndex = 1;
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
+            {
+                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+                InitialDirectory = "c:\\desktop",
+                // Filter is the default file extensions seen by the user.
+                Filter = "txt files (*.txt)|*.txt",
+                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+                FilterIndex = 1
+            };
 
 
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
@@ -393,13 +399,15 @@ namespace Scantron
             }
 
             // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog();
-            // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-            uxSaveFileDialog.InitialDirectory = "c:\\desktop";
-            // Filter is the default file extensions seen by the user.
-            uxSaveFileDialog.Filter = "csv files (*.csv)|*.csv";
-            // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-            uxSaveFileDialog.FilterIndex = 1;
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
+            {
+                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+                InitialDirectory = "c:\\desktop",
+                // Filter is the default file extensions seen by the user.
+                Filter = "csv files (*.csv)|*.csv",
+                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+                FilterIndex = 1
+            };
 
 
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
@@ -489,34 +497,57 @@ namespace Scantron
         // Event handler for the 'Enter' button.
         private void uxEnter_Click(object sender, EventArgs e)
         {
-            uxAnswerKeyPanel.Controls.Clear();
             int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
 
             if (number_of_questions <= 150 && number_of_questions > 0)
             {
-                for(int i = 0; i < number_of_questions; i++)
+                uxAnswerKeyPanel.Controls.Clear();
+
+                for (int i = 0; i < number_of_questions; i++)
                 {
-                    Panel panel = new Panel();
-                    panel.Name = "panel" + i;
-                    panel.BackColor = Color.MediumPurple;
-                    panel.Location = new Point(3, 3 + 26 * i);
-                    panel.Size = new Size(268, 22);
-                    
+                    Panel panel = new Panel
+                    {
+                        BackColor = Color.MediumPurple,
+                        Location = new Point(3, 3 + 26 * i),
+                        Size = new Size(420, 22)
+                    };
+
                     for (int j = 0; j < 5; j++)
                     {
-                        CheckBox checkbox = new CheckBox();
-                        checkbox.Name = "checkbox" + i + ((char)(j + 65)).ToString();
-                        checkbox.Location = new Point(73 + 39 * j, 3);
-                        checkbox.Size = new Size(33, 17);
-                        checkbox.Text = ((char)(j + 65)).ToString();
-                        panel.Controls.Add(checkbox);
+                        CheckBox checkbox = new CheckBox
+                        {
+                            Location = new Point(73 + 39 * j, 3),
+                            Size = new Size(33, 17),
+                            Text = ((char)(j + 65)).ToString()
+                        };
+                        panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
                     }
 
-                    Label label = new Label(); // Label is added last so checkboxes are indices 0-4.
-                    label.Location = new Point(3, 3);
-                    label.Size = new Size(70, 13);
-                    label.Text = "Question" + (i + 1);
-                    panel.Controls.Add(label);
+                    NumericUpDown points = new NumericUpDown
+                    {
+                        Location = new Point(268, 1),
+                        Minimum = 1,
+                        DecimalPlaces = 2,
+                        Size = new Size(58, 20)
+                    };
+
+                    CheckBox partial_credit = new CheckBox
+                    {
+                        Location = new Point(330, 3),
+                        Size = new Size(100, 17),
+                        Text = "Partial Credit"
+                    };
+
+                    Label label = new Label
+                    {
+                        Location = new Point(3, 3),
+                        Size = new Size(70, 13),
+                        Text = "Question" + (i + 1)
+                    };
+
+                    panel.Controls.Add(partial_credit); // Index 5
+                    panel.Controls.Add(points); // Index 6
+                    panel.Controls.Add(label); // Index 7
 
                     uxAnswerKeyPanel.Controls.Add(panel);
                 }
@@ -530,24 +561,18 @@ namespace Scantron
         // Event handler for the 'Create Answer Key' button.
         private void uxCreateAnswerKey_Click(object sender, EventArgs e)
         {
+            int number_of_questions = uxAnswerKeyPanel.Controls.Count;
             answer_key = new string[5];
-            int number_of_questions = 0;
+            partial_credit = new bool[number_of_questions];
             CheckBox checkbox;
 
-            foreach (Control control in uxAnswerKeyPanel.Controls)
+            for (int i = 0; i < number_of_questions; i++)
             {
-                if(control.Visible == true)
-                {
-                    number_of_questions++;
-                }
-            }
-
-            for (int i = 0; i < uxAnswerKeyPanel.Controls.Count; i++)
-            {
+                // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
                 for (int j = 0; j < 5; j++)
                 {
                     checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[j];
-                    if(checkbox.Checked == true)
+                    if(checkbox.Checked)
                     {
                         answer_key[j] += j + 1;
                     }
@@ -556,13 +581,20 @@ namespace Scantron
                         answer_key[j] += " ";
                     }
                 }
+
+                // Checks the current question panel's partial credit checkbox.
+                checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[5];
+                if (checkbox.Checked)
+                {
+                    partial_credit[i] = true;
+                }
             }
         }
 
         // Event handler for the 'Grade' button.
         private void Grade_Click(object sender, EventArgs e)
         {
-            grader = new Grader(students, answer_key);
+            grader = new Grader(students, answer_key, partial_credit);
             grader.Grade();
             WriteCSVFile();
 
@@ -573,6 +605,7 @@ namespace Scantron
             }
         }
 
+        // Event handler for selecting student answers to view.
         private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (Student student in students)
@@ -583,32 +616,37 @@ namespace Scantron
 
                     for (int i = 0; i < answer_key[0].Length; i++)
                     {
-                        Panel panel = new Panel();
-                        panel.Name = "panel" + i;
-                        panel.BackColor = Color.Green;
-                        panel.Location = new Point(3, 3 + 26 * i);
-                        panel.Size = new Size(268, 22);
+                        Panel panel = new Panel
+                        {
+                            BackColor = Color.Green,
+                            Location = new Point(3, 3 + 26 * i),
+                            Size = new Size(268, 22)
+                        };
 
                         for (int j = 0; j < 5; j++)
                         {
-                            CheckBox checkbox = new CheckBox();
-                            checkbox.Name = "checkbox" + i + ((char)(j + 65)).ToString();
+                            CheckBox checkbox = new CheckBox
+                            {
+                                Enabled = false,
+                                Location = new Point(73 + 39 * j, 3),
+                                Size = new Size(33, 17),
+                                Text = ((char)(j + 65)).ToString()
+                            };
+
                             if (student.Answers[j][i] != ' ')
                             {
                                 checkbox.Checked = true;
                             }
-                            checkbox.Enabled = false;
-                            checkbox.Location = new Point(73 + 39 * j, 3);
-                            checkbox.Size = new Size(33, 17);
-                            checkbox.Text = ((char)(j + 65)).ToString();
-                            panel.Controls.Add(checkbox);
+
+                            panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
                         }
 
-                        Label label = new Label(); // Label is added last so checkboxes are indices 0-4.
-                        label.Location = new Point(3, 3);
-                        label.Size = new Size(70, 13);
-                        label.Text = "Question" + (i + 1);
-                        panel.Controls.Add(label);
+                        Label label = new Label
+                        {
+                            Location = new Point(3, 3),
+                            Size = new Size(70, 13),
+                            Text = "Question" + (i + 1)
+                        };
 
                         for (int k = 0; k < 5; k++)
                         {
@@ -621,6 +659,8 @@ namespace Scantron
                                 break;
                             }
                         }
+
+                        panel.Controls.Add(label);
 
                         uxStudentAnswerPanel.Controls.Add(panel);
                     }
