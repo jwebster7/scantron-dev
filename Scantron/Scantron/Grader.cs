@@ -82,7 +82,7 @@ namespace Scantron
                         }
                     }
 
-                    score[i] = correct_answers / total_answers - incorrect_answers / total_answers;
+                    score[i] = (correct_answers / total_answers) * points - (incorrect_answers / total_answers) * points; // This is the algorithm.
                 }
                 else
                 {

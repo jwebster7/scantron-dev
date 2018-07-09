@@ -38,13 +38,6 @@ namespace Scantron
         private string[] answer_key;
         private bool[] partial_credit;
 
-        // Header text for the Debug Mode.
-        private string debug_header = "Debug Mode On" + Environment.NewLine +
-                                      "Click Debug again to exit" +
-                                      Environment.NewLine;
-        // Flag for toggling Debug Mode.
-        private bool debug = false;
-
         // Holds the read in Scantron data.
         //private string raw_scantron_output;
         // Uncomment below assignment for example card data.
@@ -66,33 +59,22 @@ namespace Scantron
         // The event handler opens the serial port and begins reading data from the scantron machine.
         private void uxStart_Click(object sender, EventArgs e)
         {
-            if (debug)
+            try
             {
-                uxInstructionBox.Text = debug_header + "Click 'Stop' once all cards are scanned to view the raw output";
+                uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
+                                        "Once all the cards have successfully scanned, " + Environment.NewLine +
+                                        "press the 'Stop' within this window.";
+                raw_scantron_output = "";
+                students = new List<Student>();
                 serial_port.Open();
                 serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                uxStart.Enabled = false;
+                uxStop.Enabled = true;
             }
-            else
+            // SystemException is the superclass containing IOException and InvalidOperationException
+            catch (SystemException)
             {
-                try
-                {
-                    uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
-                                            "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                            "press the 'Stop' within this window.";
-                    raw_scantron_output = "";
-                    students = new List<Student>();
-                    serial_port.Open();
-                    serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-                    uxStart.Enabled = false;
-                    uxStop.Enabled = true;
-                    uxCreateFile.Enabled = false;
-                    uxCanConvert.Enabled = false;
-                }
-                // SystemException is the superclass containing IOException and InvalidOperationException
-                catch (SystemException)
-                {
-                    // Do nothing. This is to prevent an error message about the port already being open.
-                }
+                // Do nothing. This is to prevent an error message about the port already being open.
             }
         }
 
@@ -111,129 +93,27 @@ namespace Scantron
             serial_port.Close();
             CreateStudents();
 
-            if (debug)
+            // We cannot create students if raw_scantron_output is empty.
+            // Sets the program to initial state of the program.
+            if (raw_scantron_output.Equals(""))
             {
-                uxInstructionBox.Text = debug_header +
-                                        "Raw card output: " +
-                                        Environment.NewLine +
-                                        Environment.NewLine +
-                                        raw_scantron_output.ToString();
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
+                uxStart.Enabled = true;
+                uxStop.Enabled = false;
+
+                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                Environment.NewLine +
+                                "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                "backwards, or reversed and reload the hopper.");
             }
             else
             {
-                // We cannot create students if raw_scantron_output is empty.
-                // Sets the program to initial state of the program.
-                if (raw_scantron_output.Equals(""))
-                {
-                    uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                            "then click on 'Start' within this window.";
-                    uxStart.Enabled = true;
-                    uxStop.Enabled = false;
-                    uxCreateFile.Enabled = false;
-                    uxCanConvert.Enabled = false;
-
-                    MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                    Environment.NewLine +
-                                    "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                    "backwards, or reversed and reload the hopper.");
-                }
-                else
-                {
-                    uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                                            "Then press 'Create File' to create and save" + Environment.NewLine +
-                                            "a file onto the USB drive";
-                    uxStart.Enabled = false;
-                    uxStop.Enabled = false;
-                    uxCreateFile.Enabled = true;
-                    uxCanConvert.Enabled = true;
-                }
-            }
-        }
-
-        // Event handler for 'Create File (Canvas)' button.
-        private void uxCreateFile_Click(object sender, EventArgs e)
-        {
-            if (debug)
-            {
-                uxInstructionBox.Text = debug_header;
-                for (int i = 0; i < students.Count; i++)
-                {
-                    uxInstructionBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine
-                        + students[i].ToString() + Environment.NewLine;
-                }
-
-                try
-                {
-                    // Throws IOException if SaveFileDialog fails, or if
-                    // the user does not select a filename.
-                    WriteFile();
-                }
-                catch (IOException)
-                {
-                    // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions
-                }
-            }
-            else
-            {
-                try
-                {
-                    // Throws IOException if SaveFileDialog fails, or if
-                    // the user does not select a filename.
-                    WriteFile();
-                }
-                catch (IOException)
-                {
-                    // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions
-                }
-
-                uxInstructionBox.Text = "Please click 'Restart' if you are finished," + Environment.NewLine +
-                                        "otherwise you may create the file again if needed.";
-            }
-        }
-
-        // Event handler for the 'Create File (CanConvert)' button. This is a temporary button for people too stubborn
-        // to move on from CanConvert.
-        private void uxCanConvert_Click(object sender, EventArgs e)
-        {
-            if (debug)
-            {
-                uxInstructionBox.Text = debug_header;
-                for (int i = 0; i < students.Count; i++)
-                {
-                    uxInstructionBox.Text += "Student " + (i + 1) + ": " + Environment.NewLine
-                        + students[i].ToCanConvertString() + Environment.NewLine;
-                }
-
-                try
-                {
-                    // Throws IOException if SaveFileDialog fails, or if
-                    // the user does not select a filename.
-                    WriteCanConvertFile();
-                }
-                catch (IOException)
-                {
-                    // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions
-                }
-            }
-            else
-            {
-                try
-                {
-                    // Throws IOException if SaveFileDialog fails, or if
-                    // the user does not select a filename.
-                    WriteCanConvertFile();
-                }
-                catch (IOException)
-                {
-                    // Error message handled in the WriteFile() & CreateStudents() method
-                    // could catch IOExceptions
-                }
-
-                uxInstructionBox.Text = "Please click 'Restart' if you are finished," + Environment.NewLine +
-                                        "otherwise you may create the file again if needed.";
+                uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
+                                        "Then press 'Create File' to create and save" + Environment.NewLine +
+                                        "a file onto the USB drive";
+                uxStart.Enabled = false;
+                uxStop.Enabled = false;
             }
         }
 
@@ -249,17 +129,14 @@ namespace Scantron
                 students.Add(new Student(cards[i]));
             }
 
-            // If no students were created, (this should already be taken care 
-            // of in the Stop event handler), we want to set the state back to 
-            // the start button and start over.
+            // If no students were created, (this should already be taken care of in the Stop event handler), 
+            // we want to set the state back to the start button and start over.
             if (students.Count == 0)
             {
                 uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                         "then click on 'Start' within this window.";
                 uxStart.Enabled = true;
                 uxStop.Enabled = false;
-                uxCreateFile.Enabled = false;
-                uxCanConvert.Enabled = false;
 
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
                                 Environment.NewLine +
@@ -315,65 +192,6 @@ namespace Scantron
                 }
             }
             else 
-            {
-                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
-                                "The format for filenames should not include" + Environment.NewLine +
-                                "slashes, parentheticals, or symbols" +
-                                Environment.NewLine +
-                                "Please reload the hopper and ensure the" + Environment.NewLine +
-                                "cards are not stuck together, backwards," + Environment.NewLine +
-                                "or reversed. ");
-                throw new IOException();
-            }
-        }
-         
-        // Temporary method for people too stubborn to move on from CanConvert.
-        private void WriteCanConvertFile()
-        {
-            string file = "";
-
-            // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Student student in students)
-            {
-                file += student.ToCanConvertString();
-            }
-
-            // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
-            {
-                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-                InitialDirectory = "c:\\desktop",
-                // Filter is the default file extensions seen by the user.
-                Filter = "txt files (*.txt)|*.txt",
-                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-                FilterIndex = 1
-            };
-
-
-            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string path = uxSaveFileDialog.FileName;
-                // Stores the location of the file we want to save; use filenames for multiple.
-                if (path.Equals(""))
-                {
-                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine +
-                                    "a file path for the exam record!");
-                    throw new IOException();
-                }
-                else
-                {
-                    // "using" opens and close the StreamWriter.
-                    using (StreamWriter file_generator = new StreamWriter(path))
-                    {
-                        // Adds everything in the 'file' given to the streamwriter.
-                        file_generator.Write(file);
-                    }
-                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
-                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
-                                    "using the file generated.");
-                }
-            }
-            else
             {
                 MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
                                 "The format for filenames should not include" + Environment.NewLine +
@@ -449,31 +267,13 @@ namespace Scantron
         // Event handler for the 'Admin' button.
         private void uxAdmin_Click(object sender, EventArgs e)
         {
-            if (!debug)
-            {
-                uxInstructionBox.Font = new Font("Courier New", 9, FontStyle.Regular);
-                uxInstructionBox.Text = debug_header;
-                uxInstructionBox.ScrollBars = ScrollBars.Vertical;
-                uxInstructionBox.ReadOnly = false;
-                uxStart.Enabled = true;
-                uxStop.Enabled = true;
-                uxCreateFile.Enabled = true;
-                uxCanConvert.Enabled = true;
-                debug = true;
-            }
-            else
-            {
-                uxInstructionBox.Font = new Font("Microsoft Sans Serif", (float)17.5, FontStyle.Regular);
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-                uxInstructionBox.ReadOnly = true;
-                uxInstructionBox.ScrollBars = ScrollBars.None;
-                uxStart.Enabled = true;
-                uxStop.Enabled = false;
-                uxCreateFile.Enabled = false;
-                uxCanConvert.Enabled = false;
-                debug = false;
-            }
+            uxInstructionBox.Font = new Font("Microsoft Sans Serif", (float)17.5, FontStyle.Regular);
+            uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                    "then click on 'Start' within this window.";
+            uxInstructionBox.ReadOnly = true;
+            uxInstructionBox.ScrollBars = ScrollBars.None;
+            uxStart.Enabled = true;
+            uxStop.Enabled = false;
         }
 
         // Click event for the 'Restart' button.
@@ -489,9 +289,6 @@ namespace Scantron
                                     "then click on 'Start' within this window.";
             uxStart.Enabled = true;
             uxStop.Enabled = false;
-            uxAdmin.Enabled = true;
-            uxCreateFile.Enabled = false;
-            uxCanConvert.Enabled = false;
         }
 
         // Event handler for the 'Enter' button.

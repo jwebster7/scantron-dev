@@ -31,9 +31,6 @@
             this.uxStart = new System.Windows.Forms.Button();
             this.uxInstructionBox = new System.Windows.Forms.TextBox();
             this.uxStop = new System.Windows.Forms.Button();
-            this.uxCreateFile = new System.Windows.Forms.Button();
-            this.uxAdmin = new System.Windows.Forms.Button();
-            this.uxCanConvert = new System.Windows.Forms.Button();
             this.uxRestart = new System.Windows.Forms.Button();
             this.uxMainPanel = new System.Windows.Forms.Panel();
             this.uxAnswerKeyPanel = new System.Windows.Forms.Panel();
@@ -85,43 +82,10 @@
             this.uxStop.UseVisualStyleBackColor = true;
             this.uxStop.Click += new System.EventHandler(this.uxStop_Click);
             // 
-            // uxCreateFile
-            // 
-            this.uxCreateFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxCreateFile.Location = new System.Drawing.Point(94, 279);
-            this.uxCreateFile.Name = "uxCreateFile";
-            this.uxCreateFile.Size = new System.Drawing.Size(130, 65);
-            this.uxCreateFile.TabIndex = 5;
-            this.uxCreateFile.Text = "Create File (Canvas)";
-            this.uxCreateFile.UseVisualStyleBackColor = true;
-            this.uxCreateFile.Click += new System.EventHandler(this.uxCreateFile_Click);
-            // 
-            // uxAdmin
-            // 
-            this.uxAdmin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.uxAdmin.Location = new System.Drawing.Point(3, 3);
-            this.uxAdmin.Name = "uxAdmin";
-            this.uxAdmin.Size = new System.Drawing.Size(53, 22);
-            this.uxAdmin.TabIndex = 6;
-            this.uxAdmin.Text = "Admin";
-            this.uxAdmin.UseVisualStyleBackColor = true;
-            this.uxAdmin.Click += new System.EventHandler(this.uxAdmin_Click);
-            // 
-            // uxCanConvert
-            // 
-            this.uxCanConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxCanConvert.Location = new System.Drawing.Point(94, 350);
-            this.uxCanConvert.Name = "uxCanConvert";
-            this.uxCanConvert.Size = new System.Drawing.Size(130, 65);
-            this.uxCanConvert.TabIndex = 7;
-            this.uxCanConvert.Text = "Create File (CanConvert)";
-            this.uxCanConvert.UseVisualStyleBackColor = true;
-            this.uxCanConvert.Click += new System.EventHandler(this.uxCanConvert_Click);
-            // 
             // uxRestart
             // 
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(230, 311);
+            this.uxRestart.Location = new System.Drawing.Point(94, 311);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -134,10 +98,7 @@
             this.uxMainPanel.Controls.Add(this.uxStart);
             this.uxMainPanel.Controls.Add(this.uxRestart);
             this.uxMainPanel.Controls.Add(this.uxInstructionBox);
-            this.uxMainPanel.Controls.Add(this.uxCanConvert);
             this.uxMainPanel.Controls.Add(this.uxStop);
-            this.uxMainPanel.Controls.Add(this.uxAdmin);
-            this.uxMainPanel.Controls.Add(this.uxCreateFile);
             this.uxMainPanel.Location = new System.Drawing.Point(-1, 0);
             this.uxMainPanel.Name = "uxMainPanel";
             this.uxMainPanel.Size = new System.Drawing.Size(363, 422);
@@ -239,9 +200,6 @@
         private System.Windows.Forms.Button uxStart;
         private System.Windows.Forms.TextBox uxInstructionBox;
         private System.Windows.Forms.Button uxStop;
-        private System.Windows.Forms.Button uxCreateFile;
-        private System.Windows.Forms.Button uxAdmin;
-        private System.Windows.Forms.Button uxCanConvert;
         private System.Windows.Forms.Button uxRestart;
         private System.Windows.Forms.Panel uxMainPanel;
         private System.Windows.Forms.Panel uxAnswerKeyPanel;
