@@ -23,10 +23,13 @@ namespace Scantron
         // Holds the students to be graded.
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
-        private string[] answer_key = new string[5];
-        // Hold a list of which questions are given partial credit.
-        private bool[] partial_credit;
-        
+        private List<Question> answer_key = new List<Question>();
+
+        public Grader()
+        {
+
+        }
+
         public List<Student> Students
         {
             get
@@ -35,7 +38,7 @@ namespace Scantron
             }
         }
 
-        public string[] AnswerKey
+        public List<Question> AnswerKey
         {
             get
             {
@@ -45,23 +48,6 @@ namespace Scantron
             {
                 answer_key = value;
             }
-        }
-
-        public bool[] PartialCredit
-        {
-            get
-            {
-                return partial_credit;
-            }
-            set
-            {
-                partial_credit = value;
-            }
-        }
-
-        // Real constructor for the grader.
-        public Grader()
-        {
         }
 
         // This method creates student objects and adds them to the students list.
@@ -77,79 +63,35 @@ namespace Scantron
             }
         }
 
-        // Method for grading the student responses.
-        public void Grade()
+        // Check student answers against the answer key. Canvas grading
+        public void GradeStudents()
         {
             foreach (Student student in students)
             {
-                student.Grade = CheckAnswers(student.Answers, answer_key);
-            }
-        }
-
-        // Check student answers against the answer key. Canvas grading
-        private float[] CheckAnswers(string[] answers, string[] answer_key)
-        {
-            int number_of_questions = answer_key[0].Length;
-            float[] score = new float[number_of_questions];
-
-            for (int i = 0; i < number_of_questions; i++)
-            {
-                if (partial_credit[i])
+                for (int i = 0; i < answer_key.Count; i++)
                 {
-                    float total_answers = 0;
-                    float correct_answers = 0;
-                    float incorrect_answers = 0;
-
-                    for (int j = 0; j < 5; j++)
-                    {
-                        if (answer_key[j][i] != ' ')
-                        {
-                            total_answers++;
-
-                            if (answers[j][i] == answer_key[j][i])
-                            {
-                                correct_answers++;
-                            }
-                        }
-                        else
-                        {
-                            if (answers[j][i] != answer_key[j][i])
-                            {
-                                incorrect_answers++;
-                            }
-                        }
-                    }
-
-                    score[i] = (correct_answers / total_answers) - (incorrect_answers / total_answers); // This is the algorithm.
-                }
-                else
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        if (answers[j][i] != answer_key[j][i])
-                        {
-                            score[i] = 0;
-                            break;
-                        }
-                        score[i] = 1;
-                    }
+                    student.Response[i].Grade(answer_key[i]);
                 }
             }
-
-            return score;
         }
 
         // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
         public override string ToString()
         {
-            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key[0].Length + Environment.NewLine +
-                            "Points Possible,,,,," + answer_key[0].Length + Environment.NewLine; // Will need to fix with Question.Score
+            float points_possible = 0;
+            foreach (Question question in answer_key)
+            {
+                points_possible += question.Points;
+            }
+
+            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Count + Environment.NewLine +
+                            "Points Possible,,,,," + points_possible + Environment.NewLine;
             int count = 1;
 
             foreach (Student student in students)
             {
                 count++;
-                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Grade.Sum();
+                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();
             }
 
             return info;

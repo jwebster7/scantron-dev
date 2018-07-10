@@ -30,11 +30,18 @@ namespace Scantron
         private string sheet_number;
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
-        private string[] answers = new string[5];
-        // Stores grade on exam
-        private float[] grade;
+        private List<Question> response = new List<Question>();
 
-        private char[,] answer = new char[50, 5];
+        // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
+        // fields.
+        public Student(string raw_student_data)
+        {
+            this.raw_student_data = raw_student_data;
+            RemoveBackSide();
+            Uncompress();
+            Format();
+            TranslateData();
+        }
 
         // WID property.
         public string WID
@@ -46,36 +53,12 @@ namespace Scantron
         }
 
         // Answers property.
-        public string[] Answers
+        public List<Question> Response
         {
             get
             {
-                return answers;
+                return response;
             }
-        }
-
-        // Grade property.
-        public float[] Grade
-        {
-            get
-            {
-                return grade;
-            }
-            set
-            {
-                grade = value;
-            }
-        }
-
-        // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
-        // fields.
-        public Student(string raw_student_data)
-        {
-            this.raw_student_data = raw_student_data;
-            RemoveBackSide();
-            Uncompress();
-            Format();
-            TranslateData();
         }
 
         // Both sides of a scantron card are scanned. This removes the useless back side data, each line of which is 
@@ -207,6 +190,7 @@ namespace Scantron
 
             // Checks the answer bubbles.
             int count = 0;
+            char[] answer = new char[5];
 
             // These for loops are set up so that they read all 50 questions in order, which makes the indexing 
             // difficult. This page details these loops https://github.com/prometheus1994/scantron-dev/wiki/Student.cs.
@@ -216,18 +200,21 @@ namespace Scantron
                 {
                     for (int j = 4; j >= 0; j--)
                     {
+                        answer = new char[5];
+
                         for (int k = 0; k < 5; k++)
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer[count, k] = (char)(k + 65);
+                                answer[k] = (char)(k + 65);
                             }
                             else
                             {
-                                answer[count, k] = ' ';
+                                answer[k] = ' ';
                             }
                         }
 
+                        response.Add(new Question(answer, 0, false));
                         count++;
                     }
                 }
@@ -235,25 +222,28 @@ namespace Scantron
                 {
                     for (int j = 14; j >= 0; j--)
                     {
+                        answer = new char[5];
+
                         for (int k = 0; k < 5; k++)
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer[count, k] = (char)(k + 65);
+                                answer[k] = (char)(k + 65);
                             }
                             else
                             {
-                                answer[count, k] = ' ';
+                                answer[k] = ' ';
                             }
                         }
 
+                        response.Add(new Question(answer,0, false));
                         count++;
                     }
                 }
             }
         }
 
-        // Returns which bubble from a group of three is the darkest. Darkness is given by the scantorn machine on a 
+        // Returns which bubble from a group of three is the darkest. Darkness is given by the scantron machine on a 
         // scale of 0 to F. If no bubble is clearly the darkest, a dash is returned instead.
         private string GetDarkestBubble(int a, int b, int c)
         {
@@ -300,18 +290,45 @@ namespace Scantron
             return "-";
         }
 
+        // Get the student's score.
+        public float Score()
+        {
+            float score = 0;
+
+            foreach (Question question in Response)
+            {
+                score += question.Points;
+            }
+
+            return score;
+        }
+
         // Translates the student's data to a string.
         public override string ToString()
         {
             string student_info = "";
 
             // Row 5
-            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '" + answers[4] + "'\r\n";
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '";
+
+            for (int j = 0; j < response.Count; j++)
+            {
+                student_info += response[j].Answer[4];
+            }
+
+            student_info += "'\r\n";
 
             // Rows 4, 3, 2, 1
             for (int i = 3; i >= 0; i--)
             {
-                student_info += "         ,      " + ',' + (char)(65 + i) + ", '" + answers[i] + "'\r\n";
+                student_info += "         ,      " + ',' + (char)(65 + i) + ", '" ;
+
+                for (int j = 0; j < response.Count; j++)
+                {
+                    student_info += response[j].Answer[i];
+                }
+
+                student_info += "'\r\n";
             }
 
             return student_info;

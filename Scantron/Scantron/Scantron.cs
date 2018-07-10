@@ -31,6 +31,7 @@ namespace Scantron
 
         // Class for grading CanConvert version.
         Grader grader = new Grader();
+        GUI gui = new GUI();
 
         // Holds the read in Scantron data.
         //private string raw_scantron_output;
@@ -43,6 +44,7 @@ namespace Scantron
         {
             // Initializes the form.
             InitializeComponent();
+
             foreach (Control control in uxAnswerKeyPanel.Controls)
             {
                 question_panels.Add(control);
@@ -55,20 +57,8 @@ namespace Scantron
         // The event handler opens the serial port and begins reading data from the scantron machine.
         private void uxStart_Click(object sender, EventArgs e)
         {
-            try
-            {
-                uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
-                                        "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                        "press the 'Stop' within this window.";
-                raw_scantron_output = "";
-                serial_port.Open();
-                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-            }
-            // SystemException is the superclass containing IOException and InvalidOperationException
-            catch (SystemException)
-            {
-                // Do nothing. This is to prevent an error message about the port already being open if a user has to rescan cards.
-            }
+            gui.Start(uxInstructionBox, raw_scantron_output, serial_port);
+            serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
         }
 
         // This method is an event handler for the serialport.
@@ -85,38 +75,7 @@ namespace Scantron
         {
             serial_port.Close();
             grader.CreateStudents(raw_scantron_output);
-
-            // If no students were created, (this should already be taken care of in the Stop event handler), 
-            // we want to set the state back to the start button and start over.
-            if (grader.Students.Count == 0)
-            {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-            }
-
-            // We cannot create students if raw_scantron_output is empty.
-            // Sets the program to initial state of the program.
-            if (raw_scantron_output.Equals(""))
-            {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-            }
-            else
-            {
-                uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                                        "Then press 'Create File' to create and save" + Environment.NewLine +
-                                        "a file onto the USB drive";
-            }
+            gui.Stop(grader, uxInstructionBox, raw_scantron_output);
         }
 
         // Write the file to be uploaded to the Canvas gradebook.
@@ -214,7 +173,7 @@ namespace Scantron
                         panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
                     }
 
-                    NumericUpDown points = new NumericUpDown
+                    NumericUpDown updown = new NumericUpDown
                     {
                         Location = new Point(268, 1),
                         Minimum = 1,
@@ -236,8 +195,8 @@ namespace Scantron
                         Text = "Question" + (i + 1)
                     };
 
-                    panel.Controls.Add(partial_credit); // Index 5
-                    panel.Controls.Add(points); // Index 6
+                    panel.Controls.Add(updown); // Index 5
+                    panel.Controls.Add(partial_credit); // Index 6
                     panel.Controls.Add(label); // Index 7
 
                     uxAnswerKeyPanel.Controls.Add(panel);
@@ -252,33 +211,49 @@ namespace Scantron
         // Event handler for the 'Create Answer Key' button.
         private void uxCreateAnswerKey_Click(object sender, EventArgs e)
         {
-            int number_of_questions = uxAnswerKeyPanel.Controls.Count;
-            grader.AnswerKey = new string[5];
-            grader.PartialCredit = new bool[number_of_questions];
+            grader.AnswerKey = new List<Question>();
+
             CheckBox checkbox;
+            NumericUpDown updown;
+
+            int number_of_questions = uxAnswerKeyPanel.Controls.Count;
+            char[] answer = new char[5];
+            float points = 0;
+            bool partial_credit = false;
 
             for (int i = 0; i < number_of_questions; i++)
             {
+                answer = new char[5];
+
                 // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
                 for (int j = 0; j < 5; j++)
                 {
                     checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[j];
                     if(checkbox.Checked)
                     {
-                        grader.AnswerKey[j] += j + 1;
+                        answer[j] = (char)(65 + j);
                     }
                     else
                     {
-                        grader.AnswerKey[j] += " ";
+                        answer[j] = ' ';
                     }
                 }
 
+                updown = (NumericUpDown)uxAnswerKeyPanel.Controls[i].Controls[5];
+                points = (float)updown.Value;
+
                 // Checks the current question panel's partial credit checkbox.
-                checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[5];
+                checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[6];
                 if (checkbox.Checked)
                 {
-                    grader.PartialCredit[i] = true;
+                    partial_credit = true;
                 }
+                else
+                {
+                    partial_credit = false;
+                }
+
+                grader.AnswerKey.Add(new Question(answer, points, partial_credit));
             }
 
             MessageBox.Show("Answer key created!");
@@ -287,7 +262,7 @@ namespace Scantron
         // Event handler for the 'Grade' button.
         private void Grade_Click(object sender, EventArgs e)
         {
-            grader.Grade();
+            grader.GradeStudents();
             WriteFile();
 
             uxStudentSelector.Items.Clear();
@@ -306,7 +281,7 @@ namespace Scantron
                 {
                     uxStudentAnswerPanel.Controls.Clear();
 
-                    for (int i = 0; i < grader.AnswerKey[0].Length; i++)
+                    for (int i = 0; i < grader.AnswerKey.Count; i++)
                     {
                         Panel panel = new Panel
                         {
@@ -325,7 +300,7 @@ namespace Scantron
                                 Text = ((char)(j + 65)).ToString()
                             };
 
-                            if (student.Answers[j][i] != ' ')
+                            if (student.Response[i].Answer[j] != ' ')
                             {
                                 checkbox.Checked = true;
                             }

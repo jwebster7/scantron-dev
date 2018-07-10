@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Grader.cs" />
+    <Compile Include="GUI.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Scantron.cs">
       <SubType>Form</SubType>
