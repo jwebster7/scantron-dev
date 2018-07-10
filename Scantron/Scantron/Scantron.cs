@@ -24,19 +24,13 @@ namespace Scantron
 {
     public partial class Scantron : Form
     {
-        // Holds the raw data split up by card.
-        private List<string> cards = new List<string>();
-        // Holds students; data derived from cards.
-        private List<Student> students = new List<Student>();
         // Serial port object used to read in the data stream.
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         // List of question panels.
         private List<Control> question_panels = new List<Control>();
-        
+
         // Class for grading CanConvert version.
         Grader grader = new Grader();
-        private string[] answer_key;
-        private bool[] partial_credit;
 
         // Holds the read in Scantron data.
         //private string raw_scantron_output;
@@ -53,7 +47,9 @@ namespace Scantron
             {
                 question_panels.Add(control);
             }
-            StartProgram();
+
+            uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                    "then click on 'Start' within this window.";
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.
@@ -65,16 +61,13 @@ namespace Scantron
                                         "Once all the cards have successfully scanned, " + Environment.NewLine +
                                         "press the 'Stop' within this window.";
                 raw_scantron_output = "";
-                students = new List<Student>();
                 serial_port.Open();
                 serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-                uxStart.Enabled = false;
-                uxStop.Enabled = true;
             }
             // SystemException is the superclass containing IOException and InvalidOperationException
             catch (SystemException)
             {
-                // Do nothing. This is to prevent an error message about the port already being open.
+                // Do nothing. This is to prevent an error message about the port already being open if a user has to rescan cards.
             }
         }
 
@@ -91,7 +84,20 @@ namespace Scantron
         private void uxStop_Click(object sender, EventArgs e)
         {
             serial_port.Close();
-            CreateStudents();
+            grader.CreateStudents(raw_scantron_output);
+
+            // If no students were created, (this should already be taken care of in the Stop event handler), 
+            // we want to set the state back to the start button and start over.
+            if (grader.Students.Count == 0)
+            {
+                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
+                                        "then click on 'Start' within this window.";
+
+                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
+                                Environment.NewLine +
+                                "Please ensure the cards are not stuck together," + Environment.NewLine +
+                                "backwards, or reversed and reload the hopper.");
+            }
 
             // We cannot create students if raw_scantron_output is empty.
             // Sets the program to initial state of the program.
@@ -99,8 +105,6 @@ namespace Scantron
             {
                 uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                         "then click on 'Start' within this window.";
-                uxStart.Enabled = true;
-                uxStop.Enabled = false;
 
                 MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
                                 Environment.NewLine +
@@ -112,106 +116,16 @@ namespace Scantron
                 uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
                                         "Then press 'Create File' to create and save" + Environment.NewLine +
                                         "a file onto the USB drive";
-                uxStart.Enabled = false;
-                uxStop.Enabled = false;
             }
         }
 
-        // This method creates student objects and adds them to the students list.
-        private void CreateStudents()
-        {
-            // Sets each reference value in cards equal to exactly one scantron card.
-            cards = raw_scantron_output.Split('$').ToList<string>();
-
-            // For each index/value in cards, create a student object and add to the list students.
-            for (int i = 0; i < cards.Count - 1; i++)
-            {
-                students.Add(new Student(cards[i]));
-            }
-
-            // If no students were created, (this should already be taken care of in the Stop event handler), 
-            // we want to set the state back to the start button and start over.
-            if (students.Count == 0)
-            {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-                uxStart.Enabled = true;
-                uxStop.Enabled = false;
-
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-            }
-        }
-
-        // Function for writing the student info to a string for us in the streamwriter.
+        // Write the file to be uploaded to the Canvas gradebook.
         private void WriteFile()
         {
             string file = "";
 
             // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Student student in students)
-            {
-                file += student.ToString();
-            }
-
-            // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
-            {
-                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-                InitialDirectory = "c:\\desktop",
-                // Filter is the default file extensions seen by the user.
-                Filter = "txt files (*.txt)|*.txt",
-                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-                FilterIndex = 1
-            };
-
-
-            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string path = uxSaveFileDialog.FileName;
-                // Stores the location of the file we want to save; use filenames for multiple.
-                if (path.Equals(""))
-                {
-                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine + 
-                                    "a file path for the exam record!");
-                    throw new IOException();
-                }
-                else
-                {
-                    // "using" opens and close the StreamWriter.
-                    using (StreamWriter file_generator = new StreamWriter(path))
-                    {
-                        // Adds everything in the 'file' given to the streamwriter.
-                        file_generator.Write(file);
-                    }
-                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
-                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
-                                    "using the file generated.");
-                }
-            }
-            else 
-            {
-                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
-                                "The format for filenames should not include" + Environment.NewLine +
-                                "slashes, parentheticals, or symbols" +
-                                Environment.NewLine +
-                                "Please reload the hopper and ensure the" + Environment.NewLine +
-                                "cards are not stuck together, backwards," + Environment.NewLine +
-                                "or reversed. ");
-                throw new IOException();
-            }
-        }
-
-        // Temporary method for people too stubborn to move on from CanConvert. There has to be a way to consolidate all of
-        // the write file methods.
-        private void WriteCSVFile()
-        {
-            string file = "";
-
-            // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Student student in students)
+            foreach (Student student in grader.Students)
             {
                 file += grader.ToString();
             }
@@ -264,31 +178,11 @@ namespace Scantron
             }
         }
 
-        // Event handler for the 'Admin' button.
-        private void uxAdmin_Click(object sender, EventArgs e)
-        {
-            uxInstructionBox.Font = new Font("Microsoft Sans Serif", (float)17.5, FontStyle.Regular);
-            uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                    "then click on 'Start' within this window.";
-            uxInstructionBox.ReadOnly = true;
-            uxInstructionBox.ScrollBars = ScrollBars.None;
-            uxStart.Enabled = true;
-            uxStop.Enabled = false;
-        }
-
         // Click event for the 'Restart' button.
         private void uxRestart_Click(object sender, EventArgs e)
         {
-            StartProgram();
-        }
-
-        // Initial program state
-        private void StartProgram()
-        {
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
-            uxStart.Enabled = true;
-            uxStop.Enabled = false;
         }
 
         // Event handler for the 'Enter' button.
@@ -359,8 +253,8 @@ namespace Scantron
         private void uxCreateAnswerKey_Click(object sender, EventArgs e)
         {
             int number_of_questions = uxAnswerKeyPanel.Controls.Count;
-            answer_key = new string[5];
-            partial_credit = new bool[number_of_questions];
+            grader.AnswerKey = new string[5];
+            grader.PartialCredit = new bool[number_of_questions];
             CheckBox checkbox;
 
             for (int i = 0; i < number_of_questions; i++)
@@ -371,11 +265,11 @@ namespace Scantron
                     checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[j];
                     if(checkbox.Checked)
                     {
-                        answer_key[j] += j + 1;
+                        grader.AnswerKey[j] += j + 1;
                     }
                     else
                     {
-                        answer_key[j] += " ";
+                        grader.AnswerKey[j] += " ";
                     }
                 }
 
@@ -383,20 +277,21 @@ namespace Scantron
                 checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[5];
                 if (checkbox.Checked)
                 {
-                    partial_credit[i] = true;
+                    grader.PartialCredit[i] = true;
                 }
             }
+
+            MessageBox.Show("Answer key created!");
         }
 
         // Event handler for the 'Grade' button.
         private void Grade_Click(object sender, EventArgs e)
         {
-            grader = new Grader(students, answer_key, partial_credit);
             grader.Grade();
-            WriteCSVFile();
+            WriteFile();
 
             uxStudentSelector.Items.Clear();
-            foreach (Student student in students)
+            foreach (Student student in grader.Students)
             {
                 uxStudentSelector.Items.Add(student.WID);
             }
@@ -405,13 +300,13 @@ namespace Scantron
         // Event handler for selecting student answers to view.
         private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Student student in students)
+            foreach (Student student in grader.Students)
             {
                 if (uxStudentSelector.Text.Equals(student.WID))
                 {
                     uxStudentAnswerPanel.Controls.Clear();
 
-                    for (int i = 0; i < answer_key[0].Length; i++)
+                    for (int i = 0; i < grader.AnswerKey[0].Length; i++)
                     {
                         Panel panel = new Panel
                         {

@@ -34,6 +34,8 @@ namespace Scantron
         // Stores grade on exam
         private float[] grade;
 
+        private char[,] answer = new char[50, 5];
+
         // WID property.
         public string WID
         {
@@ -205,44 +207,49 @@ namespace Scantron
 
             // Checks the answer bubbles.
             int count = 0;
-            int index;
 
             // These for loops are set up so that they read all 50 questions in order, which makes the indexing 
             // difficult. This page details these loops https://github.com/prometheus1994/scantron-dev/wiki/Student.cs.
-            for (int i = 9; i < 29; i++)
+            for (int i = 9; i < 29; i += 5)
             {
-                index = count % 5;
-
                 if (i < 14)
                 {
                     for (int j = 4; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        for (int k = 0; k < 5; k++)
                         {
-                            answers[index] += index + 1;
+                            if (card_lines[i + k][j] > 54)
+                            {
+                                answer[count, k] = (char)(k + 65);
+                            }
+                            else
+                            {
+                                answer[count, k] = ' ';
+                            }
                         }
-                        else
-                        {
-                            answers[index] += " ";
-                        }
+
+                        count++;
                     }
                 }
                 else
                 {
                     for (int j = 14; j >= 0; j--)
                     {
-                        if (card_lines[i][j] > 54)
+                        for (int k = 0; k < 5; k++)
                         {
-                            answers[index] += index + 1;
+                            if (card_lines[i + k][j] > 54)
+                            {
+                                answer[count, k] = (char)(k + 65);
+                            }
+                            else
+                            {
+                                answer[count, k] = ' ';
+                            }
                         }
-                        else
-                        {
-                            answers[index] += " ";
-                        }
+
+                        count++;
                     }
                 }
-
-                count++;
             }
         }
 
@@ -299,46 +306,13 @@ namespace Scantron
             string student_info = "";
 
             // Row 5
-            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,5, '" + answers[4] + "'\r\n";
+            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '" + answers[4] + "'\r\n";
 
             // Rows 4, 3, 2, 1
             for (int i = 3; i >= 0; i--)
             {
-                student_info += "         ,      " + ',' + (i + 1) + ", '" + answers[i] + "'\r\n";
+                student_info += "         ,      " + ',' + (char)(65 + i) + ", '" + answers[i] + "'\r\n";
             }
-
-            return student_info;
-        }
-
-        // Temporary method for people too stubborn to move on from CanConvert.
-        public string ToCanConvertString()
-        {
-            int count;
-            string student_info = "";
-
-            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,   '";
-
-            for (int i = 0; i < answers[0].Length; i++)
-            {
-                count = 0;
-
-                while(count < 5)
-                {
-                    if (answers[count][i] != ' ')
-                    {
-                        student_info += answers[count][i];
-                        count = 5;
-                    }
-                    count++;
-                }
-
-                if (count == 5)
-                {
-                    student_info += "-";
-                }
-            }
-
-            student_info += "'\r\n";
 
             return student_info;
         }

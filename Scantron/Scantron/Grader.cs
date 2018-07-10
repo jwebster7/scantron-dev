@@ -18,25 +18,63 @@ namespace Scantron
 {
     class Grader
     {
+        // Holds the raw data split up by card.
+        private List<string> cards = new List<string>();
         // Holds the students to be graded.
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
         private string[] answer_key = new string[5];
         // Hold a list of which questions are given partial credit.
         private bool[] partial_credit;
+        
+        public List<Student> Students
+        {
+            get
+            {
+                return students;
+            }
+        }
 
-        // Default constructor for the grader.
+        public string[] AnswerKey
+        {
+            get
+            {
+                return answer_key;
+            }
+            set
+            {
+                answer_key = value;
+            }
+        }
+
+        public bool[] PartialCredit
+        {
+            get
+            {
+                return partial_credit;
+            }
+            set
+            {
+                partial_credit = value;
+            }
+        }
+
+        // Real constructor for the grader.
         public Grader()
         {
-
         }
-        
-        // Real constructor for the grader.
-        public Grader(List<Student> students, string[] answer_key, bool[] partial_credit)
+
+        // This method creates student objects and adds them to the students list.
+        public void CreateStudents(string raw_scantron_output)
         {
-            this.students = students;
-            this.answer_key = answer_key;
-            this.partial_credit = partial_credit;
+            // Sets each reference value in cards equal to exactly one scantron card.
+            cards = raw_scantron_output.Split('$').ToList<string>();
+
+            // For each index/value in cards, create a student object and add to the list students.
+            for (int i = 0; i < cards.Count - 1; i++)
+            {
+                students.Add(new Student(cards[i]));
+            }
         }
 
         // Method for grading the student responses.
@@ -82,7 +120,7 @@ namespace Scantron
                         }
                     }
 
-                    score[i] = (correct_answers / total_answers) * points - (incorrect_answers / total_answers) * points; // This is the algorithm.
+                    score[i] = (correct_answers / total_answers) - (incorrect_answers / total_answers); // This is the algorithm.
                 }
                 else
                 {
@@ -105,7 +143,7 @@ namespace Scantron
         public override string ToString()
         {
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key[0].Length + Environment.NewLine +
-                            "Points Possible,,,,," + answer_key[0].Length + Environment.NewLine;
+                            "Points Possible,,,,," + answer_key[0].Length + Environment.NewLine; // Will need to fix with Question.Score
             int count = 1;
 
             foreach (Student student in students)
