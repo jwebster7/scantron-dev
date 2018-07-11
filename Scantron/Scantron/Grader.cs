@@ -86,7 +86,7 @@ namespace Scantron
 
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Count + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
-            int count = 1;
+            int count = 0;
 
             foreach (Student student in students)
             {

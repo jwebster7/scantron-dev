@@ -88,6 +88,7 @@ namespace Scantron
                     }
                 }
 
+                // Still incorrect. answer = A, , ,D,  and answer_key = A, , , ,  gives 0 points instead of half points.
                 points = (correct_answers / total_answers) * answer_key.points - (incorrect_answers / total_answers) * answer_key.points;
             }
             else
