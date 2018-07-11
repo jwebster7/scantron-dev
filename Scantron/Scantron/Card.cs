@@ -32,8 +32,7 @@ namespace Scantron
         // to the github repository.
         private List<Question> response = new List<Question>(); // Will change this to Dictionary<int, List<Question>> for multiple sheet purposes.
 
-        // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
-        // fields.
+        // Card constructor. Translates the raw data and assigns it to the appropriate fields.
         public Card(string raw_student_data)
         {
             this.raw_card_data = raw_student_data;
@@ -257,7 +256,7 @@ namespace Scantron
         }
 
         // Returns which bubble from a group of three is the darkest. Darkness is given by the scantron machine on a 
-        // scale of 0 to F. If no bubble is clearly the darkest, a dash is returned instead.
+        // scale of 0 to F. If no bubble is clearly the darkest, a zero is returned instead.
         private int GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
