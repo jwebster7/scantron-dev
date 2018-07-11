@@ -25,9 +25,9 @@ namespace Scantron
         // Stores whether the grant permission bubble is filled.
         private string grant_permission = "-";
         // Stores which of the three test version bubbles is filled.
-        private string test_version;
+        private int test_version;
         // Stores which of the five sheet number bubbles is filled.
-        private string sheet_number;
+        private int sheet_number;
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
         private List<Question> response = new List<Question>(); // Will change this to Dictionary<int, List<Question>> for multiple sheet purposes.
@@ -61,7 +61,7 @@ namespace Scantron
         {
             get
             {
-                return Convert.ToInt32(sheet_number);
+                return sheet_number;
             }
         }
 
@@ -258,49 +258,49 @@ namespace Scantron
 
         // Returns which bubble from a group of three is the darkest. Darkness is given by the scantron machine on a 
         // scale of 0 to F. If no bubble is clearly the darkest, a dash is returned instead.
-        private string GetDarkestBubble(int a, int b, int c)
+        private int GetDarkestBubble(int a, int b, int c)
         {
             if (a > b && a > c)
             {
-                return "1";
+                return 1;
             }
             if (b > a && b > c)
             {
-                return "2";
+                return 2;
             }
             if (c > a && c > b)
             {
-                return "3";
+                return 3;
             }
 
-            return "-";
+            return 0;
         }
 
         // Does the same as the above method, but for five bubbles.
-        private string GetDarkestBubble(int a, int b, int c, int d, int e)
+        private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
             {
-                return "1";
+                return 1;
             }
             if (b > a && b > c && b > d && b > e)
             {
-                return "2";
+                return 2;
             }
             if (c > a && c > b && c > d && c > e)
             {
-                return "3";
+                return 3;
             }
             if (d > a && d > b && d > c && d > e)
             {
-                return "4";
+                return 4;
             }
             if (e > a && e > b && e > c && e > d)
             {
-                return "5";
+                return 5;
             }
 
-            return "-";
+            return 0;
         }
 
         // Get the student's score.
