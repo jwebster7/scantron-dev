@@ -81,6 +81,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="Student.cs" />
     <EmbeddedResource Include="Scantron.resx">
       <DependentUpon>Scantron.cs</DependentUpon>
     </EmbeddedResource>
