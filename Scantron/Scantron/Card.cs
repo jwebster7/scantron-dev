@@ -16,10 +16,10 @@ using System.Threading;
 
 namespace Scantron
 {
-    class Student
+    class Card
     {
         // Stores the raw data stream initially read in from the scantron machine.
-        private string raw_student_data;
+        private string raw_card_data;
         // The student's WID.
         private string wid;
         // Stores whether the grant permission bubble is filled.
@@ -30,17 +30,21 @@ namespace Scantron
         private string sheet_number;
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
-        private List<Question> response = new List<Question>();
+        private List<Question> response = new List<Question>(); // Will change this to Dictionary<int, List<Question>> for multiple sheet purposes.
 
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
         // fields.
-        public Student(string raw_student_data)
+        public Card(string raw_student_data)
         {
-            this.raw_student_data = raw_student_data;
+            this.raw_card_data = raw_student_data;
             RemoveBackSide();
             Uncompress();
             Format();
             TranslateData();
+            // Need to add functionality for 51+ questions.
+            // There needs to be a mismatch checker that will give the instructor a list of sheets to match together.
+            // Students mark their versions and sheet number, so they can be grouped apart easily.
+            // After all students are scanned, combine copies that are different sheet numbers.
         }
 
         // WID property.
@@ -49,6 +53,15 @@ namespace Scantron
             get
             {
                 return wid;
+            }
+        }
+
+        // Sheet number property.
+        public int SheetNumber
+        {
+            get
+            {
+                return Convert.ToInt32(sheet_number);
             }
         }
 
@@ -70,20 +83,20 @@ namespace Scantron
 
             // As long as any b's are in the raw data, this loop removes any data from and including that b until it 
             // hits an a.
-            while (raw_student_data.Contains("b"))
+            while (raw_card_data.Contains("b"))
             {
-                start = raw_student_data.IndexOf("b");
+                start = raw_card_data.IndexOf("b");
 
-                if (raw_student_data.IndexOf("a", start) != -1)
+                if (raw_card_data.IndexOf("a", start) != -1)
                 {
-                    length = raw_student_data.IndexOf("a", start) - start;
+                    length = raw_card_data.IndexOf("a", start) - start;
                 }
                 else
                 {
-                    length = raw_student_data.Length - start;
+                    length = raw_card_data.Length - start;
                 }
 
-                raw_student_data = raw_student_data.Remove(start, length);
+                raw_card_data = raw_card_data.Remove(start, length);
             }
         }
 
@@ -98,17 +111,17 @@ namespace Scantron
             string uncompressed_string;
 
             // As long as there is a # in the raw data, this loop replaces the data with its uncompressed form.
-            while (raw_student_data.Contains("#"))
+            while (raw_card_data.Contains("#"))
             {
                 uncompressed_string = "";
-                hashtag_location = raw_student_data.IndexOf("#");
-                amount_character = raw_student_data[hashtag_location + 1];
-                character = raw_student_data[hashtag_location + 2];
+                hashtag_location = raw_card_data.IndexOf("#");
+                amount_character = raw_card_data[hashtag_location + 1];
+                character = raw_card_data[hashtag_location + 2];
                 amount = (int)amount_character - 64;
 
                 uncompressed_string = uncompressed_string.PadRight(amount, character);
 
-                raw_student_data = raw_student_data.Replace("#" + amount_character + character, uncompressed_string);
+                raw_card_data = raw_card_data.Replace("#" + amount_character + character, uncompressed_string);
             }
         }
 
@@ -120,7 +133,7 @@ namespace Scantron
             int i;
             List<string> card_lines = new List<string>();
             char[] splitter = new char[] {'a'};
-            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            card_lines = raw_card_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
             // The first two lines read are above the bubbles on the scantron card. This removes them.
             card_lines.RemoveAt(0);
@@ -145,7 +158,7 @@ namespace Scantron
                 card_lines[i] = card_lines[i].Substring(0, 15);
             }
 
-            raw_student_data = string.Join(",", card_lines);
+            raw_card_data = string.Join(",", card_lines);
         }
 
         // This method take the uncompressed, formatted data and assigns the appropriate data to each student field.
@@ -154,7 +167,7 @@ namespace Scantron
             // This list splits up each line of bubbles on the scantron card.
             List<string> card_lines = new List<string>();
             char[] splitter = new char[] {','};
-            card_lines = raw_student_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            card_lines = raw_card_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
             // Read in the WID bubbles. The relevant lines are reversed because from left to right the bubbles read 
             // from 9 to 0, but their indices are 0 to 9 in their respective strings. Reversing lets Array.IndexOf 

@@ -75,10 +75,5 @@ namespace Scantron
         {
             gui.SelectStudent();
         }
-
-        private void uxModifyStudent_Click(object sender, EventArgs e)
-        {
-            gui.ModifyStudent();
-        }
     }
 }
