@@ -303,7 +303,7 @@ namespace Scantron
             return score;
         }
 
-        // Translates the student's data to a string.
+        // Translates the student's data to a string for use with the Canvas Scantron tool.
         public override string ToString()
         {
             string student_info = "";

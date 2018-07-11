@@ -66,11 +66,10 @@ namespace Scantron
             {
                 float total_answers = 0;
                 float correct_answers = 0;
-                float incorrect_answers = 0;
 
                 for (int i = 0; i < 5; i++)
                 {
-                    if (answer_key.answer[i] != ' ')
+                    if (answer[i] != ' ' || answer_key.answer[i] != ' ')
                     {
                         total_answers++;
 
@@ -79,17 +78,9 @@ namespace Scantron
                             correct_answers++;
                         }
                     }
-                    else
-                    {
-                        if (answer[i] != answer_key.answer[i])
-                        {
-                            incorrect_answers++;
-                        }
-                    }
                 }
-
-                // Still incorrect. answer = A, , ,D,  and answer_key = A, , , ,  gives 0 points instead of half points.
-                points = (correct_answers / total_answers) * answer_key.points - (incorrect_answers / total_answers) * answer_key.points;
+                
+                points = (correct_answers / total_answers) * answer_key.points;
             }
             else
             {

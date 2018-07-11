@@ -19,12 +19,13 @@ using System.Threading.Tasks; //Requires .Net 4
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+// Remove unused using statements in final version.
 
 namespace Scantron
 {
     public partial class Scantron : Form
     {
-        GUI gui;
+        private GUI gui;
 
         // The default constructor for the scantron GUI.
         public Scantron()
