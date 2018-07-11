@@ -21,7 +21,7 @@ namespace Scantron
         // Holds the raw data split up by card.
         private List<string> cards = new List<string>();
         // Holds the students to be graded.
-        private List<Student> students = new List<Student>();
+        private List<Card> students = new List<Card>();
         // Holds the answer key to compare to student responses.
         private List<Question> answer_key = new List<Question>();
 
@@ -30,7 +30,7 @@ namespace Scantron
 
         }
 
-        public List<Student> Students
+        public List<Card> Students
         {
             get
             {
@@ -59,14 +59,14 @@ namespace Scantron
             // For each index/value in cards, create a student object and add to the list students.
             for (int i = 0; i < cards.Count - 1; i++)
             {
-                students.Add(new Student(cards[i]));
+                students.Add(new Card(cards[i]));
             }
         }
 
         // Check student answers against the answer key. Canvas grading
         public void GradeStudents()
         {
-            foreach (Student student in students)
+            foreach (Card student in students)
             {
                 for (int i = 0; i < answer_key.Count; i++)
                 {
@@ -88,7 +88,7 @@ namespace Scantron
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
             int count = 0;
 
-            foreach (Student student in students)
+            foreach (Card student in students)
             {
                 count++;
                 info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();

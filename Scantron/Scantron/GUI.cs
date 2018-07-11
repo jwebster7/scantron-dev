@@ -246,7 +246,7 @@ namespace Scantron
             WriteFile();
 
             uxStudentSelector.Items.Clear();
-            foreach (Student student in grader.Students)
+            foreach (Card student in grader.Students)
             {
                 uxStudentSelector.Items.Add(student.WID);
             }
@@ -258,7 +258,7 @@ namespace Scantron
             string file = "";
 
             // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Student student in grader.Students)
+            foreach (Card student in grader.Students)
             {
                 file += grader.ToString();
             }
@@ -314,7 +314,7 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            foreach (Student student in grader.Students)
+            foreach (Card student in grader.Students)
             {
                 if (uxStudentSelector.Text.Equals(student.WID))
                 {
