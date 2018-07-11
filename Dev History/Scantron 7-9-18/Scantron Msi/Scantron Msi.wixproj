@@ -22,8 +22,8 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Scantron\Scantron.csproj">
-      <Name>Scantron</Name>
+    <ProjectReference Include="..\Scantron\Scantron_old.csproj">
+      <Name>Scantron_old</Name>
       <Project>{fa7e8847-ce4c-47cd-9d7c-bb0914761825}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scantron", "Scantron\Scantron.csproj", "{FA7E8847-CE4C-47CD-9D7C-BB0914761825}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scantron_old", "Scantron\Scantron_old.csproj", "{FA7E8847-CE4C-47CD-9D7C-BB0914761825}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Scantron Msi", "Scantron Msi\Scantron Msi.wixproj", "{ADD993E7-0600-481D-8FCA-BAE17A00DF16}"
 EndProject
