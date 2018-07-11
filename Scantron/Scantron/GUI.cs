@@ -29,7 +29,7 @@ namespace Scantron
         private string raw_scantron_output = "b3F33F0FF#F0#DF00#\\Fb033#Q0#\\Fa3F00F0FF#F0#DF00#\\Fb0033#P0#\\Fa3#S0#\\Fb0003#P0#\\Fa4F#H05#I0#[FEb3#S0#\\Fa4#G0F08#I0#\\Fb#T0#\\Fa33000F00034#I0#\\Fb#T0#\\Fa3303F#E05#I0#\\Fb#T0#\\Fa333000E003#J0#\\Fb#T0#\\Fa30F#F037#I0#\\Fb#T0#\\Fa300F#F07#I0#\\Fb#T0#\\Fa3#H0F4#I0#\\FaF#H047#I0#\\Fb#T0#\\Fa4334F00F#L0#\\Fb#T0#\\Fa433F#P0#\\Fb#T0#\\Fa33F#G0F00F#F0#\\Fb#T0#\\Fb#T0#\\Fa3D00F#O0#\\FaF3003#O0#\\Fb#T0#\\Fb#T0#\\Fa3000F#D0E#D0E#E0#\\Fb#T0#\\Fa300F#D0F#D0E#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0F#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa00C#D0F#D0F#G0#\\Fb#T0#\\Fa0E#D0F#D0F#H0#\\FaF#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0F#E0#\\Fb#T0#\\Fa000F#D0F#D0F#F0#\\Fb#T0#\\Fa30F#D0F#D0F#G0#\\Fb#S05#\\Fa0D#D0F#D0F#H0#\\FaE#D0D#D0E#H06#\\F$";
         private Form scantron_form;
         private TextBox uxInstructionBox;
-        private Panel uxStudentAnswerPanel;
+        private Panel uxStudentResponsePanel;
         private ComboBox uxStudentSelector;
         private Panel uxAnswerKeyPanel;
         private List<Control> question_panels = new List<Control>();
@@ -41,7 +41,7 @@ namespace Scantron
             this.scantron_form = scantron_form;
             
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
-            uxStudentAnswerPanel = (Panel)scantron_form.Controls.Find("uxStudentAnswerPanel", true)[0];
+            uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyPanel = (Panel) scantron_form.Controls.Find("uxAnswerKeyPanel", true)[0];
 
@@ -318,7 +318,7 @@ namespace Scantron
             {
                 if (uxStudentSelector.Text.Equals(student.WID))
                 {
-                    uxStudentAnswerPanel.Controls.Clear();
+                    uxStudentResponsePanel.Controls.Clear();
 
                     for (int i = 0; i < grader.AnswerKey.Count; i++)
                     {
@@ -368,20 +368,8 @@ namespace Scantron
 
                         panel.Controls.Add(label);
 
-                        uxStudentAnswerPanel.Controls.Add(panel);
+                        uxStudentResponsePanel.Controls.Add(panel);
                     }
-                }
-            }
-        }
-
-        public void ModifyStudent()
-        {
-            foreach (Panel question_panel in uxStudentAnswerPanel.Controls)
-            {
-                for(int i = 0; i < 5; i++)
-                {
-                    CheckBox checkbox = (CheckBox) question_panel.Controls[i];
-                    checkbox.Enabled = true;
                 }
             }
         }

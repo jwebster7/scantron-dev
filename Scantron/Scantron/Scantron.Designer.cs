@@ -32,28 +32,27 @@
             this.uxInstructionBox = new System.Windows.Forms.TextBox();
             this.uxStop = new System.Windows.Forms.Button();
             this.uxRestart = new System.Windows.Forms.Button();
-            this.uxMainPanel = new System.Windows.Forms.Panel();
             this.uxAnswerKeyPanel = new System.Windows.Forms.Panel();
             this.uxNumberOfQuestions = new System.Windows.Forms.TextBox();
             this.uxEnter = new System.Windows.Forms.Button();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
             this.Grade = new System.Windows.Forms.Button();
-            this.uxStudentAnswerPanel = new System.Windows.Forms.Panel();
+            this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
             this.uxStudentSelector = new System.Windows.Forms.ComboBox();
             this.uxTabControl = new System.Windows.Forms.TabControl();
             this.ScanTab = new System.Windows.Forms.TabPage();
-            this.AnswerKeyTab = new System.Windows.Forms.TabPage();
-            this.uxModifyStudent = new System.Windows.Forms.Button();
-            this.uxMainPanel.SuspendLayout();
+            this.GradeTab = new System.Windows.Forms.TabPage();
+            this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
+            this.uxStudentResponseLabel = new System.Windows.Forms.Label();
             this.uxTabControl.SuspendLayout();
             this.ScanTab.SuspendLayout();
-            this.AnswerKeyTab.SuspendLayout();
+            this.GradeTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // uxStart
             // 
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStart.Location = new System.Drawing.Point(3, 279);
+            this.uxStart.Location = new System.Drawing.Point(3, 254);
             this.uxStart.Name = "uxStart";
             this.uxStart.Size = new System.Drawing.Size(85, 65);
             this.uxStart.TabIndex = 0;
@@ -67,21 +66,21 @@
             this.uxInstructionBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxInstructionBox.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.uxInstructionBox.Location = new System.Drawing.Point(3, 28);
+            this.uxInstructionBox.Location = new System.Drawing.Point(3, 3);
             this.uxInstructionBox.MaximumSize = new System.Drawing.Size(580, 245);
             this.uxInstructionBox.Multiline = true;
             this.uxInstructionBox.Name = "uxInstructionBox";
             this.uxInstructionBox.ReadOnly = true;
             this.uxInstructionBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.uxInstructionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxInstructionBox.Size = new System.Drawing.Size(351, 245);
+            this.uxInstructionBox.Size = new System.Drawing.Size(580, 245);
             this.uxInstructionBox.TabIndex = 3;
             this.uxInstructionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(3, 350);
+            this.uxStop.Location = new System.Drawing.Point(94, 254);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
@@ -92,7 +91,7 @@
             // uxRestart
             // 
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(94, 311);
+            this.uxRestart.Location = new System.Drawing.Point(185, 254);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -100,24 +99,13 @@
             this.uxRestart.UseVisualStyleBackColor = true;
             this.uxRestart.Click += new System.EventHandler(this.uxRestart_Click);
             // 
-            // uxMainPanel
-            // 
-            this.uxMainPanel.Controls.Add(this.uxStart);
-            this.uxMainPanel.Controls.Add(this.uxRestart);
-            this.uxMainPanel.Controls.Add(this.uxInstructionBox);
-            this.uxMainPanel.Controls.Add(this.uxStop);
-            this.uxMainPanel.Location = new System.Drawing.Point(3, 3);
-            this.uxMainPanel.Name = "uxMainPanel";
-            this.uxMainPanel.Size = new System.Drawing.Size(363, 422);
-            this.uxMainPanel.TabIndex = 9;
-            // 
             // uxAnswerKeyPanel
             // 
             this.uxAnswerKeyPanel.AutoScroll = true;
             this.uxAnswerKeyPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxAnswerKeyPanel.Location = new System.Drawing.Point(3, 3);
+            this.uxAnswerKeyPanel.Location = new System.Drawing.Point(3, 30);
             this.uxAnswerKeyPanel.Name = "uxAnswerKeyPanel";
-            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(499, 364);
+            this.uxAnswerKeyPanel.Size = new System.Drawing.Size(499, 337);
             this.uxAnswerKeyPanel.TabIndex = 10;
             // 
             // uxNumberOfQuestions
@@ -157,19 +145,19 @@
             this.Grade.UseVisualStyleBackColor = true;
             this.Grade.Click += new System.EventHandler(this.Grade_Click);
             // 
-            // uxStudentAnswerPanel
+            // uxStudentResponsePanel
             // 
-            this.uxStudentAnswerPanel.AutoScroll = true;
-            this.uxStudentAnswerPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStudentAnswerPanel.Location = new System.Drawing.Point(508, 3);
-            this.uxStudentAnswerPanel.Name = "uxStudentAnswerPanel";
-            this.uxStudentAnswerPanel.Size = new System.Drawing.Size(440, 349);
-            this.uxStudentAnswerPanel.TabIndex = 15;
+            this.uxStudentResponsePanel.AutoScroll = true;
+            this.uxStudentResponsePanel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxStudentResponsePanel.Location = new System.Drawing.Point(508, 30);
+            this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
+            this.uxStudentResponsePanel.Size = new System.Drawing.Size(440, 337);
+            this.uxStudentResponsePanel.TabIndex = 15;
             // 
             // uxStudentSelector
             // 
             this.uxStudentSelector.FormattingEnabled = true;
-            this.uxStudentSelector.Location = new System.Drawing.Point(570, 373);
+            this.uxStudentSelector.Location = new System.Drawing.Point(508, 373);
             this.uxStudentSelector.Name = "uxStudentSelector";
             this.uxStudentSelector.Size = new System.Drawing.Size(153, 21);
             this.uxStudentSelector.TabIndex = 16;
@@ -179,7 +167,8 @@
             // uxTabControl
             // 
             this.uxTabControl.Controls.Add(this.ScanTab);
-            this.uxTabControl.Controls.Add(this.AnswerKeyTab);
+            this.uxTabControl.Controls.Add(this.GradeTab);
+            this.uxTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.uxTabControl.HotTrack = true;
             this.uxTabControl.ItemSize = new System.Drawing.Size(150, 50);
             this.uxTabControl.Location = new System.Drawing.Point(0, 0);
@@ -192,7 +181,11 @@
             // ScanTab
             // 
             this.ScanTab.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ScanTab.Controls.Add(this.uxMainPanel);
+            this.ScanTab.Controls.Add(this.uxStart);
+            this.ScanTab.Controls.Add(this.uxStop);
+            this.ScanTab.Controls.Add(this.uxRestart);
+            this.ScanTab.Controls.Add(this.uxInstructionBox);
+            this.ScanTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.ScanTab.Location = new System.Drawing.Point(4, 54);
             this.ScanTab.Name = "ScanTab";
             this.ScanTab.Padding = new System.Windows.Forms.Padding(3);
@@ -200,33 +193,47 @@
             this.ScanTab.TabIndex = 0;
             this.ScanTab.Text = "Scan";
             // 
-            // AnswerKeyTab
+            // GradeTab
             // 
-            this.AnswerKeyTab.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.AnswerKeyTab.Controls.Add(this.uxModifyStudent);
-            this.AnswerKeyTab.Controls.Add(this.uxNumberOfQuestions);
-            this.AnswerKeyTab.Controls.Add(this.uxCreateAnswerKey);
-            this.AnswerKeyTab.Controls.Add(this.uxStudentAnswerPanel);
-            this.AnswerKeyTab.Controls.Add(this.Grade);
-            this.AnswerKeyTab.Controls.Add(this.uxAnswerKeyPanel);
-            this.AnswerKeyTab.Controls.Add(this.uxEnter);
-            this.AnswerKeyTab.Controls.Add(this.uxStudentSelector);
-            this.AnswerKeyTab.Location = new System.Drawing.Point(4, 54);
-            this.AnswerKeyTab.Name = "AnswerKeyTab";
-            this.AnswerKeyTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AnswerKeyTab.Size = new System.Drawing.Size(1093, 530);
-            this.AnswerKeyTab.TabIndex = 1;
-            this.AnswerKeyTab.Text = "Answer Key";
+            this.GradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.GradeTab.Controls.Add(this.uxStudentResponseLabel);
+            this.GradeTab.Controls.Add(this.uxAnswerKeyLabel);
+            this.GradeTab.Controls.Add(this.uxNumberOfQuestions);
+            this.GradeTab.Controls.Add(this.uxCreateAnswerKey);
+            this.GradeTab.Controls.Add(this.uxStudentResponsePanel);
+            this.GradeTab.Controls.Add(this.Grade);
+            this.GradeTab.Controls.Add(this.uxAnswerKeyPanel);
+            this.GradeTab.Controls.Add(this.uxEnter);
+            this.GradeTab.Controls.Add(this.uxStudentSelector);
+            this.GradeTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.GradeTab.Location = new System.Drawing.Point(4, 54);
+            this.GradeTab.Name = "GradeTab";
+            this.GradeTab.Padding = new System.Windows.Forms.Padding(3);
+            this.GradeTab.Size = new System.Drawing.Size(1093, 530);
+            this.GradeTab.TabIndex = 1;
+            this.GradeTab.Text = "Grade";
             // 
-            // uxModifyStudent
+            // uxAnswerKeyLabel
             // 
-            this.uxModifyStudent.Location = new System.Drawing.Point(570, 399);
-            this.uxModifyStudent.Name = "uxModifyStudent";
-            this.uxModifyStudent.Size = new System.Drawing.Size(99, 23);
-            this.uxModifyStudent.TabIndex = 17;
-            this.uxModifyStudent.Text = "Modify Student";
-            this.uxModifyStudent.UseVisualStyleBackColor = true;
-            this.uxModifyStudent.Click += new System.EventHandler(this.uxModifyStudent_Click);
+            this.uxAnswerKeyLabel.AutoSize = true;
+            this.uxAnswerKeyLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxAnswerKeyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.uxAnswerKeyLabel.Location = new System.Drawing.Point(3, 3);
+            this.uxAnswerKeyLabel.Name = "uxAnswerKeyLabel";
+            this.uxAnswerKeyLabel.Size = new System.Drawing.Size(111, 24);
+            this.uxAnswerKeyLabel.TabIndex = 17;
+            this.uxAnswerKeyLabel.Text = "Answer Key";
+            // 
+            // uxStudentResponseLabel
+            // 
+            this.uxStudentResponseLabel.AutoSize = true;
+            this.uxStudentResponseLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxStudentResponseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.uxStudentResponseLabel.Location = new System.Drawing.Point(504, 3);
+            this.uxStudentResponseLabel.Name = "uxStudentResponseLabel";
+            this.uxStudentResponseLabel.Size = new System.Drawing.Size(165, 24);
+            this.uxStudentResponseLabel.TabIndex = 18;
+            this.uxStudentResponseLabel.Text = "Student Response";
             // 
             // Scantron
             // 
@@ -242,12 +249,11 @@
             this.Name = "Scantron";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
-            this.uxMainPanel.ResumeLayout(false);
-            this.uxMainPanel.PerformLayout();
             this.uxTabControl.ResumeLayout(false);
             this.ScanTab.ResumeLayout(false);
-            this.AnswerKeyTab.ResumeLayout(false);
-            this.AnswerKeyTab.PerformLayout();
+            this.ScanTab.PerformLayout();
+            this.GradeTab.ResumeLayout(false);
+            this.GradeTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -258,18 +264,18 @@
         private System.Windows.Forms.TextBox uxInstructionBox;
         private System.Windows.Forms.Button uxStop;
         private System.Windows.Forms.Button uxRestart;
-        private System.Windows.Forms.Panel uxMainPanel;
         private System.Windows.Forms.Panel uxAnswerKeyPanel;
         private System.Windows.Forms.TextBox uxNumberOfQuestions;
         private System.Windows.Forms.Button uxEnter;
         private System.Windows.Forms.Button uxCreateAnswerKey;
         private System.Windows.Forms.Button Grade;
-        private System.Windows.Forms.Panel uxStudentAnswerPanel;
+        private System.Windows.Forms.Panel uxStudentResponsePanel;
         private System.Windows.Forms.ComboBox uxStudentSelector;
         private System.Windows.Forms.TabControl uxTabControl;
         private System.Windows.Forms.TabPage ScanTab;
-        private System.Windows.Forms.TabPage AnswerKeyTab;
-        private System.Windows.Forms.Button uxModifyStudent;
+        private System.Windows.Forms.TabPage GradeTab;
+        private System.Windows.Forms.Label uxStudentResponseLabel;
+        private System.Windows.Forms.Label uxAnswerKeyLabel;
     }
 }
 

@@ -30,7 +30,7 @@ namespace Scantron
         private string sheet_number;
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
-        private List<Question> response = new List<Question>();
+        private List<Question> response = new List<Question>(); // Will change this to Dictionary<int, List<Question>> for multiple sheet purposes.
 
         // Student constructor. Translates the raw data as the student is created and assigns it to the appropriate 
         // fields.
@@ -41,6 +41,10 @@ namespace Scantron
             Uncompress();
             Format();
             TranslateData();
+            // Need to add functionality for 51+ questions.
+            // There needs to be a mismatch checker that will give the instructor a list of sheets to match together.
+            // Students mark their versions and sheet number, so they can be grouped apart easily.
+            // After all students are scanned, combine copies that are different sheet numbers.
         }
 
         // WID property.
@@ -49,6 +53,15 @@ namespace Scantron
             get
             {
                 return wid;
+            }
+        }
+
+        // Sheet number property.
+        public int SheetNumber
+        {
+            get
+            {
+                return Convert.ToInt32(sheet_number);
             }
         }
 
