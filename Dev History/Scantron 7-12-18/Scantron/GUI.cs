@@ -84,11 +84,11 @@ namespace Scantron
         public void Stop()
         {
             serial_port.Close();
-            grader.CreateCards(raw_scantron_output);
+            grader.CreateStudents(raw_scantron_output);
 
             // If no students were created, (this should already be taken care of in the Stop event handler), 
             // we want to set the state back to the start button and start over.
-            if (grader.Cards.Count == 0)
+            if (grader.Students.Count == 0)
             {
                 uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                         "then click on 'Start' within this window.";
@@ -246,7 +246,7 @@ namespace Scantron
             WriteFile();
 
             uxStudentSelector.Items.Clear();
-            foreach (Card student in grader.Cards)
+            foreach (Card student in grader.Students)
             {
                 uxStudentSelector.Items.Add(student.WID);
             }
@@ -258,7 +258,7 @@ namespace Scantron
             string file = "";
 
             // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Card student in grader.Cards)
+            foreach (Card student in grader.Students)
             {
                 file += grader.ToString();
             }
@@ -314,7 +314,7 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            foreach (Card student in grader.Cards)
+            foreach (Card student in grader.Students)
             {
                 if (uxStudentSelector.Text.Equals(student.WID))
                 {

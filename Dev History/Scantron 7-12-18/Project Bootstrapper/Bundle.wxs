@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Property of the Kansas State University IT Help Desk -->
+<!-- Written by: William McCreight, Caleb Schweer, and Joseph Webster -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<Bundle Name="K-State Scanner" Version="1.0.0.0" UpgradeCode="fa1bd271-e64f-4785-ba33-3e752ae42ffb"
+          Manufacturer="Kansas State University Help Desk" 
+          HelpTelephone="785-532-7722"
+          DisableModify="yes"
+          IconSourceFile="$(var.SolutionDir)\Media Files\scantron.ico">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication LicenseFile="$(var.SolutionDir)\Media Files\ScantronEULA.rtf"
+                                              LogoFile="$(var.SolutionDir)\Media Files\ScantronPNG.png"
+                                              />
+    </BootstrapperApplicationRef>
+
+
+		<Chain>
+      <!-- Runs a webinstall of .Net 4 if target computer does not have it-->
+      <PackageGroupRef Id="NetFx40Web"/>
+      <!-- Will add the Scantron MSI to the bundle-->
+      <MsiPackage SourceFile="$(var.Scantron Msi.TargetPath)" />
+		</Chain>
+	</Bundle>
+</Wix>
