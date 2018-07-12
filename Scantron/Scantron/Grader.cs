@@ -27,11 +27,13 @@ namespace Scantron
         // Holds the answer key to compare to student responses.
         private List<Question> answer_key = new List<Question>(); // may need to be converted to a Dictionary<int, List<questions>> as well
 
+        // Default constructor; does nothing
         public Grader()
         {
 
         }
 
+        // getter for cards
         public List<Card> Cards
         {
             get
@@ -40,6 +42,7 @@ namespace Scantron
             }
         }
 
+        // getter/setter for answer_key
         public List<Question> AnswerKey
         {
             get
