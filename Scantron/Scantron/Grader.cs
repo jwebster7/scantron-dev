@@ -74,12 +74,28 @@ namespace Scantron
             foreach (Card card in cards)
             {
                 // instantiate a NEW dictionary every time to create the "cards" field for Student(s)
-                Dictionary<int, List<Question>> sheets = new Dictionary<int, List<Question>>
+                SortedDictionary<int, List<Question>> sheets = new SortedDictionary<int, List<Question>>
                 {
                     {card.SheetNumber, card.Response }
                 };
 
-                students.Add(new Student(card.WID, sheets));
+                students.Add(new Student(card.WID, sheets);
+            }
+        }
+
+        // I THINK this is right...
+        // Sorts & Merges sheets 1,2,3,...,n of the students cards
+        private void MergeSheets()
+        {
+            foreach (Student student in students)
+            {
+                List<Question> student_answers = new List<Question>();
+                // 'i' is the index of the KeyValuePair of the Dictionary
+                for (int i = 1; i <= student.Cards.Count; i++)
+                {
+                    student_answers = student.Cards[i];
+                }
+                student.Answers = student_answers;
             }
         }
 
