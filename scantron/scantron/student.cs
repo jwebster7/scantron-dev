@@ -11,7 +11,10 @@ namespace Scantron
         private string wid;
 
         // the students Scantron card(s); Holds 1 KVP if only question count is <= 50
-        private Dictionary<int, List<Question>> cards = new Dictionary<int, List<Question>>();
+        private SortedDictionary<int, List<Question>> cards = new SortedDictionary<int, List<Question>>();
+
+        // the students responses compiled from "cards"
+        private List<Question> answers = new List<Question>();
 
         // default Student constructor
         public Student()
@@ -20,7 +23,7 @@ namespace Scantron
         }
 
         // Creates Student() objects using the WID & Dictionary of cards and their sheet number
-        public Student(string wid, Dictionary<int, List<Question>> cards)
+        public Student(string wid, SortedDictionary<int, List<Question>> cards)
         {
             this.wid = wid;
             this.cards = cards;
@@ -40,7 +43,7 @@ namespace Scantron
         }
 
         // getter/setter for cards
-        public Dictionary<int, List<Question>> Cards
+        public SortedDictionary<int, List<Question>> Cards
         {
             get
             {
@@ -49,6 +52,18 @@ namespace Scantron
             set
             {
                 this.cards = value;
+            }
+        }
+
+        public List<Question> Answers
+        {
+            get
+            {
+                return answers;
+            }
+            set
+            {
+                this.answers = value;
             }
         }
     }

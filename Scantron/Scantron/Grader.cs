@@ -79,7 +79,7 @@ namespace Scantron
                     {card.SheetNumber, card.Response }
                 };
 
-                students.Add(new Student(card.WID, sheets);
+                students.Add(new Student(card.WID, sheets));
             }
         }
 
