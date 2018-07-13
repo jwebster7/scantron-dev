@@ -75,5 +75,17 @@ namespace Scantron
         {
             gui.SelectStudent();
         }
+
+        // Event handler for looking at the next students record 
+        private void uxStudentNext_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Event handler for looking at the previous students record
+        private void uxStudentPrevious_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
