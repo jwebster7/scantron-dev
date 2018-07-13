@@ -49,7 +49,6 @@ namespace Scantron
             }
         }
 
-
         // Convert the student's list of cards to a list of answers.
         public void CreateResponse()
         {
