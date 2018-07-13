@@ -19,30 +19,25 @@ namespace Scantron
     class Grader
     {
         // Holds the raw data split up by card.
-        private List<string> raw_cards = new List<string>();
-        // Holds the cards used to create the students.
-        private List<Card> cards = new List<Card>();
-        // Hold the list of students to be graded
-        private List<Student> students = new List<Student>();
+        private List<string> cards = new List<string>();
+        // Holds the students to be graded.
+        private List<Card> students = new List<Card>();
         // Holds the answer key to compare to student responses.
         private List<Question> answer_key = new List<Question>(); // may need to be converted to a Dictionary<int, List<questions>> as well
 
-        // Default constructor; does nothing
         public Grader()
         {
 
         }
 
-        // getter for cards
-        public List<Card> Cards
+        public List<Card> Students
         {
             get
             {
-                return cards;
+                return students;
             }
         }
 
-        // getter/setter for answer_key
         public List<Question> AnswerKey
         {
             get
@@ -55,59 +50,27 @@ namespace Scantron
             }
         }
 
-        // Creates card objects from the created cards and adds them to the list
-        public void CreateCards(string raw_scantron_output)
+        // This method creates student objects and adds them to the students list.
+        public void CreateStudents(string raw_scantron_output)
         {
             // Sets each reference value in cards equal to exactly one scantron card.
-            raw_cards = raw_scantron_output.Split('$').ToList<string>();
+            cards = raw_scantron_output.Split('$').ToList<string>();
 
-            // For each index/value in cards, create a *card* object and add to the list cards.
-            for (int i = 0; i < raw_cards.Count - 1; i++)
+            // For each index/value in cards, create a student object and add to the list students.
+            for (int i = 0; i < cards.Count - 1; i++)
             {
-                cards.Add(new Card(raw_cards[i]));
+                students.Add(new Card(cards[i]));
             }
         }
 
-        // Creates the students based off of the list of Card(s); However, it does not sort them.
-        public void CreateStudents()
-        {
-            foreach (Card card in cards)
-            {
-                // instantiate a NEW dictionary every time to create the "cards" field for Student(s)
-                SortedDictionary<int, List<Question>> sheets = new SortedDictionary<int, List<Question>>
-                {
-                    {card.SheetNumber, card.Response }
-                };
-
-                students.Add(new Student(card.WID, sheets));
-            }
-        }
-
-        // I THINK this is right...
-        // Sorts & Merges sheets 1,2,3,...,n of the students cards
-        private void MergeSheets()
-        {
-            foreach (Student student in students)
-            {
-                List<Question> student_answers = new List<Question>();
-                // 'i' is the index of the KeyValuePair of the Dictionary
-                for (int i = 1; i <= student.Cards.Count; i++)
-                {
-                    student_answers = student.Cards[i];
-                }
-                student.Answers = student_answers;
-            }
-        }
-
-        // REWRITE ONCE THE LIST OF STUDENTS HAS BEEN CREATED
         // Check student answers against the answer key. Canvas grading
         public void GradeStudents()
         {
-            foreach (Card card in cards)
+            foreach (Card student in students)
             {
                 for (int i = 0; i < answer_key.Count; i++)
                 {
-                    card.Response[i].Grade(answer_key[i]);
+                    student.Response[i].Grade(answer_key[i]);
                 }
             }
         }
@@ -125,7 +88,7 @@ namespace Scantron
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
             int count = 0;
 
-            foreach (Card student in cards)
+            foreach (Card student in students)
             {
                 count++;
                 info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();
