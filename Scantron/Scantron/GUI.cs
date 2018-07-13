@@ -53,7 +53,7 @@ namespace Scantron
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
         }
-
+        
         public void Start()
         {
             try
@@ -63,9 +63,15 @@ namespace Scantron
                                         "press the 'Stop' within this window.";
                 raw_scantron_output = "";
                 serial_port.Open();
-                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                
+                // Added for manual Scantron control. Might not work.
+                while (serial_port.IsOpen)
+                {
+                    serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                    serial_port.Write("+"); // Send positive signal to Scantron machine.
+                }
             }
-            // SystemException is the superclass containing IOException and InvalidOperationException
+            // SystemException is the superclass containing IOException and InvalidOperationException.
             catch (SystemException)
             {
                 // Do nothing. This is to prevent an error message about the port already being open if a user has to rescan cards.
@@ -73,8 +79,33 @@ namespace Scantron
         }
 
         // This method is an event handler for the serialport.
+        // Rewrote this in anticipation for manually controlling the Scantron machine. Might no work at all lol.
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            string data = "";
+            int count = 0;
+
+            while(count < 5)
+            {
+                data = serial_port.ReadExisting();
+
+                if (data[data.Length] != '$')
+                {
+                    serial_port.Write("-"); // Send negative signal to Scantron machine.
+                    count++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (count > 4)
+            {
+                MessageBox.Show("Something went wrong with the last card that went through.");
+                return;
+            }
+            
             // Sets serial_port to the event object value.
             serial_port = (SerialPort)sender;
             // Appends the values from the scantron machine into the raw_scantron_ouput.
