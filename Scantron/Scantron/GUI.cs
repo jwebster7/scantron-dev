@@ -35,7 +35,7 @@ namespace Scantron
         private Panel uxAnswerKeyPanel;
         private List<Control> question_panels = new List<Control>();
 
-        private Grader grader = new Grader();
+        private Grader grader;
 
         public GUI(Form scantron_form)
         {
@@ -53,6 +53,13 @@ namespace Scantron
 
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
+
+            grader = new Grader(this);
+        }
+
+        public void DisplayMessage(string message)
+        {
+            MessageBox.Show(message);
         }
         
         public void Start()
@@ -164,7 +171,7 @@ namespace Scantron
 
             int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
 
-            if (number_of_questions <= 150 && number_of_questions > 0)
+            if (number_of_questions <= 250 && number_of_questions > 0)
             {
                 uxAnswerKeyPanel.Controls.Clear();
 
@@ -275,13 +282,19 @@ namespace Scantron
 
         public void Grade()
         {
-            grader.GradeStudents();
-            WriteFile();
-
-            uxStudentSelector.Items.Clear();
-            foreach (Student student in grader.Students)
+            if(grader.GradeStudents())
             {
-                uxStudentSelector.Items.Add(student.WID);
+                WriteFile();
+
+                uxStudentSelector.Items.Clear();
+                foreach (Student student in grader.Students)
+                {
+                    uxStudentSelector.Items.Add(student.WID);
+                }
+            }
+            else
+            {
+                return;
             }
         }
 

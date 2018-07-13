@@ -18,6 +18,7 @@ namespace Scantron
 {
     class Grader
     {
+        GUI gui;
         // Holds the raw data split up by card.
         private List<string> raw_cards = new List<string>();
         // Holds the cards used to create the students.
@@ -28,9 +29,9 @@ namespace Scantron
         private List<Question> answer_key = new List<Question>(); // may need to be converted to a Dictionary<int, List<questions>> as well
 
         // Default constructor; does nothing
-        public Grader()
+        public Grader(GUI gui)
         {
-
+            this.gui = gui;
         }
 
         // getter for cards
@@ -75,7 +76,7 @@ namespace Scantron
             {
                 Student student = new Student(card.WID, card);
 
-                if (students.Contains(student))
+                if (students.Exists(item => item.WID == card.WID))
                 {
                     student = students.Find(item => item.WID == card.WID);
                     student.Cards.Add(card);
@@ -92,8 +93,8 @@ namespace Scantron
             }
         }
         
-        // Check student answers against the answer key. Canvas grading.
-        public void GradeStudents()
+        // Check student answers against the answer key. Canvas grading. Returns true if no errors occurred.
+        public bool GradeStudents()
         {
             foreach (Student student in students)
             {
@@ -104,12 +105,16 @@ namespace Scantron
                         student.Response[i].Grade(answer_key[i]);
                     }
                 }
-                catch (IndexOutOfRangeException e)
+                catch (ArgumentOutOfRangeException e)
                 {
-                    // Current student doesn't have all of their cards.
-                    // Run method that asks user to check which cards aren't matched?
+                    gui.DisplayMessage("Student " + student.WID + " has " + student.Response.Count + " questions associated with them."
+                                        + " If this is too few, the student filled out the WID on one or more of their cards incorrectly."
+                                        + " If this is the correct number, you may have entered too many questions on the answer key.");
+                    return false;
                 }
             }
+
+            return true;
         }
 
         // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
