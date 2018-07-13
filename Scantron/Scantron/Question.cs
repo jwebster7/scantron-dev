@@ -6,7 +6,7 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This class is used to create Question objects for the student responses & exam key
+// This class is used to create Question objects for the student responses & exam key.
 
 using System.Collections;
 using System.Collections.Generic;

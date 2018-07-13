@@ -6,7 +6,7 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This class handles button click events on the GUI.
+// This class handles creation and grading of students.
 
 using System;
 using System.Collections.Generic;
@@ -34,11 +34,11 @@ namespace Scantron
         }
 
         // getter for cards
-        public List<Card> Cards
+        public List<Student> Students
         {
             get
             {
-                return cards;
+                return students;
             }
         }
 
@@ -73,41 +73,41 @@ namespace Scantron
         {
             foreach (Card card in cards)
             {
-                // instantiate a NEW dictionary every time to create the "cards" field for Student(s)
-                SortedDictionary<int, List<Question>> sheets = new SortedDictionary<int, List<Question>>
-                {
-                    {card.SheetNumber, card.Response }
-                };
+                Student student = new Student(card.WID, card);
 
-                students.Add(new Student(card.WID, sheets));
+                if (students.Contains(student))
+                {
+                    student = students.Find(item => item.WID == card.WID);
+                    student.Cards.Add(card);
+                }
+                else
+                {
+                    students.Add(student);
+                }
+            }
+
+            foreach (Student student in students)
+            {
+                student.CreateResponse();
             }
         }
-
-        // I THINK this is right...
-        // Sorts & Merges sheets 1,2,3,...,n of the students cards
-        private void MergeSheets()
+        
+        // Check student answers against the answer key. Canvas grading.
+        public void GradeStudents()
         {
             foreach (Student student in students)
             {
-                List<Question> student_answers = new List<Question>();
-                // 'i' is the index of the KeyValuePair of the Dictionary
-                for (int i = 1; i <= student.Cards.Count; i++)
+                try
                 {
-                    student_answers = student.Cards[i];
+                    for (int i = 0; i < answer_key.Count; i++)
+                    {
+                        student.Response[i].Grade(answer_key[i]);
+                    }
                 }
-                student.Answers = student_answers;
-            }
-        }
-
-        // REWRITE ONCE THE LIST OF STUDENTS HAS BEEN CREATED
-        // Check student answers against the answer key. Canvas grading
-        public void GradeStudents()
-        {
-            foreach (Card card in cards)
-            {
-                for (int i = 0; i < answer_key.Count; i++)
+                catch (IndexOutOfRangeException e)
                 {
-                    card.Response[i].Grade(answer_key[i]);
+                    // Current student doesn't have all of their cards.
+                    // Run method that asks user to check which cards aren't matched?
                 }
             }
         }
@@ -125,7 +125,7 @@ namespace Scantron
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
             int count = 0;
 
-            foreach (Card student in cards)
+            foreach (Student student in students)
             {
                 count++;
                 info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();

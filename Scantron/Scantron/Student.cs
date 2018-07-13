@@ -7,64 +7,71 @@ namespace Scantron
 {
     class Student
     {
-        // the students wid
+        // The student's WID.
         private string wid;
 
-        // the students Scantron card(s); Holds 1 KVP if only question count is <= 50
-        private SortedDictionary<int, List<Question>> cards = new SortedDictionary<int, List<Question>>();
+        // The student's Scantron card(s).
+        private List<Card> cards = new List<Card>();
 
-        // the students responses compiled from "cards"
-        private List<Question> answers = new List<Question>();
-
-        // default Student constructor
-        public Student()
-        {
-            // do nothing for now
-        }
+        // The student's responses compiled from the cards.
+        private List<Question> response = new List<Question>();
 
         // Creates Student() objects using the WID & Dictionary of cards and their sheet number
-        public Student(string wid, SortedDictionary<int, List<Question>> cards)
+        public Student(string wid, Card card)
         {
             this.wid = wid;
-            this.cards = cards;
+            cards.Add(card);
         }
 
-        // getter/setter for wid
+        // getter for wid
         public string WID
         {
             get
             {
                 return wid;
             }
-            set
-            {
-                this.wid = value;
-            }
         }
 
-        // getter/setter for cards
-        public SortedDictionary<int, List<Question>> Cards
+        // getter for cards
+        public List<Card> Cards
         {
             get
             {
                 return cards;
             }
-            set
-            {
-                this.cards = value;
-            }
         }
 
-        public List<Question> Answers
+        public List<Question> Response
         {
             get
             {
-                return answers;
+                return response;
             }
-            set
+        }
+
+
+        // Convert the student's list of cards to a list of answers.
+        public void CreateResponse()
+        {
+            cards.Sort((a, b) => a.SheetNumber.CompareTo(b.SheetNumber));
+
+            foreach (Card card in cards)
             {
-                this.answers = value;
+                response.AddRange(card.Response);
             }
+        }
+
+        // Get the student's score.
+        public float Score()
+        {
+            float score = 0;
+
+            foreach (Question question in response)
+            {
+                score += question.Points;
+            }
+
+            return score;
         }
     }
 }

@@ -302,19 +302,6 @@ namespace Scantron
             return 0;
         }
 
-        // Get the student's score.
-        public float Score()
-        {
-            float score = 0;
-
-            foreach (Question question in Response)
-            {
-                score += question.Points;
-            }
-
-            return score;
-        }
-
         // Translates the student's data to a string for use with the Canvas Scantron tool.
         public override string ToString()
         {

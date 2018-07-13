@@ -85,10 +85,11 @@ namespace Scantron
         {
             serial_port.Close();
             grader.CreateCards(raw_scantron_output);
+            grader.CreateStudents();
 
             // If no students were created, (this should already be taken care of in the Stop event handler), 
             // we want to set the state back to the start button and start over.
-            if (grader.Cards.Count == 0)
+            if (grader.Students.Count == 0)
             {
                 uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                         "then click on 'Start' within this window.";
@@ -246,7 +247,7 @@ namespace Scantron
             WriteFile();
 
             uxStudentSelector.Items.Clear();
-            foreach (Card student in grader.Cards)
+            foreach (Student student in grader.Students)
             {
                 uxStudentSelector.Items.Add(student.WID);
             }
@@ -258,7 +259,7 @@ namespace Scantron
             string file = "";
 
             // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Card student in grader.Cards)
+            foreach (Student student in grader.Students)
             {
                 file += grader.ToString();
             }
@@ -314,63 +315,59 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            foreach (Card student in grader.Cards)
+            Student student = grader.Students.Find(item => item.WID == uxStudentSelector.Text);
+
+            uxStudentResponsePanel.Controls.Clear();
+
+            for (int i = 0; i < grader.AnswerKey.Count; i++)
             {
-                if (uxStudentSelector.Text.Equals(student.WID))
+                Panel panel = new Panel
                 {
-                    uxStudentResponsePanel.Controls.Clear();
+                    BackColor = Color.Green,
+                    Location = new Point(3, 3 + 26 * i),
+                    Size = new Size(268, 22)
+                };
 
-                    for (int i = 0; i < grader.AnswerKey.Count; i++)
+                for (int j = 0; j < 5; j++)
+                {
+                    CheckBox checkbox = new CheckBox
                     {
-                        Panel panel = new Panel
-                        {
-                            BackColor = Color.Green,
-                            Location = new Point(3, 3 + 26 * i),
-                            Size = new Size(268, 22)
-                        };
+                        Enabled = false,
+                        Location = new Point(73 + 39 * j, 3),
+                        Size = new Size(33, 17),
+                        Text = ((char)(j + 65)).ToString()
+                    };
 
-                        for (int j = 0; j < 5; j++)
-                        {
-                            CheckBox checkbox = new CheckBox
-                            {
-                                Enabled = false,
-                                Location = new Point(73 + 39 * j, 3),
-                                Size = new Size(33, 17),
-                                Text = ((char)(j + 65)).ToString()
-                            };
+                    if (student.Response[i].Answer[j] != ' ')
+                    {
+                        checkbox.Checked = true;
+                    }
 
-                            if (student.Response[i].Answer[j] != ' ')
-                            {
-                                checkbox.Checked = true;
-                            }
+                    panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
+                }
 
-                            panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
-                        }
+                Label label = new Label
+                {
+                    Location = new Point(3, 3),
+                    Size = new Size(70, 13),
+                    Text = "Question" + (i + 1)
+                };
 
-                        Label label = new Label
-                        {
-                            Location = new Point(3, 3),
-                            Size = new Size(70, 13),
-                            Text = "Question" + (i + 1)
-                        };
+                for (int k = 0; k < 5; k++)
+                {
+                    CheckBox response_checkbox = (CheckBox)panel.Controls[k];
+                    CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[k];
 
-                        for (int k = 0; k < 5; k++)
-                        {
-                            CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                            CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[k];
-
-                            if (response_checkbox.Checked != answer_key_checkbox.Checked)
-                            {
-                                panel.BackColor = Color.Red;
-                                break;
-                            }
-                        }
-
-                        panel.Controls.Add(label);
-
-                        uxStudentResponsePanel.Controls.Add(panel);
+                    if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                    {
+                        panel.BackColor = Color.Red;
+                        break;
                     }
                 }
+
+                panel.Controls.Add(label);
+
+                uxStudentResponsePanel.Controls.Add(panel);
             }
         }
     }
