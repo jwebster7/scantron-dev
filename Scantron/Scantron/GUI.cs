@@ -422,7 +422,7 @@ namespace Scantron
         /// <param name="location">Keeps track of the position in the list</param>
         public void NextStudent(ref int location)
         {
-            if (grader.Students == null)
+            if (grader.Students[location + 1] == null)
             {
                 throw new IndexOutOfRangeException();
             }
