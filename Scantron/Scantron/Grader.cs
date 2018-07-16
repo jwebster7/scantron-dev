@@ -74,7 +74,7 @@ namespace Scantron
         {
             foreach (Card card in cards)
             {
-                Student student = new Student(card.WID, card);
+                Student student = new Student(card);
 
                 if (students.Exists(item => item.WID == card.WID))
                 {

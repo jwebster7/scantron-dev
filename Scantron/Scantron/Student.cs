@@ -20,9 +20,9 @@ namespace Scantron
         private List<Question> response = new List<Question>();
 
         // Creates Student() objects using the WID & Dictionary of cards and their sheet number
-        public Student(string wid, Card card)
+        public Student(Card card)
         {
-            this.wid = wid;
+            this.wid = card.WID;
             this.test_version = card.TestVersion;
             cards.Add(card);
         }
