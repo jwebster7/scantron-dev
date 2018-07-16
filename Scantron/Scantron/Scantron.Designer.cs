@@ -69,7 +69,7 @@
             // uxInstructionBox
             // 
             this.uxInstructionBox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
+            this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.uxInstructionBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.uxInstructionBox.Location = new System.Drawing.Point(3, 3);
             this.uxInstructionBox.MaximumSize = new System.Drawing.Size(580, 245);
@@ -307,7 +307,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1630, 643);
+            this.ClientSize = new System.Drawing.Size(1037, 643);
             this.Controls.Add(this.uxTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;

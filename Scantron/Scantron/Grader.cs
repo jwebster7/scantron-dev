@@ -120,11 +120,7 @@ namespace Scantron
         // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
         public override string ToString()
         {
-            float points_possible = 0;
-            foreach (Question question in answer_key)
-            {
-                points_possible += question.Points;
-            }
+            float points_possible = answer_key.Sum(item => item.Points);
 
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Count + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
@@ -133,7 +129,7 @@ namespace Scantron
             foreach (Student student in students)
             {
                 count++;
-                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();
+                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score() + Environment.NewLine;
             }
 
             return info;

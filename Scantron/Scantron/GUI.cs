@@ -88,7 +88,7 @@ namespace Scantron
             serial_port = (SerialPort)sender;
             string data = serial_port.ReadExisting();
 
-            if (data.Length > 1)
+            if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
             {
                 raw_scantron_output += data;
                 uxInstructionBox.Text += data;
@@ -285,13 +285,7 @@ namespace Scantron
         // Write the file to be uploaded to the Canvas gradebook.
         private void WriteFile()
         {
-            string file = "";
-
-            // We want to write to a file and use what StudentExamInfo returns to print to a file.
-            foreach (Student student in grader.Students)
-            {
-                file += grader.ToString();
-            }
+            string file = grader.ToString();
 
             // Then we have to start a file dialog to save the string to a file.
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog
