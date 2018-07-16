@@ -19,6 +19,7 @@ using System.Threading.Tasks; //Requires .Net 4
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 // Remove unused using statements in final version.
 
 namespace Scantron

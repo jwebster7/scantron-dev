@@ -42,8 +42,8 @@
             this.uxTabControl = new System.Windows.Forms.TabControl();
             this.ScanTab = new System.Windows.Forms.TabPage();
             this.GradeTab = new System.Windows.Forms.TabPage();
-            this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
+            this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
             this.uxTabControl.SuspendLayout();
             this.ScanTab.SuspendLayout();
             this.GradeTab.SuspendLayout();
@@ -64,7 +64,7 @@
             // uxInstructionBox
             // 
             this.uxInstructionBox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
+            this.uxInstructionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
             this.uxInstructionBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.uxInstructionBox.Location = new System.Drawing.Point(3, 3);
             this.uxInstructionBox.MaximumSize = new System.Drawing.Size(580, 245);
@@ -174,7 +174,7 @@
             this.uxTabControl.Location = new System.Drawing.Point(0, 0);
             this.uxTabControl.Name = "uxTabControl";
             this.uxTabControl.SelectedIndex = 0;
-            this.uxTabControl.Size = new System.Drawing.Size(1101, 588);
+            this.uxTabControl.Size = new System.Drawing.Size(1008, 588);
             this.uxTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.uxTabControl.TabIndex = 9;
             // 
@@ -189,7 +189,7 @@
             this.ScanTab.Location = new System.Drawing.Point(4, 54);
             this.ScanTab.Name = "ScanTab";
             this.ScanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ScanTab.Size = new System.Drawing.Size(1093, 530);
+            this.ScanTab.Size = new System.Drawing.Size(1000, 530);
             this.ScanTab.TabIndex = 0;
             this.ScanTab.Text = "Scan";
             // 
@@ -209,20 +209,9 @@
             this.GradeTab.Location = new System.Drawing.Point(4, 54);
             this.GradeTab.Name = "GradeTab";
             this.GradeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.GradeTab.Size = new System.Drawing.Size(1093, 530);
+            this.GradeTab.Size = new System.Drawing.Size(1000, 530);
             this.GradeTab.TabIndex = 1;
             this.GradeTab.Text = "Grade";
-            // 
-            // uxAnswerKeyLabel
-            // 
-            this.uxAnswerKeyLabel.AutoSize = true;
-            this.uxAnswerKeyLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxAnswerKeyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxAnswerKeyLabel.Location = new System.Drawing.Point(3, 3);
-            this.uxAnswerKeyLabel.Name = "uxAnswerKeyLabel";
-            this.uxAnswerKeyLabel.Size = new System.Drawing.Size(111, 24);
-            this.uxAnswerKeyLabel.TabIndex = 17;
-            this.uxAnswerKeyLabel.Text = "Answer Key";
             // 
             // uxStudentResponseLabel
             // 
@@ -235,12 +224,23 @@
             this.uxStudentResponseLabel.TabIndex = 18;
             this.uxStudentResponseLabel.Text = "Student Response";
             // 
+            // uxAnswerKeyLabel
+            // 
+            this.uxAnswerKeyLabel.AutoSize = true;
+            this.uxAnswerKeyLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxAnswerKeyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.uxAnswerKeyLabel.Location = new System.Drawing.Point(3, 3);
+            this.uxAnswerKeyLabel.Name = "uxAnswerKeyLabel";
+            this.uxAnswerKeyLabel.Size = new System.Drawing.Size(111, 24);
+            this.uxAnswerKeyLabel.TabIndex = 17;
+            this.uxAnswerKeyLabel.Text = "Answer Key";
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1256, 668);
+            this.ClientSize = new System.Drawing.Size(1002, 668);
             this.Controls.Add(this.uxTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
