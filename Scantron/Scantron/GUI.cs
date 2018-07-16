@@ -27,6 +27,7 @@ namespace Scantron
     {
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         private string raw_scantron_output;
+        private int location;
         // Test Data. Has two students for a 150 question exam. One has blank questions.
         //private string raw_scantron_output = "b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$";
         private Form scantron_form;
@@ -46,6 +47,7 @@ namespace Scantron
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyPanel = (Panel) scantron_form.Controls.Find("uxAnswerKeyPanel", true)[0];
+            location = 0;
 
             foreach (Control control in uxAnswerKeyPanel.Controls)
             {
@@ -275,6 +277,9 @@ namespace Scantron
                 {
                     uxStudentSelector.Items.Add(student.WID);
                 }
+
+                // Displays the first student in the index; Index is always 0
+                DisplayStudent(grader.Students[0]);
             }
             else
             {
@@ -338,8 +343,46 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            Student student = grader.Students.Find(item => item.WID == uxStudentSelector.Text);
+            DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+        }
 
+        /// <summary>
+        /// Displays the "next" students responses in the uxStudentResponsePanel
+        /// </summary>
+        /// <param name="location">Keeps track of the position in the list</param>
+        public void NextStudent()
+        {
+            if (grader.Students[location + 1] == null)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
+            else
+            {
+                location++;
+                DisplayStudent(grader.Students[location]);
+            }
+        }
+
+        /// <summary>
+        /// Displays the "previous" students responses in the uxStudentResponsePanel
+        /// </summary>
+        /// <param name="location">Keeps track of the position in the list</param>
+        public void PreviousStudent()
+        {
+            if (grader.Students[location - 1] == null)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else
+            {
+                location--;
+                DisplayStudent(grader.Students[location]);
+            }
+        }
+
+        private void DisplayStudent(Student student)
+        {
             uxStudentResponsePanel.Controls.Clear();
 
             for (int i = 0; i < grader.AnswerKey.Count; i++)
@@ -392,86 +435,6 @@ namespace Scantron
 
                 uxStudentResponsePanel.Controls.Add(panel);
             }
-        }
-
-        /// <summary>
-        /// Displays the "next" students responses in the uxStudentResponsePanel
-        /// </summary>
-        /// <param name="location">Keeps track of the position in the list</param>
-        public void NextStudent(ref int location)
-        {
-            if (grader.Students[location + 1] == null)
-            {
-                throw new IndexOutOfRangeException();
-            }
-            
-            else
-            {
-                Student student = grader.Students[location + 1];
-
-                uxStudentResponsePanel.Controls.Clear();
-
-                for (int i = 0; i < grader.AnswerKey.Count; i++)
-                {
-                    Panel panel = new Panel
-                    {
-                        BackColor = Color.Green,
-                        Location = new Point(3, 3 + 26 * i),
-                        Size = new Size(268, 22)
-                    };
-
-                    for (int j = 0; j < 5; j++)
-                    {
-                        CheckBox checkbox = new CheckBox
-                        {
-                            Enabled = false,
-                            Location = new Point(73 + 39 * j, 3),
-                            Size = new Size(33, 17),
-                            Text = ((char)(j + 65)).ToString()
-                        };
-
-                        if (student.Response[i].Answer[j] != ' ')
-                        {
-                            checkbox.Checked = true;
-                        }
-
-                        panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
-                    }
-
-                    Label label = new Label
-                    {
-                        Location = new Point(3, 3),
-                        Size = new Size(70, 13),
-                        Text = "Question" + (i + 1)
-                    };
-
-                    for (int k = 0; k < 5; k++)
-                    {
-                        CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                        CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[k];
-
-                        if (response_checkbox.Checked != answer_key_checkbox.Checked)
-                        {
-                            panel.BackColor = Color.Red;
-                            break;
-                        }
-                    }
-
-                    panel.Controls.Add(label);
-
-                    uxStudentResponsePanel.Controls.Add(panel);
-
-                }
-            }
-        }
-
-        /// <summary>
-        /// Displays the "previous" students responses in the uxStudentResponsePanel
-        /// </summary>
-        /// <param name="location">Keeps track of the position in the list</param>
-        public void PreviousStudent(ref int location)
-        {
-                throw new NotImplementedException();
         }
     }
 }

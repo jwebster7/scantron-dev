@@ -46,6 +46,14 @@ namespace Scantron
             // After all students are scanned, combine copies that are different sheet numbers.
         }
 
+        public int TestVersion
+        {
+            get
+            {
+                return test_version;
+            }
+        }
+        
         // WID property.
         public string WID
         {

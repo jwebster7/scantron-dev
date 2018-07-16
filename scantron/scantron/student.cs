@@ -10,6 +10,9 @@ namespace Scantron
         // The student's WID.
         private string wid;
 
+        // The test version
+        private int test_version;
+
         // The student's Scantron card(s).
         private List<Card> cards = new List<Card>();
 
@@ -20,8 +23,18 @@ namespace Scantron
         public Student(string wid, Card card)
         {
             this.wid = wid;
+            this.test_version = card.TestVersion;
             cards.Add(card);
         }
+
+        public int TestVersion
+        {
+            get
+            {
+                return test_version;
+            }
+        }
+
 
         // getter for wid
         public string WID
