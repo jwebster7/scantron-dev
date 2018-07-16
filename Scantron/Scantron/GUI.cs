@@ -415,5 +415,15 @@ namespace Scantron
                 uxStudentResponsePanel.Controls.Add(panel);
             }
         }
+
+        public void NextStudent()
+        {
+
+        }
+
+        public void PreviousStudent()
+        {
+
+        }
     }
 }
