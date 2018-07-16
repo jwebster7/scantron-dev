@@ -415,13 +415,21 @@ namespace Scantron
                 uxStudentResponsePanel.Controls.Add(panel);
             }
         }
-
-        public void NextStudent()
+        
+        /// <summary>
+        /// Displays the "next" students responses in the uxStudentResponsePanel
+        /// </summary>
+        /// <param name="location">Keeps track of the position in the list</param>
+        public void NextStudent(ref int location)
         {
 
         }
 
-        public void PreviousStudent()
+        /// <summary>
+        /// Displays the "previous" students responses in the uxStudentResponsePanel
+        /// </summary>
+        /// <param name="location">Keeps track of the position in the list</param>
+        public void PreviousStudent(ref int location)
         {
 
         }
