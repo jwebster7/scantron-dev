@@ -415,14 +415,76 @@ namespace Scantron
                 uxStudentResponsePanel.Controls.Add(panel);
             }
         }
-        
+
         /// <summary>
         /// Displays the "next" students responses in the uxStudentResponsePanel
         /// </summary>
         /// <param name="location">Keeps track of the position in the list</param>
         public void NextStudent(ref int location)
         {
+            if (grader.Students == null)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
+            else
+            {
+                Student student = grader.Students[location + 1];
 
+                uxStudentResponsePanel.Controls.Clear();
+
+                for (int i = 0; i < grader.AnswerKey.Count; i++)
+                {
+                    Panel panel = new Panel
+                    {
+                        BackColor = Color.Green,
+                        Location = new Point(3, 3 + 26 * i),
+                        Size = new Size(268, 22)
+                    };
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        CheckBox checkbox = new CheckBox
+                        {
+                            Enabled = false,
+                            Location = new Point(73 + 39 * j, 3),
+                            Size = new Size(33, 17),
+                            Text = ((char)(j + 65)).ToString()
+                        };
+
+                        if (student.Response[i].Answer[j] != ' ')
+                        {
+                            checkbox.Checked = true;
+                        }
+
+                        panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
+                    }
+
+                    Label label = new Label
+                    {
+                        Location = new Point(3, 3),
+                        Size = new Size(70, 13),
+                        Text = "Question" + (i + 1)
+                    };
+
+                    for (int k = 0; k < 5; k++)
+                    {
+                        CheckBox response_checkbox = (CheckBox)panel.Controls[k];
+                        CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[k];
+
+                        if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                        {
+                            panel.BackColor = Color.Red;
+                            break;
+                        }
+                    }
+
+                    panel.Controls.Add(label);
+
+                    uxStudentResponsePanel.Controls.Add(panel);
+
+                }
+            }
         }
 
         /// <summary>
@@ -431,7 +493,7 @@ namespace Scantron
         /// <param name="location">Keeps track of the position in the list</param>
         public void PreviousStudent(ref int location)
         {
-
+                throw new NotImplementedException();
         }
     }
 }
