@@ -28,6 +28,9 @@ namespace Scantron
     {
         private GUI gui;
 
+        // The location/student in the grader.students
+        private static int location = 0;
+
         // The default constructor for the scantron GUI.
         public Scantron()
         {
@@ -75,6 +78,18 @@ namespace Scantron
         private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             gui.SelectStudent();
+        }
+
+        // Event handler for looking at the next students record 
+        private void uxStudentNext_Click(object sender, EventArgs e)
+        {
+            gui.NextStudent(ref location);
+        }
+
+        // Event handler for looking at the previous students record
+        private void uxStudentPrevious_Click(object sender, EventArgs e)
+        {
+            gui.PreviousStudent(ref location);
         }
     }
 }
