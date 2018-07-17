@@ -34,7 +34,7 @@ namespace Scantron
         private TextBox uxInstructionBox;
         private Panel uxStudentResponsePanel;
         private ComboBox uxStudentSelector;
-        private Panel uxAnswerKeyPanel;
+        private TabControl uxAnswerKeyTabControl;
         private List<Control> question_panels = new List<Control>();
 
         private Grader grader;
@@ -46,10 +46,10 @@ namespace Scantron
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
-            uxAnswerKeyPanel = (Panel) scantron_form.Controls.Find("uxAnswerKeyPanel", true)[0];
+            uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
             location = 0;
 
-            foreach (Control control in uxAnswerKeyPanel.Controls)
+            foreach (Control control in uxAnswerKeyTabControl.Controls)
             {
                 question_panels.Add(control);
             }
@@ -154,60 +154,65 @@ namespace Scantron
         public void Enter()
         {
             TextBox uxNumberOfQuestions = (TextBox) scantron_form.Controls.Find("uxNumberOfQuestions",true)[0];
+            NumericUpDown uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
 
             int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
 
             if (number_of_questions <= 250 && number_of_questions > 0)
             {
-                uxAnswerKeyPanel.Controls.Clear();
-
-                for (int i = 0; i < number_of_questions; i++)
+                for (int i = 0; i < uxNumberOfVersions.Value; i++)
                 {
-                    Panel panel = new Panel
-                    {
-                        BackColor = Color.MediumPurple,
-                        Location = new Point(3, 3 + 26 * i),
-                        Size = new Size(420, 22)
-                    };
+                    TabPage tabpage = (TabPage)uxAnswerKeyTabControl.Controls[i];
+                    tabpage.Controls.Clear();
 
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < number_of_questions; j++)
                     {
-                        CheckBox checkbox = new CheckBox
+                        Panel panel = new Panel
                         {
-                            Location = new Point(73 + 39 * j, 3),
-                            Size = new Size(33, 17),
-                            Text = ((char)(j + 65)).ToString()
+                            BackColor = Color.MediumPurple,
+                            Location = new Point(3, 3 + 26 * j),
+                            Size = new Size(420, 22)
                         };
-                        panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+
+                        for (int k = 0; k < 5; k++)
+                        {
+                            CheckBox checkbox = new CheckBox
+                            {
+                                Location = new Point(73 + 39 * k, 3),
+                                Size = new Size(33, 17),
+                                Text = ((char)(k + 65)).ToString()
+                            };
+                            panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+                        }
+
+                        NumericUpDown updown = new NumericUpDown
+                        {
+                            Location = new Point(268, 1),
+                            Minimum = 1,
+                            DecimalPlaces = 2,
+                            Size = new Size(58, 20)
+                        };
+
+                        CheckBox partial_credit = new CheckBox
+                        {
+                            Location = new Point(330, 3),
+                            Size = new Size(100, 17),
+                            Text = "Partial Credit"
+                        };
+
+                        Label label = new Label
+                        {
+                            Location = new Point(3, 3),
+                            Size = new Size(70, 13),
+                            Text = "Question" + (j + 1)
+                        };
+
+                        panel.Controls.Add(updown); // Index 5
+                        panel.Controls.Add(partial_credit); // Index 6
+                        panel.Controls.Add(label); // Index 7
+
+                        tabpage.Controls.Add(panel);
                     }
-
-                    NumericUpDown updown = new NumericUpDown
-                    {
-                        Location = new Point(268, 1),
-                        Minimum = 1,
-                        DecimalPlaces = 2,
-                        Size = new Size(58, 20)
-                    };
-
-                    CheckBox partial_credit = new CheckBox
-                    {
-                        Location = new Point(330, 3),
-                        Size = new Size(100, 17),
-                        Text = "Partial Credit"
-                    };
-
-                    Label label = new Label
-                    {
-                        Location = new Point(3, 3),
-                        Size = new Size(70, 13),
-                        Text = "Question" + (i + 1)
-                    };
-
-                    panel.Controls.Add(updown); // Index 5
-                    panel.Controls.Add(partial_credit); // Index 6
-                    panel.Controls.Add(label); // Index 7
-
-                    uxAnswerKeyPanel.Controls.Add(panel);
                 }
             }
             else
@@ -218,12 +223,12 @@ namespace Scantron
 
         public void CreateAnswerKey()
         {
-            grader.AnswerKey = new List<Question>();
+            grader.AnswerKey = new Dictionary<int, List<Question>>();
 
             CheckBox checkbox;
             NumericUpDown updown;
 
-            int number_of_questions = uxAnswerKeyPanel.Controls.Count;
+            int number_of_questions = uxAnswerKeyTabControl.Controls.Count;
             char[] answer = new char[5];
             float points = 0;
             bool partial_credit = false;
@@ -235,7 +240,7 @@ namespace Scantron
                 // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
                 for (int j = 0; j < 5; j++)
                 {
-                    checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[j];
+                    checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[j];
                     if (checkbox.Checked)
                     {
                         answer[j] = (char)(65 + j);
@@ -246,11 +251,11 @@ namespace Scantron
                     }
                 }
 
-                updown = (NumericUpDown)uxAnswerKeyPanel.Controls[i].Controls[5];
+                updown = (NumericUpDown)uxAnswerKeyTabControl.Controls[i].Controls[5];
                 points = (float)updown.Value;
 
                 // Checks the current question panel's partial credit checkbox.
-                checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[6];
+                checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[6];
                 if (checkbox.Checked)
                 {
                     partial_credit = true;
@@ -260,7 +265,7 @@ namespace Scantron
                     partial_credit = false;
                 }
 
-                grader.AnswerKey.Add(new Question(answer, points, partial_credit));
+                grader.AnswerKey[0].Add(new Question(answer, points, partial_credit));
             }
 
             MessageBox.Show("Answer key created!");
@@ -422,7 +427,7 @@ namespace Scantron
                 for (int k = 0; k < 5; k++)
                 {
                     CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                    CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyPanel.Controls[i].Controls[k];
+                    CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[k];
 
                     if (response_checkbox.Checked != answer_key_checkbox.Checked)
                     {
