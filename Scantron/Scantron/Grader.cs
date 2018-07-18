@@ -26,7 +26,7 @@ namespace Scantron
         // Hold the list of students to be graded
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
-        private List<Question> answer_key = new List<Question>(); // may need to be converted to a Dictionary<int, List<questions>> as well
+        private Dictionary<int, List<Question>> answer_key = new Dictionary<int, List<Question>>();
 
         // Default constructor; does nothing
         public Grader(GUI gui)
@@ -44,7 +44,7 @@ namespace Scantron
         }
 
         // getter/setter for answer_key
-        public List<Question> AnswerKey
+        public Dictionary<int, List<Question>> AnswerKey
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Scantron
         {
             foreach (Card card in cards)
             {
-                Student student = new Student(card.WID, card);
+                Student student = new Student(card);
 
                 if (students.Exists(item => item.WID == card.WID))
                 {
@@ -98,11 +98,13 @@ namespace Scantron
         {
             foreach (Student student in students)
             {
+                int test_version = student.TestVersion;
+
                 try
                 {
-                    for (int i = 0; i < answer_key.Count; i++)
+                    for (int i = 0; i < answer_key[0].Count; i++)
                     {
-                        student.Response[i].Grade(answer_key[i]);
+                        student.Response[i].Grade(answer_key[test_version][i]);
                     }
                 }
                 catch (ArgumentOutOfRangeException e)
@@ -120,11 +122,7 @@ namespace Scantron
         // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
         public override string ToString()
         {
-            float points_possible = 0;
-            foreach (Question question in answer_key)
-            {
-                points_possible += question.Points;
-            }
+            float points_possible = answer_key[0].Sum(question => question.Points);
 
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Count + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
@@ -133,7 +131,7 @@ namespace Scantron
             foreach (Student student in students)
             {
                 count++;
-                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score();
+                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score() + Environment.NewLine;
             }
 
             return info;

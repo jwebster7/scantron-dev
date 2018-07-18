@@ -19,6 +19,7 @@ using System.Threading.Tasks; //Requires .Net 4
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 // Remove unused using statements in final version.
 
 namespace Scantron
@@ -26,6 +27,9 @@ namespace Scantron
     public partial class Scantron : Form
     {
         private GUI gui;
+
+        // The location/student in the grader.students
+        private static int location = 0;
 
         // The default constructor for the scantron GUI.
         public Scantron()
@@ -79,13 +83,13 @@ namespace Scantron
         // Event handler for looking at the next students record 
         private void uxStudentNext_Click(object sender, EventArgs e)
         {
-
+            gui.NextStudent();
         }
 
         // Event handler for looking at the previous students record
         private void uxStudentPrevious_Click(object sender, EventArgs e)
         {
-
+            gui.PreviousStudent();
         }
     }
 }

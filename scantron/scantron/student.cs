@@ -10,6 +10,9 @@ namespace Scantron
         // The student's WID.
         private string wid;
 
+        // The test version
+        private int test_version;
+
         // The student's Scantron card(s).
         private List<Card> cards = new List<Card>();
 
@@ -17,11 +20,21 @@ namespace Scantron
         private List<Question> response = new List<Question>();
 
         // Creates Student() objects using the WID & Dictionary of cards and their sheet number
-        public Student(string wid, Card card)
+        public Student(Card card)
         {
-            this.wid = wid;
+            this.wid = card.WID;
+            this.test_version = card.TestVersion;
             cards.Add(card);
         }
+
+        public int TestVersion
+        {
+            get
+            {
+                return test_version;
+            }
+        }
+
 
         // getter for wid
         public string WID
