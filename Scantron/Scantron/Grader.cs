@@ -104,7 +104,7 @@ namespace Scantron
                 {
                     for (int i = 0; i < answer_key[0].Count; i++)
                     {
-                        student.Response[i].Grade(answer_key[test_version][i]);
+                        student.Response[i].Grade(answer_key[test_version - 1][i]);
                     }
                 }
                 catch (ArgumentOutOfRangeException e)
@@ -113,6 +113,11 @@ namespace Scantron
                                         + " If this is too few, the student filled out the WID on one or more of their cards incorrectly."
                                         + " If this is the correct number, you may have entered too many questions on the answer key.");
                     return false;
+                }
+                catch (KeyNotFoundException e)
+                {
+                    gui.DisplayMessage("Student " + student.WID + " wrote down Test Version " + test_version + "."
+                                        + " You did not create this many versions. Student cannot be graded.");
                 }
             }
 

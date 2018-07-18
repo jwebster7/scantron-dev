@@ -267,10 +267,6 @@ namespace Scantron
         // scale of 0 to F. If no bubble is clearly the darkest, a zero is returned instead.
         private int GetDarkestBubble(int a, int b, int c)
         {
-            if (a > b && a > c)
-            {
-                return 1;
-            }
             if (b > a && b > c)
             {
                 return 2;
@@ -280,7 +276,7 @@ namespace Scantron
                 return 3;
             }
 
-            return 0;
+            return 1;
         }
 
         // Does the same as the above method, but for five bubbles.

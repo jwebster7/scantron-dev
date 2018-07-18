@@ -26,15 +26,18 @@ namespace Scantron
     class GUI
     {
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
-        private string raw_scantron_output;
-        private int location;
+        //private string raw_scantron_output;
         // Test Data. Has two students for a 150 question exam. One has blank questions.
-        //private string raw_scantron_output = "b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$";
+        private string raw_scantron_output = "b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$";
         private Form scantron_form;
         private TextBox uxInstructionBox;
         private Panel uxStudentResponsePanel;
         private ComboBox uxStudentSelector;
         private TabControl uxAnswerKeyTabControl;
+        private NumericUpDown uxNumberOfQuestions;
+        private NumericUpDown uxNumberOfVersions;
+        private Button uxPreviousStudent;
+        private Button uxNextStudent;
         private List<Control> question_panels = new List<Control>();
 
         private Grader grader;
@@ -47,7 +50,10 @@ namespace Scantron
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
-            location = 0;
+            uxNumberOfQuestions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
+            uxNumberOfVersions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
+            uxPreviousStudent = (Button)scantron_form.Controls.Find("uxPreviousStudent", true)[0];
+            uxNextStudent = (Button)scantron_form.Controls.Find("uxNextStudent", true)[0];
 
             foreach (Control control in uxAnswerKeyTabControl.Controls)
             {
@@ -153,71 +159,62 @@ namespace Scantron
 
         public void Enter()
         {
-            TextBox uxNumberOfQuestions = (TextBox) scantron_form.Controls.Find("uxNumberOfQuestions",true)[0];
-            NumericUpDown uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
+            int number_of_versions = (int) uxNumberOfVersions.Value;
+            int number_of_questions = (int) uxNumberOfQuestions.Value;
 
-            int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
-
-            if (number_of_questions <= 250 && number_of_questions > 0)
+            for (int i = 0; i < number_of_versions; i++)
             {
-                for (int i = 0; i < uxNumberOfVersions.Value; i++)
+                TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
+                tabpage.Controls.Clear();
+
+                for (int j = 0; j < number_of_questions; j++)
                 {
-                    TabPage tabpage = (TabPage)uxAnswerKeyTabControl.Controls[i];
-                    tabpage.Controls.Clear();
-
-                    for (int j = 0; j < number_of_questions; j++)
+                    Panel panel = new Panel
                     {
-                        Panel panel = new Panel
+                        BackColor = Color.MediumPurple,
+                        Location = new Point(3, 3 + 26 * j),
+                        Size = new Size(420, 22)
+                    };
+
+                    for (int k = 0; k < 5; k++)
+                    {
+                        CheckBox checkbox = new CheckBox
                         {
-                            BackColor = Color.MediumPurple,
-                            Location = new Point(3, 3 + 26 * j),
-                            Size = new Size(420, 22)
+                            Location = new Point(73 + 39 * k, 3),
+                            Size = new Size(33, 17),
+                            Text = ((char)(k + 65)).ToString()
                         };
-
-                        for (int k = 0; k < 5; k++)
-                        {
-                            CheckBox checkbox = new CheckBox
-                            {
-                                Location = new Point(73 + 39 * k, 3),
-                                Size = new Size(33, 17),
-                                Text = ((char)(k + 65)).ToString()
-                            };
-                            panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
-                        }
-
-                        NumericUpDown updown = new NumericUpDown
-                        {
-                            Location = new Point(268, 1),
-                            Minimum = 1,
-                            DecimalPlaces = 2,
-                            Size = new Size(58, 20)
-                        };
-
-                        CheckBox partial_credit = new CheckBox
-                        {
-                            Location = new Point(330, 3),
-                            Size = new Size(100, 17),
-                            Text = "Partial Credit"
-                        };
-
-                        Label label = new Label
-                        {
-                            Location = new Point(3, 3),
-                            Size = new Size(70, 13),
-                            Text = "Question" + (j + 1)
-                        };
-
-                        panel.Controls.Add(updown); // Index 5
-                        panel.Controls.Add(partial_credit); // Index 6
-                        panel.Controls.Add(label); // Index 7
-
-                        tabpage.Controls.Add(panel);
+                        panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
                     }
+
+                    NumericUpDown updown = new NumericUpDown
+                    {
+                        Location = new Point(268, 1),
+                        Minimum = 1,
+                        DecimalPlaces = 2,
+                        Size = new Size(58, 20)
+                    };
+
+                    CheckBox partial_credit = new CheckBox
+                    {
+                        Location = new Point(330, 3),
+                        Size = new Size(100, 17),
+                        Text = "Partial Credit"
+                    };
+
+                    Label label = new Label
+                    {
+                        Location = new Point(3, 3),
+                        Size = new Size(70, 13),
+                        Text = "Question" + (j + 1)
+                    };
+
+                    panel.Controls.Add(updown); // Index 5
+                    panel.Controls.Add(partial_credit); // Index 6
+                    panel.Controls.Add(label); // Index 7
+
+                    tabpage.Controls.Add(panel);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Enter a number from 1-150.");
             }
         }
 
@@ -228,44 +225,50 @@ namespace Scantron
             CheckBox checkbox;
             NumericUpDown updown;
 
-            int number_of_questions = uxAnswerKeyTabControl.Controls.Count;
+            int number_of_versions = (int) uxNumberOfVersions.Value;
+            int number_of_questions = (int) uxNumberOfQuestions.Value;
             char[] answer = new char[5];
             float points = 0;
             bool partial_credit = false;
 
-            for (int i = 0; i < number_of_questions; i++)
+            for (int i = 0; i < number_of_versions; i++)
             {
-                answer = new char[5];
+                grader.AnswerKey.Add(i, new List<Question>());
 
-                // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < number_of_questions; j++)
                 {
-                    checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[j];
+                    answer = new char[5];
+
+                    // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
+                    for (int k = 0; k < 5; k++)
+                    {
+                        checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[k];
+                        if (checkbox.Checked)
+                        {
+                            answer[k] = (char)(65 + k);
+                        }
+                        else
+                        {
+                            answer[k] = ' ';
+                        }
+                    }
+
+                    updown = (NumericUpDown)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[5];
+                    points = (float)updown.Value;
+
+                    // Checks the current question panel's partial credit checkbox.
+                    checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[6];
                     if (checkbox.Checked)
                     {
-                        answer[j] = (char)(65 + j);
+                        partial_credit = true;
                     }
                     else
                     {
-                        answer[j] = ' ';
+                        partial_credit = false;
                     }
-                }
 
-                updown = (NumericUpDown)uxAnswerKeyTabControl.Controls[i].Controls[5];
-                points = (float)updown.Value;
-
-                // Checks the current question panel's partial credit checkbox.
-                checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[6];
-                if (checkbox.Checked)
-                {
-                    partial_credit = true;
+                    grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
-                else
-                {
-                    partial_credit = false;
-                }
-
-                grader.AnswerKey[0].Add(new Question(answer, points, partial_credit));
             }
 
             MessageBox.Show("Answer key created!");
@@ -348,49 +351,50 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+            DisplayStudent(grader.Students.Find(student => student.WID == uxStudentSelector.Text));
         }
 
         /// <summary>
         /// Displays the "next" students responses in the uxStudentResponsePanel
         /// </summary>
-        /// <param name="location">Keeps track of the position in the list</param>
         public void NextStudent()
         {
-            if (grader.Students[location + 1] == null)
-            {
-                throw new IndexOutOfRangeException();
-            }
-            
-            else
-            {
-                location++;
-                DisplayStudent(grader.Students[location]);
-            }
+            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex + 1];
+            uxStudentSelector.SelectedItem = wid;
         }
 
         /// <summary>
         /// Displays the "previous" students responses in the uxStudentResponsePanel
         /// </summary>
-        /// <param name="location">Keeps track of the position in the list</param>
         public void PreviousStudent()
         {
-            if (grader.Students[location - 1] == null)
-            {
-                throw new IndexOutOfRangeException();
-            }
-            else
-            {
-                location--;
-                DisplayStudent(grader.Students[location]);
-            }
+            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex - 1];
+            uxStudentSelector.SelectedItem = wid;
         }
 
         private void DisplayStudent(Student student)
         {
             uxStudentResponsePanel.Controls.Clear();
 
-            for (int i = 0; i < grader.AnswerKey.Count; i++)
+            if (uxStudentSelector.SelectedIndex == 0)
+            {
+                uxPreviousStudent.Enabled = false;
+            }
+            else
+            {
+                uxPreviousStudent.Enabled = true;
+            }
+
+            if (uxStudentSelector.SelectedIndex == uxStudentSelector.Items.Count -1)
+            {
+                uxNextStudent.Enabled = false;
+            }
+            else
+            {
+                uxNextStudent.Enabled = true;
+            }
+
+            for (int i = 0; i < grader.AnswerKey[0].Count; i++)
             {
                 Panel panel = new Panel
                 {
@@ -426,13 +430,21 @@ namespace Scantron
 
                 for (int k = 0; k < 5; k++)
                 {
-                    CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                    CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[k];
-
-                    if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                    try
                     {
-                        panel.BackColor = Color.Red;
-                        break;
+                        CheckBox response_checkbox = (CheckBox)panel.Controls[k];
+                        CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls[i].Controls[k];
+
+                        if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                        {
+                            panel.BackColor = Color.Red;
+                            break;
+                        }
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        DisplayMessage("Student " + student.WID + " cannot be displayed.");
+                        return;
                     }
                 }
 

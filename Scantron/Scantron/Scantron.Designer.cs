@@ -32,7 +32,6 @@
             this.uxInstructionBox = new System.Windows.Forms.TextBox();
             this.uxStop = new System.Windows.Forms.Button();
             this.uxRestart = new System.Windows.Forms.Button();
-            this.uxNumberOfQuestions = new System.Windows.Forms.TextBox();
             this.uxEnter = new System.Windows.Forms.Button();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
             this.Grade = new System.Windows.Forms.Button();
@@ -41,8 +40,8 @@
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxScanTab = new System.Windows.Forms.TabPage();
             this.uxGradeTab = new System.Windows.Forms.TabPage();
-            this.uxStudentPrevious = new System.Windows.Forms.Button();
-            this.uxStudentNext = new System.Windows.Forms.Button();
+            this.uxPreviousStudent = new System.Windows.Forms.Button();
+            this.uxNextStudent = new System.Windows.Forms.Button();
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
             this.uxNumberOfVersions = new System.Windows.Forms.NumericUpDown();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
@@ -51,11 +50,14 @@
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
+            this.uxNumberOfQuestionsLabel = new System.Windows.Forms.Label();
+            this.uxNumberOfQuestions = new System.Windows.Forms.NumericUpDown();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).BeginInit();
             this.uxAnswerKeyTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).BeginInit();
             this.SuspendLayout();
             // 
             // uxStart
@@ -108,13 +110,6 @@
             this.uxRestart.UseVisualStyleBackColor = true;
             this.uxRestart.Click += new System.EventHandler(this.uxRestart_Click);
             // 
-            // uxNumberOfQuestions
-            // 
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(8, 366);
-            this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
-            this.uxNumberOfQuestions.Size = new System.Drawing.Size(100, 20);
-            this.uxNumberOfQuestions.TabIndex = 11;
-            // 
             // uxEnter
             // 
             this.uxEnter.Location = new System.Drawing.Point(8, 399);
@@ -156,8 +151,9 @@
             // 
             // uxStudentSelector
             // 
+            this.uxStudentSelector.DisplayMember = "Student";
             this.uxStudentSelector.FormattingEnabled = true;
-            this.uxStudentSelector.Location = new System.Drawing.Point(487, 412);
+            this.uxStudentSelector.Location = new System.Drawing.Point(624, 366);
             this.uxStudentSelector.Name = "uxStudentSelector";
             this.uxStudentSelector.Size = new System.Drawing.Size(193, 21);
             this.uxStudentSelector.TabIndex = 16;
@@ -196,16 +192,17 @@
             // uxGradeTab
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTab.Controls.Add(this.uxNumberOfQuestions);
+            this.uxGradeTab.Controls.Add(this.uxNumberOfQuestionsLabel);
             this.uxGradeTab.Controls.Add(this.uxAnswerKeyTabControl);
-            this.uxGradeTab.Controls.Add(this.uxStudentPrevious);
-            this.uxGradeTab.Controls.Add(this.uxStudentNext);
+            this.uxGradeTab.Controls.Add(this.uxPreviousStudent);
+            this.uxGradeTab.Controls.Add(this.uxNextStudent);
             this.uxGradeTab.Controls.Add(this.uxStudentResponseLabel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfVersions);
             this.uxGradeTab.Controls.Add(this.uxStudentResponsePanel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfVersionsLabel);
             this.uxGradeTab.Controls.Add(this.uxStudentSelector);
             this.uxGradeTab.Controls.Add(this.uxAnswerKeyLabel);
-            this.uxGradeTab.Controls.Add(this.uxNumberOfQuestions);
             this.uxGradeTab.Controls.Add(this.uxCreateAnswerKey);
             this.uxGradeTab.Controls.Add(this.Grade);
             this.uxGradeTab.Controls.Add(this.uxEnter);
@@ -217,27 +214,27 @@
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
             // 
-            // uxStudentPrevious
+            // uxPreviousStudent
             // 
-            this.uxStudentPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxStudentPrevious.Location = new System.Drawing.Point(487, 366);
-            this.uxStudentPrevious.Name = "uxStudentPrevious";
-            this.uxStudentPrevious.Size = new System.Drawing.Size(100, 40);
-            this.uxStudentPrevious.TabIndex = 21;
-            this.uxStudentPrevious.Text = "Previous";
-            this.uxStudentPrevious.UseVisualStyleBackColor = true;
-            this.uxStudentPrevious.Click += new System.EventHandler(this.uxStudentPrevious_Click);
+            this.uxPreviousStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxPreviousStudent.Location = new System.Drawing.Point(518, 366);
+            this.uxPreviousStudent.Name = "uxPreviousStudent";
+            this.uxPreviousStudent.Size = new System.Drawing.Size(100, 40);
+            this.uxPreviousStudent.TabIndex = 21;
+            this.uxPreviousStudent.Text = "Previous";
+            this.uxPreviousStudent.UseVisualStyleBackColor = true;
+            this.uxPreviousStudent.Click += new System.EventHandler(this.uxPreviousStudent_Click);
             // 
-            // uxStudentNext
+            // uxNextStudent
             // 
-            this.uxStudentNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxStudentNext.Location = new System.Drawing.Point(862, 366);
-            this.uxStudentNext.Name = "uxStudentNext";
-            this.uxStudentNext.Size = new System.Drawing.Size(100, 40);
-            this.uxStudentNext.TabIndex = 10;
-            this.uxStudentNext.Text = "Next";
-            this.uxStudentNext.UseVisualStyleBackColor = true;
-            this.uxStudentNext.Click += new System.EventHandler(this.uxStudentNext_Click);
+            this.uxNextStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxNextStudent.Location = new System.Drawing.Point(823, 367);
+            this.uxNextStudent.Name = "uxNextStudent";
+            this.uxNextStudent.Size = new System.Drawing.Size(100, 40);
+            this.uxNextStudent.TabIndex = 10;
+            this.uxNextStudent.Text = "Next";
+            this.uxNextStudent.UseVisualStyleBackColor = true;
+            this.uxNextStudent.Click += new System.EventHandler(this.uxNextStudent_Click);
             // 
             // uxStudentResponseLabel
             // 
@@ -340,6 +337,41 @@
             this.uxVersion3Tab.TabIndex = 2;
             this.uxVersion3Tab.Text = "Version 3";
             // 
+            // uxNumberOfQuestionsLabel
+            // 
+            this.uxNumberOfQuestionsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(8, 367);
+            this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
+            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(143, 20);
+            this.uxNumberOfQuestionsLabel.TabIndex = 23;
+            this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
+            this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // uxNumberOfQuestions
+            // 
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(157, 369);
+            this.uxNumberOfQuestions.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.uxNumberOfQuestions.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
+            this.uxNumberOfQuestions.Size = new System.Drawing.Size(52, 20);
+            this.uxNumberOfQuestions.TabIndex = 24;
+            this.uxNumberOfQuestions.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,6 +393,7 @@
             this.uxGradeTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).EndInit();
             this.uxAnswerKeyTabControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -371,7 +404,6 @@
         private System.Windows.Forms.TextBox uxInstructionBox;
         private System.Windows.Forms.Button uxStop;
         private System.Windows.Forms.Button uxRestart;
-        private System.Windows.Forms.TextBox uxNumberOfQuestions;
         private System.Windows.Forms.Button uxEnter;
         private System.Windows.Forms.Button uxCreateAnswerKey;
         private System.Windows.Forms.Button Grade;
@@ -384,12 +416,14 @@
         private System.Windows.Forms.Label uxAnswerKeyLabel;
         private System.Windows.Forms.NumericUpDown uxNumberOfVersions;
         private System.Windows.Forms.Label uxNumberOfVersionsLabel;
-        private System.Windows.Forms.Button uxStudentPrevious;
-        private System.Windows.Forms.Button uxStudentNext;
+        private System.Windows.Forms.Button uxPreviousStudent;
+        private System.Windows.Forms.Button uxNextStudent;
         private System.Windows.Forms.TabControl uxAnswerKeyTabControl;
         private System.Windows.Forms.TabPage uxVersion1Tab;
         private System.Windows.Forms.TabPage uxVersion2Tab;
         private System.Windows.Forms.TabPage uxVersion3Tab;
+        private System.Windows.Forms.NumericUpDown uxNumberOfQuestions;
+        private System.Windows.Forms.Label uxNumberOfQuestionsLabel;
     }
 }
 
