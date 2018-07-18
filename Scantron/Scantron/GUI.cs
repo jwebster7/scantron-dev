@@ -80,35 +80,25 @@ namespace Scantron
         {
             string error = "";
 
-            if (ex is UnauthorizedAccessException)
+            if (ex is IOException)
             {
-                error = "UNAUTHORIZED ACCESS EXCEPTION" + Environment.NewLine +
-                        " - The Scantron authorization to the port it needs." + Environment.NewLine +
-                        " - Please run the application with Administrator privileges.";
-            }
-            else if (ex is IOException)
-            {
-                error = "INPUT/OUTPUT EXCEPTION" + Environment.NewLine +
-                        " - The Scantron could not read or write do to an internal error." + Environment.NewLine +
-                        " - Please try re-scanning the cards again & saving the result to\n   a valid file path";
+                error = "";
             }
             else if (ex is ArgumentException)
             {
-                error = "ARGUMENT EXCEPTION" + Environment.NewLine +
-                        " - The Scantron could not read or write do to an internal error." + Environment.NewLine +
-                        " - Please restart the program and try again.";
+                error = "";
             }
             else if (ex is ArgumentNullException)
             {
-                error = "NULL ARGUMENT EXCEPTION" + Environment.NewLine +
-                        " - Data was not passed correctly to an internal function." + Environment.NewLine +
-                        " - Ensure you are scanning the Scantron sheets with the \n   bubbles facing up & try again";
+                error = "";
             }
             else if (ex is ArgumentOutOfRangeException)
             {
-                error = "ARGUMENT OUT OF RANGE EXCEPTION" + Environment.NewLine +
-                        " - An internal error occured." + Environment.NewLine +
-                        " - Please reload the hopper and restart the program.";
+                error = "";
+            }
+            else if (ex is IndexOutOfRangeException)
+            {
+                error = "";
             }
             else if (ex is InvalidOperationException)
             {
@@ -116,12 +106,7 @@ namespace Scantron
             }
             else if (ex is NullReferenceException)
             {
-                error = "NULL REFERENCE EXCEPTION";
-            }
-            // for testing purposes
-            else if (ex is InvalidCastException)
-            {
-                error = "You can't cast that\n" + ex.ToString();
+                error = "";
             }
             else
             {
@@ -135,13 +120,14 @@ namespace Scantron
         // Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         public void Start()
         {
+
+            if (!serial_port.IsOpen)
+            {
+                serial_port.Open();
+            }
+
             try
             {
-                if (!serial_port.IsOpen)
-                {
-                    serial_port.Open();
-                }
-
                 /*uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
                                             "Once all the cards have successfully scanned, " + Environment.NewLine +
                                             "press the 'Stop' within this window.";*/
