@@ -204,72 +204,80 @@ namespace Scantron
 
         public void Enter()
         {
-            TextBox uxNumberOfQuestions = (TextBox) scantron_form.Controls.Find("uxNumberOfQuestions",true)[0];
-            NumericUpDown uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
-
-            int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
-
-            if (number_of_questions <= 250 && number_of_questions > 0)
+            try
             {
-                for (int i = 0; i < uxNumberOfVersions.Value; i++)
+                TextBox uxNumberOfQuestions = (TextBox)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
+                NumericUpDown uxNumberOfVersions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
+
+                int number_of_questions = Convert.ToInt32(uxNumberOfQuestions.Text);
+
+                if (number_of_questions <= 250 && number_of_questions > 0)
                 {
-                    TabPage tabpage = (TabPage)uxAnswerKeyTabControl.Controls[i];
-                    tabpage.Controls.Clear();
-
-                    for (int j = 0; j < number_of_questions; j++)
+                    for (int i = 0; i < uxNumberOfVersions.Value; i++)
                     {
-                        Panel panel = new Panel
-                        {
-                            BackColor = Color.MediumPurple,
-                            Location = new Point(3, 3 + 26 * j),
-                            Size = new Size(420, 22)
-                        };
+                        TabPage tabpage = (TabPage)uxAnswerKeyTabControl.Controls[i];
+                        tabpage.Controls.Clear();
 
-                        for (int k = 0; k < 5; k++)
+                        for (int j = 0; j < number_of_questions; j++)
                         {
-                            CheckBox checkbox = new CheckBox
+                            Panel panel = new Panel
                             {
-                                Location = new Point(73 + 39 * k, 3),
-                                Size = new Size(33, 17),
-                                Text = ((char)(k + 65)).ToString()
+                                BackColor = Color.MediumPurple,
+                                Location = new Point(3, 3 + 26 * j),
+                                Size = new Size(420, 22)
                             };
-                            panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+
+                            for (int k = 0; k < 5; k++)
+                            {
+                                CheckBox checkbox = new CheckBox
+                                {
+                                    Location = new Point(73 + 39 * k, 3),
+                                    Size = new Size(33, 17),
+                                    Text = ((char)(k + 65)).ToString()
+                                };
+                                panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+                            }
+
+                            NumericUpDown updown = new NumericUpDown
+                            {
+                                Location = new Point(268, 1),
+                                Minimum = 1,
+                                DecimalPlaces = 2,
+                                Size = new Size(58, 20)
+                            };
+
+                            CheckBox partial_credit = new CheckBox
+                            {
+                                Location = new Point(330, 3),
+                                Size = new Size(100, 17),
+                                Text = "Partial Credit"
+                            };
+
+                            Label label = new Label
+                            {
+                                Location = new Point(3, 3),
+                                Size = new Size(70, 13),
+                                Text = "Question" + (j + 1)
+                            };
+
+                            panel.Controls.Add(updown); // Index 5
+                            panel.Controls.Add(partial_credit); // Index 6
+                            panel.Controls.Add(label); // Index 7
+
+                            tabpage.Controls.Add(panel);
                         }
-
-                        NumericUpDown updown = new NumericUpDown
-                        {
-                            Location = new Point(268, 1),
-                            Minimum = 1,
-                            DecimalPlaces = 2,
-                            Size = new Size(58, 20)
-                        };
-
-                        CheckBox partial_credit = new CheckBox
-                        {
-                            Location = new Point(330, 3),
-                            Size = new Size(100, 17),
-                            Text = "Partial Credit"
-                        };
-
-                        Label label = new Label
-                        {
-                            Location = new Point(3, 3),
-                            Size = new Size(70, 13),
-                            Text = "Question" + (j + 1)
-                        };
-
-                        panel.Controls.Add(updown); // Index 5
-                        panel.Controls.Add(partial_credit); // Index 6
-                        panel.Controls.Add(label); // Index 7
-
-                        tabpage.Controls.Add(panel);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Enter a number from 1-150.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Enter a number from 1-150.");
+                DisplayMessage(CatchException(ex));
             }
+            
         }
 
         public void CreateAnswerKey()
@@ -399,7 +407,14 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+            try
+            {
+                DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+            }
+            catch (Exception ex)
+            {
+                DisplayMessage(CatchException(ex));
+            }
         }
 
         /// <summary>
@@ -441,55 +456,62 @@ namespace Scantron
         {
             uxStudentResponsePanel.Controls.Clear();
 
-            for (int i = 0; i < grader.AnswerKey.Count; i++)
+            try
             {
-                Panel panel = new Panel
+                for (int i = 0; i < grader.AnswerKey.Count; i++)
                 {
-                    BackColor = Color.Green,
-                    Location = new Point(3, 3 + 26 * i),
-                    Size = new Size(268, 22)
-                };
-
-                for (int j = 0; j < 5; j++)
-                {
-                    CheckBox checkbox = new CheckBox
+                    Panel panel = new Panel
                     {
-                        Enabled = false,
-                        Location = new Point(73 + 39 * j, 3),
-                        Size = new Size(33, 17),
-                        Text = ((char)(j + 65)).ToString()
+                        BackColor = Color.Green,
+                        Location = new Point(3, 3 + 26 * i),
+                        Size = new Size(268, 22)
                     };
 
-                    if (student.Response[i].Answer[j] != ' ')
+                    for (int j = 0; j < 5; j++)
                     {
-                        checkbox.Checked = true;
+                        CheckBox checkbox = new CheckBox
+                        {
+                            Enabled = false,
+                            Location = new Point(73 + 39 * j, 3),
+                            Size = new Size(33, 17),
+                            Text = ((char)(j + 65)).ToString()
+                        };
+
+                        if (student.Response[i].Answer[j] != ' ')
+                        {
+                            checkbox.Checked = true;
+                        }
+
+                        panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
                     }
 
-                    panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
-                }
-
-                Label label = new Label
-                {
-                    Location = new Point(3, 3),
-                    Size = new Size(70, 13),
-                    Text = "Question" + (i + 1)
-                };
-
-                for (int k = 0; k < 5; k++)
-                {
-                    CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                    CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[k];
-
-                    if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                    Label label = new Label
                     {
-                        panel.BackColor = Color.Red;
-                        break;
+                        Location = new Point(3, 3),
+                        Size = new Size(70, 13),
+                        Text = "Question" + (i + 1)
+                    };
+
+                    for (int k = 0; k < 5; k++)
+                    {
+                        CheckBox response_checkbox = (CheckBox)panel.Controls[k];
+                        CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[k];
+
+                        if (response_checkbox.Checked != answer_key_checkbox.Checked)
+                        {
+                            panel.BackColor = Color.Red;
+                            break;
+                        }
                     }
+
+                    panel.Controls.Add(label);
+
+                    uxStudentResponsePanel.Controls.Add(panel);
                 }
-
-                panel.Controls.Add(label);
-
-                uxStudentResponsePanel.Controls.Add(panel);
+            }
+            catch (Exception ex)
+            {
+                DisplayMessage(CatchException(ex));
             }
         }
     }
