@@ -66,88 +66,139 @@ namespace Scantron
             grader = new Grader(this);
         }
 
+        // Displays messages via Message Box
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message);
         }
-        
+
+        // Handles exceptions thrown from a SerialPort object
+        // Determines what type of exception it is, then stores it in a custom error message string to display
+        // Switch case doesn't work for Exceptions or comparing inherited objects
+        // Some of these errors will more than likely never be reached, but we should cover them regardless. The ones who will most likely never be reached. 
+        private string CatchException(Exception ex)
+        {
+            string error = "";
+
+            if (ex is UnauthorizedAccessException)
+            {
+                error = "UNAUTHORIZED ACCESS EXCEPTION" + Environment.NewLine +
+                        " - The Scantron authorization to the port it needs." + Environment.NewLine +
+                        " - Please run the application with Administrator privileges.";
+            }
+            else if (ex is IOException)
+            {
+                error = "INPUT/OUTPUT EXCEPTION" + Environment.NewLine +
+                        " - The Scantron could not read or write do to an internal error." + Environment.NewLine +
+                        " - Please try re-scanning the cards again & saving the result to\n   a valid file path";
+            }
+            else if (ex is ArgumentException)
+            {
+                error = "ARGUMENT EXCEPTION" + Environment.NewLine +
+                        " - The Scantron could not read or write do to an internal error." + Environment.NewLine +
+                        " - Please restart the program and try again.";
+            }
+            else if (ex is ArgumentNullException)
+            {
+                error = "NULL ARGUMENT EXCEPTION" + Environment.NewLine +
+                        " - Data was not passed correctly to an internal function." + Environment.NewLine +
+                        " - Ensure you are scanning the Scantron sheets with the \n   bubbles facing up & try again";
+            }
+            else if (ex is ArgumentOutOfRangeException)
+            {
+                error = "ARGUMENT OUT OF RANGE EXCEPTION" + Environment.NewLine +
+                        " - An internal error occured." + Environment.NewLine +
+                        " - Please reload the hopper and restart the program.";
+            }
+            else if (ex is InvalidOperationException)
+            {
+                error = ex.ToString();
+            }
+            else if (ex is NullReferenceException)
+            {
+                error = "NULL REFERENCE EXCEPTION";
+            }
+            // for testing purposes
+            else if (ex is InvalidCastException)
+            {
+                error = "You can't cast that\n" + ex.ToString();
+            }
+            else
+            {
+                error = ex.ToString();
+            }
+            return error;
+        }
+
+        // Opens the serial port; begins scanning the cards
+        // The most common exceptions with serial ports are handled
+        // Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         public void Start()
         {
-            if (!serial_port.IsOpen)
+            try
             {
-                serial_port.Open();
-            }
+                if (!serial_port.IsOpen)
+                {
+                    serial_port.Open();
+                }
 
-            /*uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
-                                        "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                        "press the 'Stop' within this window.";*/
-            uxInstructionBox.Text = "";
-            raw_scantron_output = "";
-            
-            serial_port.Write(">");
-            serial_port.Write("+");
-            serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                /*uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
+                                            "Once all the cards have successfully scanned, " + Environment.NewLine +
+                                            "press the 'Stop' within this window.";*/
+                uxInstructionBox.Text = "";
+                raw_scantron_output = "";
+
+                serial_port.Write(">");
+                serial_port.Write("+");
+                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+            }
+            catch (Exception ex)
+            {
+                DisplayMessage(CatchException(ex));
+            }
         }
 
         // This method is an event handler for the serial port.
         // Rewrote this in anticipation for manually controlling the Scantron machine. Might no work at all lol.
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            serial_port = (SerialPort)sender;
-            string data = serial_port.ReadExisting();
-
-            if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
-            {
-                raw_scantron_output += data;
-                uxInstructionBox.Text += data;
-                serial_port.Write("+");
+            try
+            { 
+                serial_port = (SerialPort)sender;
+                string data = serial_port.ReadExisting();
+                
+                if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
+                {
+                    raw_scantron_output += data;
+                    uxInstructionBox.Text += data;
+                    serial_port.Write("+");
+                }
+                else
+                {
+                    serial_port.Write("<");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                serial_port.Write("<");
+                DisplayMessage(CatchException(ex));
             }
         }
 
         public void Stop()
         {
-            if (serial_port.IsOpen)
+            try
             {
-                serial_port.Close();
+                if (serial_port.IsOpen)
+                {
+                    serial_port.Close();
+                }
+
+                grader.CreateCards(raw_scantron_output);
+                grader.CreateStudents();
             }
-
-            grader.CreateCards(raw_scantron_output);
-            grader.CreateStudents();
-
-            // If no students were created, (this should already be taken care of in the Stop event handler), 
-            // we want to set the state back to the start button and start over.
-            if (grader.Students.Count == 0)
+            catch (Exception ex)
             {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-            }
-
-            // We cannot create students if raw_scantron_output is empty.
-            // Sets the program to initial state of the program.
-            if (raw_scantron_output.Equals(""))
-            {
-                uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
-                                        "then click on 'Start' within this window.";
-
-                MessageBox.Show("Something went wrong when scanning the cards." + Environment.NewLine +
-                                Environment.NewLine +
-                                "Please ensure the cards are not stuck together," + Environment.NewLine +
-                                "backwards, or reversed and reload the hopper.");
-            }
-            else
-            {
-                uxInstructionBox.Text = "Please insert a USB drive into the computer" + Environment.NewLine +
-                                        "Then press 'Create File' to create and save" + Environment.NewLine +
-                                        "a file onto the USB drive";
+                DisplayMessage(CatchException(ex));
             }
         }
 
@@ -276,7 +327,7 @@ namespace Scantron
 
         public void Grade()
         {
-            if(grader.GradeStudents())
+            if (grader.GradeStudents())
             {
                 WriteFile();
 
@@ -351,7 +402,14 @@ namespace Scantron
         // Populates the student answer panel with question panels that show the selected student's response.
         public void SelectStudent()
         {
-            DisplayStudent(grader.Students.Find(student => student.WID == uxStudentSelector.Text));
+            try
+            {
+                DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+            }
+            catch (Exception ex)
+            {
+                DisplayMessage(CatchException(ex));
+            }
         }
 
         /// <summary>
