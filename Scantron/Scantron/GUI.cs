@@ -292,40 +292,48 @@ namespace Scantron
             float points = 0;
             bool partial_credit = false;
 
-            for (int i = 0; i < number_of_questions; i++)
+            try
             {
-                answer = new char[5];
-
-                // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
-                for (int j = 0; j < 5; j++)
+                for (int i = 0; i < number_of_questions; i++)
                 {
-                    checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[j];
+                    answer = new char[5];
+
+                    // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
+                    for (int j = 0; j < 5; j++)
+                    {
+                        checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[j];
+                        if (checkbox.Checked)
+                        {
+                            answer[j] = (char)(65 + j);
+                        }
+                        else
+                        {
+                            answer[j] = ' ';
+                        }
+                    }
+
+                    updown = (NumericUpDown)uxAnswerKeyTabControl.Controls[i].Controls[5];
+                    points = (float)updown.Value;
+
+                    // Checks the current question panel's partial credit checkbox.
+                    checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[6];
                     if (checkbox.Checked)
                     {
-                        answer[j] = (char)(65 + j);
+                        partial_credit = true;
                     }
                     else
                     {
-                        answer[j] = ' ';
+                        partial_credit = false;
                     }
-                }
 
-                updown = (NumericUpDown)uxAnswerKeyTabControl.Controls[i].Controls[5];
-                points = (float)updown.Value;
-
-                // Checks the current question panel's partial credit checkbox.
-                checkbox = (CheckBox)uxAnswerKeyTabControl.Controls[i].Controls[6];
-                if (checkbox.Checked)
-                {
-                    partial_credit = true;
+                    grader.AnswerKey[0].Add(new Question(answer, points, partial_credit));
                 }
-                else
-                {
-                    partial_credit = false;
-                }
-
-                grader.AnswerKey[0].Add(new Question(answer, points, partial_credit));
             }
+            catch (Exception ex)
+            {
+                DisplayMessage(CatchException(ex));
+            }
+            
 
             MessageBox.Show("Answer key created!");
         }
