@@ -40,6 +40,7 @@
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxScanTab = new System.Windows.Forms.TabPage();
             this.uxGradeTab = new System.Windows.Forms.TabPage();
+            this.uxVersionLabel = new System.Windows.Forms.Label();
             this.uxNumberOfQuestions = new System.Windows.Forms.NumericUpDown();
             this.uxNumberOfQuestionsLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyTabControl = new System.Windows.Forms.TabControl();
@@ -52,7 +53,6 @@
             this.uxNumberOfVersions = new System.Windows.Forms.NumericUpDown();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
-            this.uxVersionLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -216,6 +216,20 @@
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
             // 
+            // uxVersionLabel
+            // 
+            this.uxVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uxVersionLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxVersionLabel.Location = new System.Drawing.Point(624, 390);
+            this.uxVersionLabel.Name = "uxVersionLabel";
+            this.uxVersionLabel.Size = new System.Drawing.Size(73, 20);
+            this.uxVersionLabel.TabIndex = 25;
+            this.uxVersionLabel.Text = "Version: ";
+            this.uxVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // uxNumberOfQuestions
             // 
             this.uxNumberOfQuestions.Location = new System.Drawing.Point(157, 369);
@@ -373,20 +387,6 @@
             this.uxAnswerKeyLabel.Size = new System.Drawing.Size(111, 24);
             this.uxAnswerKeyLabel.TabIndex = 17;
             this.uxAnswerKeyLabel.Text = "Answer Key";
-            // 
-            // uxVersionLabel
-            // 
-            this.uxVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uxVersionLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxVersionLabel.Location = new System.Drawing.Point(624, 390);
-            this.uxVersionLabel.Name = "uxVersionLabel";
-            this.uxVersionLabel.Size = new System.Drawing.Size(73, 20);
-            this.uxVersionLabel.TabIndex = 25;
-            this.uxVersionLabel.Text = "Version: ";
-            this.uxVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Scantron
             // 

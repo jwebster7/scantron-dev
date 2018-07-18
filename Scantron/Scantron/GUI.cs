@@ -274,6 +274,13 @@ namespace Scantron
 
         public void CreateAnswerKey()
         {
+            if (uxAnswerKeyTabControl.TabPages[0].Controls.Count == 0)
+            {
+                DisplayMessage("You have not created an answer key. Enter the number of questions on the exam"
+                                + ", click Enter, then fill out the answer key.");
+                return;
+            }
+
             grader.AnswerKey = new Dictionary<int, List<Question>>();
 
             CheckBox checkbox;
@@ -330,6 +337,21 @@ namespace Scantron
 
         public void Grade()
         {
+            if (grader.Students.Count == 0)
+            {
+                DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
+                                + " and follow the instructions.");
+
+                return;
+            }
+
+            if (grader.AnswerKey.Count == 0)
+            {
+                DisplayMessage("You have not created an answer key. Enter the number of questions on the exam"
+                                + ", click Enter, fill out the answer key, then click Create Answer Key.");
+                return;
+            }
+
             if (grader.GradeStudents())
             {
                 WriteFile();
@@ -506,7 +528,15 @@ namespace Scantron
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
-                        DisplayMessage("Student " + student.WID + " cannot be displayed.");
+                        label = new Label
+                        {
+                            Location = new Point(3, 3),
+                            Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20), // -20 to keep from adding scroll bars to tabcontrol.
+                            Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
+                                    + " test version."
+                        };
+                        uxStudentResponsePanel.Controls.Add(label);
+
                         return;
                     }
                 }
