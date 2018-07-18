@@ -83,28 +83,13 @@ namespace Scantron
         // Event handler for looking at the next students record 
         private void uxStudentNext_Click(object sender, EventArgs e)
         {
-            try
-            {
-                gui.NextStudent();
-            }
-            catch (IndexOutOfRangeException)
-            {
-
-                MessageBox.Show("There are no more students in the stack!");
-            }
+            gui.NextStudent();
         }
 
         // Event handler for looking at the previous students record
         private void uxStudentPrevious_Click(object sender, EventArgs e)
         {
-            try
-            {
-                gui.PreviousStudent();
-            }
-            catch (IndexOutOfRangeException)
-            {
-                MessageBox.Show("You cannot select a student before the first student scanned!");
-            }
+            gui.PreviousStudent();
         }
     }
 }
