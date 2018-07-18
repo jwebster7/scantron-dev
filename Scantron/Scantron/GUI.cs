@@ -69,16 +69,23 @@ namespace Scantron
             grader = new Grader(this);
         }
 
-        // Displays messages via Message Box
+        /// <summary>
+        /// Displays messages via Message Box.
+        /// </summary>
+        /// <param name="message">Message to be displayed.</param>
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message);
         }
 
-        // Handles exceptions thrown from a SerialPort object
-        // Determines what type of exception it is, then stores it in a custom error message string to display
-        // Switch case doesn't work for Exceptions or comparing inherited objects
-        // Some of these errors will more than likely never be reached, but we should cover them regardless. The ones who will most likely never be reached. 
+        /// <summary>
+        /// Handles exceptions thrown from a SerialPort object
+        /// Determines what type of exception it is, then stores it in a custom error message string to display
+        /// Switch case doesn't work for Exceptions or comparing inherited objects
+        /// Some of these errors will more than likely never be reached, but we should cover them regardless. The ones who will most likely never be reached. 
+        /// </summary>
+        /// <param name="ex">Exception object.</param>
+        /// <returns>Error message.</returns>
         private string CatchException(Exception ex)
         {
             string error = "";
@@ -118,9 +125,10 @@ namespace Scantron
             return error;
         }
 
-        // Opens the serial port; begins scanning the cards
-        // The most common exceptions with serial ports are handled
-        // Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
+        /// <summary>
+        /// Opens the serial port; begins scanning the cards. The most common exceptions with serial ports are handled. 
+        /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
+        /// </summary>
         public void Start()
         {
 
@@ -147,8 +155,11 @@ namespace Scantron
             }
         }
 
-        // This method is an event handler for the serial port.
-        // Rewrote this in anticipation for manually controlling the Scantron machine. Might no work at all lol.
+        /// <summary>
+        /// This method is an event handler for the serial port. Activates when data is picked up.
+        /// </summary>
+        /// <param name="sender">The serial port.</param>
+        /// <param name="e">Event object.</param>
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -173,6 +184,9 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Close the serial port and create list of students from scanned in data.
+        /// </summary>
         public void Stop()
         {
             try
@@ -191,12 +205,19 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Reset all fields to initial states.
+        /// </summary>
         public void Restart()
         {
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
+            // needs lot more code
         }
 
+        /// <summary>
+        /// Create the answer key form with the specified number of questions and versions.
+        /// </summary>
         public void Enter()
         {
             int number_of_versions = (int) uxNumberOfVersions.Value;
@@ -205,59 +226,72 @@ namespace Scantron
             for (int i = 0; i < number_of_versions; i++)
             {
                 TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
-                tabpage.Controls.Clear();
-
-                for (int j = 0; j < number_of_questions; j++)
-                {
-                    Panel panel = new Panel
-                    {
-                        BackColor = Color.MediumPurple,
-                        Location = new Point(3, 3 + 26 * j),
-                        Size = new Size(420, 22)
-                    };
-
-                    for (int k = 0; k < 5; k++)
-                    {
-                        CheckBox checkbox = new CheckBox
-                        {
-                            Location = new Point(73 + 39 * k, 3),
-                            Size = new Size(33, 17),
-                            Text = ((char)(k + 65)).ToString()
-                        };
-                        panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
-                    }
-
-                    NumericUpDown updown = new NumericUpDown
-                    {
-                        Location = new Point(268, 1),
-                        Minimum = 1,
-                        DecimalPlaces = 2,
-                        Size = new Size(58, 20)
-                    };
-
-                    CheckBox partial_credit = new CheckBox
-                    {
-                        Location = new Point(330, 3),
-                        Size = new Size(100, 17),
-                        Text = "Partial Credit"
-                    };
-
-                    Label label = new Label
-                    {
-                        Location = new Point(3, 3),
-                        Size = new Size(70, 13),
-                        Text = "Question" + (j + 1)
-                    };
-
-                    panel.Controls.Add(updown); // Index 5
-                    panel.Controls.Add(partial_credit); // Index 6
-                    panel.Controls.Add(label); // Index 7
-
-                    tabpage.Controls.Add(panel);
-                }
+                CreateAnswerKeyForm(number_of_questions, tabpage);
             }
         }
 
+        /// <summary>
+        /// Create the answer key form to be filled out by the instructor.
+        /// </summary>
+        /// <param name="number_of_questions">Number of questions in the answer key.</param>
+        /// <param name="tabpage">Current version being created.</param>
+        public void CreateAnswerKeyForm(int number_of_questions, TabPage tabpage)
+        {
+            tabpage.Controls.Clear();
+
+            for (int j = 0; j < number_of_questions; j++)
+            {
+                Panel panel = new Panel
+                {
+                    BackColor = Color.MediumPurple,
+                    Location = new Point(3, 3 + 26 * j),
+                    Size = new Size(420, 22)
+                };
+
+                for (int k = 0; k < 5; k++)
+                {
+                    CheckBox checkbox = new CheckBox
+                    {
+                        Location = new Point(73 + 39 * k, 3),
+                        Size = new Size(33, 17),
+                        Text = ((char)(k + 65)).ToString()
+                    };
+                    panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+                }
+
+                NumericUpDown updown = new NumericUpDown
+                {
+                    Location = new Point(268, 1),
+                    Minimum = 1,
+                    DecimalPlaces = 2,
+                    Size = new Size(58, 20)
+                };
+
+                CheckBox partial_credit = new CheckBox
+                {
+                    Location = new Point(330, 3),
+                    Size = new Size(100, 17),
+                    Text = "Partial Credit"
+                };
+
+                Label label = new Label
+                {
+                    Location = new Point(3, 3),
+                    Size = new Size(70, 13),
+                    Text = "Question" + (j + 1)
+                };
+
+                panel.Controls.Add(updown); // Index 5
+                panel.Controls.Add(partial_credit); // Index 6
+                panel.Controls.Add(label); // Index 7
+
+                tabpage.Controls.Add(panel);
+            }
+        }
+
+        /// <summary>
+        /// Create the answer key from the filled out form.
+        /// </summary>
         public void CreateAnswerKey()
         {
             if (uxAnswerKeyTabControl.TabPages[0].Controls.Count == 0)
@@ -280,47 +314,15 @@ namespace Scantron
 
             for (int i = 0; i < number_of_versions; i++)
             {
-                grader.AnswerKey.Add(i, new List<Question>());
-
-                for (int j = 0; j < number_of_questions; j++)
-                {
-                    answer = new char[5];
-
-                    // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
-                    for (int k = 0; k < 5; k++)
-                    {
-                        checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[k];
-                        if (checkbox.Checked)
-                        {
-                            answer[k] = (char)(65 + k);
-                        }
-                        else
-                        {
-                            answer[k] = ' ';
-                        }
-                    }
-
-                    updown = (NumericUpDown)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[5];
-                    points = (float)updown.Value;
-
-                    // Checks the current question panel's partial credit checkbox.
-                    checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[6];
-                    if (checkbox.Checked)
-                    {
-                        partial_credit = true;
-                    }
-                    else
-                    {
-                        partial_credit = false;
-                    }
-
-                    grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
-                }
+                
             }
 
             MessageBox.Show("Answer key created!");
         }
 
+        /// <summary>
+        /// Grade the students.
+        /// </summary>
         public void Grade()
         {
             if (grader.Students.Count == 0)
@@ -357,7 +359,9 @@ namespace Scantron
             }
         }
 
-        // Write the file to be uploaded to the Canvas gradebook.
+        /// <summary>
+        /// Write the file to be uploaded to the Canvas gradebook.
+        /// </summary>
         private void WriteFile()
         {
             string file = grader.ToString();
@@ -410,7 +414,9 @@ namespace Scantron
             }
         }
 
-        // Populates the student answer panel with question panels that show the selected student's response.
+        /// <summary>
+        /// Populates the student answer panel with question panels that show the selected student's response.
+        /// </summary>
         public void SelectStudent()
         {
             try
@@ -424,7 +430,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Displays the "next" students responses in the uxStudentResponsePanel
+        /// Displays the next student's responses in the uxStudentResponsePanel.
         /// </summary>
         public void NextStudent()
         {
@@ -433,7 +439,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Displays the "previous" students responses in the uxStudentResponsePanel
+        /// Displays the previous student's responses in the uxStudentResponsePanel.
         /// </summary>
         public void PreviousStudent()
         {
@@ -441,6 +447,10 @@ namespace Scantron
             uxStudentSelector.SelectedItem = wid;
         }
 
+        /// <summary>
+        /// Display the selected student's response in uxStudentResponsePanel.
+        /// </summary>
+        /// <param name="student">Selected student.</param>
         private void DisplayStudent(Student student)
         {
             uxStudentResponsePanel.Controls.Clear();
@@ -517,7 +527,7 @@ namespace Scantron
                         label = new Label
                         {
                             Location = new Point(3, 3),
-                            Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20), // -20 to keep from adding scroll bars to tabcontrol.
+                            Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20), // -20 to keep from adding scroll bars to panel.
                             Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
                                     + " test version."
                         };
