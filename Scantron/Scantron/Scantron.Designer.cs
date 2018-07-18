@@ -113,7 +113,7 @@
             // 
             // uxEnter
             // 
-            this.uxEnter.Location = new System.Drawing.Point(8, 399);
+            this.uxEnter.Location = new System.Drawing.Point(212, 369);
             this.uxEnter.Name = "uxEnter";
             this.uxEnter.Size = new System.Drawing.Size(75, 23);
             this.uxEnter.TabIndex = 12;
@@ -123,7 +123,7 @@
             // 
             // uxCreateAnswerKey
             // 
-            this.uxCreateAnswerKey.Location = new System.Drawing.Point(8, 428);
+            this.uxCreateAnswerKey.Location = new System.Drawing.Point(293, 369);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
             this.uxCreateAnswerKey.Size = new System.Drawing.Size(75, 39);
             this.uxCreateAnswerKey.TabIndex = 13;
@@ -133,7 +133,7 @@
             // 
             // Grade
             // 
-            this.Grade.Location = new System.Drawing.Point(8, 473);
+            this.Grade.Location = new System.Drawing.Point(374, 369);
             this.Grade.Name = "Grade";
             this.Grade.Size = new System.Drawing.Size(75, 23);
             this.Grade.TabIndex = 14;
@@ -244,8 +244,9 @@
             0,
             0});
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
-            this.uxNumberOfQuestions.Size = new System.Drawing.Size(52, 20);
+            this.uxNumberOfQuestions.Size = new System.Drawing.Size(49, 20);
             this.uxNumberOfQuestions.TabIndex = 24;
+            this.uxNumberOfQuestions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uxNumberOfQuestions.Value = new decimal(new int[] {
             1,
             0,
@@ -263,7 +264,7 @@
             this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(143, 20);
             this.uxNumberOfQuestionsLabel.TabIndex = 23;
             this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
-            this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uxAnswerKeyTabControl
             // 
@@ -343,7 +344,7 @@
             // 
             // uxNumberOfVersions
             // 
-            this.uxNumberOfVersions.Location = new System.Drawing.Point(442, 367);
+            this.uxNumberOfVersions.Location = new System.Drawing.Point(157, 395);
             this.uxNumberOfVersions.Maximum = new decimal(new int[] {
             3,
             0,
@@ -355,7 +356,7 @@
             0,
             0});
             this.uxNumberOfVersions.Name = "uxNumberOfVersions";
-            this.uxNumberOfVersions.Size = new System.Drawing.Size(36, 20);
+            this.uxNumberOfVersions.Size = new System.Drawing.Size(49, 20);
             this.uxNumberOfVersions.TabIndex = 20;
             this.uxNumberOfVersions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uxNumberOfVersions.Value = new decimal(new int[] {
@@ -370,12 +371,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uxNumberOfVersionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(310, 367);
+            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(8, 392);
             this.uxNumberOfVersionsLabel.Name = "uxNumberOfVersionsLabel";
             this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(126, 20);
             this.uxNumberOfVersionsLabel.TabIndex = 19;
             this.uxNumberOfVersionsLabel.Text = "Number of Versions:";
-            this.uxNumberOfVersionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uxNumberOfVersionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uxAnswerKeyLabel
             // 
