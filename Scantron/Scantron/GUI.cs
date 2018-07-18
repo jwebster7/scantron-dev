@@ -38,6 +38,8 @@ namespace Scantron
         private NumericUpDown uxNumberOfVersions;
         private Button uxPreviousStudent;
         private Button uxNextStudent;
+        private Label uxVersionLabel;
+
         private List<Control> question_panels = new List<Control>();
 
         private Grader grader;
@@ -54,6 +56,7 @@ namespace Scantron
             uxNumberOfVersions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
             uxPreviousStudent = (Button)scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button)scantron_form.Controls.Find("uxNextStudent", true)[0];
+            uxVersionLabel = (Label)scantron_form.Controls.Find("uxVersionLabel", true)[0];
 
             foreach (Control control in uxAnswerKeyTabControl.Controls)
             {
@@ -131,7 +134,7 @@ namespace Scantron
                 /*uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
                                             "Once all the cards have successfully scanned, " + Environment.NewLine +
                                             "press the 'Stop' within this window.";*/
-                uxInstructionBox.Text = "";
+                uxInstructionBox.Text = ""; // For testing
                 raw_scantron_output = "";
 
                 serial_port.Write(">");
@@ -323,8 +326,8 @@ namespace Scantron
                     uxStudentSelector.Items.Add(student.WID);
                 }
 
-                // Displays the first student in the index; Index is always 0
-                DisplayStudent(grader.Students[0]);
+                // Displays the first student in the index
+                NextStudent();
             }
             else
             {
@@ -437,6 +440,8 @@ namespace Scantron
             {
                 uxNextStudent.Enabled = true;
             }
+
+            uxVersionLabel.Text = "Version: " + student.TestVersion;
 
             for (int i = 0; i < grader.AnswerKey[0].Count; i++)
             {
