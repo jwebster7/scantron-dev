@@ -53,26 +53,39 @@
               Name="$(var.Scantron.TargetFileName)" 
               Source="$(var.Scantron.TargetPath)" 
               KeyPath="yes" />
-        <!-- Start Menu Shortcut -->
-        <Shortcut Id="ScannerEXE_STARTMENU" 
-                  Name="KSU Scanner" 
-                  Description="Launches the KSU Scanner application"
-                  Advertise="yes"
+			</Component>
+      <!-- Scanner.exe Startmenu Shortcut-->
+      <Component Id="CMP_ScannerEXE_STARTMENU" Guid="*">
+        <Shortcut Id="ScannerEXE_STARTMENU"
+                  Name="KSU Scanner"
+                  Description="Application to scan Scantroncards to upload on Canvas"
+                  Target="[INSTALLFOLDER]$(var.Scantron.TargetFileName)"
                   Directory="StartMenuShortcutsDir" 
-                  Icon="scantron.ico"/>        
-        <RemoveFolder Id="RemoveShortcutsDir" Directory="StartMenuShortcutsDir" On="uninstall"/>
-        <!-- Desktop Shortcut -->
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="CleanUpStartMenu" Directory="StartMenuShortcutsDir" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\KSU HelpDesk\$(var.Scantron.TargetFileName)" Name="startmenu" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <!-- Scanner.exe Desktop Shortcut-->
+      <Component Id="CMP_ScannerEXE_DESKTOP" Guid="*">
         <Shortcut Id="ScannerEXE_DESKTOP"
                   Name="KSU Scanner"
-                  Description="Launches the KSU Scanner application"
-                  Advertise="yes"
+                  Description="Application to scan Scantroncards to upload on Canvas"
+                  Target="[INSTALLFOLDER]$(var.Scantron.TargetFileName)"
                   Directory="DesktopFolder"
-                  Icon="scantron.ico"/>
-			</Component>
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RegistryValue Root="HKCU" Key="Software\KSU HelpDesk\$(var.Scantron.TargetFileName)" Name="desktop" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      
       <!-- Adds the Config to the install folder -->
       <Component Id="CMP_Config.JSON" Guid="*">
         <File Id="FILE_ProgramDir_ConfigJSON" 
               Source="$(var.Scantron.ProjectDir)\Config.json" 
+              KeyPath="yes" />
+      </Component>
+      <!-- Adds the JSON helper file to the install folder-->
+      <Component Id="CMP_Newtonsoft.dll" Guid="*">
+        <File Id="FILE_ProgramDir_NewtonsoftDLL"
+              Source="$(var.Scantron.TargetDir)\Newtonsoft.Json.dll"
               KeyPath="yes" />
       </Component>
 		</ComponentGroup>
