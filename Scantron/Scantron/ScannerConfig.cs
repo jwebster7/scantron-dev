@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks; //Requires .Net 4
+using System.Windows.Forms;
+using System.IO;
 using System.IO.Ports;
-
-
+using System.Threading;
+using Newtonsoft.Json;
+// Remove unused using statements in final version.
 
 namespace Scantron
 {
@@ -41,7 +48,13 @@ namespace Scantron
         public string end_of_batch { get; set; }
         public string ocr { get; set; }
 
+        public static ScantronConfig Deserialize()
+        {
+            using (StreamReader settings = File.OpenText("Config.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                return (ScantronConfig)serializer.Deserialize(settings, typeof(ScantronConfig));
+            }
+        }
     }
-
-
 }

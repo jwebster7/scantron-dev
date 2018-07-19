@@ -20,9 +20,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 using System.Threading;
-// Remove unused using statements in final version.
-
 using Newtonsoft.Json;
+// Remove unused using statements in final version.
 
 namespace Scantron
 {
@@ -31,18 +30,11 @@ namespace Scantron
         private GUI gui;
         public ScantronConfig config;
 
-        // The location/student in the grader.students
-        private static int location = 0;
-
         // The default constructor for the scantron GUI.
         public Scantron()
         {
             InitializeComponent();
-            using (StreamReader settings = File.OpenText("Config.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                config = (ScantronConfig)serializer.Deserialize(settings, typeof(ScantronConfig));
-            }
+            config = ScantronConfig.Deserialize();
             gui = new GUI(this, config);
         }
 
