@@ -22,11 +22,14 @@ using System.IO.Ports;
 using System.Threading;
 // Remove unused using statements in final version.
 
+using Newtonsoft.Json;
+
 namespace Scantron
 {
     public partial class Scantron : Form
     {
         private GUI gui;
+        public ScantronConfig config;
 
         // The location/student in the grader.students
         private static int location = 0;
@@ -35,7 +38,12 @@ namespace Scantron
         public Scantron()
         {
             InitializeComponent();
-            gui = new GUI(this);
+            using (StreamReader settings = File.OpenText("Config.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                config = (ScantronConfig)serializer.Deserialize(settings, typeof(ScantronConfig));
+            }
+            gui = new GUI(this, config);
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.

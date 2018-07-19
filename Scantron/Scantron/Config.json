@@ -1,37 +1,31 @@
 ﻿{
-	"Serial_Config_Basic" : 
-	{
-		"port_name" : ,
-		"baud_rate" : ,
-		"parity_bit" : ,
-		"stop_bits" :
-	}
-		
-	"Scantron_Config" :
-	{
-		"start_of_record" : ,
-		"end_of_record" : ,
-		"end_of_document" : ,
-		"compress" : ,
-		"record_length" : ,
-		"initate" : ,
-		"positive" : ,
-		"negitive" : ,
-		"x_on" : ,
-		"x_off" : ,
-		"start" : ,
-		"stop" : ,
-		"release" : ,
-		"select_stacker" : ,
-		"download" : ,
-		"runtime" : ,
-		"status" : ,
-		"scanner_control" : ,
-		"print_position" : ,
-		"print_data" : ,
-		"display_data" : ,
-		"end_of_info" : ,
-		"end_of_batch" : ,
-		"ocr" :
-	}
+  "port_name": "com1",
+  "baud_rate": 9600,
+  "parity_bit": "None",
+  "bit_length": 8,
+  "stop_bits": "One",
+  "start_of_record": "",
+  "end_of_record": "$",
+  "end_of_document": "",
+  "compress": "#",
+  "initate": "+",
+  "record_length": "",
+  "positive": "+",
+  "negitive": "-",
+  "x_on": "",
+  "x_off": "",
+  "start": ">",
+  "stop": "<",
+  "release": ".",
+  "select_stacker": "",
+  "download": "",
+  "runtime": "",
+  "status": "s",
+  "scanner_control": "",
+  "print_position": "",
+  "print_data": "",
+  "display_data": "!",
+  "end_of_info": "/",
+  "end_of_batch": "",
+  "ocr": ""
 }
