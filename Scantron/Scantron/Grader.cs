@@ -19,8 +19,6 @@ namespace Scantron
     class Grader
     {
         GUI gui;
-        // Holds the raw data split up by card.
-        private List<string> raw_cards = new List<string>();
         // Holds the cards used to create the students.
         private List<Card> cards = new List<Card>();
         // Hold the list of students to be graded
@@ -56,22 +54,14 @@ namespace Scantron
             }
         }
 
-        // Creates card objects from the created cards and adds them to the list
-        public void CreateCards(string raw_scantron_output)
+        // Creates the students based off of the list of Card(s); However, it does not sort them.
+        public void CreateStudents(List<string> raw_cards)
         {
-            // Sets each reference value in cards equal to exactly one scantron card.
-            raw_cards = raw_scantron_output.Split('$').ToList<string>();
-
-            // For each index/value in cards, create a *card* object and add to the list cards.
             for (int i = 0; i < raw_cards.Count - 1; i++)
             {
                 cards.Add(new Card(raw_cards[i]));
             }
-        }
 
-        // Creates the students based off of the list of Card(s); However, it does not sort them.
-        public void CreateStudents()
-        {
             foreach (Card card in cards)
             {
                 Student student = new Student(card);
