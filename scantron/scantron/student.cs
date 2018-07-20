@@ -1,7 +1,14 @@
-﻿using System;
+﻿// Student.cs
+//
+// Property of the Kansas State University IT Help Desk
+// Written by: William McCreight, Caleb Schweer, and Joseph Webster
+// 
+// An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
+// repository: https://github.com/prometheus1994/scantron-dev/wiki
+//
+// This class is used to create student objects for grading.
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Scantron
 {
@@ -9,22 +16,26 @@ namespace Scantron
     {
         // The student's WID.
         private string wid;
-
         // The test version
         private int test_version;
-
         // The student's Scantron card(s).
         private List<Card> cards = new List<Card>();
-
         // The student's responses compiled from the cards.
         private List<Question> response = new List<Question>();
-
-        // Creates Student() objects using the WID & Dictionary of cards and their sheet number
+        
         public Student(Card card)
         {
             this.wid = card.WID;
             this.test_version = card.TestVersion;
             cards.Add(card);
+        }
+        
+        public string WID
+        {
+            get
+            {
+                return wid;
+            }
         }
 
         public int TestVersion
@@ -34,18 +45,7 @@ namespace Scantron
                 return test_version;
             }
         }
-
-
-        // getter for wid
-        public string WID
-        {
-            get
-            {
-                return wid;
-            }
-        }
-
-        // getter for cards
+        
         public List<Card> Cards
         {
             get
@@ -62,7 +62,9 @@ namespace Scantron
             }
         }
 
-        // Convert the student's list of cards to a list of answers.
+        /// <summary>
+        /// Convert the student's list of cards to a list of answers.
+        /// </summary>
         public void CreateResponse()
         {
             cards.Sort((a, b) => a.SheetNumber.CompareTo(b.SheetNumber));
@@ -73,7 +75,10 @@ namespace Scantron
             }
         }
 
-        // Get the student's score.
+        /// <summary>
+        /// Get the student's score.
+        /// </summary>
+        /// <returns>Student's exam score.</returns>
         public float Score()
         {
             float score = 0;
