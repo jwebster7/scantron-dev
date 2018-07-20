@@ -8,11 +8,6 @@
 //
 // This class is used to create Question objects for the student responses & exam key.
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Scantron
 {
     class Question
