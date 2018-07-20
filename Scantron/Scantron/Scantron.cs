@@ -28,14 +28,14 @@ namespace Scantron
     public partial class Scantron : Form
     {
         private GUI gui;
-        public ScantronConfig config;
+        public ScantronCom com;
 
         // The default constructor for the scantron GUI.
         public Scantron()
         {
             InitializeComponent();
-            config = ScantronConfig.Deserialize();
-            gui = new GUI(this, config);
+            com = ScantronCom.Deserialize();
+            gui = new GUI(this, com);
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.

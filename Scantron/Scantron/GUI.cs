@@ -28,7 +28,7 @@ namespace Scantron
         private Grader grader;
         // Serial port objects.
         private SerialPort serial_port;
-        private ScantronConfig config;
+        private ScantronCom com;
         // GUI objects that we need data from.
         private Form scantron_form;
         private TextBox uxInstructionBox;
@@ -43,7 +43,7 @@ namespace Scantron
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
 
-        public GUI(Form scantron_form, ScantronConfig config)
+        public GUI(Form scantron_form, ScantronCom com)
         {
             // Test Data. Has two students for a 150 question exam. One has blank answers.
             raw_cards = new List<string>();
@@ -55,8 +55,8 @@ namespace Scantron
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
 
             this.scantron_form = scantron_form;
-            this.config = config;
-            serial_port = new SerialPort(config.port_name, config.baud_rate, (Parity)Enum.Parse(typeof(Parity), config.parity_bit), config.bit_length, (StopBits)Enum.Parse(typeof(StopBits), config.stop_bits));
+            this.com = com;
+            serial_port = new SerialPort(com.port_name, com.baud_rate, (Parity)Enum.Parse(typeof(Parity), com.parity_bit), com.bit_length, (StopBits)Enum.Parse(typeof(StopBits), com.stop_bits));
             
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
@@ -150,8 +150,8 @@ namespace Scantron
                 uxInstructionBox.Text = ""; // For testing
                 raw_cards = new List<string>();
 
-                serial_port.Write(config.start);
-                serial_port.Write(config.positive);
+                serial_port.Write(com.start);
+                serial_port.Write(com.positive);
                 serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
             }
             catch (Exception ex)
@@ -176,11 +176,11 @@ namespace Scantron
                 {
                     raw_cards.Add(data);
                     uxInstructionBox.Text += data;
-                    serial_port.Write(config.positive);
+                    serial_port.Write(com.positive);
                 }
                 else
                 {
-                    serial_port.Write(config.stop);
+                    serial_port.Write(com.stop);
                 }
             }
             catch (Exception ex)

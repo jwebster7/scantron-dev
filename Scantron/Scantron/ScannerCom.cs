@@ -25,7 +25,7 @@ using Newtonsoft.Json;
 
 namespace Scantron
 {
-    public class ScantronConfig
+    public class ScantronCom
     {
         public string port_name { get; set; }
         public int baud_rate { get; set; }
@@ -58,12 +58,12 @@ namespace Scantron
         public string end_of_batch { get; set; }
         public string ocr { get; set; }
 
-        public static ScantronConfig Deserialize()
+        public static ScantronCom Deserialize()
         {
             using (StreamReader settings = File.OpenText("Config.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                return (ScantronConfig)serializer.Deserialize(settings, typeof(ScantronConfig));
+                return (ScantronCom)serializer.Deserialize(settings, typeof(ScantronCom));
             }
         }
     }
