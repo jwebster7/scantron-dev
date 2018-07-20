@@ -1,4 +1,14 @@
-﻿using System;
+﻿// ScannerConfig.cs
+//
+// Property of the Kansas State University IT Help Desk
+// Written by: William McCreight, Caleb Schweer, and Joseph Webster
+// 
+// An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
+// repository: https://github.com/prometheus1994/scantron-dev/wiki
+//
+// This class is used for configuring the serial port and scantron machine settings.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

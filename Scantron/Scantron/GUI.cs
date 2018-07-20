@@ -25,9 +25,11 @@ namespace Scantron
 {
     class GUI
     {
+        private Grader grader;
+        // Serial port objects.
         private SerialPort serial_port;
         private ScantronConfig config;
-        private List<string> raw_cards;
+        // GUI objects that we need data from.
         private Form scantron_form;
         private TextBox uxInstructionBox;
         private Panel uxStudentResponsePanel;
@@ -38,10 +40,8 @@ namespace Scantron
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
-
-        private List<Control> question_panels = new List<Control>();
-
-        private Grader grader;
+        // Holds the raw card data from the Scantron.
+        private List<string> raw_cards;
 
         public GUI(Form scantron_form, ScantronConfig config)
         {
@@ -67,11 +67,6 @@ namespace Scantron
             uxPreviousStudent = (Button)scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button)scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label)scantron_form.Controls.Find("uxVersionLabel", true)[0];
-
-            foreach (Control control in uxAnswerKeyTabControl.Controls)
-            {
-                question_panels.Add(control);
-            }
 
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";

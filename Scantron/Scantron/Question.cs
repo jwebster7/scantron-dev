@@ -17,24 +17,22 @@ namespace Scantron
 {
     class Question
     {
-        // char[] to hold the student response to the question
+        // A char array that holds the answer a student gives or the answer on the answer key.
         private char[] answer = new char[5];
 
-        // float for holding the total points for the question
+        // How many points this question is worth.
         private float points;
 
-        // will decide if the question gives partial points for multiple choice or multiple answer
+        // Holds if this questions can be graded for partial credit on multiple answer questions.
         private bool partial_credit;
-
-        // constructor for Question
+        
         public Question(char[] answer, float points, bool partial_credit)
         {
             this.answer = answer;
             this.points = points;
             this.partial_credit = partial_credit;
         }
-
-        // getter for char[] answer
+        
         public char[] Answer
         {
             get
@@ -59,7 +57,10 @@ namespace Scantron
             }
         }
 
-        // Method for grading this question.
+        /// <summary>
+        /// Method for grading this question.
+        /// </summary>
+        /// <param name="answer_key">Answer key to grade this questions against.</param>
         public void Grade(Question answer_key)
         {
             if (answer_key.PartialCredit)

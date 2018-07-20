@@ -25,14 +25,12 @@ namespace Scantron
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
         private Dictionary<int, List<Question>> answer_key = new Dictionary<int, List<Question>>();
-
-        // Default constructor; does nothing
+        
         public Grader(GUI gui)
         {
             this.gui = gui;
         }
-
-        // getter for cards
+        
         public List<Student> Students
         {
             get
@@ -40,8 +38,7 @@ namespace Scantron
                 return students;
             }
         }
-
-        // getter/setter for answer_key
+        
         public Dictionary<int, List<Question>> AnswerKey
         {
             get
@@ -54,7 +51,10 @@ namespace Scantron
             }
         }
 
-        // Creates the students based off of the list of Card(s); However, it does not sort them.
+        /// <summary>
+        /// Creates the students based off of the list of raw card data.
+        /// </summary>
+        /// <param name="raw_cards">Raw card data read in from Scantron.</param>
         public void CreateStudents(List<string> raw_cards)
         {
             for (int i = 0; i < raw_cards.Count - 1; i++)
@@ -82,8 +82,11 @@ namespace Scantron
                 student.CreateResponse();
             }
         }
-        
-        // Check student answers against the answer key. Canvas grading. Returns true if no errors occurred.
+
+        /// <summary>
+        /// Check student answers against the answer key.
+        /// </summary>
+        /// <returns>True if no errors occurred.</returns>
         public bool GradeStudents()
         {
             foreach (Student student in students)
@@ -114,7 +117,10 @@ namespace Scantron
             return true;
         }
 
-        // Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
+        /// <summary>
+        /// Convert the students' grades into a CSV file to be uploaded to the Canvas gradebook.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             float points_possible = answer_key[0].Sum(question => question.Points);

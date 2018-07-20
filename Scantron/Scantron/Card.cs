@@ -1,4 +1,4 @@
-﻿// Student.cs
+﻿// Card.cs
 //
 // Property of the Kansas State University IT Help Desk
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
@@ -6,7 +6,7 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This class is used for creating Student objects with their associated fields, methods, and properties.
+// This class is used for creating card objects from the raw scantron data.
 
 using System;
 using System.Collections.Generic;
@@ -263,8 +263,13 @@ namespace Scantron
             }
         }
 
-        // Returns which bubble from a group of three is the darkest. Darkness is given by the scantron machine on a 
-        // scale of 0 to F. If no bubble is clearly the darkest, a zero is returned instead.
+        /// <summary>
+        /// Returns which bubble from a group of three is the darkest. Darkness is given by the scantron machine on a scale of 0 to F.
+        /// </summary>
+        /// <param name="a">First bubble's darkness.</param>
+        /// <param name="b">Second bubble's darkness.</param>
+        /// <param name="c">Third bubble's darkness.</param>
+        /// <returns>Which bubble is darkest. Defaults to 1.</returns>
         private int GetDarkestBubble(int a, int b, int c)
         {
             if (b > a && b > c)
@@ -279,7 +284,15 @@ namespace Scantron
             return 1;
         }
 
-        // Does the same as the above method, but for five bubbles.
+        /// <summary>
+        /// Returns which bubble from a group of five is the darkest. Darkness is given by the scantron machine on a scale of 0 to F.
+        /// </summary>
+        /// <param name="a">First bubble's darkness.</param>
+        /// <param name="b">Second bubble's darkness.</param>
+        /// <param name="c">Third bubble's darkness.</param>
+        /// <param name="d">Fourth bubble's darkness.</param>
+        /// <param name="e">Fifth bubble's darkness.</param>
+        /// <returns>Which bubble is darkest. Defaults to 1.</returns>
         private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a> d && a >e)
@@ -306,7 +319,10 @@ namespace Scantron
             return 0;
         }
 
-        // Translates the student's data to a string for use with the Canvas Scantron tool.
+        /// <summary>
+        /// Translates the student's data to a string for use with the Canvas Scantron tool, not for uploading to the gradebook as a .csv.
+        /// </summary>
+        /// <returns>Student's data as a string.</returns>
         public override string ToString()
         {
             string student_info = "";
