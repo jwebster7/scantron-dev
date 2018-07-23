@@ -98,6 +98,7 @@
             this.uxStop.TabIndex = 4;
             this.uxStop.Text = "Stop";
             this.uxStop.UseVisualStyleBackColor = true;
+            this.uxStop.Visible = false;
             this.uxStop.Click += new System.EventHandler(this.uxStop_Click);
             // 
             // uxRestart

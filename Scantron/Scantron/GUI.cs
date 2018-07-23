@@ -13,15 +13,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-using System.IO.Ports;
 
 namespace Scantron
 {
-    class GUI
+    public class GUI
     {
         private Grader grader;
         // Serial port objects.
-        private SerialPort serial_port;
         private ScantronCom com;
         // GUI objects that we need data from.
         private Form scantron_form;
@@ -37,7 +35,7 @@ namespace Scantron
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
 
-        public GUI(Form scantron_form, ScantronCom com)
+        public GUI(Form scantron_form)
         {
             // Test Data. Has two students for a 150 question exam. One has blank answers.
             raw_cards = new List<string>();
@@ -49,8 +47,12 @@ namespace Scantron
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
 
             this.scantron_form = scantron_form;
-            this.com = com;
-            serial_port = new SerialPort(com.port_name, com.baud_rate, (Parity)Enum.Parse(typeof(Parity), com.parity_bit), com.bit_length, (StopBits)Enum.Parse(typeof(StopBits), com.stop_bits));
+            this.com = new ScantronCom(this);
+           // com = ScantronCom.Deserialize();
+
+
+           
+            
             
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
@@ -130,57 +132,10 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
+            com.Start();
+            raw_cards = com.Run(raw_cards);
+            grader.CreateStudents(raw_cards);
 
-            if (!serial_port.IsOpen)
-            {
-                serial_port.Open();
-            }
-
-            try
-            {
-                /*uxInstructionBox.Text = "Now press Start on the Machine to begin scanning." + Environment.NewLine +
-                                            "Once all the cards have successfully scanned, " + Environment.NewLine +
-                                            "press the 'Stop' within this window.";*/
-                uxInstructionBox.Text = ""; // For testing
-                raw_cards = new List<string>();
-
-                serial_port.Write(com.start);
-                serial_port.Write(com.positive);
-                serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
-            }
-            catch (Exception ex)
-            {
-                DisplayMessage(CatchException(ex));
-            }
-        }
-
-        /// <summary>
-        /// This method is an event handler for the serial port. Activates when data is picked up.
-        /// </summary>
-        /// <param name="sender">The serial port.</param>
-        /// <param name="e">Event object.</param>
-        private void DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            try
-            { 
-                serial_port = (SerialPort)sender;
-                string data = serial_port.ReadExisting();
-                
-                if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
-                {
-                    raw_cards.Add(data);
-                    uxInstructionBox.Text += data;
-                    serial_port.Write(com.positive);
-                }
-                else
-                {
-                    serial_port.Write(com.stop);
-                }
-            }
-            catch (Exception ex)
-            {
-                DisplayMessage(CatchException(ex));
-            }
         }
 
         /// <summary>
@@ -188,19 +143,8 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            try
-            {
-                if (serial_port.IsOpen)
-                {
-                    serial_port.Close();
-                }
-                
-                grader.CreateStudents(raw_cards);
-            }
-            catch (Exception ex)
-            {
-                DisplayMessage(CatchException(ex));
-            }
+            com.Stop();
+
         }
 
         /// <summary>
