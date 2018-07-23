@@ -17,6 +17,7 @@ namespace Scantron
     class Grader
     {
         GUI gui;
+
         // Holds the cards used to create the students.
         private List<Card> cards = new List<Card>();
         // Hold the list of students to be graded

@@ -8,10 +8,7 @@
 //
 // This class is used to create student objects for grading.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Scantron
 {

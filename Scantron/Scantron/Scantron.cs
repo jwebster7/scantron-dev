@@ -17,8 +17,7 @@ namespace Scantron
     {
         private GUI gui;
         public ScantronConfig config;
-
-        // The default constructor for the scantron GUI.
+        
         public Scantron()
         {
             InitializeComponent();

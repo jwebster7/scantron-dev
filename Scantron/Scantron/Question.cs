@@ -14,10 +14,8 @@ namespace Scantron
     {
         // A char array that holds the answer a student gives or the answer on the answer key.
         private char[] answer = new char[5];
-
         // How many points this question is worth.
         private float points;
-
         // Holds if this questions can be graded for partial credit on multiple answer questions.
         private bool partial_credit;
         

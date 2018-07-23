@@ -14,12 +14,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 
 namespace Scantron
 {
     class GUI
     {
         private Grader grader;
+
         // Serial port objects.
         private SerialPort serial_port;
         private ScantronConfig config;
@@ -39,6 +41,7 @@ namespace Scantron
 
         public GUI(Form scantron_form, ScantronConfig config)
         {
+            /*
             // Test Data. Has two students for a 150 question exam. One has blank answers.
             raw_cards = new List<string>();
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
@@ -47,7 +50,7 @@ namespace Scantron
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$");
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
-
+            */
             this.scantron_form = scantron_form;
             this.config = config;
             serial_port = new SerialPort(config.port_name, config.baud_rate, (Parity)Enum.Parse(typeof(Parity), config.parity_bit), config.bit_length, (StopBits)Enum.Parse(typeof(StopBits), config.stop_bits));
@@ -161,25 +164,19 @@ namespace Scantron
         /// <param name="e">Event object.</param>
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            try
-            { 
-                serial_port = (SerialPort)sender;
-                string data = serial_port.ReadExisting();
-                
-                if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
-                {
-                    raw_cards.Add(data);
-                    uxInstructionBox.Text += data;
-                    serial_port.Write(config.positive);
-                }
-                else
-                {
-                    serial_port.Write(config.stop);
-                }
-            }
-            catch (Exception ex)
+            serial_port = (SerialPort)sender;
+            string data = serial_port.ReadExisting();
+
+            if (data.Length > 1) // The data from the Scantron will just be "$" if it asks for a card after the stack is done.
             {
-                DisplayMessage(CatchException(ex));
+                raw_cards.Add(data);
+                uxInstructionBox.Text += data;
+                serial_port.Write(config.positive);
+                Thread.Sleep(500);
+            }
+            else
+            {
+                serial_port.Write(config.stop);
             }
         }
 
@@ -188,19 +185,12 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            try
+            if (serial_port.IsOpen)
             {
-                if (serial_port.IsOpen)
-                {
-                    serial_port.Close();
-                }
-                
-                grader.CreateStudents(raw_cards);
+                serial_port.Close();
             }
-            catch (Exception ex)
-            {
-                DisplayMessage(CatchException(ex));
-            }
+
+            grader.CreateStudents(raw_cards);
         }
 
         /// <summary>
@@ -362,7 +352,6 @@ namespace Scantron
             {
                 DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
                                 + " and follow the instructions.");
-
                 return;
             }
 
@@ -383,8 +372,7 @@ namespace Scantron
                     uxStudentSelector.Items.Add(student.WID);
                 }
 
-                // Displays the first student in the index
-                NextStudent();
+                NextStudent(); // Displays the first student in the index
             }
             else
             {
