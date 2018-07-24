@@ -46,14 +46,15 @@ namespace Scantron
 
         }
 
-        public List<string> Run(List<string> raw_cards)
+        public  List<string> Run(List<string> raw_cards)
         {
+            serial_port.Write(config.initate);
 
             while (Status()[11] != '1') //will loop while the hopper is up
             {
                 serial_port.Write(config.positive);
 
-                if (Status()[8] == 1 || Status()[8] == 2) //checks status if there was an error reading in the sheet
+                if (Status()[8] == '1' || Status()[8] == '2') //checks status if there was an error reading in the sheet
                 {
                     Stop();
                     serial_port.DiscardInBuffer();
@@ -90,7 +91,7 @@ namespace Scantron
 
     }
 
-    public class ScannerConfig
+    public  class ScannerConfig
     {
         public string port_name { get; set; }
         public int baud_rate { get; set; }
