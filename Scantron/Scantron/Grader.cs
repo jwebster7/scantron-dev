@@ -56,7 +56,7 @@ namespace Scantron
         /// <param name="raw_cards">Raw card data read in from Scantron.</param>
         public void CreateStudents(List<string> raw_cards)
         {
-            for (int i = 0; i < raw_cards.Count - 1; i++)
+            for (int i = 0; i < raw_cards.Count; i++)
             {
                 cards.Add(new Card(raw_cards[i]));
             }

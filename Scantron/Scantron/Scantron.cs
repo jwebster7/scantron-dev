@@ -22,6 +22,12 @@ namespace Scantron
         {
             InitializeComponent();
             gui = new GUI(this);
+
+            for (int i = 0; i < 3; i++)
+            {
+                TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
+                gui.InstantiateAnswerKeyForm(tabpage);
+            }
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.
@@ -74,6 +80,16 @@ namespace Scantron
         private void uxPreviousStudent_Click(object sender, EventArgs e)
         {
             gui.PreviousStudent();
+        }
+
+        private void uxAllPartialCredit_CheckedChanged(object sender, EventArgs e)
+        {
+            gui.UpdateAllPartialCredit();
+        }
+
+        private void uxAllQuestionPoints_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateAllQuestionPoints();
         }
     }
 }

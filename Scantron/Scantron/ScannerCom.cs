@@ -63,13 +63,11 @@ namespace Scantron
                     //Event that user resumes scanning
                     Start();
                     serial_port.Write(config.initate);
-
                 }
                 else
                 {
                     raw_cards.Add(serial_port.ReadLine());
                 }
-
             }
 
             serial_port.Close();
