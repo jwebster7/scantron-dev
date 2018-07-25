@@ -53,12 +53,16 @@
             this.uxNumberOfVersions = new System.Windows.Forms.NumericUpDown();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
+            this.uxAllQuestionPoints = new System.Windows.Forms.NumericUpDown();
+            this.uxAllQuestionPointsLabel = new System.Windows.Forms.Label();
+            this.uxAllPartialCredit = new System.Windows.Forms.CheckBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).BeginInit();
             this.uxAnswerKeyTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
             this.SuspendLayout();
             // 
             // uxStart
@@ -98,7 +102,6 @@
             this.uxStop.TabIndex = 4;
             this.uxStop.Text = "Stop";
             this.uxStop.UseVisualStyleBackColor = true;
-            this.uxStop.Visible = false;
             this.uxStop.Click += new System.EventHandler(this.uxStop_Click);
             // 
             // uxRestart
@@ -194,6 +197,9 @@
             // uxGradeTab
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTab.Controls.Add(this.uxAllPartialCredit);
+            this.uxGradeTab.Controls.Add(this.uxAllQuestionPointsLabel);
+            this.uxGradeTab.Controls.Add(this.uxAllQuestionPoints);
             this.uxGradeTab.Controls.Add(this.uxVersionLabel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfQuestions);
             this.uxGradeTab.Controls.Add(this.uxNumberOfQuestionsLabel);
@@ -390,6 +396,43 @@
             this.uxAnswerKeyLabel.TabIndex = 17;
             this.uxAnswerKeyLabel.Text = "Answer Key";
             // 
+            // uxAllQuestionPoints
+            // 
+            this.uxAllQuestionPoints.DecimalPlaces = 2;
+            this.uxAllQuestionPoints.Location = new System.Drawing.Point(274, 20);
+            this.uxAllQuestionPoints.Name = "uxAllQuestionPoints";
+            this.uxAllQuestionPoints.Size = new System.Drawing.Size(60, 20);
+            this.uxAllQuestionPoints.TabIndex = 26;
+            this.uxAllQuestionPoints.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.uxAllQuestionPoints.ValueChanged += new System.EventHandler(this.uxAllQuestionPoints_ValueChanged);
+            // 
+            // uxAllQuestionPointsLabel
+            // 
+            this.uxAllQuestionPointsLabel.AutoSize = true;
+            this.uxAllQuestionPointsLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxAllQuestionPointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(185, 20);
+            this.uxAllQuestionPointsLabel.Name = "uxAllQuestionPointsLabel";
+            this.uxAllQuestionPointsLabel.Size = new System.Drawing.Size(81, 13);
+            this.uxAllQuestionPointsLabel.TabIndex = 27;
+            this.uxAllQuestionPointsLabel.Text = "All Questions";
+            // 
+            // uxAllPartialCredit
+            // 
+            this.uxAllPartialCredit.AutoSize = true;
+            this.uxAllPartialCredit.BackColor = System.Drawing.Color.Transparent;
+            this.uxAllPartialCredit.Location = new System.Drawing.Point(337, 21);
+            this.uxAllPartialCredit.Name = "uxAllPartialCredit";
+            this.uxAllPartialCredit.Size = new System.Drawing.Size(99, 17);
+            this.uxAllPartialCredit.TabIndex = 0;
+            this.uxAllPartialCredit.Text = "All Partial Credit";
+            this.uxAllPartialCredit.UseVisualStyleBackColor = false;
+            this.uxAllPartialCredit.CheckedChanged += new System.EventHandler(this.uxAllPartialCredit_CheckedChanged);
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,6 +455,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).EndInit();
             this.uxAnswerKeyTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -443,6 +487,9 @@
         private System.Windows.Forms.NumericUpDown uxNumberOfQuestions;
         private System.Windows.Forms.Label uxNumberOfQuestionsLabel;
         private System.Windows.Forms.Label uxVersionLabel;
+        private System.Windows.Forms.NumericUpDown uxAllQuestionPoints;
+        private System.Windows.Forms.CheckBox uxAllPartialCredit;
+        private System.Windows.Forms.Label uxAllQuestionPointsLabel;
     }
 }
 

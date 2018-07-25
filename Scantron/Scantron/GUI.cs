@@ -29,6 +29,8 @@ namespace Scantron
         private TabControl uxAnswerKeyTabControl;
         private NumericUpDown uxNumberOfQuestions;
         private NumericUpDown uxNumberOfVersions;
+        private NumericUpDown uxAllQuestionPoints;
+        private CheckBox uxAllPartialCredit;
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
@@ -49,17 +51,15 @@ namespace Scantron
             this.scantron_form = scantron_form;
             this.com = new ScantronCom(this);
            // com = ScantronCom.Deserialize();
-
-
            
-            
-            
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
             uxNumberOfQuestions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
             uxNumberOfVersions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
+            uxAllQuestionPoints = (NumericUpDown)scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
+            uxAllPartialCredit = (CheckBox)scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
             uxPreviousStudent = (Button)scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button)scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label)scantron_form.Controls.Find("uxVersionLabel", true)[0];
@@ -136,8 +136,6 @@ namespace Scantron
             raw_cards = com.Run(raw_cards);
             grader.CreateStudents(raw_cards);
 
-            
-
         }
 
         /// <summary>
@@ -145,8 +143,7 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            com.Stop();
-
+            grader.CreateStudents(raw_cards);
         }
 
         /// <summary>
@@ -164,32 +161,67 @@ namespace Scantron
         /// </summary>
         public void Enter()
         {
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            {
+                foreach (Panel panel in tabpage.Controls)
+                {
+                    panel.Visible = false;
+                }
+            }
+
+            uxAllQuestionPoints.Value = 1;
+            uxAllPartialCredit.Checked = false;
+
             int number_of_versions = (int) uxNumberOfVersions.Value;
             int number_of_questions = (int) uxNumberOfQuestions.Value;
 
-            for (int i = 0; i < number_of_versions; i++)
+            CreateAnswerKeyForm(number_of_versions, number_of_questions);
+        }
+
+        /// <summary>
+        /// Updates points for all questions in the exam.
+        /// </summary>
+        public void UpdateAllQuestionPoints()
+        {
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
             {
-                TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
-                CreateAnswerKeyForm(number_of_questions, tabpage);
+                foreach (Control control in tabpage.Controls)
+                {
+                    NumericUpDown updown = (NumericUpDown)control.Controls[5];
+                    updown.Value = uxAllQuestionPoints.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates partial credit for all questions in the exam.
+        /// </summary>
+        public void UpdateAllPartialCredit()
+        {
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            {
+                foreach (Control control in tabpage.Controls)
+                {
+                    CheckBox checkbox = (CheckBox)control.Controls[6];
+                    checkbox.Checked = uxAllPartialCredit.Checked;
+                }
             }
         }
 
         /// <summary>
         /// Create the answer key form to be filled out by the instructor.
         /// </summary>
-        /// <param name="number_of_questions">Number of questions in the answer key.</param>
         /// <param name="tabpage">Current version being created.</param>
-        public void CreateAnswerKeyForm(int number_of_questions, TabPage tabpage)
+        public void InstantiateAnswerKeyForm(TabPage tabpage)
         {
-            tabpage.Controls.Clear();
-
-            for (int j = 0; j < number_of_questions; j++)
+            for (int j = 0; j < 250; j++)
             {
                 Panel panel = new Panel
                 {
                     BackColor = Color.MediumPurple,
                     Location = new Point(3, 3 + 26 * j),
-                    Size = new Size(420, 22)
+                    Size = new Size(420, 22),
+                    Visible = false
                 };
 
                 for (int k = 0; k < 5; k++)
@@ -206,9 +238,9 @@ namespace Scantron
                 NumericUpDown updown = new NumericUpDown
                 {
                     Location = new Point(268, 1),
-                    Minimum = 1,
                     DecimalPlaces = 2,
-                    Size = new Size(58, 20)
+                    Size = new Size(58, 20),
+                    Value = 1
                 };
 
                 CheckBox partial_credit = new CheckBox
@@ -234,6 +266,26 @@ namespace Scantron
         }
 
         /// <summary>
+        /// Makes the selected number of versions and questions on the answer key form visible.
+        /// </summary>
+        /// <param name="number_of_versions">Number of exam versions.</param>
+        /// <param name="number_of_questions">Number of questions on the exam.</param>
+        public void CreateAnswerKeyForm(int number_of_versions, int number_of_questions)
+        {
+            TabPage tabpage;
+
+            for (int i = 0; i < number_of_versions; i++)
+            {
+                tabpage = uxAnswerKeyTabControl.TabPages[i];
+
+                for (int j = 0; j < number_of_questions; j++)
+                {
+                    tabpage.Controls[j].Visible = true;
+                }
+            }
+        }
+
+        /// <summary>
         /// Create the answer key from the filled out form.
         /// </summary>
         public void CreateAnswerKey()
@@ -247,6 +299,7 @@ namespace Scantron
 
             grader.AnswerKey = new Dictionary<int, List<Question>>();
 
+            Panel panel;
             CheckBox checkbox;
             NumericUpDown updown;
 
@@ -260,40 +313,42 @@ namespace Scantron
             {
                 grader.AnswerKey.Add(i, new List<Question>());
                 
-                               for (int j = 0; j < number_of_questions; j++)
-                                    {
+                for (int j = 0; j < number_of_questions; j++)
+                {
                     answer = new char[5];
-                    
-                                        // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
-                                        for (int k = 0; k < 5; k++)
-                                           {
-                        checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[k];
-                                                if (checkbox.Checked)
-                                                    {
+
+                    panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
+
+                    // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
+                    for (int k = 0; k < 5; k++)
+                    {
+                        checkbox = (CheckBox) panel.Controls[k];
+                        if (checkbox.Checked)
+                        {
                             answer[k] = (char)(65 + k);
-                                                    }
-                                                else
-                       {
+                        }
+                        else
+                        {
                             answer[k] = ' ';
-                                                    }
-                                            }
+                        }
+                    }
                     
-                    updown = (NumericUpDown)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[5];
+                    updown = (NumericUpDown) panel.Controls[5];
                     points = (float)updown.Value;
                     
-                                        // Checks the current question panel's partial credit checkbox.
-                    checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[i].Controls[j].Controls[6];
-                                        if (checkbox.Checked)
-                                            {
+                    // Checks the current question panel's partial credit checkbox.
+                    checkbox = (CheckBox) panel.Controls[6];
+                    if (checkbox.Checked)
+                    {
                         partial_credit = true;
-                                            }
-                                        else
+                    }
+                    else
                     {
                         partial_credit = false;
-                                            }
+                    }
                     
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
-                                    }
+                }
             }
 
             MessageBox.Show("Answer key created!");
