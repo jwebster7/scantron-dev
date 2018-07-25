@@ -44,31 +44,36 @@ namespace Scantron
                 serial_port.Write(config.start);
             }
 
+            
         }
 
-        public  List<string> Run(List<string> raw_cards)
+        public List<string> Run(List<string> raw_cards)
         {
-            serial_port.Write(config.initate);
+            
+            string cardFromSerialPort;
 
             while (Status()[11] != '1') //will loop while the hopper is up
             {
+                
+                
                 serial_port.Write(config.positive);
+                cardFromSerialPort = serial_port.ReadLine();
+
 
                 if (Status()[8] == '1' || Status()[8] == '2') //checks status if there was an error reading in the sheet
                 {
-                    Stop();
+                    //Do not need to stop when the scanner gets an error it drops the bed
                     serial_port.DiscardInBuffer();
                     gui.DisplayMessage("A card has jammed. Please remove the card.\n \n " +
                         "Place it back in your scantron pile and close this pop up.");
-                    //Display Message Box to remove jammed card and add it back to the top of the card stack
-                    //Event that user resumes scanning
-                    Start();
-                    serial_port.Write(config.initate);
+                    
+                    serial_port.Write(config.start);
+                    
 
                 }
                 else
                 {
-                    raw_cards.Add(serial_port.ReadLine());
+                    raw_cards.Add(cardFromSerialPort);
                 }
 
             }
@@ -79,15 +84,17 @@ namespace Scantron
 
         public void Stop()
         {
-           // serial_port.Write(config.stop);
+           serial_port.Write(config.stop);
         }
 
         private string Status()
         {
+            string status;
             serial_port.Write(config.status);
             serial_port.Write("0"); // 0 - for long status
                                     // 1 - for short status
-            return serial_port.ReadLine();
+            status = serial_port.ReadLine();
+            return status;
 
         }
 
