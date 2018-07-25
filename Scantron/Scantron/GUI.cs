@@ -34,6 +34,7 @@ namespace Scantron
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
+        private Label uxStudentDisplayLabel;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
 
@@ -57,12 +58,13 @@ namespace Scantron
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
             uxNumberOfQuestions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
-            uxNumberOfVersions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
-            uxAllQuestionPoints = (NumericUpDown)scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
-            uxAllPartialCredit = (CheckBox)scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
-            uxPreviousStudent = (Button)scantron_form.Controls.Find("uxPreviousStudent", true)[0];
-            uxNextStudent = (Button)scantron_form.Controls.Find("uxNextStudent", true)[0];
-            uxVersionLabel = (Label)scantron_form.Controls.Find("uxVersionLabel", true)[0];
+            uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
+            uxAllQuestionPoints = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
+            uxAllPartialCredit = (CheckBox) scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
+            uxPreviousStudent = (Button) scantron_form.Controls.Find("uxPreviousStudent", true)[0];
+            uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
+            uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
+            uxStudentDisplayLabel = (Label) scantron_form.Controls.Find("uxStudentDisplayLabel", true)[0];
 
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
@@ -482,13 +484,51 @@ namespace Scantron
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void InstantiateStudentDisplay()
+        {
+            for (int i = 0; i < 250; i++)
+            {
+                Panel panel = new Panel
+                {
+                    Location = new Point(3, 3 + 26 * i),
+                    Size = new Size(268, 22),
+                    Visible = false
+                };
+
+                for (int j = 0; j < 5; j++)
+                {
+                    CheckBox checkbox = new CheckBox
+                    {
+                        Enabled = false,
+                        Location = new Point(73 + 39 * j, 3),
+                        Size = new Size(33, 17),
+                        Text = ((char)(j + 65)).ToString()
+                    };
+
+                    panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
+                }
+
+                Label label = new Label
+                {
+                    Location = new Point(3, 3),
+                    Size = new Size(70, 13),
+                    Text = "Question" + (i + 1)
+                };
+
+                panel.Controls.Add(label); // Index 5
+
+                uxStudentResponsePanel.Controls.Add(panel);
+            }
+        }
+
+        /// <summary>
         /// Display the selected student's response in uxStudentResponsePanel.
         /// </summary>
         /// <param name="student">Selected student.</param>
         private void DisplayStudent(Student student)
         {
-            uxStudentResponsePanel.Controls.Clear();
-
             if (uxStudentSelector.SelectedIndex == 0)
             {
                 uxPreviousStudent.Enabled = false;
@@ -508,72 +548,52 @@ namespace Scantron
             }
 
             uxVersionLabel.Text = "Version: " + student.TestVersion;
+            Panel panel;
+            CheckBox response_checkbox;
+            CheckBox answer_key_checkbox;
 
-            for (int i = 0; i < grader.AnswerKey[0].Count; i++)
+            foreach (Control control in uxStudentResponsePanel.Controls)
             {
-                Panel panel = new Panel
+                control.Visible = false;
+            }
+
+            if (uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls.Count == 0)
+            {
+                uxStudentDisplayLabel.Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20);
+                uxStudentDisplayLabel.Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
+                            + " test version.";
+                uxStudentDisplayLabel.Visible = true;
+                return;
+            }
+
+            for (int i = 0; i < student.Response.Count; i++)
+            {
+                panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
+                panel.Visible = true;
+
+                if (student.Response[i].Points == grader.AnswerKey[student.TestVersion - 1][i].Points)
                 {
-                    BackColor = Color.Green,
-                    Location = new Point(3, 3 + 26 * i),
-                    Size = new Size(268, 22)
-                };
+                    panel.BackColor = Color.DarkGreen;
+                }
+                else
+                {
+                    panel.BackColor = Color.Red;
+                }
 
                 for (int j = 0; j < 5; j++)
                 {
-                    CheckBox checkbox = new CheckBox
-                    {
-                        Enabled = false,
-                        Location = new Point(73 + 39 * j, 3),
-                        Size = new Size(33, 17),
-                        Text = ((char)(j + 65)).ToString()
-                    };
+                    response_checkbox = (CheckBox)panel.Controls[j];
+                    answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls[i].Controls[j];
 
-                    if (student.Response[i].Answer[j] != ' ')
+                    if (student.Response[i].Answer[j] == ' ')
                     {
-                        checkbox.Checked = true;
+                        response_checkbox.Checked = false;
                     }
-
-                    panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
-                }
-
-                Label label = new Label
-                {
-                    Location = new Point(3, 3),
-                    Size = new Size(70, 13),
-                    Text = "Question" + (i + 1)
-                };
-
-                for (int k = 0; k < 5; k++)
-                {
-                    try
+                    else
                     {
-                        CheckBox response_checkbox = (CheckBox)panel.Controls[k];
-                        CheckBox answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls[i].Controls[k];
-
-                        if (response_checkbox.Checked != answer_key_checkbox.Checked)
-                        {
-                            panel.BackColor = Color.Red;
-                            break;
-                        }
-                    }
-                    catch (ArgumentOutOfRangeException e)
-                    {
-                        label = new Label
-                        {
-                            Location = new Point(3, 3),
-                            Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20), // -20 to keep from adding scroll bars to panel.
-                            Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
-                                    + " test version."
-                        };
-                        uxStudentResponsePanel.Controls.Add(label);
-
-                        return;
+                        response_checkbox.Checked = true;
                     }
                 }
-
-                panel.Controls.Add(label);
-
-                uxStudentResponsePanel.Controls.Add(panel);
             }
         }
     }

@@ -28,6 +28,8 @@ namespace Scantron
                 TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
                 gui.InstantiateAnswerKeyForm(tabpage);
             }
+
+            gui.InstantiateStudentDisplay();
         }
 
         // The event handler opens the serial port and begins reading data from the scantron machine.
