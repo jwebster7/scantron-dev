@@ -80,53 +80,6 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Handles exceptions thrown from a SerialPort object
-        /// Determines what type of exception it is, then stores it in a custom error message string to display
-        /// Switch case doesn't work for Exceptions or comparing inherited objects
-        /// Some of these errors will more than likely never be reached, but we should cover them regardless. The ones who will most likely never be reached. 
-        /// </summary>
-        /// <param name="ex">Exception object.</param>
-        /// <returns>Error message.</returns>
-        private string CatchException(Exception ex)
-        {
-            string error = "";
-
-            if (ex is IOException)
-            {
-                error = "";
-            }
-            else if (ex is ArgumentException)
-            {
-                error = "";
-            }
-            else if (ex is ArgumentNullException)
-            {
-                error = "";
-            }
-            else if (ex is ArgumentOutOfRangeException)
-            {
-                error = "";
-            }
-            else if (ex is IndexOutOfRangeException)
-            {
-                error = "";
-            }
-            else if (ex is InvalidOperationException)
-            {
-                error = ex.ToString();
-            }
-            else if (ex is NullReferenceException)
-            {
-                error = "";
-            }
-            else
-            {
-                error = ex.ToString();
-            }
-            return error;
-        }
-
-        /// <summary>
         /// Opens the serial port; begins scanning the cards. The most common exceptions with serial ports are handled. 
         /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         /// </summary>
@@ -134,8 +87,6 @@ namespace Scantron
         {
             ScannerCom.Start();
             raw_cards = ScannerCom.Run(raw_cards);
-            grader.CreateStudents(raw_cards);
-
         }
 
         /// <summary>
@@ -363,7 +314,6 @@ namespace Scantron
             {
                 DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
                                 + " and follow the instructions.");
-
                 return;
             }
 
@@ -453,14 +403,7 @@ namespace Scantron
         /// </summary>
         public void SelectStudent()
         {
-            try
-            {
-                DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
-            }
-            catch (Exception ex)
-            {
-                DisplayMessage(CatchException(ex));
-            }
+            DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
         }
 
         /// <summary>
@@ -545,7 +488,8 @@ namespace Scantron
                 uxNextStudent.Enabled = true;
             }
 
-            uxVersionLabel.Text = "Version: " + student.TestVersion;
+            int test_version = student.TestVersion;
+            uxVersionLabel.Text = "Version: " + test_version;
             Panel panel;
             CheckBox response_checkbox;
             CheckBox answer_key_checkbox;
@@ -555,7 +499,7 @@ namespace Scantron
                 control.Visible = false;
             }
 
-            if (uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls.Count == 0)
+            if (uxAnswerKeyTabControl.TabPages[test_version - 1].Controls.Count == 0)
             {
                 uxStudentDisplayLabel.Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20);
                 uxStudentDisplayLabel.Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
@@ -564,12 +508,12 @@ namespace Scantron
                 return;
             }
 
-            for (int i = 0; i < student.Response.Count; i++)
+            for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
             {
                 panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
                 panel.Visible = true;
 
-                if (student.Response[i].Points == grader.AnswerKey[student.TestVersion - 1][i].Points)
+                if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
                     panel.BackColor = Color.DarkGreen;
                 }
@@ -581,7 +525,7 @@ namespace Scantron
                 for (int j = 0; j < 5; j++)
                 {
                     response_checkbox = (CheckBox)panel.Controls[j];
-                    answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[student.TestVersion - 1].Controls[i].Controls[j];
+                    answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[test_version - 1].Controls[i].Controls[j];
 
                     if (student.Response[i].Answer[j] == ' ')
                     {

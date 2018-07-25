@@ -110,6 +110,7 @@ namespace Scantron
                 {
                     gui.DisplayMessage("Student " + student.WID + " wrote down Test Version " + test_version + "."
                                         + " You did not create this many versions. Student cannot be graded.");
+                    return false;
                 }
             }
 
