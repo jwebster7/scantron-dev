@@ -12,15 +12,15 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
+using System.IO; 
 
 namespace Scantron
 {
     public class GUI
     {
         private Grader grader;
-        // Serial port objects.
-        private ScantronCom com;
+
+
         // GUI objects that we need data from.
         private Form scantron_form;
         private TextBox uxInstructionBox;
@@ -49,8 +49,6 @@ namespace Scantron
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
 
             this.scantron_form = scantron_form;
-            this.com = new ScantronCom(this);
-           // com = ScantronCom.Deserialize();
            
             uxInstructionBox = (TextBox) scantron_form.Controls.Find("uxInstructionBox", true)[0];
             uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
@@ -132,8 +130,8 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-            com.Start();
-            raw_cards = com.Run(raw_cards);
+            ScannerCom.Start();
+            raw_cards = ScannerCom.Run(raw_cards);
             grader.CreateStudents(raw_cards);
 
         }

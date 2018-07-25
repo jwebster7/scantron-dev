@@ -1,4 +1,4 @@
-﻿// ScannerConfig.cs
+﻿// ScannerCom.cs
 //
 // Property of the Kansas State University IT Help Desk
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
@@ -8,35 +8,31 @@
 //
 // This class is used for configuring the serial port and scantron machine settings.
 
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.IO;
 using System.IO.Ports;
-using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace Scantron
 {
-    public class ScantronCom
+    public static class ScannerCom
     {
-        ScannerConfig config;
-        private SerialPort serial_port;
-        private GUI gui;
+        private static SerialPort serial_port;
+        private static ScannerConfig config;
 
-
-        public ScantronCom(GUI gui)
+        static ScannerCom()
         {
-            this.gui = gui;
-
             config = ScannerConfig.Deserialize();
 
             serial_port = new SerialPort(config.port_name, config.baud_rate, (Parity)Enum.Parse(typeof(Parity), config.parity_bit), config.bit_length, (StopBits)Enum.Parse(typeof(StopBits), config.stop_bits));
             serial_port.NewLine = config.end_of_record;
         }
 
-
-        public void Start()
+        public static void Start()
         {
             if (!serial_port.IsOpen)
             {
@@ -44,18 +40,18 @@ namespace Scantron
                 serial_port.Write(config.start);
             }
 
-            
+
         }
 
-        public List<string> Run(List<string> raw_cards)
+        public static List<string> Run(List<string> raw_cards)
         {
-            
+
             string cardFromSerialPort;
 
             while (Status()[11] != '1') //will loop while the hopper is up
             {
-                
-                
+
+
                 serial_port.Write(config.positive);
                 cardFromSerialPort = serial_port.ReadLine();
 
@@ -64,11 +60,11 @@ namespace Scantron
                 {
                     //Do not need to stop when the scanner gets an error it drops the bed
                     serial_port.DiscardInBuffer();
-                    gui.DisplayMessage("A card has jammed. Please remove the card.\n \n " +
+                    MessageBox.Show("A card has jammed. Please remove the card.\n \n " +
                         "Place it back in your scantron pile and close this pop up.");
-                    
+
                     serial_port.Write(config.start);
-                    
+
 
                 }
                 else
@@ -82,12 +78,12 @@ namespace Scantron
             return raw_cards;
         }
 
-        public void Stop()
+        public static void Stop()
         {
-           serial_port.Write(config.stop);
+            serial_port.Write(config.stop);
         }
 
-        private string Status()
+        private static string Status()
         {
             string status;
             serial_port.Write(config.status);
@@ -100,38 +96,28 @@ namespace Scantron
 
     }
 
-    public  class ScannerConfig
+
+
+
+    public class ScannerConfig
     {
         public string port_name { get; set; }
         public int baud_rate { get; set; }
         public string parity_bit { get; set; }
         public int bit_length { get; set; }
         public string stop_bits { get; set; }
-        public string start_of_record { get; set; }
+
         public string end_of_record { get; set; }
-        public string end_of_document { get; set; }
         public string compress { get; set; }
-        public string record_length { get; set; }
-        public string initate { get; set; }
+        public string initiate { get; set; }
         public string positive { get; set; }
-        public string negitive { get; set; }
-        public string x_on { get; set; }
-        public string x_off { get; set; }
+        public string negative { get; set; }
         public string start { get; set; }
         public string stop { get; set; }
         public string release { get; set; }
-        public string select_stacker { get; set; }
-        public string download { get; set; }
-        public string runtime { get; set; }
         public string status { get; set; }
-        public string scanner_control { get; set; }
-        public string print_position { get; set; }
         public string print_data { get; set; }
         public string display_data { get; set; }
-        public string end_of_info { get; set; }
-        public string end_of_batch { get; set; }
-        public string ocr { get; set; }
-
 
         public static ScannerConfig Deserialize()
         {
@@ -140,8 +126,9 @@ namespace Scantron
                 JsonSerializer serializer = new JsonSerializer();
                 return (ScannerConfig)serializer.Deserialize(settings, typeof(ScannerConfig));
             }
+
         }
 
-    }
 
+    }
 }
