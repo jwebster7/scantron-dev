@@ -272,7 +272,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uxVersionLabel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxVersionLabel.Location = new System.Drawing.Point(863, 9);
+            this.uxVersionLabel.Location = new System.Drawing.Point(499, 27);
             this.uxVersionLabel.Name = "uxVersionLabel";
             this.uxVersionLabel.Size = new System.Drawing.Size(65, 20);
             this.uxVersionLabel.TabIndex = 25;
