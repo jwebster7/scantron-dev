@@ -162,6 +162,7 @@
             // 
             this.uxStudentSelector.DisplayMember = "Student";
             this.uxStudentSelector.FormattingEnabled = true;
+            this.uxStudentSelector.ItemHeight = 13;
             this.uxStudentSelector.Location = new System.Drawing.Point(639, 366);
             this.uxStudentSelector.Name = "uxStudentSelector";
             this.uxStudentSelector.Size = new System.Drawing.Size(193, 21);

@@ -510,7 +510,9 @@ namespace Scantron
 
             for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
             {
-                panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
+                panel = (Panel)uxStudentResponsePanel.Controls[i];
+                // This line prints the student responses from the 2nd question on
+                // panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
                 panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
