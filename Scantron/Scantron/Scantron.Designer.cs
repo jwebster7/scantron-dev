@@ -57,7 +57,6 @@
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
             this.uxStudentDisplayLabel = new System.Windows.Forms.Label();
-            this.uxStudentResponsePanel.SuspendLayout();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -70,7 +69,7 @@
             // uxStart
             // 
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStart.Location = new System.Drawing.Point(3, 254);
+            this.uxStart.Location = new System.Drawing.Point(8, 254);
             this.uxStart.Name = "uxStart";
             this.uxStart.Size = new System.Drawing.Size(85, 65);
             this.uxStart.TabIndex = 0;
@@ -98,7 +97,7 @@
             // uxStop
             // 
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(94, 254);
+            this.uxStop.Location = new System.Drawing.Point(99, 254);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
@@ -109,7 +108,7 @@
             // uxRestart
             // 
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(185, 254);
+            this.uxRestart.Location = new System.Drawing.Point(190, 254);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -119,9 +118,10 @@
             // 
             // uxEnter
             // 
-            this.uxEnter.Location = new System.Drawing.Point(212, 369);
+            this.uxEnter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxEnter.Location = new System.Drawing.Point(199, 364);
             this.uxEnter.Name = "uxEnter";
-            this.uxEnter.Size = new System.Drawing.Size(75, 23);
+            this.uxEnter.Size = new System.Drawing.Size(90, 30);
             this.uxEnter.TabIndex = 12;
             this.uxEnter.Text = "Enter";
             this.uxEnter.UseVisualStyleBackColor = true;
@@ -129,19 +129,21 @@
             // 
             // uxCreateAnswerKey
             // 
-            this.uxCreateAnswerKey.Location = new System.Drawing.Point(293, 369);
+            this.uxCreateAnswerKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxCreateAnswerKey.Location = new System.Drawing.Point(293, 364);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
-            this.uxCreateAnswerKey.Size = new System.Drawing.Size(75, 39);
+            this.uxCreateAnswerKey.Size = new System.Drawing.Size(90, 30);
             this.uxCreateAnswerKey.TabIndex = 13;
-            this.uxCreateAnswerKey.Text = "Create Answer Key";
+            this.uxCreateAnswerKey.Text = "Create";
             this.uxCreateAnswerKey.UseVisualStyleBackColor = true;
             this.uxCreateAnswerKey.Click += new System.EventHandler(this.uxCreateAnswerKey_Click);
             // 
             // Grade
             // 
-            this.Grade.Location = new System.Drawing.Point(374, 369);
+            this.Grade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.Grade.Location = new System.Drawing.Point(389, 364);
             this.Grade.Name = "Grade";
-            this.Grade.Size = new System.Drawing.Size(75, 23);
+            this.Grade.Size = new System.Drawing.Size(90, 30);
             this.Grade.TabIndex = 14;
             this.Grade.Text = "Grade";
             this.Grade.UseVisualStyleBackColor = true;
@@ -151,17 +153,16 @@
             // 
             this.uxStudentResponsePanel.AutoScroll = true;
             this.uxStudentResponsePanel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStudentResponsePanel.Controls.Add(this.uxStudentDisplayLabel);
-            this.uxStudentResponsePanel.Location = new System.Drawing.Point(487, 30);
+            this.uxStudentResponsePanel.Location = new System.Drawing.Point(496, 46);
             this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
-            this.uxStudentResponsePanel.Size = new System.Drawing.Size(475, 330);
+            this.uxStudentResponsePanel.Size = new System.Drawing.Size(475, 307);
             this.uxStudentResponsePanel.TabIndex = 15;
             // 
             // uxStudentSelector
             // 
             this.uxStudentSelector.DisplayMember = "Student";
             this.uxStudentSelector.FormattingEnabled = true;
-            this.uxStudentSelector.Location = new System.Drawing.Point(624, 366);
+            this.uxStudentSelector.Location = new System.Drawing.Point(639, 366);
             this.uxStudentSelector.Name = "uxStudentSelector";
             this.uxStudentSelector.Size = new System.Drawing.Size(193, 21);
             this.uxStudentSelector.TabIndex = 16;
@@ -178,7 +179,7 @@
             this.uxMainTabControl.Location = new System.Drawing.Point(0, 0);
             this.uxMainTabControl.Name = "uxMainTabControl";
             this.uxMainTabControl.SelectedIndex = 0;
-            this.uxMainTabControl.Size = new System.Drawing.Size(1101, 588);
+            this.uxMainTabControl.Size = new System.Drawing.Size(1036, 588);
             this.uxMainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.uxMainTabControl.TabIndex = 9;
             // 
@@ -193,13 +194,14 @@
             this.uxScanTab.Location = new System.Drawing.Point(4, 54);
             this.uxScanTab.Name = "uxScanTab";
             this.uxScanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxScanTab.Size = new System.Drawing.Size(1093, 530);
+            this.uxScanTab.Size = new System.Drawing.Size(1028, 530);
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
             // 
             // uxGradeTab
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTab.Controls.Add(this.uxStudentDisplayLabel);
             this.uxGradeTab.Controls.Add(this.uxAllPartialCredit);
             this.uxGradeTab.Controls.Add(this.uxAllQuestionPointsLabel);
             this.uxGradeTab.Controls.Add(this.uxAllQuestionPoints);
@@ -222,7 +224,7 @@
             this.uxGradeTab.Location = new System.Drawing.Point(4, 54);
             this.uxGradeTab.Name = "uxGradeTab";
             this.uxGradeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxGradeTab.Size = new System.Drawing.Size(1093, 530);
+            this.uxGradeTab.Size = new System.Drawing.Size(1028, 530);
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
             // 
@@ -230,7 +232,7 @@
             // 
             this.uxAllPartialCredit.AutoSize = true;
             this.uxAllPartialCredit.BackColor = System.Drawing.Color.Transparent;
-            this.uxAllPartialCredit.Location = new System.Drawing.Point(337, 21);
+            this.uxAllPartialCredit.Location = new System.Drawing.Point(377, 14);
             this.uxAllPartialCredit.Name = "uxAllPartialCredit";
             this.uxAllPartialCredit.Size = new System.Drawing.Size(99, 17);
             this.uxAllPartialCredit.TabIndex = 0;
@@ -240,21 +242,21 @@
             // 
             // uxAllQuestionPointsLabel
             // 
-            this.uxAllQuestionPointsLabel.AutoSize = true;
             this.uxAllQuestionPointsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxAllQuestionPointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(185, 20);
+            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(215, 9);
             this.uxAllQuestionPointsLabel.Name = "uxAllQuestionPointsLabel";
-            this.uxAllQuestionPointsLabel.Size = new System.Drawing.Size(81, 13);
+            this.uxAllQuestionPointsLabel.Size = new System.Drawing.Size(100, 20);
             this.uxAllQuestionPointsLabel.TabIndex = 27;
             this.uxAllQuestionPointsLabel.Text = "All Questions";
+            this.uxAllQuestionPointsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // uxAllQuestionPoints
             // 
             this.uxAllQuestionPoints.DecimalPlaces = 2;
-            this.uxAllQuestionPoints.Location = new System.Drawing.Point(274, 20);
+            this.uxAllQuestionPoints.Location = new System.Drawing.Point(321, 11);
             this.uxAllQuestionPoints.Name = "uxAllQuestionPoints";
-            this.uxAllQuestionPoints.Size = new System.Drawing.Size(60, 20);
+            this.uxAllQuestionPoints.Size = new System.Drawing.Size(50, 20);
             this.uxAllQuestionPoints.TabIndex = 26;
             this.uxAllQuestionPoints.Value = new decimal(new int[] {
             1,
@@ -268,18 +270,18 @@
             this.uxVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uxVersionLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.uxVersionLabel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxVersionLabel.Location = new System.Drawing.Point(624, 390);
+            this.uxVersionLabel.Location = new System.Drawing.Point(863, 9);
             this.uxVersionLabel.Name = "uxVersionLabel";
-            this.uxVersionLabel.Size = new System.Drawing.Size(73, 20);
+            this.uxVersionLabel.Size = new System.Drawing.Size(65, 20);
             this.uxVersionLabel.TabIndex = 25;
             this.uxVersionLabel.Text = "Version: ";
             this.uxVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uxNumberOfQuestions
             // 
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(157, 369);
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(144, 366);
             this.uxNumberOfQuestions.Maximum = new decimal(new int[] {
             250,
             0,
@@ -291,7 +293,7 @@
             0,
             0});
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
-            this.uxNumberOfQuestions.Size = new System.Drawing.Size(49, 20);
+            this.uxNumberOfQuestions.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfQuestions.TabIndex = 24;
             this.uxNumberOfQuestions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uxNumberOfQuestions.Value = new decimal(new int[] {
@@ -306,9 +308,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(8, 367);
+            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(8, 364);
             this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
-            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(143, 20);
+            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(130, 20);
             this.uxNumberOfQuestionsLabel.TabIndex = 23;
             this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
             this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -318,10 +320,10 @@
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion1Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion2Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion3Tab);
-            this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(0, 30);
+            this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(0, 27);
             this.uxAnswerKeyTabControl.Name = "uxAnswerKeyTabControl";
             this.uxAnswerKeyTabControl.SelectedIndex = 0;
-            this.uxAnswerKeyTabControl.Size = new System.Drawing.Size(490, 331);
+            this.uxAnswerKeyTabControl.Size = new System.Drawing.Size(483, 326);
             this.uxAnswerKeyTabControl.TabIndex = 22;
             // 
             // uxVersion1Tab
@@ -331,7 +333,7 @@
             this.uxVersion1Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion1Tab.Name = "uxVersion1Tab";
             this.uxVersion1Tab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxVersion1Tab.Size = new System.Drawing.Size(482, 305);
+            this.uxVersion1Tab.Size = new System.Drawing.Size(475, 300);
             this.uxVersion1Tab.TabIndex = 0;
             this.uxVersion1Tab.Text = "Version 1";
             // 
@@ -342,7 +344,7 @@
             this.uxVersion2Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion2Tab.Name = "uxVersion2Tab";
             this.uxVersion2Tab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxVersion2Tab.Size = new System.Drawing.Size(482, 305);
+            this.uxVersion2Tab.Size = new System.Drawing.Size(475, 300);
             this.uxVersion2Tab.TabIndex = 1;
             this.uxVersion2Tab.Text = "Version 2";
             // 
@@ -352,16 +354,16 @@
             this.uxVersion3Tab.BackColor = System.Drawing.SystemColors.Control;
             this.uxVersion3Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion3Tab.Name = "uxVersion3Tab";
-            this.uxVersion3Tab.Size = new System.Drawing.Size(482, 305);
+            this.uxVersion3Tab.Size = new System.Drawing.Size(475, 300);
             this.uxVersion3Tab.TabIndex = 2;
             this.uxVersion3Tab.Text = "Version 3";
             // 
             // uxPreviousStudent
             // 
             this.uxPreviousStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxPreviousStudent.Location = new System.Drawing.Point(518, 366);
+            this.uxPreviousStudent.Location = new System.Drawing.Point(543, 364);
             this.uxPreviousStudent.Name = "uxPreviousStudent";
-            this.uxPreviousStudent.Size = new System.Drawing.Size(100, 40);
+            this.uxPreviousStudent.Size = new System.Drawing.Size(90, 30);
             this.uxPreviousStudent.TabIndex = 21;
             this.uxPreviousStudent.Text = "Previous";
             this.uxPreviousStudent.UseVisualStyleBackColor = true;
@@ -370,9 +372,9 @@
             // uxNextStudent
             // 
             this.uxNextStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNextStudent.Location = new System.Drawing.Point(823, 367);
+            this.uxNextStudent.Location = new System.Drawing.Point(838, 364);
             this.uxNextStudent.Name = "uxNextStudent";
-            this.uxNextStudent.Size = new System.Drawing.Size(100, 40);
+            this.uxNextStudent.Size = new System.Drawing.Size(90, 30);
             this.uxNextStudent.TabIndex = 10;
             this.uxNextStudent.Text = "Next";
             this.uxNextStudent.UseVisualStyleBackColor = true;
@@ -383,7 +385,7 @@
             this.uxStudentResponseLabel.AutoSize = true;
             this.uxStudentResponseLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxStudentResponseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxStudentResponseLabel.Location = new System.Drawing.Point(489, 3);
+            this.uxStudentResponseLabel.Location = new System.Drawing.Point(496, 3);
             this.uxStudentResponseLabel.Name = "uxStudentResponseLabel";
             this.uxStudentResponseLabel.Size = new System.Drawing.Size(165, 24);
             this.uxStudentResponseLabel.TabIndex = 18;
@@ -391,7 +393,7 @@
             // 
             // uxNumberOfVersions
             // 
-            this.uxNumberOfVersions.Location = new System.Drawing.Point(157, 395);
+            this.uxNumberOfVersions.Location = new System.Drawing.Point(144, 392);
             this.uxNumberOfVersions.Maximum = new decimal(new int[] {
             3,
             0,
@@ -403,7 +405,7 @@
             0,
             0});
             this.uxNumberOfVersions.Name = "uxNumberOfVersions";
-            this.uxNumberOfVersions.Size = new System.Drawing.Size(49, 20);
+            this.uxNumberOfVersions.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfVersions.TabIndex = 20;
             this.uxNumberOfVersions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uxNumberOfVersions.Value = new decimal(new int[] {
@@ -420,7 +422,7 @@
             this.uxNumberOfVersionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(8, 392);
             this.uxNumberOfVersionsLabel.Name = "uxNumberOfVersionsLabel";
-            this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(126, 20);
+            this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(130, 20);
             this.uxNumberOfVersionsLabel.TabIndex = 19;
             this.uxNumberOfVersionsLabel.Text = "Number of Versions:";
             this.uxNumberOfVersionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -439,19 +441,18 @@
             // uxStudentDisplayLabel
             // 
             this.uxStudentDisplayLabel.AutoSize = true;
-            this.uxStudentDisplayLabel.Location = new System.Drawing.Point(3, 3);
+            this.uxStudentDisplayLabel.Location = new System.Drawing.Point(863, 473);
             this.uxStudentDisplayLabel.Name = "uxStudentDisplayLabel";
             this.uxStudentDisplayLabel.Size = new System.Drawing.Size(35, 13);
-            this.uxStudentDisplayLabel.TabIndex = 0;
+            this.uxStudentDisplayLabel.TabIndex = 28;
             this.uxStudentDisplayLabel.Text = "label1";
-            this.uxStudentDisplayLabel.Visible = false;
             // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1037, 643);
+            this.ClientSize = new System.Drawing.Size(1037, 588);
             this.Controls.Add(this.uxMainTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
@@ -460,8 +461,6 @@
             this.Name = "Scantron";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
-            this.uxStudentResponsePanel.ResumeLayout(false);
-            this.uxStudentResponsePanel.PerformLayout();
             this.uxMainTabControl.ResumeLayout(false);
             this.uxScanTab.ResumeLayout(false);
             this.uxScanTab.PerformLayout();
