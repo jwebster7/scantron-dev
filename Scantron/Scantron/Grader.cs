@@ -117,7 +117,8 @@ namespace Scantron
                 catch (KeyNotFoundException e)
                 {
                     gui.DisplayMessage("Student " + student.WID + " wrote down Test Version " + test_version + "."
-                                        + " You did not create this many versions. Student cannot be graded.");
+                                        + " You did not create this many versions. Find this student's card(s) and mark"
+                                        + " a valid test version.");
                     return false;
                 }
             }

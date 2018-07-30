@@ -31,9 +31,9 @@ namespace Scantron
         private List<Question> response = new List<Question>();
 
         // Card constructor. Translates the raw data and assigns it to the appropriate fields.
-        public Card(string raw_student_data)
+        public Card(string raw_card_data)
         {
-            this.raw_card_data = raw_student_data;
+            this.raw_card_data = raw_card_data;
             RemoveBackSide();
             Uncompress();
             Format();

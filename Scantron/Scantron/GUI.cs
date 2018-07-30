@@ -63,7 +63,6 @@ namespace Scantron
             uxPreviousStudent = (Button) scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
-            uxStudentDisplayLabel = (Label) scantron_form.Controls.Find("uxStudentDisplayLabel", true)[0];
 
             uxInstructionBox.Text = "Please load the hopper of the Scantron," + Environment.NewLine +
                                     "then click on 'Start' within this window.";
@@ -500,20 +499,9 @@ namespace Scantron
                 control.Visible = false;
             }
 
-            if (uxAnswerKeyTabControl.TabPages[test_version - 1].Controls.Count == 0)
-            {
-                uxStudentDisplayLabel.Size = new Size(uxStudentResponsePanel.Width - 20, uxStudentResponsePanel.Height - 20);
-                uxStudentDisplayLabel.Text = "Student " + student.WID + " could not be graded due to filling in an invalid"
-                            + " test version.";
-                uxStudentDisplayLabel.Visible = true;
-                return;
-            }
-
             for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
             {
                 panel = (Panel)uxStudentResponsePanel.Controls[i];
-                // This line prints the student responses from the 2nd question on
-                // panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
                 panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
