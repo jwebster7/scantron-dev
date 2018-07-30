@@ -43,18 +43,20 @@ namespace Scantron
 
         }
 
+        /// <summary>
+        /// Starts reading cards from the scantron to a serial port and addes the string produced to a list
+        /// </summary>
+        /// <param name="raw_cards">A list of raw card data filled by the method</param>
+        /// <param name="partial_wids">A list of potential partial_wids; Null if no partial_wids found</param>
+        /// <returns></returns>
         public static List<string> Run(List<string> raw_cards)
         {
-
+            // Reads in data from the scantron cards into raw_cards
             string cardFromSerialPort;
-
             while (Status()[11] != '1') //will loop while the hopper is up
             {
-
-
                 serial_port.Write(config.positive);
                 cardFromSerialPort = serial_port.ReadLine();
-
 
                 if (Status()[8] == '1' || Status()[8] == '2') //checks status if there was an error reading in the sheet
                 {
@@ -64,14 +66,11 @@ namespace Scantron
                         "Place it back in your scantron pile and close this pop up.");
 
                     serial_port.Write(config.start);
-
-
                 }
                 else
                 {
                     raw_cards.Add(cardFromSerialPort);
                 }
-
             }
 
             serial_port.Close();

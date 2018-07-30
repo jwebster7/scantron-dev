@@ -20,7 +20,6 @@ namespace Scantron
     {
         private Grader grader;
 
-
         // GUI objects that we need data from.
         private Form scantron_form;
         private TextBox uxInstructionBox;
@@ -37,6 +36,8 @@ namespace Scantron
         private Label uxStudentDisplayLabel;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
+        // Holds the partial misread WID's
+        private List<string> partial_wids;
 
         public GUI(Form scantron_form)
         {
@@ -94,7 +95,7 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            grader.CreateStudents(raw_cards);
+            grader.CreateStudents(raw_cards, ref partial_wids);
         }
 
         /// <summary>
@@ -510,7 +511,9 @@ namespace Scantron
 
             for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
             {
-                panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
+                panel = (Panel)uxStudentResponsePanel.Controls[i];
+                // This line prints the student responses from the 2nd question on
+                // panel = (Panel) uxStudentResponsePanel.Controls[i + 1]; // +1 for now because of the label that already exists in the panel
                 panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
