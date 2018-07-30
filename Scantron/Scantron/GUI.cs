@@ -361,7 +361,6 @@ namespace Scantron
                 FilterIndex = 1
             };
 
-
             if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string path = uxSaveFileDialog.FileName;
