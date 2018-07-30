@@ -67,6 +67,8 @@
             // 
             // uxStart
             // 
+            this.uxStart.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.uxStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxStart.Location = new System.Drawing.Point(8, 254);
             this.uxStart.Name = "uxStart";
@@ -74,7 +76,7 @@
             this.uxStart.TabIndex = 0;
             this.uxStart.Tag = "";
             this.uxStart.Text = "Start";
-            this.uxStart.UseVisualStyleBackColor = true;
+            this.uxStart.UseVisualStyleBackColor = false;
             this.uxStart.Click += new System.EventHandler(this.uxStart_Click);
             // 
             // uxInstructionBox
@@ -95,24 +97,28 @@
             // 
             // uxStop
             // 
+            this.uxStop.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.uxStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxStop.Location = new System.Drawing.Point(99, 254);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
             this.uxStop.Text = "Stop";
-            this.uxStop.UseVisualStyleBackColor = true;
+            this.uxStop.UseVisualStyleBackColor = false;
             this.uxStop.Click += new System.EventHandler(this.uxStop_Click);
             // 
             // uxRestart
             // 
+            this.uxRestart.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.uxRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
             this.uxRestart.Location = new System.Drawing.Point(190, 254);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
             this.uxRestart.Text = "Restart";
-            this.uxRestart.UseVisualStyleBackColor = true;
+            this.uxRestart.UseVisualStyleBackColor = false;
             this.uxRestart.Click += new System.EventHandler(this.uxRestart_Click);
             // 
             // uxCreateAnswerForm
