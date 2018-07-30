@@ -66,7 +66,7 @@ namespace Scantron
             {
                 // Checks for a partial wid on the card; 
                 // We want to create a student regardless to retain the scores read in (at this point)
-                if (card.WID.Contains('9'))
+                if (card.WID.Contains('-'))
                 {
                     partial_wids.Add(card.WID);
                 }
