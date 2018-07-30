@@ -39,8 +39,6 @@ namespace Scantron
                 serial_port.Open();
                 serial_port.Write(config.start);
             }
-
-
         }
 
         /// <summary>
@@ -90,13 +88,9 @@ namespace Scantron
                                     // 1 - for short status
             status = serial_port.ReadLine();
             return status;
-
         }
 
     }
-
-
-
 
     public class ScannerConfig
     {
@@ -127,7 +121,5 @@ namespace Scantron
             }
 
         }
-
-
     }
 }
