@@ -33,7 +33,6 @@ namespace Scantron
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
-        private Label uxStudentDisplayLabel;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
         // Holds the partial misread WID's
@@ -110,11 +109,11 @@ namespace Scantron
         /// <summary>
         /// Create the answer key form with the specified number of questions and versions.
         /// </summary>
-        public void Enter()
+        public void CreateAnswerForm()
         {
-            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            foreach (TabPage tp in uxAnswerKeyTabControl.TabPages)
             {
-                foreach (Panel panel in tabpage.Controls)
+                foreach (Panel panel in tp.Controls)
                 {
                     panel.Visible = false;
                 }
@@ -126,7 +125,17 @@ namespace Scantron
             int number_of_versions = (int) uxNumberOfVersions.Value;
             int number_of_questions = (int) uxNumberOfQuestions.Value;
 
-            CreateAnswerKeyForm(number_of_versions, number_of_questions);
+            TabPage tabpage;
+
+            for (int i = 0; i < number_of_versions; i++)
+            {
+                tabpage = uxAnswerKeyTabControl.TabPages[i];
+
+                for (int j = 0; j < number_of_questions; j++)
+                {
+                    tabpage.Controls[j].Visible = true;
+                }
+            }
         }
 
         /// <summary>
@@ -217,26 +226,6 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Makes the selected number of versions and questions on the answer key form visible.
-        /// </summary>
-        /// <param name="number_of_versions">Number of exam versions.</param>
-        /// <param name="number_of_questions">Number of questions on the exam.</param>
-        public void CreateAnswerKeyForm(int number_of_versions, int number_of_questions)
-        {
-            TabPage tabpage;
-
-            for (int i = 0; i < number_of_versions; i++)
-            {
-                tabpage = uxAnswerKeyTabControl.TabPages[i];
-
-                for (int j = 0; j < number_of_questions; j++)
-                {
-                    tabpage.Controls[j].Visible = true;
-                }
-            }
-        }
-
-        /// <summary>
         /// Create the answer key from the filled out form.
         /// </summary>
         public void CreateAnswerKey()
@@ -308,7 +297,7 @@ namespace Scantron
         /// <summary>
         /// Grade the students.
         /// </summary>
-        public void Grade()
+        public void GradeStudents()
         {
             if (grader.Students.Count == 0)
             {

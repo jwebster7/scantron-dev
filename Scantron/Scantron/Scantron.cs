@@ -50,10 +50,10 @@ namespace Scantron
             gui.Restart();
         }
 
-        // Event handler for the 'Enter' button.
-        private void uxEnter_Click(object sender, EventArgs e)
+        // Event handler for the 'Create Answer Form' button.
+        private void uxCreateAnswerForm_Click(object sender, EventArgs e)
         {
-            gui.Enter();
+            gui.CreateAnswerForm();
         }
 
         // Event handler for the 'Create Answer Key' button.
@@ -62,10 +62,10 @@ namespace Scantron
             gui.CreateAnswerKey();
         }
 
-        // Event handler for the 'Grade' button.
-        private void Grade_Click(object sender, EventArgs e)
+        // Event handler for the 'Grade Students' button.
+        private void uxGradeStudents_Click(object sender, EventArgs e)
         {
-            gui.Grade();
+            gui.GradeStudents();
         }
 
         // Event handler for selecting student answers to view.
@@ -93,6 +93,5 @@ namespace Scantron
         {
             gui.UpdateAllQuestionPoints();
         }
-
     }
 }
