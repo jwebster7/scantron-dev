@@ -28,7 +28,7 @@ namespace Scantron
         private int sheet_number;
         // Stores the answer bubbles formatted to be written to the output file correctly. For more information refer 
         // to the github repository.
-        private List<Question> response = new List<Question>(); // Will change this to Dictionary<int, List<Question>> for multiple sheet purposes.
+        private List<Question> response = new List<Question>();
 
         // Card constructor. Translates the raw data and assigns it to the appropriate fields.
         public Card(string raw_student_data)
@@ -38,10 +38,6 @@ namespace Scantron
             Uncompress();
             Format();
             TranslateData();
-            // Need to add functionality for 51+ questions.
-            // There needs to be a mismatch checker that will give the instructor a list of sheets to match together.
-            // Students mark their versions and sheet number, so they can be grouped apart easily.
-            // After all students are scanned, combine copies that are different sheet numbers.
         }
 
         public int TestVersion
@@ -166,7 +162,7 @@ namespace Scantron
             raw_card_data = string.Join(",", card_lines);
         }
 
-        // This method take the uncompressed, formatted data and assigns the appropriate data to each student field.
+        // This method takes the uncompressed, formatted data and assigns the appropriate data to each student field.
         private void TranslateData()
         {
             // This list splits up each line of bubbles on the scantron card.
@@ -176,15 +172,24 @@ namespace Scantron
 
             // Read in the WID bubbles. The relevant lines are reversed because from left to right the bubbles read 
             // from 9 to 0, but their indices are 0 to 9 in their respective strings. Reversing lets Array.IndexOf 
-            // do its job correctly.
+            // do its job correctly. If no bubble is dark enough for a given digit, a dash is used.
             for (int i = 0; i < 9; i++)
             {
                 char[] line = card_lines[i].Reverse().ToArray();
-                wid += Array.IndexOf(line, line.Max());
+                char max = line.Max();
+
+                if (max > 6)
+                {
+                    wid += Array.IndexOf(line, max);
+                }
+                else
+                {
+                    wid += "-";
+                }
             }
             
             // Checks the grant permission bubble.
-            if ((int)card_lines[11][13] > 6)
+            if (card_lines[11][13] > 6)
             {
                 grant_permission = "1";
             }
@@ -293,7 +298,7 @@ namespace Scantron
         /// <returns>Which bubble is darkest. Defaults to 1.</returns>
         private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
-            if (a > b && a > c && a> d && a >e)
+            if (a > b && a > c && a > d && a > e)
             {
                 return 1;
             }
