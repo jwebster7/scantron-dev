@@ -54,7 +54,8 @@ namespace Scantron
         /// Creates the students based off of the list of raw card data.
         /// </summary>
         /// <param name="raw_cards">Raw card data read in from Scantron.</param>
-        public void CreateStudents(List<string> raw_cards)
+        /// <param name="partial_wids">Holds potential partial_wids; Null if no partial wids are found</param>
+        public void CreateStudents(List<string> raw_cards, ref List<string> partial_wids)
         {
             for (int i = 0; i < raw_cards.Count; i++)
             {
@@ -63,6 +64,13 @@ namespace Scantron
 
             foreach (Card card in cards)
             {
+                // Checks for a partial wid on the card; 
+                // We want to create a student regardless to retain the scores read in (at this point)
+                if (card.WID.Contains('9'))
+                {
+                    partial_wids.Add(card.WID);
+                }
+
                 Student student = new Student(card);
 
                 if (students.Exists(item => item.WID == card.WID))
