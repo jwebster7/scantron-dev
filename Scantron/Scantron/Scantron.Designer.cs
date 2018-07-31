@@ -56,6 +56,7 @@
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
             this.uxGradeInstructionBox = new System.Windows.Forms.TextBox();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -192,13 +193,14 @@
             this.uxScanInstructionBox.Multiline = true;
             this.uxScanInstructionBox.Name = "uxScanInstructionBox";
             this.uxScanInstructionBox.ReadOnly = true;
-            this.uxScanInstructionBox.Size = new System.Drawing.Size(688, 196);
+            this.uxScanInstructionBox.Size = new System.Drawing.Size(977, 196);
             this.uxScanInstructionBox.TabIndex = 9;
             this.uxScanInstructionBox.TabStop = false;
             // 
             // uxGradeTab
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTab.Controls.Add(this.splitter1);
             this.uxGradeTab.Controls.Add(this.uxGradeInstructionBox);
             this.uxGradeTab.Controls.Add(this.uxNumberOfVersionsLabel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfQuestionsLabel);
@@ -272,7 +274,7 @@
             this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.uxVersionLabel.Location = new System.Drawing.Point(485, 245);
             this.uxVersionLabel.Name = "uxVersionLabel";
-            this.uxVersionLabel.Size = new System.Drawing.Size(65, 27);
+            this.uxVersionLabel.Size = new System.Drawing.Size(65, 22);
             this.uxVersionLabel.TabIndex = 25;
             this.uxVersionLabel.Text = "Version: ";
             this.uxVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -307,7 +309,7 @@
             this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(4, 239);
             this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
-            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(130, 25);
+            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(130, 20);
             this.uxNumberOfQuestionsLabel.TabIndex = 23;
             this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
             this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -449,9 +451,17 @@
             this.uxGradeInstructionBox.Multiline = true;
             this.uxGradeInstructionBox.Name = "uxGradeInstructionBox";
             this.uxGradeInstructionBox.ReadOnly = true;
-            this.uxGradeInstructionBox.Size = new System.Drawing.Size(688, 196);
+            this.uxGradeInstructionBox.Size = new System.Drawing.Size(976, 196);
             this.uxGradeInstructionBox.TabIndex = 28;
             this.uxGradeInstructionBox.TabStop = false;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(3, 3);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 596);
+            this.splitter1.TabIndex = 29;
+            this.splitter1.TabStop = false;
             // 
             // Scantron
             // 
@@ -510,6 +520,7 @@
         private System.Windows.Forms.Label uxAllQuestionPointsLabel;
         private System.Windows.Forms.TextBox uxScanInstructionBox;
         private System.Windows.Forms.TextBox uxGradeInstructionBox;
+        private System.Windows.Forms.Splitter splitter1;
     }
 }
 
