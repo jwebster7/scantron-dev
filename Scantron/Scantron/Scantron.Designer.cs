@@ -52,8 +52,6 @@
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
             this.uxNumberOfVersions = new System.Windows.Forms.NumericUpDown();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
-            this.uxGradeInstructionBox = new System.Windows.Forms.TextBox();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.uxAnswerKeyTabControl = new System.Windows.Forms.TabControl();
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
@@ -207,7 +205,6 @@
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradeTab.Controls.Add(this.uxVerticalDivider);
             this.uxGradeTab.Controls.Add(this.label1);
-            this.uxGradeTab.Controls.Add(this.splitter1);
             this.uxGradeTab.Controls.Add(this.uxGradeInstructionBox);
             this.uxGradeTab.Controls.Add(this.uxNumberOfVersionsLabel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfQuestionsLabel);
@@ -547,14 +544,6 @@
             this.uxVerticalDivider.Name = "uxVerticalDivider";
             this.uxVerticalDivider.Size = new System.Drawing.Size(12, 381);
             this.uxVerticalDivider.TabIndex = 0;
-            // 
-            // splitter1
-            // 
-            this.splitter1.Location = new System.Drawing.Point(3, 3);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 596);
-            this.splitter1.TabIndex = 29;
-            this.splitter1.TabStop = false;
             // 
             // Scantron
             // 
