@@ -56,12 +56,6 @@ namespace Scantron
             gui.CreateAnswerForm();
         }
 
-        // Event handler for the 'Create Answer Key' button.
-        private void uxCreateAnswerKey_Click(object sender, EventArgs e)
-        {
-            gui.CreateAnswerKey();
-        }
-
         // Event handler for the 'Grade Students' button.
         private void uxGradeStudents_Click(object sender, EventArgs e)
         {
