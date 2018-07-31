@@ -23,6 +23,7 @@ namespace Scantron
         // GUI objects that we need data from.
         private Form scantron_form;
         private TextBox uxScanInstructionBox;
+        private TextBox uxGradeInstructionBox;
         private Panel uxStudentResponsePanel;
         private ComboBox uxStudentSelector;
         private TabControl uxAnswerKeyTabControl;
@@ -52,7 +53,8 @@ namespace Scantron
             this.scantron_form = scantron_form;
            
             uxScanInstructionBox = (TextBox) scantron_form.Controls.Find("uxScanInstructionBox", true)[0];
-            uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
+            uxGradeInstructionBox = (TextBox) scantron_form.Controls.Find("uxGradeInstructionBox", true)[0];
+            uxStudentResponsePanel = (Panel) scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
             uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
             uxNumberOfQuestions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
@@ -63,23 +65,24 @@ namespace Scantron
             uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
 
-            uxScanInstructionBox.Text = "You may click Restart at any time to start at the beginning of these instructions." +
-                                        Environment.NewLine + Environment.NewLine +
-                                        "Scan tab instructions: " +
-                                        Environment.NewLine + Environment.NewLine +
-                                        "1. Load the Scantron hopper and use the guider to make sure they are straight." +
-                                        Environment.NewLine +
-                                        "2. Click Start within this Window." +
-                                        Environment.NewLine +
-                                        "3. After your cards have finished scanning, click the Grade tab." +
-                                        Environment.NewLine + Environment.NewLine +
-                                        "Grade tab instructions: " +
-                                        Environment.NewLine + Environment.NewLine +
-                                        "1. Specify the number of questions and versions the exam has, then click Create Answer Form." +
-                                        Environment.NewLine +
-                                        "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." +
-                                        Environment.NewLine +
-                                        "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
+            uxScanInstructionBox.Text =     "You may click Restart at any time to start at the beginning of these instructions." +
+                                            Environment.NewLine + Environment.NewLine +
+                                            "Scan tab instructions: " +
+                                            Environment.NewLine + Environment.NewLine +
+                                            "1. Load the Scantron hopper and use the guider to make sure they are straight." +
+                                            Environment.NewLine +
+                                            "2. Click Start within this Window." +
+                                            Environment.NewLine +
+                                            "3. After your cards have finished scanning, click the Grade tab." +
+                                            Environment.NewLine + Environment.NewLine;
+
+            uxGradeInstructionBox.Text =    "Grade tab instructions: " +
+                                            Environment.NewLine + Environment.NewLine +
+                                            "1. Specify the number of questions and versions the exam has, then click Create Answer Form." +
+                                            Environment.NewLine +
+                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." +
+                                            Environment.NewLine +
+                                            "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
 
             grader = new Grader(this);
         }
