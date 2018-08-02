@@ -41,7 +41,7 @@
             this.uxScanInstructionBox = new System.Windows.Forms.TextBox();
             this.uxGradeTab = new System.Windows.Forms.TabPage();
             this.uxVerticalDivider = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.uxHorizontalDivider2 = new System.Windows.Forms.Label();
             this.uxGradeInstructionBox = new System.Windows.Forms.TextBox();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
             this.uxNumberOfQuestionsLabel = new System.Windows.Forms.Label();
@@ -59,6 +59,9 @@
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
+            this.uxReviewTab = new System.Windows.Forms.TabPage();
+            this.uxHorizontalDivider3 = new System.Windows.Forms.Label();
+            this.uxReviewInstructionBox = new System.Windows.Forms.TextBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -66,6 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).BeginInit();
             this.uxAnswerKeyTabControl.SuspendLayout();
+            this.uxReviewTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // uxStart
@@ -164,13 +168,14 @@
             this.uxMainTabControl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.uxMainTabControl.Controls.Add(this.uxScanTab);
             this.uxMainTabControl.Controls.Add(this.uxGradeTab);
+            this.uxMainTabControl.Controls.Add(this.uxReviewTab);
             this.uxMainTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.uxMainTabControl.HotTrack = true;
-            this.uxMainTabControl.ItemSize = new System.Drawing.Size(150, 30);
-            this.uxMainTabControl.Location = new System.Drawing.Point(-6, 2);
+            this.uxMainTabControl.ItemSize = new System.Drawing.Size(325, 30);
+            this.uxMainTabControl.Location = new System.Drawing.Point(-6, 0);
             this.uxMainTabControl.Name = "uxMainTabControl";
             this.uxMainTabControl.SelectedIndex = 0;
-            this.uxMainTabControl.Size = new System.Drawing.Size(1036, 647);
+            this.uxMainTabControl.Size = new System.Drawing.Size(1036, 649);
             this.uxMainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.uxMainTabControl.TabIndex = 9;
             // 
@@ -186,7 +191,7 @@
             this.uxScanTab.Location = new System.Drawing.Point(4, 34);
             this.uxScanTab.Name = "uxScanTab";
             this.uxScanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxScanTab.Size = new System.Drawing.Size(1028, 609);
+            this.uxScanTab.Size = new System.Drawing.Size(1028, 611);
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
             // 
@@ -212,7 +217,7 @@
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradeTab.Controls.Add(this.uxVerticalDivider);
-            this.uxGradeTab.Controls.Add(this.label1);
+            this.uxGradeTab.Controls.Add(this.uxHorizontalDivider2);
             this.uxGradeTab.Controls.Add(this.uxGradeInstructionBox);
             this.uxGradeTab.Controls.Add(this.uxNumberOfVersionsLabel);
             this.uxGradeTab.Controls.Add(this.uxNumberOfQuestionsLabel);
@@ -235,7 +240,7 @@
             this.uxGradeTab.Location = new System.Drawing.Point(4, 34);
             this.uxGradeTab.Name = "uxGradeTab";
             this.uxGradeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxGradeTab.Size = new System.Drawing.Size(1028, 609);
+            this.uxGradeTab.Size = new System.Drawing.Size(1028, 611);
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
             // 
@@ -247,13 +252,13 @@
             this.uxVerticalDivider.Size = new System.Drawing.Size(12, 381);
             this.uxVerticalDivider.TabIndex = 0;
             // 
-            // label1
+            // uxHorizontalDivider2
             // 
-            this.label1.BackColor = System.Drawing.Color.SlateBlue;
-            this.label1.Location = new System.Drawing.Point(7, 202);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(962, 10);
-            this.label1.TabIndex = 29;
+            this.uxHorizontalDivider2.BackColor = System.Drawing.Color.SlateBlue;
+            this.uxHorizontalDivider2.Location = new System.Drawing.Point(7, 202);
+            this.uxHorizontalDivider2.Name = "uxHorizontalDivider2";
+            this.uxHorizontalDivider2.Size = new System.Drawing.Size(962, 10);
+            this.uxHorizontalDivider2.TabIndex = 29;
             // 
             // uxGradeInstructionBox
             // 
@@ -483,6 +488,36 @@
             this.uxVersion1Tab.TabIndex = 0;
             this.uxVersion1Tab.Text = "Version 1";
             // 
+            // uxReviewTab
+            // 
+            this.uxReviewTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxReviewTab.Controls.Add(this.uxHorizontalDivider3);
+            this.uxReviewTab.Controls.Add(this.uxReviewInstructionBox);
+            this.uxReviewTab.Location = new System.Drawing.Point(4, 34);
+            this.uxReviewTab.Name = "uxReviewTab";
+            this.uxReviewTab.Padding = new System.Windows.Forms.Padding(3);
+            this.uxReviewTab.Size = new System.Drawing.Size(1028, 611);
+            this.uxReviewTab.TabIndex = 2;
+            this.uxReviewTab.Text = "Review";
+            // 
+            // uxHorizontalDivider3
+            // 
+            this.uxHorizontalDivider3.BackColor = System.Drawing.Color.SlateBlue;
+            this.uxHorizontalDivider3.Location = new System.Drawing.Point(7, 202);
+            this.uxHorizontalDivider3.Name = "uxHorizontalDivider3";
+            this.uxHorizontalDivider3.Size = new System.Drawing.Size(962, 10);
+            this.uxHorizontalDivider3.TabIndex = 12;
+            // 
+            // uxReviewInstructionBox
+            // 
+            this.uxReviewInstructionBox.Location = new System.Drawing.Point(7, 6);
+            this.uxReviewInstructionBox.Multiline = true;
+            this.uxReviewInstructionBox.Name = "uxReviewInstructionBox";
+            this.uxReviewInstructionBox.ReadOnly = true;
+            this.uxReviewInstructionBox.Size = new System.Drawing.Size(962, 192);
+            this.uxReviewInstructionBox.TabIndex = 11;
+            this.uxReviewInstructionBox.TabStop = false;
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -506,6 +541,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersions)).EndInit();
             this.uxAnswerKeyTabControl.ResumeLayout(false);
+            this.uxReviewTab.ResumeLayout(false);
+            this.uxReviewTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -540,10 +577,13 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Label uxHorizontalDivider;
         private System.Windows.Forms.Label uxVerticalDivider;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label uxHorizontalDivider2;
         private System.Windows.Forms.TabPage uxVersion1Tab;
         private System.Windows.Forms.TabPage uxVersion2Tab;
         private System.Windows.Forms.TabPage uxVersion3Tab;
+        private System.Windows.Forms.TabPage uxReviewTab;
+        private System.Windows.Forms.Label uxHorizontalDivider3;
+        private System.Windows.Forms.TextBox uxReviewInstructionBox;
     }
 }
 
