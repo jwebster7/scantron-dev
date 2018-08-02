@@ -114,9 +114,9 @@
             this.uxCreateAnswerForm.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxCreateAnswerForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxCreateAnswerForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxCreateAnswerForm.Location = new System.Drawing.Point(195, 243);
+            this.uxCreateAnswerForm.Location = new System.Drawing.Point(195, 246);
             this.uxCreateAnswerForm.Name = "uxCreateAnswerForm";
-            this.uxCreateAnswerForm.Size = new System.Drawing.Size(90, 42);
+            this.uxCreateAnswerForm.Size = new System.Drawing.Size(90, 40);
             this.uxCreateAnswerForm.TabIndex = 12;
             this.uxCreateAnswerForm.Text = "Create Answer Form";
             this.uxCreateAnswerForm.UseVisualStyleBackColor = false;
@@ -128,9 +128,9 @@
             this.uxGradeStudents.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxGradeStudents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradeStudents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxGradeStudents.Location = new System.Drawing.Point(291, 243);
+            this.uxGradeStudents.Location = new System.Drawing.Point(291, 246);
             this.uxGradeStudents.Name = "uxGradeStudents";
-            this.uxGradeStudents.Size = new System.Drawing.Size(90, 42);
+            this.uxGradeStudents.Size = new System.Drawing.Size(90, 40);
             this.uxGradeStudents.TabIndex = 14;
             this.uxGradeStudents.Text = "Grade Students";
             this.uxGradeStudents.UseVisualStyleBackColor = false;
@@ -170,7 +170,7 @@
             this.uxMainTabControl.Location = new System.Drawing.Point(-6, 2);
             this.uxMainTabControl.Name = "uxMainTabControl";
             this.uxMainTabControl.SelectedIndex = 0;
-            this.uxMainTabControl.Size = new System.Drawing.Size(1036, 640);
+            this.uxMainTabControl.Size = new System.Drawing.Size(1036, 647);
             this.uxMainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.uxMainTabControl.TabIndex = 9;
             // 
@@ -186,7 +186,7 @@
             this.uxScanTab.Location = new System.Drawing.Point(4, 34);
             this.uxScanTab.Name = "uxScanTab";
             this.uxScanTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxScanTab.Size = new System.Drawing.Size(1028, 602);
+            this.uxScanTab.Size = new System.Drawing.Size(1028, 609);
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
             // 
@@ -235,7 +235,7 @@
             this.uxGradeTab.Location = new System.Drawing.Point(4, 34);
             this.uxGradeTab.Name = "uxGradeTab";
             this.uxGradeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxGradeTab.Size = new System.Drawing.Size(1028, 602);
+            this.uxGradeTab.Size = new System.Drawing.Size(1028, 609);
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
             // 
@@ -397,7 +397,7 @@
             this.uxStudentResponseLabel.AutoSize = true;
             this.uxStudentResponseLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxStudentResponseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxStudentResponseLabel.Location = new System.Drawing.Point(649, 212);
+            this.uxStudentResponseLabel.Location = new System.Drawing.Point(643, 216);
             this.uxStudentResponseLabel.Name = "uxStudentResponseLabel";
             this.uxStudentResponseLabel.Size = new System.Drawing.Size(165, 24);
             this.uxStudentResponseLabel.TabIndex = 18;
@@ -433,7 +433,7 @@
             this.uxAnswerKeyLabel.AutoSize = true;
             this.uxAnswerKeyLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxAnswerKeyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.uxAnswerKeyLabel.Location = new System.Drawing.Point(174, 212);
+            this.uxAnswerKeyLabel.Location = new System.Drawing.Point(174, 216);
             this.uxAnswerKeyLabel.Name = "uxAnswerKeyLabel";
             this.uxAnswerKeyLabel.Size = new System.Drawing.Size(111, 24);
             this.uxAnswerKeyLabel.TabIndex = 17;
