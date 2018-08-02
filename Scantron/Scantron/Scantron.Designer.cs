@@ -56,9 +56,9 @@
             this.uxNumberOfVersions = new System.Windows.Forms.NumericUpDown();
             this.uxAnswerKeyLabel = new System.Windows.Forms.Label();
             this.uxAnswerKeyTabControl = new System.Windows.Forms.TabControl();
-            this.uxVersion3Tab = new System.Windows.Forms.TabPage();
-            this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
+            this.uxVersion2Tab = new System.Windows.Forms.TabPage();
+            this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxReviewTab = new System.Windows.Forms.TabPage();
             this.uxHorizontalDivider3 = new System.Windows.Forms.Label();
             this.uxReviewInstructionBox = new System.Windows.Forms.TextBox();
@@ -456,15 +456,16 @@
             this.uxAnswerKeyTabControl.Size = new System.Drawing.Size(458, 301);
             this.uxAnswerKeyTabControl.TabIndex = 22;
             // 
-            // uxVersion3Tab
+            // uxVersion1Tab
             // 
-            this.uxVersion3Tab.AutoScroll = true;
-            this.uxVersion3Tab.BackColor = System.Drawing.SystemColors.Control;
-            this.uxVersion3Tab.Location = new System.Drawing.Point(4, 22);
-            this.uxVersion3Tab.Name = "uxVersion3Tab";
-            this.uxVersion3Tab.Size = new System.Drawing.Size(450, 275);
-            this.uxVersion3Tab.TabIndex = 2;
-            this.uxVersion3Tab.Text = "Version 3";
+            this.uxVersion1Tab.AutoScroll = true;
+            this.uxVersion1Tab.BackColor = System.Drawing.SystemColors.Control;
+            this.uxVersion1Tab.Location = new System.Drawing.Point(4, 22);
+            this.uxVersion1Tab.Name = "uxVersion1Tab";
+            this.uxVersion1Tab.Padding = new System.Windows.Forms.Padding(3);
+            this.uxVersion1Tab.Size = new System.Drawing.Size(450, 275);
+            this.uxVersion1Tab.TabIndex = 0;
+            this.uxVersion1Tab.Text = "Version 1";
             // 
             // uxVersion2Tab
             // 
@@ -477,16 +478,15 @@
             this.uxVersion2Tab.TabIndex = 1;
             this.uxVersion2Tab.Text = "Version 2";
             // 
-            // uxVersion1Tab
+            // uxVersion3Tab
             // 
-            this.uxVersion1Tab.AutoScroll = true;
-            this.uxVersion1Tab.BackColor = System.Drawing.SystemColors.Control;
-            this.uxVersion1Tab.Location = new System.Drawing.Point(4, 22);
-            this.uxVersion1Tab.Name = "uxVersion1Tab";
-            this.uxVersion1Tab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxVersion1Tab.Size = new System.Drawing.Size(450, 275);
-            this.uxVersion1Tab.TabIndex = 0;
-            this.uxVersion1Tab.Text = "Version 1";
+            this.uxVersion3Tab.AutoScroll = true;
+            this.uxVersion3Tab.BackColor = System.Drawing.SystemColors.Control;
+            this.uxVersion3Tab.Location = new System.Drawing.Point(4, 22);
+            this.uxVersion3Tab.Name = "uxVersion3Tab";
+            this.uxVersion3Tab.Size = new System.Drawing.Size(450, 275);
+            this.uxVersion3Tab.TabIndex = 2;
+            this.uxVersion3Tab.Text = "Version 3";
             // 
             // uxReviewTab
             // 
