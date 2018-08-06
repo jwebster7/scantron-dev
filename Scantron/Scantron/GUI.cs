@@ -122,7 +122,9 @@ namespace Scantron
         /// </summary>
         public void Restart()
         {
+            raw_cards.Clear();
             grader.Students.Clear();
+            grader.PartialWids.Clear();
         }
 
         /// <summary>
