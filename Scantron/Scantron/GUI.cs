@@ -113,7 +113,7 @@ namespace Scantron
             // May need to check if it's null
             if (grader.PartialWids.Count > 0)
             {
-                DisplayPartialWids(grader.GetBrokenWids());
+                DisplayMessage(grader.GetBrokenWids());
             }
         }
 
@@ -530,15 +530,6 @@ namespace Scantron
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Displays the partial wids in a 
-        /// </summary>
-        /// <param name="partial_wids"></param>
-        private void DisplayPartialWids(string partial_wids)
-        {
-            MessageBox.Show(partial_wids);
         }
     }
 }
