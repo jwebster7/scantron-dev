@@ -24,7 +24,9 @@ namespace Scantron
         private List<Student> students = new List<Student>();
         // Holds the answer key to compare to student responses.
         private Dictionary<int, List<Question>> answer_key = new Dictionary<int, List<Question>>();
-        
+        // Holds the partial misread WID's
+        private List<string> partial_wids = new List<string>();
+
         public Grader(GUI gui)
         {
             this.gui = gui;
@@ -50,12 +52,20 @@ namespace Scantron
             }
         }
 
+        public List<string> PartialWids
+        {
+            get
+            {
+                return partial_wids;
+            }
+        }
+
         /// <summary>
         /// Creates the students based off of the list of raw card data.
         /// </summary>
         /// <param name="raw_cards">Raw card data read in from Scantron.</param>
         /// <param name="partial_wids">Holds potential partial_wids; Null if no partial wids are found</param>
-        public void CreateStudents(List<string> raw_cards, ref List<string> partial_wids)
+        public void CreateStudents(List<string> raw_cards)
         {
             for (int i = 0; i < raw_cards.Count; i++)
             {
@@ -65,7 +75,7 @@ namespace Scantron
             foreach (Card card in cards)
             {
                 // Checks for a partial wid on the card; 
-                // We want to create a student regardless to retain the scores read in (at this point);
+                // We want to create a student regardless to retain the scores read in;
                 if (card.WID.Contains('-'))
                 {
                     partial_wids.Add(card.WID);
@@ -145,6 +155,21 @@ namespace Scantron
             }
 
             return info;
+        }
+
+        /// <summary>
+        /// Broken WID's returns a string of the partial wids
+        /// </summary>
+        /// <returns></returns>
+        public string GetBrokenWids()
+        {
+            string broken_wids = "The following WID's have issues associated with their cards: " + Environment.NewLine;
+            foreach (string s in partial_wids)
+            {
+                broken_wids += s + Environment.NewLine;
+            }
+            broken_wids += "Please go review the output file and check which WID's are incomplete";
+            return broken_wids;
         }
     }
 }
