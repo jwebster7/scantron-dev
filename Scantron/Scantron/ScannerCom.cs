@@ -16,6 +16,7 @@ using System.IO;
 using System.IO.Ports;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Scantron
 {
@@ -49,6 +50,8 @@ namespace Scantron
         /// <returns></returns>
         public static List<string> Run(List<string> raw_cards)
         {
+            Thread.Sleep(500);
+            
             // Reads in data from the scantron cards into raw_cards
             string cardFromSerialPort;
             while (Status()[11] != '1') //will loop while the hopper is up
