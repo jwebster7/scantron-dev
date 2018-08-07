@@ -32,6 +32,13 @@ namespace Scantron
             this.gui = gui;
         }
         
+        public List<Card> Cards
+        {
+            get
+            {
+                return cards;
+            }
+        }
         public List<Student> Students
         {
             get
