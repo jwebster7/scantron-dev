@@ -178,7 +178,7 @@ namespace Scantron
                 char[] line = card_lines[i].Reverse().ToArray();
                 char max = line.Max();
 
-                if (max > 6)
+                if (max > 54)
                 {
                     wid += Array.IndexOf(line, max);
                 }
