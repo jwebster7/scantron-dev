@@ -18,6 +18,7 @@ namespace Scantron
     {
         GUI gui;
 
+        string exam_name = "";
         // Holds the cards used to create the students.
         private List<Card> cards = new List<Card>();
         // Hold the list of students to be graded
@@ -30,6 +31,7 @@ namespace Scantron
         public Grader(GUI gui)
         {
             this.gui = gui;
+            this.exam_name = exam_name;
         }
         
         public List<Card> Cards
@@ -111,8 +113,10 @@ namespace Scantron
         /// Check student answers against the answer key.
         /// </summary>
         /// <returns>True if no errors occurred.</returns>
-        public bool GradeStudents()
+        public bool GradeStudents(string exam_name)
         {
+            this.exam_name = exam_name;
+
             foreach (Student student in students)
             {
                 int test_version = student.TestVersion;
@@ -151,14 +155,14 @@ namespace Scantron
         {
             float points_possible = answer_key[0].Sum(question => question.Points);
 
-            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + answer_key.Count + Environment.NewLine +
+            string info = "Student,ID,SIS User ID,SIS Login ID,Section," + exam_name + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
             int count = 0;
 
             foreach (Student student in students)
             {
                 count++;
-                info += "Scantron Card(s): " + count + ",," + student.WID + ",,," + student.Score() + Environment.NewLine;
+                info += student.WID + ",," + student.WID + ",,," + student.Score() + Environment.NewLine;
             }
 
             return info;

@@ -50,12 +50,6 @@ namespace Scantron
             gui.Restart();
         }
 
-        // Event handler for the 'Create Answer Form' button.
-        private void uxCreateAnswerForm_Click(object sender, EventArgs e)
-        {
-            gui.CreateAnswerForm();
-        }
-
         // Event handler for the 'Grade Students' button.
         private void uxGradeStudents_Click(object sender, EventArgs e)
         {
@@ -86,6 +80,16 @@ namespace Scantron
         private void uxAllQuestionPoints_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAllQuestionPoints();
+        }
+
+        private void uxNumberOfQuestions_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateAnswerForm();
+        }
+
+        private void uxNumberOfVersions_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateAnswerForm();
         }
     }
 }
