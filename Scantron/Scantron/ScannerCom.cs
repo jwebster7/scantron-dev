@@ -16,6 +16,7 @@ using System.IO;
 using System.IO.Ports;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Scantron
 {
@@ -49,6 +50,10 @@ namespace Scantron
         /// <returns></returns>
         public static List<string> Run(List<string> raw_cards)
         {
+            
+            Thread.Sleep(1000);
+            Thread.BeginCriticalRegion();
+
             // Reads in data from the scantron cards into raw_cards
             string cardFromSerialPort;
             while (Status()[11] != '1') //will loop while the hopper is up
@@ -71,6 +76,8 @@ namespace Scantron
                 }
             }
 
+            Thread.EndCriticalRegion();
+
             serial_port.Close();
             return raw_cards;
         }
@@ -89,6 +96,20 @@ namespace Scantron
             status = serial_port.ReadLine();
             return status;
         }
+
+        private static void Display(string message)
+        {
+            serial_port.Write(config.display_data);
+            serial_port.Write("{");
+            serial_port.Write("0");
+            serial_port.Write("0");
+            serial_port.Write(message);
+            serial_port.Write("}");
+            serial_port.Write(config.end_of_info);
+        }
+
+
+
 
     }
 
@@ -111,6 +132,7 @@ namespace Scantron
         public string status { get; set; }
         public string print_data { get; set; }
         public string display_data { get; set; }
+        public string end_of_info { get; set; }
 
         public static ScannerConfig Deserialize()
         {
