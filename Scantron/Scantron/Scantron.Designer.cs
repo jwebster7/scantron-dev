@@ -183,6 +183,7 @@
             // uxScanInstructionLabel
             // 
             this.uxScanInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxScanInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxScanInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxScanInstructionLabel.Name = "uxScanInstructionLabel";
             this.uxScanInstructionLabel.Size = new System.Drawing.Size(963, 189);
@@ -249,6 +250,7 @@
             // uxGradeInstructionLabel
             // 
             this.uxGradeInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxGradeInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxGradeInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxGradeInstructionLabel.Name = "uxGradeInstructionLabel";
             this.uxGradeInstructionLabel.Size = new System.Drawing.Size(963, 189);

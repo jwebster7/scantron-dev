@@ -67,23 +67,15 @@ namespace Scantron
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
 
-            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." +
-                                            Environment.NewLine + Environment.NewLine +
-                                            "Scan tab instructions: " +
-                                            Environment.NewLine + Environment.NewLine +
-                                            "1. Load the Scantron hopper and use the guider to make sure they are straight." +
-                                            Environment.NewLine +
-                                            "2. Click Start within this Window." +
-                                            Environment.NewLine +
-                                            "3. After your cards have finished scanning, click the Grade tab." +
-                                            Environment.NewLine + Environment.NewLine;
+            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." + Environment.NewLine + Environment.NewLine +
+                                            "Scan tab instructions: " +  Environment.NewLine + Environment.NewLine +
+                                            "1. Load the Scantron hopper and use the guider to make sure they are straight." + Environment.NewLine +
+                                            "2. Click Start within this Window." + Environment.NewLine +
+                                            "3. After your cards have finished scanning, click the Grade tab.";
 
-            uxGradeInstructionLabel.Text =  "Grade tab instructions: " +
-                                            Environment.NewLine + Environment.NewLine +
-                                            "1. Specify the number of questions and versions the exam has and give it a name." +
-                                            Environment.NewLine +
-                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." +
-                                            Environment.NewLine +
+            uxGradeInstructionLabel.Text =  "Grade tab instructions: " + Environment.NewLine + Environment.NewLine +
+                                            "1. Specify the number of questions and versions the exam has and give it a name." + Environment.NewLine +
+                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." + Environment.NewLine +
                                             "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
 
             grader = new Grader(this);
@@ -406,19 +398,18 @@ namespace Scantron
                         // Adds everything in the 'file' given to the streamwriter.
                         file_generator.Write(file);
                     }
-                    MessageBox.Show("Student responses have been successfully recorded!" + Environment.NewLine +
-                                    "You may now upload the student responses to Canvas" + Environment.NewLine +
+                    MessageBox.Show("Student responses have been successfully recorded!\n" +
+                                    "You may now upload the student responses to Canvas\n" +
                                     "using the file generated.");
                 }
             }
             else
             {
-                MessageBox.Show("An error occured while trying to save," + Environment.NewLine +
-                                "The format for filenames should not include" + Environment.NewLine +
-                                "slashes, parentheticals, or symbols" +
-                                Environment.NewLine +
-                                "Please reload the hopper and ensure the" + Environment.NewLine +
-                                "cards are not stuck together, backwards," + Environment.NewLine +
+                MessageBox.Show("An error occured while trying to save,\n" +
+                                "The format for filenames should not include\n" +
+                                "slashes, parentheticals, or symbols\n" +
+                                "Please reload the hopper and ensure the\n" +
+                                "cards are not stuck together, backwards,\n" +
                                 "or reversed. ");
                 throw new IOException();
             }

@@ -31,7 +31,6 @@ namespace Scantron
         public Grader(GUI gui)
         {
             this.gui = gui;
-            this.exam_name = exam_name;
         }
         
         public List<Card> Cards
@@ -174,7 +173,7 @@ namespace Scantron
         /// <returns></returns>
         public string GetBrokenWids()
         {
-            string broken_wids = "The following WID's have issues associated with their cards: " + Environment.NewLine;
+            string broken_wids = "The following WID's have issues associated with their cards: \n";
             foreach (string s in partial_wids)
             {
                 broken_wids += s + Environment.NewLine;
