@@ -476,7 +476,7 @@
             this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
             this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(315, 39);
             this.uxCouldNotBeGradedLabel.TabIndex = 0;
-            this.uxCouldNotBeGradedLabel.Text = "Student could not be graded.";
+            this.uxCouldNotBeGradedLabel.Text = "Student could not be graded correctly.";
             this.uxCouldNotBeGradedLabel.Visible = false;
             // 
             // Scantron
