@@ -130,17 +130,16 @@ namespace Scantron
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    gui.DisplayMessage("Student " + student.WID + " has " + student.Response.Count + " questions associated with them."
-                                        + " If this is too few, the student filled out the WID on one or more of their cards incorrectly."
-                                        + " If this is the correct number, you may have entered too many questions on the answer key.");
-                    return false;
+                    gui.DisplayMessage("Student " + student.WID + " has " + student.Response.Count + " questions associated with them." +
+                                        " If this is the correct number, you may have entered too many questions on the answer key" +
+                                        " If this is too few, the student filled out the WID on one or more of their cards incorrectly." +
+                                        " You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
                 }
                 catch (KeyNotFoundException e)
                 {
                     gui.DisplayMessage("Student " + student.WID + " wrote down Test Version " + test_version + "."
-                                        + " You did not create this many versions. Find this student's card(s) and mark"
-                                        + " a valid test version.");
-                    return false;
+                                        + " You did not create this many versions. Student cannot be graded correctly." +
+                                        " You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
                 }
             }
 

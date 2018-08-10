@@ -39,6 +39,7 @@
             this.uxScanInstructionLabel = new System.Windows.Forms.Label();
             this.uxHorizontalDivider = new System.Windows.Forms.Label();
             this.uxGradeTab = new System.Windows.Forms.TabPage();
+            this.uxExamNameLabel = new System.Windows.Forms.Label();
             this.uxExamName = new System.Windows.Forms.TextBox();
             this.uxGradeInstructionLabel = new System.Windows.Forms.Label();
             this.uxVerticalDivider = new System.Windows.Forms.Label();
@@ -59,7 +60,8 @@
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
-            this.uxExamNameLabel = new System.Windows.Forms.Label();
+            this.uxCouldNotBeGradedLabel = new System.Windows.Forms.Label();
+            this.uxStudentResponsePanel.SuspendLayout();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -128,6 +130,7 @@
             this.uxStudentResponsePanel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxStudentResponsePanel.AutoScroll = true;
             this.uxStudentResponsePanel.BackColor = System.Drawing.SystemColors.Control;
+            this.uxStudentResponsePanel.Controls.Add(this.uxCouldNotBeGradedLabel);
             this.uxStudentResponsePanel.Location = new System.Drawing.Point(490, 312);
             this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
             this.uxStudentResponsePanel.Size = new System.Drawing.Size(475, 282);
@@ -224,6 +227,17 @@
             this.uxGradeTab.Size = new System.Drawing.Size(1028, 611);
             this.uxGradeTab.TabIndex = 1;
             this.uxGradeTab.Text = "Grade";
+            // 
+            // uxExamNameLabel
+            // 
+            this.uxExamNameLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.uxExamNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxExamNameLabel.Location = new System.Drawing.Point(291, 245);
+            this.uxExamNameLabel.Name = "uxExamNameLabel";
+            this.uxExamNameLabel.Size = new System.Drawing.Size(130, 20);
+            this.uxExamNameLabel.TabIndex = 32;
+            this.uxExamNameLabel.Text = "Exam Name:";
+            this.uxExamNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uxExamName
             // 
@@ -339,20 +353,10 @@
             0,
             0,
             0});
-            this.uxNumberOfQuestions.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.uxNumberOfQuestions.Name = "uxNumberOfQuestions";
             this.uxNumberOfQuestions.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfQuestions.TabIndex = 24;
             this.uxNumberOfQuestions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.uxNumberOfQuestions.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.uxNumberOfQuestions.ValueChanged += new System.EventHandler(this.uxNumberOfQuestions_ValueChanged);
             // 
             // uxPreviousStudent
@@ -404,20 +408,10 @@
             0,
             0,
             0});
-            this.uxNumberOfVersions.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.uxNumberOfVersions.Name = "uxNumberOfVersions";
             this.uxNumberOfVersions.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfVersions.TabIndex = 20;
             this.uxNumberOfVersions.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.uxNumberOfVersions.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.uxNumberOfVersions.ValueChanged += new System.EventHandler(this.uxNumberOfVersions_ValueChanged);
             // 
             // uxAnswerKeyLabel
@@ -476,16 +470,14 @@
             this.uxVersion3Tab.TabIndex = 2;
             this.uxVersion3Tab.Text = "Version 3";
             // 
-            // uxExamNameLabel
+            // uxCouldNotBeGradedLabel
             // 
-            this.uxExamNameLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.uxExamNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxExamNameLabel.Location = new System.Drawing.Point(291, 245);
-            this.uxExamNameLabel.Name = "uxExamNameLabel";
-            this.uxExamNameLabel.Size = new System.Drawing.Size(130, 20);
-            this.uxExamNameLabel.TabIndex = 32;
-            this.uxExamNameLabel.Text = "Exam Name:";
-            this.uxExamNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(63, 82);
+            this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
+            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(315, 39);
+            this.uxCouldNotBeGradedLabel.TabIndex = 0;
+            this.uxCouldNotBeGradedLabel.Text = "Student could not be graded.";
+            this.uxCouldNotBeGradedLabel.Visible = false;
             // 
             // Scantron
             // 
@@ -501,6 +493,7 @@
             this.Name = "Scantron";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
+            this.uxStudentResponsePanel.ResumeLayout(false);
             this.uxMainTabControl.ResumeLayout(false);
             this.uxScanTab.ResumeLayout(false);
             this.uxGradeTab.ResumeLayout(false);
@@ -548,6 +541,7 @@
         private System.Windows.Forms.Label uxScanInstructionLabel;
         private System.Windows.Forms.TextBox uxExamName;
         private System.Windows.Forms.Label uxExamNameLabel;
+        private System.Windows.Forms.Label uxCouldNotBeGradedLabel;
     }
 }
 

@@ -35,6 +35,7 @@ namespace Scantron
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
+        private Label uxCouldNotBeGradedLabel;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
 
@@ -64,6 +65,7 @@ namespace Scantron
             uxPreviousStudent = (Button) scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
+            uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
 
             uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." +
                                             Environment.NewLine + Environment.NewLine +
@@ -78,7 +80,7 @@ namespace Scantron
 
             uxGradeInstructionLabel.Text =  "Grade tab instructions: " +
                                             Environment.NewLine + Environment.NewLine +
-                                            "1. Specify the number of questions and versions the exam has, then click Create Answer Form." +
+                                            "1. Specify the number of questions and versions the exam has and give it a name." +
                                             Environment.NewLine +
                                             "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." +
                                             Environment.NewLine +
@@ -258,13 +260,17 @@ namespace Scantron
         /// <summary>
         /// Create the answer key from the filled out form.
         /// </summary>
-        public void CreateAnswerKey()
+        /// <returns>True if successful.</returns>
+        public bool CreateAnswerKey()
         {
-            if (uxAnswerKeyTabControl.TabPages[0].Controls.Count == 0)
+            int number_of_versions = (int)uxNumberOfVersions.Value;
+            int number_of_questions = (int)uxNumberOfQuestions.Value;
+
+            if (number_of_versions == 0 || number_of_questions == 0)
             {
-                DisplayMessage("You have not created an answer key. Enter the number of questions on the exam"
-                                + ", click Enter, then fill out the answer key.");
-                return;
+                DisplayMessage("You have not created an answer key. Select the number of questions and versions" +
+                                ", then fill out the answer key form.");
+                return false;
             }
 
             grader.AnswerKey = new Dictionary<int, List<Question>>();
@@ -273,8 +279,6 @@ namespace Scantron
             CheckBox checkbox;
             NumericUpDown updown;
 
-            int number_of_versions = (int) uxNumberOfVersions.Value;
-            int number_of_questions = (int) uxNumberOfQuestions.Value;
             char[] answer = new char[5];
             float points = 0;
             bool partial_credit = false;
@@ -320,6 +324,8 @@ namespace Scantron
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
             }
+
+            return true;
         }
 
         /// <summary>
@@ -334,7 +340,16 @@ namespace Scantron
                 return;
             }
 
-            CreateAnswerKey();
+            if (uxExamName.Text == "")
+            {
+                DisplayMessage("Enter a name for the exam.");
+                return;
+            }
+
+            if (!CreateAnswerKey())
+            {
+                return;
+            }
 
             if (grader.GradeStudents(uxExamName.Text))
             {
@@ -510,9 +525,16 @@ namespace Scantron
                 control.Visible = false;
             }
 
+            if (test_version > grader.AnswerKey.Keys.Count || grader.AnswerKey[0].Count > student.Response.Count)
+            {
+                uxCouldNotBeGradedLabel.Visible = true;
+
+                return;
+            }
+
             for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
             {
-                panel = (Panel)uxStudentResponsePanel.Controls[i];
+                panel = (Panel)uxStudentResponsePanel.Controls[i + 1];
                 panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
