@@ -61,6 +61,8 @@
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
+            this.uxAnswerKeyInstructionBox = new System.Windows.Forms.Label();
+            this.uxStudentList = new System.Windows.Forms.Panel();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -76,7 +78,7 @@
             this.uxStart.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStart.Location = new System.Drawing.Point(14, 215);
+            this.uxStart.Location = new System.Drawing.Point(9, 226);
             this.uxStart.Name = "uxStart";
             this.uxStart.Size = new System.Drawing.Size(85, 65);
             this.uxStart.TabIndex = 0;
@@ -90,7 +92,7 @@
             this.uxStop.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(105, 215);
+            this.uxStop.Location = new System.Drawing.Point(100, 226);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
@@ -103,7 +105,7 @@
             this.uxRestart.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(196, 215);
+            this.uxRestart.Location = new System.Drawing.Point(191, 226);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -161,6 +163,7 @@
             // uxAnswerKeyTab
             // 
             this.uxAnswerKeyTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionBox);
             this.uxAnswerKeyTab.Controls.Add(this.uxExamNameLabel);
             this.uxAnswerKeyTab.Controls.Add(this.uxExamName);
             this.uxAnswerKeyTab.Controls.Add(this.uxNumberOfVersionsLabel);
@@ -182,7 +185,7 @@
             this.uxExamNameLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxExamNameLabel.AutoSize = true;
             this.uxExamNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxExamNameLabel.Location = new System.Drawing.Point(26, 31);
+            this.uxExamNameLabel.Location = new System.Drawing.Point(17, 235);
             this.uxExamNameLabel.Name = "uxExamNameLabel";
             this.uxExamNameLabel.Size = new System.Drawing.Size(77, 13);
             this.uxExamNameLabel.TabIndex = 42;
@@ -192,7 +195,7 @@
             // uxExamName
             // 
             this.uxExamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxExamName.Location = new System.Drawing.Point(109, 29);
+            this.uxExamName.Location = new System.Drawing.Point(100, 233);
             this.uxExamName.Name = "uxExamName";
             this.uxExamName.Size = new System.Drawing.Size(170, 20);
             this.uxExamName.TabIndex = 41;
@@ -202,7 +205,7 @@
             this.uxNumberOfVersionsLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxNumberOfVersionsLabel.AutoSize = true;
             this.uxNumberOfVersionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(26, 64);
+            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(17, 268);
             this.uxNumberOfVersionsLabel.Name = "uxNumberOfVersionsLabel";
             this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(121, 13);
             this.uxNumberOfVersionsLabel.TabIndex = 35;
@@ -214,7 +217,7 @@
             this.uxNumberOfQuestionsLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxNumberOfQuestionsLabel.AutoSize = true;
             this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(26, 98);
+            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(17, 302);
             this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
             this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(129, 13);
             this.uxNumberOfQuestionsLabel.TabIndex = 37;
@@ -227,7 +230,7 @@
             this.uxAllPartialCredit.AutoSize = true;
             this.uxAllPartialCredit.BackColor = System.Drawing.Color.Transparent;
             this.uxAllPartialCredit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllPartialCredit.Location = new System.Drawing.Point(29, 168);
+            this.uxAllPartialCredit.Location = new System.Drawing.Point(20, 372);
             this.uxAllPartialCredit.Name = "uxAllPartialCredit";
             this.uxAllPartialCredit.Size = new System.Drawing.Size(117, 17);
             this.uxAllPartialCredit.TabIndex = 33;
@@ -241,7 +244,7 @@
             this.uxAllQuestionPointsLabel.AutoSize = true;
             this.uxAllQuestionPointsLabel.BackColor = System.Drawing.Color.Transparent;
             this.uxAllQuestionPointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(26, 133);
+            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(17, 337);
             this.uxAllQuestionPointsLabel.Name = "uxAllQuestionPointsLabel";
             this.uxAllQuestionPointsLabel.Size = new System.Drawing.Size(85, 13);
             this.uxAllQuestionPointsLabel.TabIndex = 40;
@@ -253,7 +256,7 @@
             this.uxAllQuestionPoints.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxAllQuestionPoints.DecimalPlaces = 2;
             this.uxAllQuestionPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPoints.Location = new System.Drawing.Point(161, 133);
+            this.uxAllQuestionPoints.Location = new System.Drawing.Point(152, 337);
             this.uxAllQuestionPoints.Name = "uxAllQuestionPoints";
             this.uxAllQuestionPoints.Size = new System.Drawing.Size(50, 20);
             this.uxAllQuestionPoints.TabIndex = 39;
@@ -268,7 +271,7 @@
             // 
             this.uxNumberOfQuestions.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxNumberOfQuestions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxNumberOfQuestions.Location = new System.Drawing.Point(161, 98);
+            this.uxNumberOfQuestions.Location = new System.Drawing.Point(152, 302);
             this.uxNumberOfQuestions.Maximum = new decimal(new int[] {
             250,
             0,
@@ -284,7 +287,7 @@
             // 
             this.uxNumberOfVersions.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxNumberOfVersions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxNumberOfVersions.Location = new System.Drawing.Point(161, 64);
+            this.uxNumberOfVersions.Location = new System.Drawing.Point(152, 268);
             this.uxNumberOfVersions.Maximum = new decimal(new int[] {
             3,
             0,
@@ -303,10 +306,10 @@
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion2Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion3Tab);
             this.uxAnswerKeyTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(422, 31);
+            this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(422, 233);
             this.uxAnswerKeyTabControl.Name = "uxAnswerKeyTabControl";
             this.uxAnswerKeyTabControl.SelectedIndex = 0;
-            this.uxAnswerKeyTabControl.Size = new System.Drawing.Size(458, 574);
+            this.uxAnswerKeyTabControl.Size = new System.Drawing.Size(458, 372);
             this.uxAnswerKeyTabControl.TabIndex = 23;
             // 
             // uxVersion1Tab
@@ -316,7 +319,7 @@
             this.uxVersion1Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion1Tab.Name = "uxVersion1Tab";
             this.uxVersion1Tab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxVersion1Tab.Size = new System.Drawing.Size(450, 548);
+            this.uxVersion1Tab.Size = new System.Drawing.Size(450, 346);
             this.uxVersion1Tab.TabIndex = 0;
             this.uxVersion1Tab.Text = "Version 1";
             // 
@@ -344,6 +347,7 @@
             // uxScanTab
             // 
             this.uxScanTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScanTab.Controls.Add(this.uxStudentList);
             this.uxScanTab.Controls.Add(this.uxScanInstructionLabel);
             this.uxScanTab.Controls.Add(this.uxHorizontalDivider);
             this.uxScanTab.Controls.Add(this.uxStart);
@@ -484,6 +488,23 @@
             this.uxStudentResponseLabel.TabIndex = 18;
             this.uxStudentResponseLabel.Text = "Student Response";
             // 
+            // uxAnswerKeyInstructionBox
+            // 
+            this.uxAnswerKeyInstructionBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxAnswerKeyInstructionBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxAnswerKeyInstructionBox.Location = new System.Drawing.Point(6, 3);
+            this.uxAnswerKeyInstructionBox.Name = "uxAnswerKeyInstructionBox";
+            this.uxAnswerKeyInstructionBox.Size = new System.Drawing.Size(874, 189);
+            this.uxAnswerKeyInstructionBox.TabIndex = 43;
+            // 
+            // uxStudentList
+            // 
+            this.uxStudentList.BackColor = System.Drawing.SystemColors.Control;
+            this.uxStudentList.Location = new System.Drawing.Point(375, 239);
+            this.uxStudentList.Name = "uxStudentList";
+            this.uxStudentList.Size = new System.Drawing.Size(428, 342);
+            this.uxStudentList.TabIndex = 32;
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -548,6 +569,8 @@
         private System.Windows.Forms.TabPage uxVersion3Tab;
         private System.Windows.Forms.Button uxGradeStudents;
         private System.Windows.Forms.Label uxHorizontalDivider2;
+        private System.Windows.Forms.Label uxAnswerKeyInstructionBox;
+        private System.Windows.Forms.Panel uxStudentList;
     }
 }
 

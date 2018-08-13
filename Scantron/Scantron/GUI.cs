@@ -37,6 +37,7 @@ namespace Scantron
         private Label uxVersionLabel;
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
+        private Panel uxStudentList;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
 
@@ -68,6 +69,7 @@ namespace Scantron
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
+            uxStudentList = (Panel) scantron_form.Controls.Find("uxStudentList", true)[0];
 
             uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." + Environment.NewLine + Environment.NewLine +
                                             "Scan tab instructions: " +  Environment.NewLine + Environment.NewLine +
@@ -119,6 +121,8 @@ namespace Scantron
             {
                 DisplayMessage(grader.GetBrokenWids());
             }
+
+            UpdateStudentList();
         }
 
         /// <summary>
@@ -132,6 +136,56 @@ namespace Scantron
             grader.PartialWids.Clear();
         }
 
+        private void UpdateStudentList()
+        {
+            for (int i = 0; i < grader.Students.Count; i++)
+            {
+                Panel student_panel = new Panel
+                {
+                    BackColor = Color.Gray,
+                    Location = new Point(3, 3 + 29 * i),
+                    Size = new Size(420, 25),
+                };
+
+                TextBox wid_textbox = new TextBox
+                {
+                    Font = new Font("Microsoft Sans Serif", 8),
+                    Location = new Point(3, 3),
+                    MaxLength = 9,
+                    Text = grader.Students[i].WID,
+                    Width = 70
+                };
+
+                Label version_label = new Label
+                {
+                    Font = new Font("Microsoft Sans Serif", 8),
+                    Location = new Point(80, 6),
+                    Text = "Version:",
+                    Width = 45
+                };
+
+                NumericUpDown version_updown = new NumericUpDown
+                {
+                    Font = new Font("Microsoft Sans Serif", 8),
+                    Location = new Point(125, 3),
+                    Maximum = 3,
+                    Minimum = 1,
+                    Value = grader.Students[i].TestVersion,
+                    Width = 30
+                };
+
+                Label card_label = new Label
+                {
+
+                };
+
+                student_panel.Controls.Add(wid_textbox);
+                student_panel.Controls.Add(version_label);
+                student_panel.Controls.Add(version_updown);
+                uxStudentList.Controls.Add(student_panel);
+            }
+        }
+
         /// <summary>
         /// Create the answer key form with the specified number of questions and versions.
         /// </summary>
@@ -139,9 +193,9 @@ namespace Scantron
         {
             CheckBox checkbox;
 
-            foreach (TabPage tp in uxAnswerKeyTabControl.TabPages)
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
             {
-                foreach (Panel panel in tp.Controls)
+                foreach (Panel panel in tabpage.Controls)
                 {
                     panel.Visible = false;
                     
@@ -159,15 +213,15 @@ namespace Scantron
             int number_of_versions = (int) uxNumberOfVersions.Value;
             int number_of_questions = (int) uxNumberOfQuestions.Value;
 
-            TabPage tabpage;
+            TabPage answer_key_tabpage;
 
             for (int i = 0; i < number_of_versions; i++)
             {
-                tabpage = uxAnswerKeyTabControl.TabPages[i];
+                answer_key_tabpage = uxAnswerKeyTabControl.TabPages[i];
 
                 for (int j = 0; j < number_of_questions; j++)
                 {
-                    tabpage.Controls[j].Visible = true;
+                    answer_key_tabpage.Controls[j].Visible = true;
                 }
             }
         }
@@ -210,7 +264,7 @@ namespace Scantron
         {
             for (int j = 0; j < 250; j++)
             {
-                Panel panel = new Panel
+                Panel question_panel = new Panel
                 {
                     BackColor = Color.MediumPurple,
                     Location = new Point(3, 3 + 26 * j),
@@ -226,10 +280,10 @@ namespace Scantron
                         Size = new Size(33, 17),
                         Text = ((char)(k + 65)).ToString()
                     };
-                    panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
+                    question_panel.Controls.Add(checkbox); // Checkboxes are added first so they are indices 0-4.
                 }
 
-                NumericUpDown updown = new NumericUpDown
+                NumericUpDown points_updown = new NumericUpDown
                 {
                     Location = new Point(268, 1),
                     DecimalPlaces = 2,
@@ -237,25 +291,25 @@ namespace Scantron
                     Value = 1
                 };
 
-                CheckBox partial_credit = new CheckBox
+                CheckBox partial_credit_checkbox = new CheckBox
                 {
                     Location = new Point(330, 3),
                     Size = new Size(100, 17),
                     Text = "Partial Credit"
                 };
 
-                Label label = new Label
+                Label question_label = new Label
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
                     Text = "Question " + (j + 1)
                 };
 
-                panel.Controls.Add(updown); // Index 5
-                panel.Controls.Add(partial_credit); // Index 6
-                panel.Controls.Add(label); // Index 7
+                question_panel.Controls.Add(points_updown); // Index 5
+                question_panel.Controls.Add(partial_credit_checkbox); // Index 6
+                question_panel.Controls.Add(question_label); // Index 7
 
-                tabpage.Controls.Add(panel);
+                tabpage.Controls.Add(question_panel);
             }
         }
 
@@ -277,9 +331,9 @@ namespace Scantron
 
             grader.AnswerKey = new Dictionary<int, List<Question>>();
 
-            Panel panel;
+            Panel question_panel;
             CheckBox checkbox;
-            NumericUpDown updown;
+            NumericUpDown points_updown;
 
             char[] answer = new char[5];
             float points = 0;
@@ -293,12 +347,12 @@ namespace Scantron
                 {
                     answer = new char[5];
 
-                    panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
+                    question_panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
 
                     // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
                     for (int k = 0; k < 5; k++)
                     {
-                        checkbox = (CheckBox) panel.Controls[k];
+                        checkbox = (CheckBox) question_panel.Controls[k];
                         if (checkbox.Checked)
                         {
                             answer[k] = (char)(65 + k);
@@ -309,11 +363,11 @@ namespace Scantron
                         }
                     }
                     
-                    updown = (NumericUpDown) panel.Controls[5];
-                    points = (float)updown.Value;
+                    points_updown = (NumericUpDown) question_panel.Controls[5];
+                    points = (float) points_updown.Value;
                     
                     // Checks the current question panel's partial credit checkbox.
-                    checkbox = (CheckBox) panel.Controls[6];
+                    checkbox = (CheckBox) question_panel.Controls[6];
                     if (checkbox.Checked)
                     {
                         partial_credit = true;
@@ -458,7 +512,7 @@ namespace Scantron
         {
             for (int i = 0; i < 250; i++)
             {
-                Panel panel = new Panel
+                Panel question_panel = new Panel
                 {
                     Location = new Point(3, 3 + 26 * i),
                     Size = new Size(350, 22),
@@ -475,27 +529,27 @@ namespace Scantron
                         Text = ((char)(j + 65)).ToString()
                     };
 
-                    panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
+                    question_panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
                 }
 
-                Label points = new Label
+                Label points_label = new Label
                 {
                     Location = new Point(268, 3),
                     Size = new Size(80, 13),
                     Text = "Points: 0"
                 };
 
-                Label label = new Label
+                Label question_label = new Label
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
                     Text = "Question " + (i + 1)
                 };
 
-                panel.Controls.Add(points); // Index 5
-                panel.Controls.Add(label); // Index 6
+                question_panel.Controls.Add(points_label); // Index 5
+                question_panel.Controls.Add(question_label); // Index 6
 
-                uxStudentResponsePanel.Controls.Add(panel);
+                uxStudentResponsePanel.Controls.Add(question_panel);
             }
         }
 
@@ -527,7 +581,7 @@ namespace Scantron
             uxVersionLabel.Text = "Version: " + test_version;
             uxScoreLabel.Text = "Score: " + student.Score();
             uxCouldNotBeGradedLabel.Visible = false;
-            Panel panel;
+            Panel question_panel;
             CheckBox response_checkbox;
             CheckBox answer_key_checkbox;
 
@@ -550,25 +604,25 @@ namespace Scantron
 
             for (int i = 0; i < Math.Min(grader.AnswerKey[test_version - 1].Count, student.Response.Count); i++)
             {
-                panel = (Panel)uxStudentResponsePanel.Controls[i];
-                panel.Visible = true;
+                question_panel = (Panel)uxStudentResponsePanel.Controls[i];
+                question_panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
-                    panel.BackColor = Color.DarkGreen;
+                    question_panel.BackColor = Color.DarkGreen;
                 }
                 else if(student.Response[i].Points == 0)
                 {
-                    panel.BackColor = Color.Red;
+                    question_panel.BackColor = Color.Red;
                 }
                 else
                 {
-                    panel.BackColor = Color.Cyan;
+                    question_panel.BackColor = Color.Cyan;
                 }
 
                 for (int j = 0; j < 5; j++)
                 {
-                    response_checkbox = (CheckBox)panel.Controls[j];
+                    response_checkbox = (CheckBox)question_panel.Controls[j];
                     answer_key_checkbox = (CheckBox)uxAnswerKeyTabControl.TabPages[test_version - 1].Controls[i].Controls[j];
 
                     if (student.Response[i].Answer[j] == ' ')
@@ -581,7 +635,7 @@ namespace Scantron
                     }
                 }
 
-                panel.Controls[5].Text = "Points: " + student.Response[i].Points.ToString("0.00");
+                question_panel.Controls[5].Text = "Points: " + student.Response[i].Points.ToString("0.00");
             }
         }
     }
