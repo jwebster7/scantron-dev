@@ -33,6 +33,7 @@
             this.uxRestart = new System.Windows.Forms.Button();
             this.uxGradeStudents = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
+            this.uxCouldNotBeGradedLabel = new System.Windows.Forms.Label();
             this.uxStudentSelector = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxScanTab = new System.Windows.Forms.TabPage();
@@ -60,8 +61,7 @@
             this.uxVersion1Tab = new System.Windows.Forms.TabPage();
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
-            this.uxCouldNotBeGradedLabel = new System.Windows.Forms.Label();
-            this.uxStudentResponsePanel.SuspendLayout();
+            this.uxScoreLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
@@ -130,11 +130,21 @@
             this.uxStudentResponsePanel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.uxStudentResponsePanel.AutoScroll = true;
             this.uxStudentResponsePanel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStudentResponsePanel.Controls.Add(this.uxCouldNotBeGradedLabel);
             this.uxStudentResponsePanel.Location = new System.Drawing.Point(490, 312);
             this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
             this.uxStudentResponsePanel.Size = new System.Drawing.Size(475, 282);
             this.uxStudentResponsePanel.TabIndex = 15;
+            // 
+            // uxCouldNotBeGradedLabel
+            // 
+            this.uxCouldNotBeGradedLabel.AutoSize = true;
+            this.uxCouldNotBeGradedLabel.BackColor = System.Drawing.Color.Red;
+            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(629, 296);
+            this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
+            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(188, 13);
+            this.uxCouldNotBeGradedLabel.TabIndex = 0;
+            this.uxCouldNotBeGradedLabel.Text = "Student could not be graded correctly.";
+            this.uxCouldNotBeGradedLabel.Visible = false;
             // 
             // uxStudentSelector
             // 
@@ -200,6 +210,8 @@
             // uxGradeTab
             // 
             this.uxGradeTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTab.Controls.Add(this.uxScoreLabel);
+            this.uxGradeTab.Controls.Add(this.uxCouldNotBeGradedLabel);
             this.uxGradeTab.Controls.Add(this.uxExamNameLabel);
             this.uxGradeTab.Controls.Add(this.uxExamName);
             this.uxGradeTab.Controls.Add(this.uxGradeInstructionLabel);
@@ -472,14 +484,17 @@
             this.uxVersion3Tab.TabIndex = 2;
             this.uxVersion3Tab.Text = "Version 3";
             // 
-            // uxCouldNotBeGradedLabel
+            // uxScoreLabel
             // 
-            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(63, 82);
-            this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
-            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(315, 39);
-            this.uxCouldNotBeGradedLabel.TabIndex = 0;
-            this.uxCouldNotBeGradedLabel.Text = "Student could not be graded correctly.";
-            this.uxCouldNotBeGradedLabel.Visible = false;
+            this.uxScoreLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.uxScoreLabel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxScoreLabel.Location = new System.Drawing.Point(841, 239);
+            this.uxScoreLabel.Name = "uxScoreLabel";
+            this.uxScoreLabel.Size = new System.Drawing.Size(65, 22);
+            this.uxScoreLabel.TabIndex = 33;
+            this.uxScoreLabel.Text = "Score: ";
+            this.uxScoreLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Scantron
             // 
@@ -495,7 +510,6 @@
             this.Name = "Scantron";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "File Generator";
-            this.uxStudentResponsePanel.ResumeLayout(false);
             this.uxMainTabControl.ResumeLayout(false);
             this.uxScanTab.ResumeLayout(false);
             this.uxGradeTab.ResumeLayout(false);
@@ -544,6 +558,7 @@
         private System.Windows.Forms.TextBox uxExamName;
         private System.Windows.Forms.Label uxExamNameLabel;
         private System.Windows.Forms.Label uxCouldNotBeGradedLabel;
+        private System.Windows.Forms.Label uxScoreLabel;
     }
 }
 

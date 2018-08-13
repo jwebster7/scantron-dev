@@ -51,7 +51,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Method for grading this question.
+        /// Method for grading this question. https://community.canvaslms.com/docs/DOC-6674-understanding-multiple-answers-questions
         /// </summary>
         /// <param name="answer_key">Answer key to grade this questions against.</param>
         public void Grade(Question answer_key)
@@ -60,21 +60,43 @@ namespace Scantron
             {
                 float total_answers = 0;
                 float correct_answers = 0;
+                float incorrect_answers = 0;
 
                 for (int i = 0; i < 5; i++)
                 {
-                    if (answer[i] != ' ' || answer_key.answer[i] != ' ')
+                    if (answer_key.answer[i] != ' ')
                     {
                         total_answers++;
 
-                        if (answer[i] == answer_key.answer[i])
+                        if (answer[i] == ' ')
+                        {
+                            // No points are deducted.
+                        }
+                        else if (answer[i] == answer_key.answer[i])
                         {
                             correct_answers++;
+                        } 
+                        else
+                        {
+                            incorrect_answers++;
+                        }
+                    }
+                    
+                    if(answer_key.answer[i] == ' ')
+                    {
+                        if (answer[i] != ' ')
+                        {
+                            incorrect_answers++;
                         }
                     }
                 }
                 
-                points = (correct_answers / total_answers) * answer_key.points;
+                points = ((1 / total_answers) * correct_answers - (1 /total_answers) * incorrect_answers ) * answer_key.points;
+
+                if (points < 0)
+                {
+                    points = 0;
+                }
             }
             else
             {

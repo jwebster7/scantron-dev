@@ -35,6 +35,7 @@ namespace Scantron
         private Button uxPreviousStudent;
         private Button uxNextStudent;
         private Label uxVersionLabel;
+        private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards;
@@ -65,6 +66,7 @@ namespace Scantron
             uxPreviousStudent = (Button) scantron_form.Controls.Find("uxPreviousStudent", true)[0];
             uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
+            uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
 
             uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." + Environment.NewLine + Environment.NewLine +
@@ -135,11 +137,19 @@ namespace Scantron
         /// </summary>
         public void UpdateAnswerForm()
         {
+            CheckBox checkbox;
+
             foreach (TabPage tp in uxAnswerKeyTabControl.TabPages)
             {
                 foreach (Panel panel in tp.Controls)
                 {
                     panel.Visible = false;
+                    
+                    for (int i = 0; i < 5; i++)
+                    {
+                        checkbox = (CheckBox) panel.Controls[i];
+                        checkbox.Checked = false;
+                    }
                 }
             }
 
@@ -238,7 +248,7 @@ namespace Scantron
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
-                    Text = "Question" + (j + 1)
+                    Text = "Question " + (j + 1)
                 };
 
                 panel.Controls.Add(updown); // Index 5
@@ -451,7 +461,7 @@ namespace Scantron
                 Panel panel = new Panel
                 {
                     Location = new Point(3, 3 + 26 * i),
-                    Size = new Size(268, 22),
+                    Size = new Size(350, 22),
                     Visible = false
                 };
 
@@ -468,14 +478,22 @@ namespace Scantron
                     panel.Controls.Add(checkbox); // Checkboxes are added first so their indices are 0-4.
                 }
 
+                Label points = new Label
+                {
+                    Location = new Point(268, 3),
+                    Size = new Size(80, 13),
+                    Text = "Points: 0"
+                };
+
                 Label label = new Label
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
-                    Text = "Question" + (i + 1)
+                    Text = "Question " + (i + 1)
                 };
 
-                panel.Controls.Add(label); // Index 5
+                panel.Controls.Add(points); // Index 5
+                panel.Controls.Add(label); // Index 6
 
                 uxStudentResponsePanel.Controls.Add(panel);
             }
@@ -507,6 +525,8 @@ namespace Scantron
 
             int test_version = student.TestVersion;
             uxVersionLabel.Text = "Version: " + test_version;
+            uxScoreLabel.Text = "Score: " + student.Score();
+            uxCouldNotBeGradedLabel.Visible = false;
             Panel panel;
             CheckBox response_checkbox;
             CheckBox answer_key_checkbox;
@@ -516,25 +536,34 @@ namespace Scantron
                 control.Visible = false;
             }
 
-            if (test_version > grader.AnswerKey.Keys.Count || grader.AnswerKey[0].Count > student.Response.Count)
+            if (test_version > grader.AnswerKey.Keys.Count)
             {
                 uxCouldNotBeGradedLabel.Visible = true;
 
                 return;
             }
 
-            for (int i = 0; i < grader.AnswerKey[test_version - 1].Count; i++)
+            if(grader.AnswerKey[0].Count > student.Response.Count)
             {
-                panel = (Panel)uxStudentResponsePanel.Controls[i + 1];
+                uxCouldNotBeGradedLabel.Visible = true;
+            }
+
+            for (int i = 0; i < Math.Min(grader.AnswerKey[test_version - 1].Count, student.Response.Count); i++)
+            {
+                panel = (Panel)uxStudentResponsePanel.Controls[i];
                 panel.Visible = true;
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
                     panel.BackColor = Color.DarkGreen;
                 }
-                else
+                else if(student.Response[i].Points == 0)
                 {
                     panel.BackColor = Color.Red;
+                }
+                else
+                {
+                    panel.BackColor = Color.Cyan;
                 }
 
                 for (int j = 0; j < 5; j++)
@@ -551,6 +580,8 @@ namespace Scantron
                         response_checkbox.Checked = true;
                     }
                 }
+
+                panel.Controls[5].Text = "Points: " + student.Response[i].Points.ToString("0.00");
             }
         }
     }
