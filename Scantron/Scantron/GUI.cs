@@ -142,24 +142,32 @@ namespace Scantron
             {
                 Panel student_panel = new Panel
                 {
-                    BackColor = Color.Gray,
+                    BackColor = Color.LightGray,
                     Location = new Point(3, 3 + 29 * i),
-                    Size = new Size(420, 25),
+                    Size = new Size(270, 25)
+                };
+
+                Label wid_label = new Label
+                {
+                    Font = new Font("Microsoft Sans Serif", 8),
+                    Location = new Point(3, 6),
+                    Text = "WID:",
+                    Width = 32
                 };
 
                 TextBox wid_textbox = new TextBox
                 {
                     Font = new Font("Microsoft Sans Serif", 8),
-                    Location = new Point(3, 3),
+                    Location = new Point(35, 3),
                     MaxLength = 9,
                     Text = grader.Students[i].WID,
-                    Width = 70
+                    Width = 65
                 };
 
                 Label version_label = new Label
                 {
                     Font = new Font("Microsoft Sans Serif", 8),
-                    Location = new Point(80, 6),
+                    Location = new Point(105, 6),
                     Text = "Version:",
                     Width = 45
                 };
@@ -167,7 +175,7 @@ namespace Scantron
                 NumericUpDown version_updown = new NumericUpDown
                 {
                     Font = new Font("Microsoft Sans Serif", 8),
-                    Location = new Point(125, 3),
+                    Location = new Point(150, 3),
                     Maximum = 3,
                     Minimum = 1,
                     Value = grader.Students[i].TestVersion,
@@ -176,14 +184,42 @@ namespace Scantron
 
                 Label card_label = new Label
                 {
-
+                    Font = new Font("MicrosoftSans Serif", 8),
+                    Location = new Point(185, 6),
+                    Text = "Cards: " + grader.Students[i].Cards.Count,
+                    Width = 50
                 };
 
-                student_panel.Controls.Add(wid_textbox);
-                student_panel.Controls.Add(version_label);
-                student_panel.Controls.Add(version_updown);
+                CheckBox checkbox = new CheckBox
+                {
+                    Location = new Point(250, 1)
+                };
+                
+                student_panel.Controls.Add(wid_label); // index 0
+                student_panel.Controls.Add(wid_textbox); // index 1
+                student_panel.Controls.Add(version_label); // index 2
+                student_panel.Controls.Add(version_updown); // index 3
+                student_panel.Controls.Add(card_label); // index 4
+                student_panel.Controls.Add(checkbox); // index 5
                 uxStudentList.Controls.Add(student_panel);
             }
+        }
+
+        public void SaveChanges()
+        {
+            TextBox wid_textbox;
+            NumericUpDown version_updown;
+
+            for (int i = 0; i < uxStudentList.Controls.Count; i++)
+            {
+                wid_textbox = (TextBox) uxStudentList.Controls[i].Controls[1];
+                grader.Students[i].WID = wid_textbox.Text;
+
+                version_updown = (NumericUpDown)uxStudentList.Controls[i].Controls[3];
+                grader.Students[i].TestVersion = (int) version_updown.Value;
+            }
+
+            UpdateStudentList();
         }
 
         /// <summary>
