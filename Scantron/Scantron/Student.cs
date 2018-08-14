@@ -36,6 +36,10 @@ namespace Scantron
             {
                 return wid;
             }
+            set
+            {
+                wid = value;
+            }
         }
 
         public int TestVersion
@@ -43,6 +47,10 @@ namespace Scantron
             get
             {
                 return test_version;
+            }
+            set
+            {
+                test_version = value;
             }
         }
         

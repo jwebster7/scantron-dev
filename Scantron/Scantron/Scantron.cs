@@ -91,5 +91,10 @@ namespace Scantron
         {
             gui.UpdateAnswerForm();
         }
+
+        private void uxSaveChanges_Click(object sender, EventArgs e)
+        {
+            gui.SaveChanges();
+        }
     }
 }
