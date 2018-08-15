@@ -16,16 +16,20 @@ using System.IO;
 using System.IO.Ports;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 using System.Threading;
 
 namespace Scantron
 {
-    public static class ScannerCom
+    public class ScannerCom
     {
-        private static SerialPort serial_port;
-        private static ScannerConfig config;
+        private  SerialPort serial_port;
+        private  ScannerConfig config;
 
-        static ScannerCom()
+        public static ManualResetEvent ToAbort = new ManualResetEvent(false);
+        
+               
+        public ScannerCom()
         {
             config = ScannerConfig.Deserialize();
 
@@ -33,7 +37,7 @@ namespace Scantron
             serial_port.NewLine = config.end_of_record;
         }
 
-        public static void Start()
+        public void Start()
         {
             if (!serial_port.IsOpen)
             {
@@ -48,7 +52,8 @@ namespace Scantron
         /// <param name="raw_cards">A list of raw card data filled by the method</param>
         /// <param name="partial_wids">A list of potential partial_wids; Null if no partial_wids found</param>
         /// <returns></returns>
-        public static List<string> Run(List<string> raw_cards)
+        //public static List<string> Run()
+        public List<string> Run(List<string> raw_cards)
         {
             
             Thread.Sleep(1000);
@@ -58,6 +63,15 @@ namespace Scantron
             string cardFromSerialPort;
             while (Status()[11] != '1') //will loop while the hopper is up
             {
+
+                //if(ToAbort.WaitOne())
+                //    Console.WriteLine("runs");
+                //if(!ToAbort.WaitOne())
+                //    Console.WriteLine("NO run");
+
+                ToAbort.WaitOne();
+
+
                 serial_port.Write(config.positive);
                 cardFromSerialPort = serial_port.ReadLine();
 
@@ -82,12 +96,12 @@ namespace Scantron
             return raw_cards;
         }
 
-        public static void Stop()
+        public void Stop()
         {
             serial_port.Write(config.stop);
         }
 
-        private static string Status()
+        private string Status()
         {
             string status;
             serial_port.Write(config.status);
@@ -97,7 +111,7 @@ namespace Scantron
             return status;
         }
 
-        private static void Display(string message)
+        private void Display(string message)
         {
             serial_port.Write(config.display_data);
             serial_port.Write("{");
@@ -107,10 +121,6 @@ namespace Scantron
             serial_port.Write("}");
             serial_port.Write(config.end_of_info);
         }
-
-
-
-
     }
 
     public class ScannerConfig
@@ -141,7 +151,6 @@ namespace Scantron
                 JsonSerializer serializer = new JsonSerializer();
                 return (ScannerConfig)serializer.Deserialize(settings, typeof(ScannerConfig));
             }
-
         }
     }
 }
