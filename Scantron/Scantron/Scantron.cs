@@ -111,5 +111,15 @@ namespace Scantron
         {
             gui.CreateStudents();
         }
+
+        private void uxPause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uxResume_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
