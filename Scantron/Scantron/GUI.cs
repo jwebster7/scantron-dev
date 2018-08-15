@@ -114,7 +114,7 @@ namespace Scantron
 
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
-
+            //grader.CreateStudents(cr.Result);
         }
 
         /// <summary>
