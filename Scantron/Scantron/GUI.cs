@@ -247,10 +247,16 @@ namespace Scantron
             for (int i = 0; i < uxStudentList.Controls.Count; i++)
             {
                 wid_textbox = (TextBox) uxStudentList.Controls[i].Controls[1];
-                grader.Students[i].WID = wid_textbox.Text;
+                // previously had
+                // grader.Students[i].WID = wid_textbox.Text;
+                // I think it should be: 
+                wid_textbox.Text = grader.Students[i].WID;
 
                 version_updown = (NumericUpDown)uxStudentList.Controls[i].Controls[3];
-                grader.Students[i].TestVersion = (int) version_updown.Value;
+                // previously had
+                // grader.Students[i].TestVersion = (int) version_updown.Value;
+                // I think it should be:
+                version_updown.Value = grader.Students[i].TestVersion;
             }
 
             UpdateStudentList();

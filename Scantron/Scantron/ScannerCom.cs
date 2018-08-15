@@ -121,10 +121,6 @@ namespace Scantron
             serial_port.Write("}");
             serial_port.Write(config.end_of_info);
         }
-
-
-
-
     }
 
     public class ScannerConfig
@@ -155,14 +151,6 @@ namespace Scantron
                 JsonSerializer serializer = new JsonSerializer();
                 return (ScannerConfig)serializer.Deserialize(settings, typeof(ScannerConfig));
             }
-
         }
     }
-
-
-
-
-
-
-
 }
