@@ -96,5 +96,10 @@ namespace Scantron
         {
             gui.SaveChanges();
         }
+
+        private void uxPause_Click(object sender, EventArgs e)
+        {
+            gui.Pause();
+        }
     }
 }

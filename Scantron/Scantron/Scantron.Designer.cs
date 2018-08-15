@@ -51,6 +51,8 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTab = new System.Windows.Forms.TabPage();
+            this.uxCombineStudents = new System.Windows.Forms.Button();
+            this.uxSaveChanges = new System.Windows.Forms.Button();
             this.uxStudentList = new System.Windows.Forms.Panel();
             this.uxScanInstructionLabel = new System.Windows.Forms.Label();
             this.uxHorizontalDivider = new System.Windows.Forms.Label();
@@ -63,8 +65,7 @@
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
-            this.uxSaveChanges = new System.Windows.Forms.Button();
-            this.uxCombineStudents = new System.Windows.Forms.Button();
+            this.uxPause = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -94,7 +95,7 @@
             this.uxStop.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxStop.Location = new System.Drawing.Point(100, 226);
+            this.uxStop.Location = new System.Drawing.Point(9, 368);
             this.uxStop.Name = "uxStop";
             this.uxStop.Size = new System.Drawing.Size(85, 65);
             this.uxStop.TabIndex = 4;
@@ -107,7 +108,7 @@
             this.uxRestart.BackColor = System.Drawing.SystemColors.ControlLight;
             this.uxRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxRestart.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.uxRestart.Location = new System.Drawing.Point(191, 226);
+            this.uxRestart.Location = new System.Drawing.Point(9, 439);
             this.uxRestart.Name = "uxRestart";
             this.uxRestart.Size = new System.Drawing.Size(124, 65);
             this.uxRestart.TabIndex = 8;
@@ -350,6 +351,7 @@
             // uxScanTab
             // 
             this.uxScanTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScanTab.Controls.Add(this.uxPause);
             this.uxScanTab.Controls.Add(this.uxCombineStudents);
             this.uxScanTab.Controls.Add(this.uxSaveChanges);
             this.uxScanTab.Controls.Add(this.uxStudentList);
@@ -365,6 +367,27 @@
             this.uxScanTab.Size = new System.Drawing.Size(889, 611);
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
+            // 
+            // uxCombineStudents
+            // 
+            this.uxCombineStudents.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxCombineStudents.Location = new System.Drawing.Point(690, 382);
+            this.uxCombineStudents.Name = "uxCombineStudents";
+            this.uxCombineStudents.Size = new System.Drawing.Size(125, 70);
+            this.uxCombineStudents.TabIndex = 34;
+            this.uxCombineStudents.Text = "Combine Students";
+            this.uxCombineStudents.UseVisualStyleBackColor = true;
+            // 
+            // uxSaveChanges
+            // 
+            this.uxSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxSaveChanges.Location = new System.Drawing.Point(690, 274);
+            this.uxSaveChanges.Name = "uxSaveChanges";
+            this.uxSaveChanges.Size = new System.Drawing.Size(125, 68);
+            this.uxSaveChanges.TabIndex = 33;
+            this.uxSaveChanges.Text = "Save Changes";
+            this.uxSaveChanges.UseVisualStyleBackColor = true;
+            this.uxSaveChanges.Click += new System.EventHandler(this.uxSaveChanges_Click);
             // 
             // uxStudentList
             // 
@@ -502,26 +525,15 @@
             this.uxStudentResponseLabel.TabIndex = 18;
             this.uxStudentResponseLabel.Text = "Student Response";
             // 
-            // uxSaveChanges
+            // uxPause
             // 
-            this.uxSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxSaveChanges.Location = new System.Drawing.Point(690, 274);
-            this.uxSaveChanges.Name = "uxSaveChanges";
-            this.uxSaveChanges.Size = new System.Drawing.Size(125, 68);
-            this.uxSaveChanges.TabIndex = 33;
-            this.uxSaveChanges.Text = "Save Changes";
-            this.uxSaveChanges.UseVisualStyleBackColor = true;
-            this.uxSaveChanges.Click += new System.EventHandler(this.uxSaveChanges_Click);
-            // 
-            // uxCombineStudents
-            // 
-            this.uxCombineStudents.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxCombineStudents.Location = new System.Drawing.Point(690, 382);
-            this.uxCombineStudents.Name = "uxCombineStudents";
-            this.uxCombineStudents.Size = new System.Drawing.Size(125, 70);
-            this.uxCombineStudents.TabIndex = 34;
-            this.uxCombineStudents.Text = "Combine Students";
-            this.uxCombineStudents.UseVisualStyleBackColor = true;
+            this.uxPause.Location = new System.Drawing.Point(9, 297);
+            this.uxPause.Name = "uxPause";
+            this.uxPause.Size = new System.Drawing.Size(85, 65);
+            this.uxPause.TabIndex = 35;
+            this.uxPause.Text = "Pause";
+            this.uxPause.UseVisualStyleBackColor = true;
+            this.uxPause.Click += new System.EventHandler(this.uxPause_Click);
             // 
             // Scantron
             // 
@@ -591,6 +603,7 @@
         private System.Windows.Forms.Panel uxStudentList;
         private System.Windows.Forms.Button uxSaveChanges;
         private System.Windows.Forms.Button uxCombineStudents;
+        private System.Windows.Forms.Button uxPause;
     }
 }
 

@@ -122,21 +122,6 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            // The logic to Abort is below
-            // toAbort is a bool to make the Stop button toggle
-            if (toAbort)
-            {
-                ScannerCom.ToAbort.Reset(); //Aborts & Stops
-                toAbort = false;
-            }
-            else
-            {
-                ScannerCom.ToAbort.Set(); // Does NOT Abort & Stop
-                toAbort = true;
-            }
-
-            //ScannerCom.ToAbort.Reset();
-
 
             //The following code should be moved to a place where it 
             //should be executed automaticly
@@ -151,6 +136,27 @@ namespace Scantron
             //}
 
             //UpdateStudentList();
+        }
+
+        /// <summary>
+        /// Pauses the scanning
+        /// </summary>
+        public void Pause()
+        {
+            // The logic to Abort is below
+            // toAbort is a bool to make the Stop button toggle
+            if (toAbort)
+            {
+                ScannerCom.ToAbort.Reset(); //Aborts & Stops
+                toAbort = false;
+            }
+            else
+            {
+                ScannerCom.ToAbort.Set(); // Does NOT Abort & Stop
+                toAbort = true;
+            }
+
+            //ScannerCom.ToAbort.Reset();
         }
 
         /// <summary>
