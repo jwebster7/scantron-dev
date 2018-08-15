@@ -97,7 +97,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Opens the serial port; begins scanning the cards. The most common exceptions with serial ports are handled. 
+        /// Opens the serial port; begins scanning the cards.
         /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         /// </summary>
         public void Start()
@@ -111,7 +111,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Close the serial port and create list of students from scanned in data.
+        /// Close the serial port.
         /// </summary>
         public void Stop()
         {
@@ -119,7 +119,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Pauses the scantron
+        /// Pauses the scantron.
         /// </summary>
         public void Pause()
         {
@@ -128,7 +128,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Resumes the scantron
+        /// Resumes the scantron.
         /// </summary>
         public void Resume()
         {
