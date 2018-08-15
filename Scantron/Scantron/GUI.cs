@@ -39,9 +39,9 @@ namespace Scantron
         private Label uxVersionLabel;
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
-        private Panel uxStudentList;
+        private Panel uxCardList;
         // Holds the raw card data from the Scantron.
-        private List<string> raw_cards;
+        private List<string> raw_cards = new List<string>();
         private bool toAbort = true;
 
         Task<List<string>> cr;
@@ -50,15 +50,6 @@ namespace Scantron
 
         public GUI(Form scantron_form)
         {
-            raw_cards = new List<string>();
-            //// Test Data. Has two students for a 150 question exam. One has blank answers.
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$");
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$");
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$");
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
-            //raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
-
             this.scantron_form = scantron_form;
             scannerCom = new ScannerCom();
            
@@ -77,7 +68,7 @@ namespace Scantron
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
-            uxStudentList = (Panel) scantron_form.Controls.Find("uxStudentList", true)[0];
+            uxCardList = (Panel) scantron_form.Controls.Find("uxCardList", true)[0];
 
             uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." + Environment.NewLine + Environment.NewLine +
                                             "Scan tab instructions: " +  Environment.NewLine + Environment.NewLine +
@@ -114,7 +105,6 @@ namespace Scantron
 
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
-            //grader.CreateStudents(cr.Result);
         }
 
         /// <summary>
@@ -134,23 +124,6 @@ namespace Scantron
                 ScannerCom.ToAbort.Set(); // Does NOT Abort & Stop
                 toAbort = true;
             }
-
-            //ScannerCom.ToAbort.Reset();
-
-
-            //The following code should be moved to a place where it 
-            //should be executed automaticly
-            //***************************************
-
-            //raw_cards.AddRange(cr.Result);
-            //grader.CreateStudents(raw_cards);
-            //// May need to check if it's null
-            //if (grader.PartialWids.Count > 0)
-            //{
-            //    DisplayMessage(grader.GetBrokenWids());
-            //}
-
-            //UpdateStudentList();
         }
 
         /// <summary>
@@ -162,6 +135,26 @@ namespace Scantron
             grader.Cards.Clear();
             grader.Students.Clear();
             grader.PartialWids.Clear();
+            uxCardList.Controls.Clear();
+            uxStudentResponsePanel.Controls.Clear();
+        }
+
+        /// <summary>
+        /// Fill raw cards list with test data.
+        /// </summary>
+        public void TestData()
+        {
+            raw_cards = new List<string>();
+            // Test Data. Has two students for a 150 question exam. One has blank answers.
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0D#R0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G05#L0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
+
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
 
         private static void ThreadAbort()
@@ -170,15 +163,17 @@ namespace Scantron
         }
 
 
-        private void UpdateStudentList()
+        private void UpdateCardList()
         {
-            for (int i = 0; i < grader.Students.Count; i++)
+            uxCardList.Controls.Clear();
+
+            for (int i = 0; i < grader.Cards.Count; i++)
             {
-                Panel student_panel = new Panel
+                Panel card_panel = new Panel
                 {
                     BackColor = Color.LightGray,
                     Location = new Point(3, 3 + 29 * i),
-                    Size = new Size(270, 25)
+                    Size = new Size(300, 25)
                 };
 
                 Label wid_label = new Label
@@ -194,11 +189,11 @@ namespace Scantron
                     Font = new Font("Microsoft Sans Serif", 8),
                     Location = new Point(35, 3),
                     MaxLength = 9,
-                    Text = grader.Students[i].WID,
+                    Text = grader.Cards[i].WID,
                     Width = 65
                 };
 
-                Label version_label = new Label
+                Label test_version_label = new Label
                 {
                     Font = new Font("Microsoft Sans Serif", 8),
                     Location = new Point(105, 6),
@@ -206,60 +201,80 @@ namespace Scantron
                     Width = 45
                 };
 
-                NumericUpDown version_updown = new NumericUpDown
+                NumericUpDown test_version_updown = new NumericUpDown
                 {
                     Font = new Font("Microsoft Sans Serif", 8),
                     Location = new Point(150, 3),
                     Maximum = 3,
                     Minimum = 1,
-                    Value = grader.Students[i].TestVersion,
+                    Value = grader.Cards[i].TestVersion,
                     Width = 30
                 };
 
-                Label card_label = new Label
+                Label sheet_number_label = new Label
                 {
                     Font = new Font("MicrosoftSans Serif", 8),
                     Location = new Point(185, 6),
-                    Text = "Cards: " + grader.Students[i].Cards.Count,
-                    Width = 50
+                    Text = "Sheet Number: ",
+                    Width = 80
                 };
 
-                CheckBox checkbox = new CheckBox
+                NumericUpDown sheet_number_updown = new NumericUpDown
                 {
-                    Location = new Point(250, 1)
+                    Font = new Font("Microsoft Sans Serif", 8),
+                    Location = new Point(265, 3),
+                    Maximum = 5,
+                    Minimum = 1,
+                    Value = grader.Cards[i].SheetNumber,
+                    Width = 30
                 };
-                
-                student_panel.Controls.Add(wid_label); // index 0
-                student_panel.Controls.Add(wid_textbox); // index 1
-                student_panel.Controls.Add(version_label); // index 2
-                student_panel.Controls.Add(version_updown); // index 3
-                student_panel.Controls.Add(card_label); // index 4
-                student_panel.Controls.Add(checkbox); // index 5
-                uxStudentList.Controls.Add(student_panel);
+
+                if (test_version_updown.Value > grader.AnswerKey.Count)
+                {
+                    card_panel.BackColor = Color.Aqua;
+                }
+
+                if (wid_textbox.Text.Contains("-"))
+                {
+                    card_panel.BackColor = Color.DarkRed;
+                }
+
+                card_panel.Controls.Add(wid_label); // index 0
+                card_panel.Controls.Add(wid_textbox); // index 1
+                card_panel.Controls.Add(test_version_label); // index 2
+                card_panel.Controls.Add(test_version_updown); // index 3
+                card_panel.Controls.Add(sheet_number_label); // index 4
+                card_panel.Controls.Add(sheet_number_updown); // index 5
+                uxCardList.Controls.Add(card_panel);
             }
         }
 
+        /// <summary>
+        /// Save changes made to WIDs and test versions on student list.
+        /// </summary>
         public void SaveChanges()
         {
             TextBox wid_textbox;
             NumericUpDown version_updown;
 
-            for (int i = 0; i < uxStudentList.Controls.Count; i++)
+            for (int i = 0; i < uxCardList.Controls.Count; i++)
             {
-                wid_textbox = (TextBox) uxStudentList.Controls[i].Controls[1];
-                // previously had
-                // grader.Students[i].WID = wid_textbox.Text;
-                // I think it should be: 
-                wid_textbox.Text = grader.Students[i].WID;
+                wid_textbox = (TextBox) uxCardList.Controls[i].Controls[1];
+                grader.Cards[i].WID = wid_textbox.Text;
 
-                version_updown = (NumericUpDown)uxStudentList.Controls[i].Controls[3];
-                // previously had
-                // grader.Students[i].TestVersion = (int) version_updown.Value;
-                // I think it should be:
-                version_updown.Value = grader.Students[i].TestVersion;
+                version_updown = (NumericUpDown)uxCardList.Controls[i].Controls[3];
+                grader.Cards[i].TestVersion = (int) version_updown.Value;
             }
 
-            UpdateStudentList();
+            UpdateCardList();
+        }
+
+        /// <summary>
+        /// Merges all cards with the same WIDs into one student.
+        /// </summary>
+        public void CreateStudents()
+        {
+            grader.CreateStudents();
         }
 
         /// <summary>
@@ -393,16 +408,22 @@ namespace Scantron
         /// Create the answer key from the filled out form.
         /// </summary>
         /// <returns>True if successful.</returns>
-        public bool CreateAnswerKey()
+        public void CreateAnswerKey()
         {
             int number_of_versions = (int)uxNumberOfVersions.Value;
             int number_of_questions = (int)uxNumberOfQuestions.Value;
+
+            if (uxExamName.Text == "")
+            {
+                DisplayMessage("Enter a name for the exam.");
+                return;
+            }
 
             if (number_of_versions == 0 || number_of_questions == 0)
             {
                 DisplayMessage("You have not created an answer key. Select the number of questions and versions" +
                                 ", then fill out the answer key form.");
-                return false;
+                return;
             }
 
             grader.AnswerKey = new Dictionary<int, List<Question>>();
@@ -456,8 +477,6 @@ namespace Scantron
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
             }
-
-            return true;
         }
 
         /// <summary>
@@ -465,21 +484,17 @@ namespace Scantron
         /// </summary>
         public void GradeStudents()
         {
-            if (grader.Students.Count == 0)
+            if (grader.AnswerKey.Count == 0)
             {
-                DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
+                DisplayMessage("You have not created an answer key. Got back to the Answer Key tab"
                                 + " and follow the instructions.");
                 return;
             }
 
-            if (uxExamName.Text == "")
+            if (grader.Students.Count == 0)
             {
-                DisplayMessage("Enter a name for the exam.");
-                return;
-            }
-
-            if (!CreateAnswerKey())
-            {
+                DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
+                                + " and follow the instructions.");
                 return;
             }
 
@@ -560,7 +575,7 @@ namespace Scantron
         /// </summary>
         public void SelectStudent()
         {
-            DisplayStudent(grader.Students.Find(item => item.WID == uxStudentSelector.Text));
+            DisplayStudent(grader.Students.Find(student => student.WID == uxStudentSelector.Text));
         }
 
         /// <summary>
