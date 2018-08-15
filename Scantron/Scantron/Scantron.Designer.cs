@@ -38,7 +38,6 @@
             this.uxAnswerKeyTab = new System.Windows.Forms.TabPage();
             this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
-            this.uxAnswerKeyInstructionBox = new System.Windows.Forms.Label();
             this.uxExamNameLabel = new System.Windows.Forms.Label();
             this.uxExamName = new System.Windows.Forms.TextBox();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
