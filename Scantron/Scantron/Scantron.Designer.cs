@@ -36,7 +36,7 @@
             this.uxStudentSelector = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxAnswerKeyTab = new System.Windows.Forms.TabPage();
-            this.uxAnswerKeyInstructionBox = new System.Windows.Forms.Label();
+            this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
             this.uxExamNameLabel = new System.Windows.Forms.Label();
             this.uxExamName = new System.Windows.Forms.TextBox();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
@@ -168,7 +168,7 @@
             // 
             this.uxAnswerKeyTab.BackColor = System.Drawing.SystemColors.ControlDark;
             this.uxAnswerKeyTab.Controls.Add(this.uxCreateAnswerKey);
-            this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionBox);
+            this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionLabel);
             this.uxAnswerKeyTab.Controls.Add(this.uxExamNameLabel);
             this.uxAnswerKeyTab.Controls.Add(this.uxExamName);
             this.uxAnswerKeyTab.Controls.Add(this.uxNumberOfVersionsLabel);
@@ -185,14 +185,14 @@
             this.uxAnswerKeyTab.TabIndex = 2;
             this.uxAnswerKeyTab.Text = "Answer Key";
             // 
-            // uxAnswerKeyInstructionBox
+            // uxAnswerKeyInstructionLabel
             // 
-            this.uxAnswerKeyInstructionBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxAnswerKeyInstructionBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAnswerKeyInstructionBox.Location = new System.Drawing.Point(6, 3);
-            this.uxAnswerKeyInstructionBox.Name = "uxAnswerKeyInstructionBox";
-            this.uxAnswerKeyInstructionBox.Size = new System.Drawing.Size(874, 189);
-            this.uxAnswerKeyInstructionBox.TabIndex = 43;
+            this.uxAnswerKeyInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxAnswerKeyInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxAnswerKeyInstructionLabel.Location = new System.Drawing.Point(6, 3);
+            this.uxAnswerKeyInstructionLabel.Name = "uxAnswerKeyInstructionLabel";
+            this.uxAnswerKeyInstructionLabel.Size = new System.Drawing.Size(874, 189);
+            this.uxAnswerKeyInstructionLabel.TabIndex = 43;
             // 
             // uxExamNameLabel
             // 
@@ -612,7 +612,7 @@
         private System.Windows.Forms.TabPage uxVersion3Tab;
         private System.Windows.Forms.Button uxGradeStudents;
         private System.Windows.Forms.Label uxHorizontalDivider2;
-        private System.Windows.Forms.Label uxAnswerKeyInstructionBox;
+        private System.Windows.Forms.Label uxAnswerKeyInstructionLabel;
         private System.Windows.Forms.Panel uxCardList;
         private System.Windows.Forms.Button uxSaveChanges;
         private System.Windows.Forms.Button uxCreateStudents;
