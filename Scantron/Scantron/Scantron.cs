@@ -97,9 +97,19 @@ namespace Scantron
             gui.SaveChanges();
         }
 
-        private void uxPause_Click(object sender, EventArgs e)
+        private void uxTestData_Click(object sender, EventArgs e)
         {
-            gui.Pause();
+            gui.TestData();
+        }
+
+        private void uxCreateAnswerKey_Click(object sender, EventArgs e)
+        {
+            gui.CreateAnswerKey();
+        }
+
+        private void uxCreateStudents_Click(object sender, EventArgs e)
+        {
+            gui.CreateStudents();
         }
     }
 }

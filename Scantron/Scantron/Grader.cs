@@ -69,16 +69,25 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Creates the students based off of the list of raw card data.
+        /// Create a list of cards from the raw card data.
         /// </summary>
         /// <param name="raw_cards">Raw card data read in from Scantron.</param>
-        /// <param name="partial_wids">Holds potential partial_wids; Null if no partial wids are found</param>
-        public void CreateStudents(List<string> raw_cards)
+        public void CreateCards(List<string> raw_cards)
         {
+            cards.Clear();
+
             for (int i = 0; i < raw_cards.Count; i++)
             {
                 cards.Add(new Card(raw_cards[i]));
             }
+        }
+
+        /// <summary>
+        /// Creates the students based off of the list of cards.
+        /// </summary>
+        public void CreateStudents()
+        {
+            students.Clear();
 
             foreach (Card card in cards)
             {
@@ -165,21 +174,6 @@ namespace Scantron
             }
 
             return info;
-        }
-
-        /// <summary>
-        /// Broken WID's returns a string of the partial wids
-        /// </summary>
-        /// <returns></returns>
-        public string GetBrokenWids()
-        {
-            string broken_wids = "The following WID's have issues associated with their cards: \n";
-            foreach (string s in partial_wids)
-            {
-                broken_wids += s + Environment.NewLine;
-            }
-            broken_wids += "Please go review the output file and check which WID's are incomplete";
-            return broken_wids;
         }
     }
 }

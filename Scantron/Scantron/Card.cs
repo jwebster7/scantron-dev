@@ -46,6 +46,10 @@ namespace Scantron
             {
                 return test_version;
             }
+            set
+            {
+                test_version = value;
+            }
         }
         
         // WID property.
@@ -54,6 +58,10 @@ namespace Scantron
             get
             {
                 return wid;
+            }
+            set
+            {
+                wid = value;
             }
         }
 
