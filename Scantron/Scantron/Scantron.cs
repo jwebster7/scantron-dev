@@ -114,12 +114,12 @@ namespace Scantron
 
         private void uxPause_Click(object sender, EventArgs e)
         {
-
+            gui.Pause();
         }
 
         private void uxResume_Click(object sender, EventArgs e)
         {
-
+            gui.Resume();
         }
     }
 }
