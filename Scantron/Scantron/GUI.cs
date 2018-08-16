@@ -24,6 +24,7 @@ namespace Scantron
 
         // GUI objects that we need data from.
         private Form scantron_form;
+        private Label uxAnswerKeyInstructionLabel;
         private Label uxScanInstructionLabel;
         private Label uxGradeInstructionLabel;
         private Panel uxStudentResponsePanel;
@@ -53,6 +54,7 @@ namespace Scantron
             this.scantron_form = scantron_form;
             scannerCom = new ScannerCom();
            
+            uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
             uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
             uxGradeInstructionLabel = (Label) scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
             uxStudentResponsePanel = (Panel) scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
@@ -70,15 +72,16 @@ namespace Scantron
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (Panel) scantron_form.Controls.Find("uxCardList", true)[0];
 
-            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions." + Environment.NewLine + Environment.NewLine +
-                                            "Scan tab instructions: " +  Environment.NewLine + Environment.NewLine +
-                                            "1. Load the Scantron hopper and use the guider to make sure they are straight." + Environment.NewLine +
-                                            "2. Click Start within this Window." + Environment.NewLine +
+            uxAnswerKeyInstructionLabel.Text = "If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier";
+            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions.\n\n" +
+                                            "Scan tab instructions: \n\n" +
+                                            "1. Load the Scantron hopper and use the guider to make sure they are straight.\n" +
+                                            "2. Click Start within this Window.\n" +
                                             "3. After your cards have finished scanning, click the Grade tab.";
 
-            uxGradeInstructionLabel.Text =  "Grade tab instructions: " + Environment.NewLine + Environment.NewLine +
-                                            "1. Specify the number of questions and versions the exam has and give it a name." + Environment.NewLine +
-                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions." + Environment.NewLine +
+            uxGradeInstructionLabel.Text =  "Grade tab instructions: \n\n" +
+                                            "1. Specify the number of questions and versions the exam has and give it a name.\n" +
+                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions.\n" +
                                             "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
 
             grader = new Grader(this);
@@ -94,7 +97,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Opens the serial port; begins scanning the cards. The most common exceptions with serial ports are handled. 
+        /// Opens the serial port; begins scanning the cards.
         /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         /// </summary>
         public void Start()
@@ -108,7 +111,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Close the serial port and create list of students from scanned in data.
+        /// Close the serial port.
         /// </summary>
         public void Stop()
         {
@@ -116,7 +119,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Pauses the scantron
+        /// Pauses the scantron.
         /// </summary>
         public void Pause()
         {
@@ -125,7 +128,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Resumes the scantron
+        /// Resumes the scantron.
         /// </summary>
         public void Resume()
         {
@@ -263,14 +266,18 @@ namespace Scantron
         {
             TextBox wid_textbox;
             NumericUpDown version_updown;
+            NumericUpDown sheet_number_updown;
 
             for (int i = 0; i < uxCardList.Controls.Count; i++)
             {
                 wid_textbox = (TextBox) uxCardList.Controls[i].Controls[1];
                 grader.Cards[i].WID = wid_textbox.Text;
 
-                version_updown = (NumericUpDown)uxCardList.Controls[i].Controls[3];
+                version_updown = (NumericUpDown) uxCardList.Controls[i].Controls[3];
                 grader.Cards[i].TestVersion = (int) version_updown.Value;
+
+                sheet_number_updown = (NumericUpDown)uxCardList.Controls[i].Controls[5];
+                grader.Cards[i].SheetNumber = (int) sheet_number_updown.Value;
             }
 
             UpdateCardList();
@@ -548,7 +555,7 @@ namespace Scantron
                 // Stores the location of the file we want to save; use filenames for multiple.
                 if (path.Equals(""))
                 {
-                    MessageBox.Show("You must enter a filename and select" + Environment.NewLine +
+                    MessageBox.Show("You must enter a filename and select\n" +
                                     "a file path for the exam record!");
                     throw new IOException();
                 }

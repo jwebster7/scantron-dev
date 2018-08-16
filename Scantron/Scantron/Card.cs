@@ -72,6 +72,10 @@ namespace Scantron
             {
                 return sheet_number;
             }
+            set
+            {
+                sheet_number = value;
+            }
         }
 
         // Answers property.
