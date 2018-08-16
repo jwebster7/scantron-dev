@@ -580,7 +580,7 @@ namespace Scantron
                                 "Please reload the hopper and ensure the\n" +
                                 "cards are not stuck together, backwards,\n" +
                                 "or reversed. ");
-                throw new IOException();
+                //throw new IOException();
             }
         }
 
@@ -701,10 +701,14 @@ namespace Scantron
 
                 return;
             }
-
-            if(grader.AnswerKey[0].Count > student.Response.Count)
+            if (grader.AnswerKey[0].Count > student.Response.Count)
             {
                 uxCouldNotBeGradedLabel.Visible = true;
+            }
+            else
+            {
+                // uxCouldNotBeGraded wasn't turning off on the students who were graded correctly
+                uxCouldNotBeGradedLabel.Visible = false;
             }
 
             for (int i = 0; i < Math.Min(grader.AnswerKey[test_version - 1].Count, student.Response.Count); i++)
