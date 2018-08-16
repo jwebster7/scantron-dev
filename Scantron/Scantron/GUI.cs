@@ -72,17 +72,25 @@ namespace Scantron
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (Panel) scantron_form.Controls.Find("uxCardList", true)[0];
 
-            uxAnswerKeyInstructionLabel.Text = "If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier";
-            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions.\n\n" +
-                                            "Scan tab instructions: \n\n" +
-                                            "1. Load the Scantron hopper and use the guider to make sure they are straight.\n" +
-                                            "2. Click Start within this Window.\n" +
-                                            "3. After your cards have finished scanning, click the Grade tab.";
+            uxAnswerKeyInstructionLabel.Text =  "1. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
+                                                "2. Specify the number of versions and questions the exam has.\n" +
+                                                "3. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
+                                                "4. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
+                                                "5. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
+                                                "6. Click Create Answer Key, then go to the Scan tab..";
 
-            uxGradeInstructionLabel.Text =  "Grade tab instructions: \n\n" +
-                                            "1. Specify the number of questions and versions the exam has and give it a name.\n" +
-                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions.\n" +
-                                            "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
+            uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
+                                                "2. Click Start within this Window.\n" +
+                                                "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel and you may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
+                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as blue have a test version higher than the number of versions you entered in the answer key.\n" +
+                                                "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
+                                                "6. After the students have been created, go to the Grade tab.\n\n" +
+                                                "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
+                                                "The Stop button is for aborting the entire card scanning process.";
+
+            uxGradeInstructionLabel.Text =      "1. Click Grade Students.\n" +
+                                                "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
+                                                "3. Questions highlighted in green were given full points, questions highlighted in blue were given partial credit, questions highlighted in red were given 0 points. Blue questions with NaN as the points likely had no answer filled in.";
 
             grader = new Grader(this);
         }
@@ -108,6 +116,9 @@ namespace Scantron
 
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
+
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
 
         /// <summary>
@@ -246,7 +257,7 @@ namespace Scantron
 
                 if (wid_textbox.Text.Contains("-"))
                 {
-                    card_panel.BackColor = Color.DarkRed;
+                    card_panel.BackColor = Color.Red;
                 }
 
                 card_panel.Controls.Add(wid_label); // index 0
@@ -491,6 +502,8 @@ namespace Scantron
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
             }
+
+            DisplayMessage("Answer Key successfully created!");
         }
 
         /// <summary>
@@ -724,9 +737,9 @@ namespace Scantron
                 {
                     question_panel.BackColor = Color.Red;
                 }
-                else
+                else if (student.Response[i].Points > 0)
                 {
-                    question_panel.BackColor = Color.Cyan;
+                    question_panel.BackColor = Color.Aqua;
                 }
 
                 for (int j = 0; j < 5; j++)

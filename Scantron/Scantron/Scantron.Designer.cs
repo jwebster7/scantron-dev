@@ -36,8 +36,8 @@
             this.uxStudentSelector = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxAnswerKeyTab = new System.Windows.Forms.TabPage();
-            this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
             this.uxCreateAnswerKey = new System.Windows.Forms.Button();
+            this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
             this.uxExamNameLabel = new System.Windows.Forms.Label();
             this.uxExamName = new System.Windows.Forms.TextBox();
             this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
@@ -52,6 +52,8 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTab = new System.Windows.Forms.TabPage();
+            this.uxResume = new System.Windows.Forms.Button();
+            this.uxPause = new System.Windows.Forms.Button();
             this.uxTestData = new System.Windows.Forms.Button();
             this.uxCreateStudents = new System.Windows.Forms.Button();
             this.uxSaveChanges = new System.Windows.Forms.Button();
@@ -67,8 +69,6 @@
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
             this.uxStudentResponseLabel = new System.Windows.Forms.Label();
-            this.uxPause = new System.Windows.Forms.Button();
-            this.uxResume = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -197,10 +197,10 @@
             this.uxCreateAnswerKey.UseVisualStyleBackColor = true;
             this.uxCreateAnswerKey.Click += new System.EventHandler(this.uxCreateAnswerKey_Click);
             // 
-            // uxAnswerKeyInstructionBox
+            // uxAnswerKeyInstructionLabel
             // 
             this.uxAnswerKeyInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxAnswerKeyInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxAnswerKeyInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.uxAnswerKeyInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxAnswerKeyInstructionLabel.Name = "uxAnswerKeyInstructionLabel";
             this.uxAnswerKeyInstructionLabel.Size = new System.Drawing.Size(874, 189);
@@ -384,6 +384,26 @@
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
             // 
+            // uxResume
+            // 
+            this.uxResume.Location = new System.Drawing.Point(196, 226);
+            this.uxResume.Name = "uxResume";
+            this.uxResume.Size = new System.Drawing.Size(97, 65);
+            this.uxResume.TabIndex = 37;
+            this.uxResume.Text = "Resume";
+            this.uxResume.UseVisualStyleBackColor = true;
+            this.uxResume.Click += new System.EventHandler(this.uxResume_Click);
+            // 
+            // uxPause
+            // 
+            this.uxPause.Location = new System.Drawing.Point(100, 226);
+            this.uxPause.Name = "uxPause";
+            this.uxPause.Size = new System.Drawing.Size(90, 65);
+            this.uxPause.TabIndex = 36;
+            this.uxPause.Text = "Pause";
+            this.uxPause.UseVisualStyleBackColor = true;
+            this.uxPause.Click += new System.EventHandler(this.uxPause_Click);
+            // 
             // uxTestData
             // 
             this.uxTestData.Location = new System.Drawing.Point(9, 374);
@@ -427,7 +447,7 @@
             // uxScanInstructionLabel
             // 
             this.uxScanInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxScanInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxScanInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.uxScanInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxScanInstructionLabel.Name = "uxScanInstructionLabel";
             this.uxScanInstructionLabel.Size = new System.Drawing.Size(874, 189);
@@ -490,7 +510,7 @@
             // uxGradeInstructionLabel
             // 
             this.uxGradeInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxGradeInstructionLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradeInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.uxGradeInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxGradeInstructionLabel.Name = "uxGradeInstructionLabel";
             this.uxGradeInstructionLabel.Size = new System.Drawing.Size(874, 189);
@@ -551,26 +571,6 @@
             this.uxStudentResponseLabel.Size = new System.Drawing.Size(165, 24);
             this.uxStudentResponseLabel.TabIndex = 18;
             this.uxStudentResponseLabel.Text = "Student Response";
-            // 
-            // uxPause
-            // 
-            this.uxPause.Location = new System.Drawing.Point(100, 226);
-            this.uxPause.Name = "uxPause";
-            this.uxPause.Size = new System.Drawing.Size(90, 65);
-            this.uxPause.TabIndex = 36;
-            this.uxPause.Text = "Pause";
-            this.uxPause.UseVisualStyleBackColor = true;
-            this.uxPause.Click += new System.EventHandler(this.uxPause_Click);
-            // 
-            // uxResume
-            // 
-            this.uxResume.Location = new System.Drawing.Point(196, 226);
-            this.uxResume.Name = "uxResume";
-            this.uxResume.Size = new System.Drawing.Size(97, 65);
-            this.uxResume.TabIndex = 37;
-            this.uxResume.Text = "Resume";
-            this.uxResume.UseVisualStyleBackColor = true;
-            this.uxResume.Click += new System.EventHandler(this.uxResume_Click);
             // 
             // Scantron
             // 
