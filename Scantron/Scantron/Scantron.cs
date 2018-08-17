@@ -44,12 +44,6 @@ namespace Scantron
             gui.Stop();
         }
 
-        // Click event for the 'Restart' button.
-        private void uxRestart_Click(object sender, EventArgs e)
-        {
-            gui.Restart();
-        }
-
         // Event handler for the 'Grade Students' button.
         private void uxGradeStudents_Click(object sender, EventArgs e)
         {
@@ -120,6 +114,11 @@ namespace Scantron
         private void uxResume_Click(object sender, EventArgs e)
         {
             gui.Resume();
+        }
+
+        private void uxRefresh_Click(object sender, EventArgs e)
+        {
+            gui.Refresh();
         }
     }
 }

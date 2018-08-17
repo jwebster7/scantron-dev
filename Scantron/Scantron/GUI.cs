@@ -53,7 +53,8 @@ namespace Scantron
         {
             this.scantron_form = scantron_form;
             scannerCom = new ScannerCom();
-           
+            grader = new Grader(this);
+
             uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
             uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
             uxGradeInstructionLabel = (Label) scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
@@ -72,19 +73,26 @@ namespace Scantron
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (Panel) scantron_form.Controls.Find("uxCardList", true)[0];
 
-            uxAnswerKeyInstructionLabel.Text = "If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier";
-            uxScanInstructionLabel.Text =   "You may click Restart at any time to start at the beginning of these instructions.\n\n" +
-                                            "Scan tab instructions: \n\n" +
-                                            "1. Load the Scantron hopper and use the guider to make sure they are straight.\n" +
-                                            "2. Click Start within this Window.\n" +
-                                            "3. After your cards have finished scanning, click the Grade tab.";
+            uxAnswerKeyInstructionLabel.Text =  "1. Click Restart to ensure no data is leftover from the last person to use this program." +
+                                                "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
+                                                "3. Specify the number of versions and questions the exam has.\n" +
+                                                "4. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
+                                                "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
+                                                "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
+                                                "7. Click Create Answer Key, then go to the Scan tab.";
 
-            uxGradeInstructionLabel.Text =  "Grade tab instructions: \n\n" +
-                                            "1. Specify the number of questions and versions the exam has and give it a name.\n" +
-                                            "2. Fill in the answer key for each version with the check boxes and specify their points and if they are worth partial credit for multiple answer questions.\n" +
-                                            "3. Click Grade Students and name the .csv file you will upload to your course's gradebook. You may review each student's response in the window on the right.";
+            uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
+                                                "2. Click Start within this Window.\n" +
+                                                "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
+                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as blue have a test version higher than the number of versions you entered in the answer key.\n" +
+                                                "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
+                                                "6. After the students have been created, go to the Grade tab.\n\n" +
+                                                "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
+                                                "The Stop button is for aborting the entire card scanning process.";
 
-            grader = new Grader(this);
+            uxGradeInstructionLabel.Text = "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
+                                                "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
+                                                "3. Questions highlighted in green were given full points, questions highlighted in blue were given partial credit, questions highlighted in red were given 0 points. Blue questions with NaN as the points likely had no answer filled in.";
         }
 
         /// <summary>
@@ -106,6 +114,9 @@ namespace Scantron
             scannerCom.Start();
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
+
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
 
         /// <summary>
@@ -135,9 +146,9 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Reset all fields to initial states.
+        /// Reset program to initial state.
         /// </summary>
-        public void Restart()
+        public void Refresh()
         {
             raw_cards.Clear();
             grader.Cards.Clear();
@@ -145,6 +156,11 @@ namespace Scantron
             grader.PartialWids.Clear();
             uxCardList.Controls.Clear();
             uxStudentResponsePanel.Controls.Clear();
+
+            uxNextStudent.Enabled = false;
+            uxPreviousStudent.Enabled = false;
+
+            DisplayMessage("Successfully refreshed!");
         }
 
         /// <summary>
@@ -244,7 +260,7 @@ namespace Scantron
 
                 if (wid_textbox.Text.Contains("-"))
                 {
-                    card_panel.BackColor = Color.DarkRed;
+                    card_panel.BackColor = Color.Red;
                 }
 
                 card_panel.Controls.Add(wid_label); // index 0
@@ -286,6 +302,12 @@ namespace Scantron
         /// </summary>
         public void CreateStudents()
         {
+            if (grader.Cards.Count == 0)
+            {
+                DisplayMessage("No cards found. Follow the instructions on this page from the beginning.");
+                return;
+            }
+
             grader.CreateStudents();
         }
 
@@ -307,6 +329,9 @@ namespace Scantron
                         checkbox = (CheckBox) panel.Controls[i];
                         checkbox.Checked = false;
                     }
+
+                    checkbox = (CheckBox)panel.Controls[6];
+                    checkbox.Checked = false;
                 }
             }
 
@@ -489,6 +514,8 @@ namespace Scantron
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
             }
+
+            DisplayMessage("Answer Key successfully created!");
         }
 
         /// <summary>
@@ -498,35 +525,27 @@ namespace Scantron
         {
             if (grader.AnswerKey.Count == 0)
             {
-                DisplayMessage("You have not created an answer key. Got back to the Answer Key tab"
-                                + " and follow the instructions.");
+                DisplayMessage("You have not created an answer key. Got back to the Answer Key tab and follow the instructions.");
                 return;
             }
 
-            if (grader.Students.Count == 0)
+            if (grader.Cards.Count == 0)
             {
-                DisplayMessage("You have not scanned in the student responses. Go back to the Scan tab"
-                                + " and follow the instructions.");
+                DisplayMessage("No students found. Go back to the Scan tab and follow the instructions.");
                 return;
             }
 
-            if (grader.GradeStudents(uxExamName.Text))
+            grader.GradeStudents(uxExamName.Text);
+            WriteFile();
+            uxStudentSelector.Items.Clear();
+            foreach (Student student in grader.Students)
             {
-                WriteFile();
-
-                uxStudentSelector.Items.Clear();
-                foreach (Student student in grader.Students)
-                {
-                    uxStudentSelector.Items.Add(student.WID);
-                }
-
-                // Displays the first student in the index
-                NextStudent();
+                uxStudentSelector.Items.Add(student.WID);
             }
-            else
-            {
-                return;
-            }
+
+            uxNextStudent.Enabled = true;
+            uxPreviousStudent.Enabled = true;
+            NextStudent(); // Displays the first student in the index
         }
 
         /// <summary>
@@ -722,9 +741,9 @@ namespace Scantron
                 {
                     question_panel.BackColor = Color.Red;
                 }
-                else
+                else if (student.Response[i].Points > 0)
                 {
-                    question_panel.BackColor = Color.Cyan;
+                    question_panel.BackColor = Color.Aqua;
                 }
 
                 for (int j = 0; j < 5; j++)
