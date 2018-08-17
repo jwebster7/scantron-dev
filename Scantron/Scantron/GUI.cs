@@ -81,7 +81,7 @@ namespace Scantron
                                                 "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
                                                 "7. Click Create Answer Key, then go to the Scan tab.";
 
-            uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
+            uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier. This program can handle up to 750 cards at a time.\n" +
                                                 "2. Click Start within this Window.\n" +
                                                 "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
                                                 "4. Cards highlighted as red have an incomplete WID. Cards highlighted as blue have a test version higher than the number of versions you entered in the answer key.\n" +
@@ -149,15 +149,39 @@ namespace Scantron
         /// <summary>
         /// Reset program to initial state.
         /// </summary>
-        public void Refresh()
+        public void Reset()
         {
+            Panel panel;
+
             raw_cards.Clear();
             grader.Cards.Clear();
             grader.Students.Clear();
             grader.PartialWids.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 250; j++)
+                {
+                    panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
+                    panel.Visible = false;
+                }
+            }
             uxCardList.Controls.Clear();
-            uxStudentResponsePanel.Controls.Clear();
+            for (int i = 0; i < 250; i++)
+            {
+                panel = (Panel) uxStudentResponsePanel.Controls[i];
+                panel.Visible = false;
+            }
 
+            uxExamName.Text = "";
+            uxNumberOfVersions.Value = 0;
+            uxNumberOfQuestions.Value = 0;
+            uxAllQuestionPoints.Value = 0;
+            uxAllPartialCredit.Checked = false;
+            uxStudentSelector.Items.Clear();
+            uxStudentSelector.Text = "";
+            uxVersionLabel.Text = "Version: ";
+            uxScoreLabel.Text = "Score: ";
+            uxCouldNotBeGradedLabel.Visible = false;
             uxNextStudent.Enabled = false;
             uxPreviousStudent.Enabled = false;
 
@@ -187,18 +211,16 @@ namespace Scantron
             //This is an empty method for the dummy thread
         }
 
-
-        private void UpdateCardList()
+        public void InstantiateCardList()
         {
-            uxCardList.Controls.Clear();
-
-            for (int i = 0; i < grader.Cards.Count; i++)
+            for (int i = 0; i < 750; i++)
             {
                 Panel card_panel = new Panel
                 {
                     BackColor = Color.LightGray,
                     Location = new Point(3, 3 + 29 * i),
-                    Size = new Size(300, 25)
+                    Size = new Size(300, 25),
+                    Visible = false
                 };
 
                 Label wid_label = new Label
@@ -214,7 +236,6 @@ namespace Scantron
                     Font = new Font("Microsoft Sans Serif", 8),
                     Location = new Point(35, 3),
                     MaxLength = 9,
-                    Text = grader.Cards[i].WID,
                     Width = 65
                 };
 
@@ -232,7 +253,6 @@ namespace Scantron
                     Location = new Point(150, 3),
                     Maximum = 3,
                     Minimum = 1,
-                    Value = grader.Cards[i].TestVersion,
                     Width = 30
                 };
 
@@ -250,19 +270,8 @@ namespace Scantron
                     Location = new Point(265, 3),
                     Maximum = 5,
                     Minimum = 1,
-                    Value = grader.Cards[i].SheetNumber,
                     Width = 30
                 };
-
-                if (test_version_updown.Value > grader.AnswerKey.Count)
-                {
-                    card_panel.BackColor = Color.Aqua;
-                }
-
-                if (wid_textbox.Text.Contains("-"))
-                {
-                    card_panel.BackColor = Color.Red;
-                }
 
                 card_panel.Controls.Add(wid_label); // index 0
                 card_panel.Controls.Add(wid_textbox); // index 1
@@ -271,6 +280,42 @@ namespace Scantron
                 card_panel.Controls.Add(sheet_number_label); // index 4
                 card_panel.Controls.Add(sheet_number_updown); // index 5
                 uxCardList.Controls.Add(card_panel);
+            }
+        }
+
+        private void UpdateCardList()
+        {
+            Panel card_panel;
+            TextBox wid_textbox;
+            NumericUpDown test_version_updown;
+            NumericUpDown sheet_number_updown;
+
+            foreach (Panel panel in uxCardList.Controls)
+            {
+                panel.Visible = false;
+            }
+
+            for (int i = 0; i < grader.Cards.Count; i++)
+            {
+                card_panel = (Panel) uxCardList.Controls[i];
+                wid_textbox = (TextBox) card_panel.Controls[1];
+                test_version_updown = (NumericUpDown) card_panel.Controls[3];
+                sheet_number_updown = (NumericUpDown) card_panel.Controls[5];
+
+                card_panel.Visible = true;
+                wid_textbox.Text = grader.Cards[i].WID;
+                test_version_updown.Value = grader.Cards[i].TestVersion;
+                sheet_number_updown.Value = grader.Cards[i].SheetNumber;
+
+                if (test_version_updown.Value > grader.AnswerKey.Count)
+                {
+                    card_panel.BackColor = Color.Orange;
+                }
+
+                if (wid_textbox.Text.Contains("-"))
+                {
+                    card_panel.BackColor = Color.Red;
+                }
             }
         }
 
@@ -736,15 +781,15 @@ namespace Scantron
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
-                    question_panel.BackColor = Color.DarkGreen;
+                    question_panel.BackColor = Color.Green;
                 }
                 else if(student.Response[i].Points == 0)
                 {
                     question_panel.BackColor = Color.Red;
                 }
-                else if (student.Response[i].Points > 0)
+                else
                 {
-                    question_panel.BackColor = Color.Aqua;
+                    question_panel.BackColor = Color.Orange;
                 }
 
                 for (int j = 0; j < 5; j++)

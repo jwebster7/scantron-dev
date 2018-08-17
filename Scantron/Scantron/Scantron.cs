@@ -29,6 +29,7 @@ namespace Scantron
                 gui.InstantiateAnswerKeyForm(tabpage);
             }
 
+            gui.InstantiateCardList();
             gui.InstantiateStudentDisplay();
         }
 
@@ -116,9 +117,9 @@ namespace Scantron
             gui.Resume();
         }
 
-        private void uxRefresh_Click(object sender, EventArgs e)
+        private void uxReset_click(object sender, EventArgs e)
         {
-            gui.Refresh();
+            gui.Reset();
         }
     }
 }

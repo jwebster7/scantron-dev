@@ -66,7 +66,7 @@
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
             this.uxTestData = new System.Windows.Forms.Button();
-            this.uxRefresh = new System.Windows.Forms.Button();
+            this.uxReset = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -161,7 +161,7 @@
             // uxAnswerKeyTab
             // 
             this.uxAnswerKeyTab.BackColor = System.Drawing.Color.Gray;
-            this.uxAnswerKeyTab.Controls.Add(this.uxRefresh);
+            this.uxAnswerKeyTab.Controls.Add(this.uxReset);
             this.uxAnswerKeyTab.Controls.Add(this.uxCreateAnswerKey);
             this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionLabel);
             this.uxAnswerKeyTab.Controls.Add(this.uxExamNameLabel);
@@ -580,20 +580,20 @@
             this.uxTestData.UseVisualStyleBackColor = false;
             this.uxTestData.Click += new System.EventHandler(this.uxTestData_Click);
             // 
-            // uxRefresh
+            // uxReset
             // 
-            this.uxRefresh.BackColor = System.Drawing.SystemColors.Control;
-            this.uxRefresh.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxRefresh.Location = new System.Drawing.Point(14, 460);
-            this.uxRefresh.Name = "uxRefresh";
-            this.uxRefresh.Size = new System.Drawing.Size(125, 70);
-            this.uxRefresh.TabIndex = 45;
-            this.uxRefresh.Text = "Refresh";
-            this.uxRefresh.UseVisualStyleBackColor = false;
-            this.uxRefresh.Click += new System.EventHandler(this.uxRefresh_Click);
+            this.uxReset.BackColor = System.Drawing.SystemColors.Control;
+            this.uxReset.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxReset.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxReset.Location = new System.Drawing.Point(14, 460);
+            this.uxReset.Name = "uxReset";
+            this.uxReset.Size = new System.Drawing.Size(125, 70);
+            this.uxReset.TabIndex = 45;
+            this.uxReset.Text = "Reset";
+            this.uxReset.UseVisualStyleBackColor = false;
+            this.uxReset.Click += new System.EventHandler(this.uxReset_click);
             // 
             // Scantron
             // 
@@ -664,7 +664,7 @@
         private System.Windows.Forms.Button uxResume;
         private System.Windows.Forms.Button uxPause;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button uxRefresh;
+        private System.Windows.Forms.Button uxReset;
         private System.Windows.Forms.Button uxTestData;
     }
 }
