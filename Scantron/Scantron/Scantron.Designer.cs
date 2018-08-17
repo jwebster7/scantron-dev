@@ -455,6 +455,7 @@
             // 
             // uxCardList
             // 
+            this.uxCardList.AutoScroll = true;
             this.uxCardList.BackColor = System.Drawing.SystemColors.Control;
             this.uxCardList.Location = new System.Drawing.Point(194, 231);
             this.uxCardList.Name = "uxCardList";
