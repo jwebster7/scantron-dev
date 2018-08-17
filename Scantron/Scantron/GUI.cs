@@ -102,10 +102,8 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-
             ScannerCom.ToAbort.Set();
             scannerCom.Start();
-
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
         }
@@ -115,7 +113,7 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            // not implemented right now
+            scannerCom.Stop();
         }
 
         /// <summary>
@@ -276,7 +274,7 @@ namespace Scantron
                 version_updown = (NumericUpDown) uxCardList.Controls[i].Controls[3];
                 grader.Cards[i].TestVersion = (int) version_updown.Value;
 
-                sheet_number_updown = (NumericUpDown)uxCardList.Controls[i].Controls[5];
+                sheet_number_updown = (NumericUpDown) uxCardList.Controls[i].Controls[5];
                 grader.Cards[i].SheetNumber = (int) sheet_number_updown.Value;
             }
 
