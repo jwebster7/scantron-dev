@@ -116,14 +116,14 @@ namespace Scantron
                 student.CreateResponse();
             }
 
-            gui.DisplayMessage("Students successfully created!");
+            gui.DisplayMessage(students.Count + " students successfully created!");
         }
 
         /// <summary>
         /// Check student answers against the answer key.
         /// </summary>
         /// <returns>True if no errors occurred.</returns>
-        public bool GradeStudents(string exam_name)
+        public void GradeStudents(string exam_name)
         {
             this.exam_name = exam_name;
 
@@ -153,8 +153,6 @@ namespace Scantron
                                         "You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
                 }
             }
-
-            return true;
         }
 
         /// <summary>
