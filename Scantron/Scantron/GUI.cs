@@ -84,7 +84,7 @@ namespace Scantron
             uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier. This program can handle up to 750 cards at a time.\n" +
                                                 "2. Click Start within this Window.\n" +
                                                 "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
-                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as blue have a test version higher than the number of versions you entered in the answer key.\n" +
+                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as orange have a test version higher than the number of versions you entered in the answer key.\n" +
                                                 "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
                                                 "6. After the students have been created, go to the Grade tab.\n\n" +
                                                 "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
@@ -92,7 +92,7 @@ namespace Scantron
 
             uxGradeInstructionLabel.Text = "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
                                                 "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                "3. Questions highlighted in green were given full points, questions highlighted in blue were given partial credit, questions highlighted in red were given 0 points. Blue questions with NaN as the points likely had no answer filled in.";
+                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
         }
 
         /// <summary>
