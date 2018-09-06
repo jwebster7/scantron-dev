@@ -180,7 +180,7 @@ namespace Scantron
             // This list splits up each line of bubbles on the scantron card.
             List<string> card_lines = new List<string>();
             char[] splitter = new char[] {','};
-            card_lines = raw_card_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            card_lines = raw_card_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             // Read in the WID bubbles. The relevant lines are reversed because from left to right the bubbles read 
             // from 9 to 0, but their indices are 0 to 9 in their respective strings. Reversing lets Array.IndexOf 

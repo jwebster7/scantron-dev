@@ -52,6 +52,7 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTab = new System.Windows.Forms.TabPage();
+            this.uxCardList = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.uxResume = new System.Windows.Forms.Button();
             this.uxPause = new System.Windows.Forms.Button();
@@ -66,7 +67,7 @@
             this.uxVersionLabel = new System.Windows.Forms.Label();
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
-            this.uxCardList = new System.Windows.Forms.TextBox();
+            this.uxCardPanel = new System.Windows.Forms.Panel();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -376,6 +377,7 @@
             // uxScanTab
             // 
             this.uxScanTab.BackColor = System.Drawing.Color.Gray;
+            this.uxScanTab.Controls.Add(this.uxCardPanel);
             this.uxScanTab.Controls.Add(this.uxCardList);
             this.uxScanTab.Controls.Add(this.label1);
             this.uxScanTab.Controls.Add(this.uxResume);
@@ -393,6 +395,17 @@
             this.uxScanTab.Size = new System.Drawing.Size(738, 611);
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
+            // 
+            // uxCardList
+            // 
+            this.uxCardList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.uxCardList.Location = new System.Drawing.Point(203, 231);
+            this.uxCardList.MaxLength = 2147483647;
+            this.uxCardList.Multiline = true;
+            this.uxCardList.Name = "uxCardList";
+            this.uxCardList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.uxCardList.Size = new System.Drawing.Size(332, 374);
+            this.uxCardList.TabIndex = 39;
             // 
             // label1
             // 
@@ -587,15 +600,14 @@
             this.uxNextStudent.UseVisualStyleBackColor = false;
             this.uxNextStudent.Click += new System.EventHandler(this.uxNextStudent_Click);
             // 
-            // uxCardList
+            // uxCardPanel
             // 
-            this.uxCardList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uxCardList.Location = new System.Drawing.Point(203, 231);
-            this.uxCardList.Multiline = true;
-            this.uxCardList.Name = "uxCardList";
-            this.uxCardList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxCardList.Size = new System.Drawing.Size(332, 374);
-            this.uxCardList.TabIndex = 39;
+            this.uxCardPanel.AutoScroll = true;
+            this.uxCardPanel.BackColor = System.Drawing.Color.White;
+            this.uxCardPanel.Location = new System.Drawing.Point(252, 217);
+            this.uxCardPanel.Name = "uxCardPanel";
+            this.uxCardPanel.Size = new System.Drawing.Size(327, 350);
+            this.uxCardPanel.TabIndex = 40;
             // 
             // Scantron
             // 
@@ -668,6 +680,7 @@
         private System.Windows.Forms.Button uxReset;
         private System.Windows.Forms.Button uxTestData;
         private System.Windows.Forms.TextBox uxCardList;
+        private System.Windows.Forms.Panel uxCardPanel;
     }
 }
 
