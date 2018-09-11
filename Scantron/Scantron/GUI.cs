@@ -42,7 +42,8 @@ namespace Scantron
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
         private TextBox uxCardList;
-        private Panel uxCardPanel;
+        private TextBox uxErrorTextbox;
+
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
         private bool toAbort = true;
@@ -74,9 +75,9 @@ namespace Scantron
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (TextBox) scantron_form.Controls.Find("uxCardList", true)[0];
-            uxCardPanel = (Panel) scantron_form.Controls.Find("uxCardPanel", true)[0];
+            uxErrorTextbox = (TextBox) scantron_form.Controls.Find("uxErrorTextbox", true)[0];
 
-            uxAnswerKeyInstructionLabel.Text =  "1. Click Restart to ensure no data is leftover from the last person to use this program." +
+            uxAnswerKeyInstructionLabel.Text =  "1. Click Restart to ensure no data is leftover from the last person to use this program.\n" +
                                                 "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
                                                 "3. Specify the number of versions and questions the exam has.\n" +
                                                 "4. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
@@ -93,7 +94,7 @@ namespace Scantron
                                                 "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
                                                 "The Stop button is for aborting the entire card scanning process.";
 
-            uxGradeInstructionLabel.Text = "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
+            uxGradeInstructionLabel.Text =      "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
                                                 "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
                                                 "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
         }
@@ -2198,13 +2199,44 @@ namespace Scantron
         {
             uxCardList.Text = "";
             string cards = "";
+            string wid = "";
+            int test_version = 1;
+            string bad_wids = "";
+            string bad_test_versions = "";
 
             for (int i = 0; i < grader.Cards.Count; i++)
             {
-                cards += (i + 1) + ". WID: " + grader.Cards[i].WID + " Test Version: " + grader.Cards[i].TestVersion + " Sheet Number: " + grader.Cards[i].SheetNumber + Environment.NewLine;
+                wid = grader.Cards[i].WID;
+                test_version = grader.Cards[i].TestVersion;
+
+                cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + grader.Cards[i].SheetNumber + Environment.NewLine;
+
+                if (wid.Contains("-"))
+                {
+                    bad_wids += (i + 1) + " ";
+                }
+
+                if (test_version > grader.AnswerKey.Count)
+                {
+                    bad_test_versions += i + " ";
+                }
             }
 
             uxCardList.Text = cards;
+
+            if (bad_wids == "" && bad_test_versions == "")
+            {
+                uxErrorTextbox.Text = "No bad cards!";
+            }
+            else
+            {
+                uxErrorTextbox.Text =   "-Find the bad cards in the list, correct them, and click Save Changes." + Environment.NewLine +
+                                        "-Be sure not to add or delete too many characters to each line of text in the list." + Environment.NewLine +
+                                        "-Incomplete WIDs likely had a bubble filled out incorrectly and have a dash in them." + Environment.NewLine +
+                                        "-Invalid Test Versions are likely higher than the number of versions you created in the answer key." + Environment.NewLine + Environment.NewLine +
+                                        "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
+                                        "Invalid Test Versions: " + bad_test_versions;
+            }
 
             /*
             Panel card_panel;

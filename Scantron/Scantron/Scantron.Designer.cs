@@ -53,7 +53,7 @@
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTab = new System.Windows.Forms.TabPage();
             this.uxCardList = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.uxScanneCardsLabel = new System.Windows.Forms.Label();
             this.uxResume = new System.Windows.Forms.Button();
             this.uxPause = new System.Windows.Forms.Button();
             this.uxTestData = new System.Windows.Forms.Button();
@@ -67,7 +67,13 @@
             this.uxVersionLabel = new System.Windows.Forms.Label();
             this.uxPreviousStudent = new System.Windows.Forms.Button();
             this.uxNextStudent = new System.Windows.Forms.Button();
-            this.uxCardPanel = new System.Windows.Forms.Panel();
+            this.uxErrorTextbox = new System.Windows.Forms.TextBox();
+            this.uxErrorsLabel = new System.Windows.Forms.Label();
+            this.uxNoAnswerKeyButton = new System.Windows.Forms.Button();
+            this.uxStartTab = new System.Windows.Forms.TabPage();
+            this.uxCreateFileTab = new System.Windows.Forms.TabPage();
+            this.uxStartInstructionLabel = new System.Windows.Forms.Label();
+            this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
@@ -76,6 +82,8 @@
             this.uxAnswerKeyTabControl.SuspendLayout();
             this.uxScanTab.SuspendLayout();
             this.uxGradeTab.SuspendLayout();
+            this.uxStartTab.SuspendLayout();
+            this.uxCreateFileTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // uxStart
@@ -87,7 +95,7 @@
             this.uxStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxStart.Location = new System.Drawing.Point(14, 231);
             this.uxStart.Name = "uxStart";
-            this.uxStart.Size = new System.Drawing.Size(125, 70);
+            this.uxStart.Size = new System.Drawing.Size(125, 45);
             this.uxStart.TabIndex = 0;
             this.uxStart.TabStop = false;
             this.uxStart.Tag = "";
@@ -102,9 +110,9 @@
             this.uxStop.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStop.Location = new System.Drawing.Point(598, 428);
+            this.uxStop.Location = new System.Drawing.Point(14, 551);
             this.uxStop.Name = "uxStop";
-            this.uxStop.Size = new System.Drawing.Size(125, 70);
+            this.uxStop.Size = new System.Drawing.Size(125, 45);
             this.uxStop.TabIndex = 4;
             this.uxStop.TabStop = false;
             this.uxStop.Text = "Stop";
@@ -146,12 +154,14 @@
             // 
             // uxMainTabControl
             // 
+            this.uxMainTabControl.Controls.Add(this.uxStartTab);
             this.uxMainTabControl.Controls.Add(this.uxAnswerKeyTab);
             this.uxMainTabControl.Controls.Add(this.uxScanTab);
             this.uxMainTabControl.Controls.Add(this.uxGradeTab);
+            this.uxMainTabControl.Controls.Add(this.uxCreateFileTab);
             this.uxMainTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxMainTabControl.HotTrack = true;
-            this.uxMainTabControl.ItemSize = new System.Drawing.Size(240, 30);
+            this.uxMainTabControl.ItemSize = new System.Drawing.Size(148, 30);
             this.uxMainTabControl.Location = new System.Drawing.Point(-6, 0);
             this.uxMainTabControl.Name = "uxMainTabControl";
             this.uxMainTabControl.SelectedIndex = 0;
@@ -162,6 +172,7 @@
             // uxAnswerKeyTab
             // 
             this.uxAnswerKeyTab.BackColor = System.Drawing.Color.Gray;
+            this.uxAnswerKeyTab.Controls.Add(this.uxNoAnswerKeyButton);
             this.uxAnswerKeyTab.Controls.Add(this.uxReset);
             this.uxAnswerKeyTab.Controls.Add(this.uxCreateAnswerKey);
             this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionLabel);
@@ -188,7 +199,7 @@
             this.uxReset.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxReset.Location = new System.Drawing.Point(14, 460);
+            this.uxReset.Location = new System.Drawing.Point(14, 536);
             this.uxReset.Name = "uxReset";
             this.uxReset.Size = new System.Drawing.Size(125, 70);
             this.uxReset.TabIndex = 45;
@@ -204,7 +215,7 @@
             this.uxCreateAnswerKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxCreateAnswerKey.Location = new System.Drawing.Point(14, 369);
             this.uxCreateAnswerKey.Name = "uxCreateAnswerKey";
-            this.uxCreateAnswerKey.Size = new System.Drawing.Size(170, 85);
+            this.uxCreateAnswerKey.Size = new System.Drawing.Size(163, 85);
             this.uxCreateAnswerKey.TabIndex = 44;
             this.uxCreateAnswerKey.Text = "Create Answer Key";
             this.uxCreateAnswerKey.UseVisualStyleBackColor = false;
@@ -377,9 +388,10 @@
             // uxScanTab
             // 
             this.uxScanTab.BackColor = System.Drawing.Color.Gray;
-            this.uxScanTab.Controls.Add(this.uxCardPanel);
+            this.uxScanTab.Controls.Add(this.uxErrorsLabel);
+            this.uxScanTab.Controls.Add(this.uxErrorTextbox);
             this.uxScanTab.Controls.Add(this.uxCardList);
-            this.uxScanTab.Controls.Add(this.label1);
+            this.uxScanTab.Controls.Add(this.uxScanneCardsLabel);
             this.uxScanTab.Controls.Add(this.uxResume);
             this.uxScanTab.Controls.Add(this.uxPause);
             this.uxScanTab.Controls.Add(this.uxTestData);
@@ -399,23 +411,23 @@
             // uxCardList
             // 
             this.uxCardList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uxCardList.Location = new System.Drawing.Point(203, 231);
+            this.uxCardList.Location = new System.Drawing.Point(145, 231);
             this.uxCardList.MaxLength = 2147483647;
             this.uxCardList.Multiline = true;
             this.uxCardList.Name = "uxCardList";
             this.uxCardList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxCardList.Size = new System.Drawing.Size(332, 374);
+            this.uxCardList.Size = new System.Drawing.Size(332, 365);
             this.uxCardList.TabIndex = 39;
             // 
-            // label1
+            // uxScanneCardsLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(295, 204);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 24);
-            this.label1.TabIndex = 38;
-            this.label1.Text = "Scanned Cards";
+            this.uxScanneCardsLabel.AutoSize = true;
+            this.uxScanneCardsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.uxScanneCardsLabel.Location = new System.Drawing.Point(227, 204);
+            this.uxScanneCardsLabel.Name = "uxScanneCardsLabel";
+            this.uxScanneCardsLabel.Size = new System.Drawing.Size(153, 24);
+            this.uxScanneCardsLabel.TabIndex = 38;
+            this.uxScanneCardsLabel.Text = "Scanned Cards";
             // 
             // uxResume
             // 
@@ -424,9 +436,9 @@
             this.uxResume.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxResume.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxResume.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResume.Location = new System.Drawing.Point(598, 328);
+            this.uxResume.Location = new System.Drawing.Point(14, 500);
             this.uxResume.Name = "uxResume";
-            this.uxResume.Size = new System.Drawing.Size(125, 70);
+            this.uxResume.Size = new System.Drawing.Size(125, 45);
             this.uxResume.TabIndex = 37;
             this.uxResume.TabStop = false;
             this.uxResume.Text = "Resume";
@@ -440,9 +452,9 @@
             this.uxPause.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxPause.Location = new System.Drawing.Point(598, 231);
+            this.uxPause.Location = new System.Drawing.Point(14, 449);
             this.uxPause.Name = "uxPause";
-            this.uxPause.Size = new System.Drawing.Size(125, 70);
+            this.uxPause.Size = new System.Drawing.Size(125, 45);
             this.uxPause.TabIndex = 36;
             this.uxPause.TabStop = false;
             this.uxPause.Text = "Pause";
@@ -456,9 +468,9 @@
             this.uxTestData.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxTestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxTestData.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxTestData.Location = new System.Drawing.Point(14, 526);
+            this.uxTestData.Location = new System.Drawing.Point(14, 413);
             this.uxTestData.Name = "uxTestData";
-            this.uxTestData.Size = new System.Drawing.Size(125, 70);
+            this.uxTestData.Size = new System.Drawing.Size(125, 30);
             this.uxTestData.TabIndex = 35;
             this.uxTestData.TabStop = false;
             this.uxTestData.Text = "Test Data";
@@ -472,9 +484,9 @@
             this.uxCreateStudents.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxCreateStudents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxCreateStudents.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxCreateStudents.Location = new System.Drawing.Point(14, 428);
+            this.uxCreateStudents.Location = new System.Drawing.Point(14, 348);
             this.uxCreateStudents.Name = "uxCreateStudents";
-            this.uxCreateStudents.Size = new System.Drawing.Size(125, 70);
+            this.uxCreateStudents.Size = new System.Drawing.Size(125, 59);
             this.uxCreateStudents.TabIndex = 34;
             this.uxCreateStudents.TabStop = false;
             this.uxCreateStudents.Text = "Create Students";
@@ -488,9 +500,9 @@
             this.uxSaveChanges.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxSaveChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxSaveChanges.Location = new System.Drawing.Point(14, 328);
+            this.uxSaveChanges.Location = new System.Drawing.Point(14, 282);
             this.uxSaveChanges.Name = "uxSaveChanges";
-            this.uxSaveChanges.Size = new System.Drawing.Size(125, 70);
+            this.uxSaveChanges.Size = new System.Drawing.Size(125, 60);
             this.uxSaveChanges.TabIndex = 33;
             this.uxSaveChanges.TabStop = false;
             this.uxSaveChanges.Text = "Save Changes";
@@ -600,14 +612,77 @@
             this.uxNextStudent.UseVisualStyleBackColor = false;
             this.uxNextStudent.Click += new System.EventHandler(this.uxNextStudent_Click);
             // 
-            // uxCardPanel
+            // uxErrorTextbox
             // 
-            this.uxCardPanel.AutoScroll = true;
-            this.uxCardPanel.BackColor = System.Drawing.Color.White;
-            this.uxCardPanel.Location = new System.Drawing.Point(252, 217);
-            this.uxCardPanel.Name = "uxCardPanel";
-            this.uxCardPanel.Size = new System.Drawing.Size(327, 350);
-            this.uxCardPanel.TabIndex = 40;
+            this.uxErrorTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.uxErrorTextbox.Location = new System.Drawing.Point(483, 231);
+            this.uxErrorTextbox.Multiline = true;
+            this.uxErrorTextbox.Name = "uxErrorTextbox";
+            this.uxErrorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.uxErrorTextbox.Size = new System.Drawing.Size(240, 365);
+            this.uxErrorTextbox.TabIndex = 40;
+            // 
+            // uxErrorsLabel
+            // 
+            this.uxErrorsLabel.AutoSize = true;
+            this.uxErrorsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.uxErrorsLabel.Location = new System.Drawing.Point(564, 204);
+            this.uxErrorsLabel.Name = "uxErrorsLabel";
+            this.uxErrorsLabel.Size = new System.Drawing.Size(67, 24);
+            this.uxErrorsLabel.TabIndex = 41;
+            this.uxErrorsLabel.Text = "Errors";
+            // 
+            // uxNoAnswerKeyButton
+            // 
+            this.uxNoAnswerKeyButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxNoAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxNoAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxNoAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxNoAnswerKeyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxNoAnswerKeyButton.Location = new System.Drawing.Point(14, 460);
+            this.uxNoAnswerKeyButton.Name = "uxNoAnswerKeyButton";
+            this.uxNoAnswerKeyButton.Size = new System.Drawing.Size(125, 70);
+            this.uxNoAnswerKeyButton.TabIndex = 46;
+            this.uxNoAnswerKeyButton.Text = "No Answer Key";
+            this.uxNoAnswerKeyButton.UseVisualStyleBackColor = false;
+            // 
+            // uxStartTab
+            // 
+            this.uxStartTab.BackColor = System.Drawing.Color.Gray;
+            this.uxStartTab.Controls.Add(this.uxStartInstructionLabel);
+            this.uxStartTab.Location = new System.Drawing.Point(4, 34);
+            this.uxStartTab.Name = "uxStartTab";
+            this.uxStartTab.Size = new System.Drawing.Size(738, 611);
+            this.uxStartTab.TabIndex = 3;
+            this.uxStartTab.Text = "Start";
+            // 
+            // uxCreateFileTab
+            // 
+            this.uxCreateFileTab.BackColor = System.Drawing.Color.Gray;
+            this.uxCreateFileTab.Controls.Add(this.uxCreateFileInstructionLabel);
+            this.uxCreateFileTab.Location = new System.Drawing.Point(4, 34);
+            this.uxCreateFileTab.Name = "uxCreateFileTab";
+            this.uxCreateFileTab.Size = new System.Drawing.Size(738, 611);
+            this.uxCreateFileTab.TabIndex = 4;
+            this.uxCreateFileTab.Text = "Create File";
+            // 
+            // uxStartInstructionLabel
+            // 
+            this.uxStartInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxStartInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.uxStartInstructionLabel.Location = new System.Drawing.Point(6, 3);
+            this.uxStartInstructionLabel.Name = "uxStartInstructionLabel";
+            this.uxStartInstructionLabel.Size = new System.Drawing.Size(723, 189);
+            this.uxStartInstructionLabel.TabIndex = 44;
+            // 
+            // uxCreateFileInstructionLabel
+            // 
+            this.uxCreateFileInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxCreateFileInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.uxCreateFileInstructionLabel.Location = new System.Drawing.Point(6, 3);
+            this.uxCreateFileInstructionLabel.Name = "uxCreateFileInstructionLabel";
+            this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
+            this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
             // Scantron
             // 
@@ -634,6 +709,8 @@
             this.uxScanTab.PerformLayout();
             this.uxGradeTab.ResumeLayout(false);
             this.uxGradeTab.PerformLayout();
+            this.uxStartTab.ResumeLayout(false);
+            this.uxCreateFileTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -676,11 +753,17 @@
         private System.Windows.Forms.Button uxCreateAnswerKey;
         private System.Windows.Forms.Button uxResume;
         private System.Windows.Forms.Button uxPause;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label uxScanneCardsLabel;
         private System.Windows.Forms.Button uxReset;
         private System.Windows.Forms.Button uxTestData;
         private System.Windows.Forms.TextBox uxCardList;
-        private System.Windows.Forms.Panel uxCardPanel;
+        private System.Windows.Forms.Label uxErrorsLabel;
+        private System.Windows.Forms.TextBox uxErrorTextbox;
+        private System.Windows.Forms.Button uxNoAnswerKeyButton;
+        private System.Windows.Forms.TabPage uxStartTab;
+        private System.Windows.Forms.Label uxStartInstructionLabel;
+        private System.Windows.Forms.TabPage uxCreateFileTab;
+        private System.Windows.Forms.Label uxCreateFileInstructionLabel;
     }
 }
 
