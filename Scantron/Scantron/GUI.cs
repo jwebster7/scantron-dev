@@ -43,6 +43,12 @@ namespace Scantron
         private Label uxCouldNotBeGradedLabel;
         private TextBox uxCardList;
         private TextBox uxErrorTextbox;
+        private TabControl uxMainTabControl;
+        private TabPage uxStartTab;
+        private TabPage uxAnswerKeyTab;
+        private TabPage uxScanTab;
+        private TabPage uxGradeTab;
+        private TabPage uxCreateFileTab;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
@@ -76,27 +82,14 @@ namespace Scantron
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (TextBox) scantron_form.Controls.Find("uxCardList", true)[0];
             uxErrorTextbox = (TextBox) scantron_form.Controls.Find("uxErrorTextbox", true)[0];
+            uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
+            uxStartTab = (TabPage) scantron_form.Controls.Find("uxStartTab", true)[0];
+            uxAnswerKeyTab = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTab", true)[0];
+            uxScanTab = (TabPage) scantron_form.Controls.Find("uxScanTab", true)[0];
+            uxGradeTab = (TabPage) scantron_form.Controls.Find("uxGradeTab", true)[0];
+            uxCreateFileTab = (TabPage) scantron_form.Controls.Find("uxCreateFileTab", true)[0];
 
-            uxAnswerKeyInstructionLabel.Text =  "1. Click Restart to ensure no data is leftover from the last person to use this program.\n" +
-                                                "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
-                                                "3. Specify the number of versions and questions the exam has.\n" +
-                                                "4. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
-                                                "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
-                                                "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
-                                                "7. Click Create Answer Key, then go to the Scan tab.";
-
-            uxScanInstructionLabel.Text =       "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
-                                                "2. Click Start within this Window.\n" +
-                                                "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
-                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as orange have a test version higher than the number of versions you entered in the answer key.\n" +
-                                                "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
-                                                "6. After the students have been created, go to the Grade tab.\n\n" +
-                                                "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
-                                                "The Stop button is for aborting the entire card scanning process.";
-
-            uxGradeInstructionLabel.Text =      "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
-                                                "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
+            InsertText();
         }
 
         /// <summary>
@@ -106,6 +99,32 @@ namespace Scantron
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message);
+        }
+
+        public void InsertText()
+        {
+            uxStartInstructionTextBox.Text = "yup";
+
+            uxAnswerKeyInstructionLabel.Text = "1. Click Restart to ensure no data is leftover from the last person to use this program.\n" +
+                                                "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
+                                                "3. Specify the number of versions and questions the exam has.\n" +
+                                                "4. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
+                                                "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
+                                                "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
+                                                "7. Click Create Answer Key, then go to the Scan tab.";
+
+            uxScanInstructionLabel.Text = "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
+                                                "2. Click Start within this Window.\n" +
+                                                "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
+                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as orange have a test version higher than the number of versions you entered in the answer key.\n" +
+                                                "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
+                                                "6. After the students have been created, go to the Grade tab.\n\n" +
+                                                "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
+                                                "The Stop button is for aborting the entire card scanning process.";
+
+            uxGradeInstructionLabel.Text = "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
+                                                "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
+                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
         }
 
         /// <summary>
@@ -2218,7 +2237,7 @@ namespace Scantron
 
                 if (test_version > grader.AnswerKey.Count)
                 {
-                    bad_test_versions += i + " ";
+                    bad_test_versions += (i + 1) + " ";
                 }
             }
 
