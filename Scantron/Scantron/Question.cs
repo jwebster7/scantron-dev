@@ -13,20 +13,20 @@ namespace Scantron
     class Question
     {
         // A char array that holds the answer a student gives or the answer on the answer key.
-        private char[] answer = new char[5];
+        private string answer = "";
         // How many points this question is worth.
         private float points;
         // Holds if this questions can be graded for partial credit on multiple answer questions.
         private bool partial_credit;
         
-        public Question(char[] answer, float points, bool partial_credit)
+        public Question(string answer, float points, bool partial_credit)
         {
             this.answer = answer;
             this.points = points;
             this.partial_credit = partial_credit;
         }
         
-        public char[] Answer
+        public string Answer
         {
             get
             {

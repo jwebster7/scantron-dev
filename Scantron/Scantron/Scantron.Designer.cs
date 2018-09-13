@@ -41,7 +41,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.uxStartInstructionTextBox = new System.Windows.Forms.TextBox();
             this.uxAnswerKeyTab = new System.Windows.Forms.TabPage();
-            this.uxNoAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxResetButton = new System.Windows.Forms.Button();
             this.uxCreateAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
@@ -243,7 +242,6 @@
             // uxAnswerKeyTab
             // 
             this.uxAnswerKeyTab.BackColor = System.Drawing.Color.Gray;
-            this.uxAnswerKeyTab.Controls.Add(this.uxNoAnswerKeyButton);
             this.uxAnswerKeyTab.Controls.Add(this.uxResetButton);
             this.uxAnswerKeyTab.Controls.Add(this.uxCreateAnswerKeyButton);
             this.uxAnswerKeyTab.Controls.Add(this.uxAnswerKeyInstructionLabel);
@@ -263,20 +261,6 @@
             this.uxAnswerKeyTab.TabIndex = 2;
             this.uxAnswerKeyTab.Text = "Answer Key";
             // 
-            // uxNoAnswerKeyButton
-            // 
-            this.uxNoAnswerKeyButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxNoAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxNoAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxNoAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxNoAnswerKeyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxNoAnswerKeyButton.Location = new System.Drawing.Point(14, 460);
-            this.uxNoAnswerKeyButton.Name = "uxNoAnswerKeyButton";
-            this.uxNoAnswerKeyButton.Size = new System.Drawing.Size(163, 70);
-            this.uxNoAnswerKeyButton.TabIndex = 46;
-            this.uxNoAnswerKeyButton.Text = "No Answer Key";
-            this.uxNoAnswerKeyButton.UseVisualStyleBackColor = false;
-            // 
             // uxResetButton
             // 
             this.uxResetButton.BackColor = System.Drawing.SystemColors.Control;
@@ -284,7 +268,7 @@
             this.uxResetButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResetButton.Location = new System.Drawing.Point(14, 534);
+            this.uxResetButton.Location = new System.Drawing.Point(14, 460);
             this.uxResetButton.Name = "uxResetButton";
             this.uxResetButton.Size = new System.Drawing.Size(163, 70);
             this.uxResetButton.TabIndex = 45;
@@ -744,6 +728,7 @@
             this.uxGradebookButton.Tag = "";
             this.uxGradebookButton.Text = "Gradebook";
             this.uxGradebookButton.UseVisualStyleBackColor = false;
+            this.uxGradebookButton.Click += new System.EventHandler(this.uxGradebookButton_Click);
             // 
             // uxScantronToolButton
             // 
@@ -760,6 +745,7 @@
             this.uxScantronToolButton.Tag = "";
             this.uxScantronToolButton.Text = "Scantron Tool";
             this.uxScantronToolButton.UseVisualStyleBackColor = false;
+            this.uxScantronToolButton.Click += new System.EventHandler(this.uxScantronToolButton_Click);
             // 
             // uxCreateFileInstructionLabel
             // 
@@ -850,7 +836,6 @@
         private System.Windows.Forms.TextBox uxCardList;
         private System.Windows.Forms.Label uxErrorsLabel;
         private System.Windows.Forms.TextBox uxErrorTextbox;
-        private System.Windows.Forms.Button uxNoAnswerKeyButton;
         private System.Windows.Forms.TabPage uxStartTab;
         private System.Windows.Forms.TabPage uxCreateFileTab;
         private System.Windows.Forms.Label uxCreateFileInstructionLabel;

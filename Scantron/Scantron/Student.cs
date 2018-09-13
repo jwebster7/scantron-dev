@@ -90,5 +90,10 @@ namespace Scantron
 
             return score;
         }
+
+        public override string ToString()
+        {
+            return wid + ",," + wid + ",,," + Score() + "\r\n";
+        }
     }
 }

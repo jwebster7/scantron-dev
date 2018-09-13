@@ -225,7 +225,7 @@ namespace Scantron
 
             // Checks the answer bubbles.
             int count = 0;
-            char[] answer = new char[5];
+            string answer = "";
 
             // These for loops are set up so that they read all 50 questions in order, which makes the indexing 
             // difficult. This page details these loops https://github.com/prometheus1994/scantron-dev/wiki/Student.cs.
@@ -235,17 +235,17 @@ namespace Scantron
                 {
                     for (int j = 4; j >= 0; j--)
                     {
-                        answer = new char[5];
+                        answer = "";
 
                         for (int k = 0; k < 5; k++)
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer[k] = (char)(k + 65);
+                                answer += (char)(k + 65);
                             }
                             else
                             {
-                                answer[k] = ' ';
+                                answer += " ";
                             }
                         }
 
@@ -257,17 +257,17 @@ namespace Scantron
                 {
                     for (int j = 14; j >= 0; j--)
                     {
-                        answer = new char[5];
+                        answer = "";
 
                         for (int k = 0; k < 5; k++)
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer[k] = (char)(k + 65);
+                                answer += (char)(k + 65);
                             }
                             else
                             {
-                                answer[k] = ' ';
+                                answer += ' ';
                             }
                         }
 
@@ -340,32 +340,32 @@ namespace Scantron
         /// <returns>Student's data as a string.</returns>
         public override string ToString()
         {
-            string student_info = "";
+            string card_info = "";
 
             // Row 5
-            student_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '";
+            card_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '";
 
             for (int j = 0; j < response.Count; j++)
             {
-                student_info += response[j].Answer[4];
+                card_info += response[j].Answer[4];
             }
 
-            student_info += "'\r\n";
+            card_info += "'\r\n";
 
             // Rows 4, 3, 2, 1
             for (int i = 3; i >= 0; i--)
             {
-                student_info += "         ,      " + ',' + (char)(65 + i) + ", '" ;
+                card_info += "         ,      " + ',' + (char)(65 + i) + ", '" ;
 
                 for (int j = 0; j < response.Count; j++)
                 {
-                    student_info += response[j].Answer[i];
+                    card_info += response[j].Answer[i];
                 }
 
-                student_info += "'\r\n";
+                card_info += "'\r\n";
             }
 
-            return student_info;
+            return card_info;
         }
     }
 }

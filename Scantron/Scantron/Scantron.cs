@@ -61,7 +61,7 @@ namespace Scantron
 
         private void uxGradebookButton_Click(object sender, EventArgs e)
         {
-            gui.WriteGradebookFile();
+            gui.WriteFile(true);
         }
 
         private void uxCreateAnswerKeyButton_Click(object sender, EventArgs e)
@@ -127,6 +127,11 @@ namespace Scantron
         private void uxPreviousButton_Click(object sender, EventArgs e)
         {
             gui.PreviousStudent();
+        }
+
+        private void uxScantronToolButton_Click(object sender, EventArgs e)
+        {
+            gui.WriteFile(false);
         }
     }
 }

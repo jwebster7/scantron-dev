@@ -165,12 +165,22 @@ namespace Scantron
 
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + exam_name + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
-            int count = 0;
 
             foreach (Student student in students)
             {
-                count++;
-                info += student.WID + ",," + student.WID + ",,," + student.Score() + Environment.NewLine;
+                info += student.ToString();
+            }
+
+            return info;
+        }
+
+        public string ScantronToolFile()
+        {
+            string info = "";
+
+            foreach (Card card in cards)
+            {
+                info += card.ToString();
             }
 
             return info;

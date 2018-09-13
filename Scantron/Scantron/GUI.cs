@@ -36,8 +36,8 @@ namespace Scantron
         private NumericUpDown uxNumberOfVersions;
         private NumericUpDown uxAllQuestionPoints;
         private CheckBox uxAllPartialCredit;
-        private Button uxPreviousStudentButton;
-        private Button uxNextStudentButton;
+        private Button uxPreviousButton;
+        private Button uxNextButton;
         private Label uxVersionLabel;
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
@@ -76,8 +76,8 @@ namespace Scantron
             uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
             uxAllQuestionPoints = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
             uxAllPartialCredit = (CheckBox) scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
-            uxPreviousStudentButton = (Button) scantron_form.Controls.Find("uxPreviousStudentButton", true)[0];
-            uxNextStudentButton = (Button) scantron_form.Controls.Find("uxNextStudentButton", true)[0];
+            uxPreviousButton = (Button) scantron_form.Controls.Find("uxPreviousButton", true)[0];
+            uxNextButton = (Button) scantron_form.Controls.Find("uxNextButton", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
@@ -226,8 +226,8 @@ namespace Scantron
             uxVersionLabel.Text = "Version: ";
             uxScoreLabel.Text = "Score: ";
             uxCouldNotBeGradedLabel.Visible = false;
-            uxNextStudentButton.Enabled = false;
-            uxPreviousStudentButton.Enabled = false;
+            uxNextButton.Enabled = false;
+            uxPreviousButton.Enabled = false;
 
             DisplayMessage("Successfully refreshed!");
         }
@@ -2239,19 +2239,23 @@ namespace Scantron
 
         private void UpdateCardList()
         {
+            Card card;
             uxCardList.Text = "";
             string cards = "";
             string wid = "";
             int test_version = 1;
             string bad_wids = "";
             string bad_test_versions = "";
+            string bad_answers = "";
 
             for (int i = 0; i < grader.Cards.Count; i++)
             {
-                wid = grader.Cards[i].WID;
-                test_version = grader.Cards[i].TestVersion;
+                card = grader.Cards[i];
 
-                cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + grader.Cards[i].SheetNumber + Environment.NewLine;
+                wid = card.WID;
+                test_version = card.TestVersion;
+
+                cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + card.SheetNumber + Environment.NewLine;
 
                 if (wid.Contains("-"))
                 {
@@ -2261,6 +2265,15 @@ namespace Scantron
                 if (test_version > grader.AnswerKey.Count)
                 {
                     bad_test_versions += (i + 1) + " ";
+                }
+
+                foreach(Question question in card.Response)
+                {
+                    if (question.Answer == "     ")
+                    {
+                        bad_answers += (i + 1) + " ";
+                        break;
+                    }
                 }
             }
 
@@ -2275,9 +2288,11 @@ namespace Scantron
                 uxErrorTextbox.Text =   "-Find the bad cards in the list, correct them, and click Save Changes." + Environment.NewLine +
                                         "-Be sure not to add or delete too many characters to each line of text in the list." + Environment.NewLine +
                                         "-Incomplete WIDs likely had a bubble filled out incorrectly and have a dash in them." + Environment.NewLine +
-                                        "-Invalid Test Versions are likely higher than the number of versions you created in the answer key." + Environment.NewLine + Environment.NewLine +
+                                        "-Invalid Test Versions are likely higher than the number of versions you created in the answer key." + Environment.NewLine +
+                                        "-Empty Answers are the cards which have at least one answer without a response. This cannot be corrected here." + Environment.NewLine + Environment.NewLine +
                                         "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
-                                        "Invalid Test Versions: " + bad_test_versions;
+                                        "Invalid Test Versions: " + bad_test_versions + Environment.NewLine + Environment.NewLine +
+                                        "Empty Answers: " + bad_answers;
             }
 
             /*
@@ -2570,7 +2585,7 @@ namespace Scantron
             CheckBox checkbox;
             NumericUpDown points_updown;
 
-            char[] answer = new char[5];
+            string answer = "";
             float points = 0;
             bool partial_credit = false;
 
@@ -2580,7 +2595,7 @@ namespace Scantron
                 
                 for (int j = 0; j < number_of_questions; j++)
                 {
-                    answer = new char[5];
+                    answer = "";
 
                     question_panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
 
@@ -2590,11 +2605,11 @@ namespace Scantron
                         checkbox = (CheckBox) question_panel.Controls[k];
                         if (checkbox.Checked)
                         {
-                            answer[k] = (char)(65 + k);
+                            answer += (char)(65 + k);
                         }
                         else
                         {
-                            answer[k] = ' ';
+                            answer += " ";
                         }
                     }
                     
@@ -2648,17 +2663,30 @@ namespace Scantron
                 uxStudentSelector.Items.Add(student.WID);
             }
 
-            uxNextStudentButton.Enabled = true;
-            uxPreviousStudentButton.Enabled = true;
+            uxNextButton.Enabled = true;
+            uxPreviousButton.Enabled = true;
             NextStudent(); // Displays the first student in the index
         }
 
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
         /// </summary>
-        public void WriteGradebookFile()
+        public void WriteFile(bool gradebook)
         {
-            string file = grader.GradebookFile();
+            string file = "";
+            string filter = "";
+
+            if (gradebook)
+            {
+                file = grader.GradebookFile();
+                filter = "csv files (*.csv)|*.csv";
+            }
+            else
+            {
+                file = grader.ScantronToolFile();
+                filter = "txt files (*.txt)|*.txt";
+
+            }
 
             // Then we have to start a file dialog to save the string to a file.
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog
@@ -2666,7 +2694,7 @@ namespace Scantron
                 // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
                 InitialDirectory = "c:\\desktop",
                 // Filter is the default file extensions seen by the user.
-                Filter = "csv files (*.csv)|*.csv",
+                Filter = filter,
                 // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
                 FilterIndex = 1
             };
@@ -2788,20 +2816,20 @@ namespace Scantron
         {
             if (uxStudentSelector.SelectedIndex == 0)
             {
-                uxPreviousStudentButton.Enabled = false;
+                uxPreviousButton.Enabled = false;
             }
             else
             {
-                uxPreviousStudentButton.Enabled = true;
+                uxPreviousButton.Enabled = true;
             }
 
             if (uxStudentSelector.SelectedIndex == uxStudentSelector.Items.Count -1)
             {
-                uxNextStudentButton.Enabled = false;
+                uxNextButton.Enabled = false;
             }
             else
             {
-                uxNextStudentButton.Enabled = true;
+                uxNextButton.Enabled = true;
             }
 
             int test_version = student.TestVersion;
