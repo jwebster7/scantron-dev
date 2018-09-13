@@ -111,7 +111,7 @@
             this.uxStartButton.Tag = "";
             this.uxStartButton.Text = "Start";
             this.uxStartButton.UseVisualStyleBackColor = false;
-            this.uxStartButton.Click += new System.EventHandler(this.uxStart_Click);
+            this.uxStartButton.Click += new System.EventHandler(this.uxStartButton_Click);
             // 
             // uxStopButton
             // 
@@ -127,7 +127,7 @@
             this.uxStopButton.TabStop = false;
             this.uxStopButton.Text = "Stop";
             this.uxStopButton.UseVisualStyleBackColor = false;
-            this.uxStopButton.Click += new System.EventHandler(this.uxStop_Click);
+            this.uxStopButton.Click += new System.EventHandler(this.uxStopButton_Click);
             // 
             // uxStudentResponsePanel
             // 
@@ -290,7 +290,7 @@
             this.uxResetButton.TabIndex = 45;
             this.uxResetButton.Text = "Reset";
             this.uxResetButton.UseVisualStyleBackColor = false;
-            this.uxResetButton.Click += new System.EventHandler(this.uxReset_click);
+            this.uxResetButton.Click += new System.EventHandler(this.uxResetButton_click);
             // 
             // uxCreateAnswerKeyButton
             // 
@@ -304,7 +304,7 @@
             this.uxCreateAnswerKeyButton.TabIndex = 44;
             this.uxCreateAnswerKeyButton.Text = "Create Answer Key";
             this.uxCreateAnswerKeyButton.UseVisualStyleBackColor = false;
-            this.uxCreateAnswerKeyButton.Click += new System.EventHandler(this.uxCreateAnswerKey_Click);
+            this.uxCreateAnswerKeyButton.Click += new System.EventHandler(this.uxCreateAnswerKeyButton_Click);
             // 
             // uxAnswerKeyInstructionLabel
             // 
@@ -548,7 +548,7 @@
             this.uxResumeButton.TabStop = false;
             this.uxResumeButton.Text = "Resume";
             this.uxResumeButton.UseVisualStyleBackColor = false;
-            this.uxResumeButton.Click += new System.EventHandler(this.uxResume_Click);
+            this.uxResumeButton.Click += new System.EventHandler(this.uxResumeButton_Click);
             // 
             // uxPauseButton
             // 
@@ -564,7 +564,7 @@
             this.uxPauseButton.TabStop = false;
             this.uxPauseButton.Text = "Pause";
             this.uxPauseButton.UseVisualStyleBackColor = false;
-            this.uxPauseButton.Click += new System.EventHandler(this.uxPause_Click);
+            this.uxPauseButton.Click += new System.EventHandler(this.uxPauseButton_Click);
             // 
             // uxTestDataButton
             // 
@@ -580,7 +580,7 @@
             this.uxTestDataButton.TabStop = false;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
-            this.uxTestDataButton.Click += new System.EventHandler(this.uxTestData_Click);
+            this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxCreateStudentsButton
             // 
@@ -596,7 +596,7 @@
             this.uxCreateStudentsButton.TabStop = false;
             this.uxCreateStudentsButton.Text = "Create Students";
             this.uxCreateStudentsButton.UseVisualStyleBackColor = false;
-            this.uxCreateStudentsButton.Click += new System.EventHandler(this.uxCreateStudents_Click);
+            this.uxCreateStudentsButton.Click += new System.EventHandler(this.uxCreateStudentsButton_Click);
             // 
             // uxSaveChangesButton
             // 
@@ -612,7 +612,7 @@
             this.uxSaveChangesButton.TabStop = false;
             this.uxSaveChangesButton.Text = "Save Changes";
             this.uxSaveChangesButton.UseVisualStyleBackColor = false;
-            this.uxSaveChangesButton.Click += new System.EventHandler(this.uxSaveChanges_Click);
+            this.uxSaveChangesButton.Click += new System.EventHandler(this.uxSaveChangesButton_Click);
             // 
             // uxScanInstructionLabel
             // 
@@ -654,7 +654,7 @@
             this.uxGradeStudentsButton.TabIndex = 0;
             this.uxGradeStudentsButton.Text = "Grade Students";
             this.uxGradeStudentsButton.UseVisualStyleBackColor = false;
-            this.uxGradeStudentsButton.Click += new System.EventHandler(this.uxGradeStudents_Click);
+            this.uxGradeStudentsButton.Click += new System.EventHandler(this.uxGradeStudentsButton_Click);
             // 
             // uxScoreLabel
             // 
@@ -701,7 +701,7 @@
             this.uxPreviousButton.TabIndex = 21;
             this.uxPreviousButton.Text = "Previous";
             this.uxPreviousButton.UseVisualStyleBackColor = false;
-            this.uxPreviousButton.Click += new System.EventHandler(this.uxPreviousStudent_Click);
+            this.uxPreviousButton.Click += new System.EventHandler(this.uxPreviousButton_Click);
             // 
             // uxNextButton
             // 
@@ -715,7 +715,7 @@
             this.uxNextButton.TabIndex = 10;
             this.uxNextButton.Text = "Next";
             this.uxNextButton.UseVisualStyleBackColor = false;
-            this.uxNextButton.Click += new System.EventHandler(this.uxNextStudent_Click);
+            this.uxNextButton.Click += new System.EventHandler(this.uxNextButton_Click);
             // 
             // uxCreateFileTab
             // 

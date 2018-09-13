@@ -2619,6 +2619,11 @@ namespace Scantron
             DisplayMessage("Answer Key successfully created!");
         }
 
+        public void NoAnswerKey()
+        {
+
+        }
+
         /// <summary>
         /// Grade the students.
         /// </summary>
@@ -2651,7 +2656,7 @@ namespace Scantron
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
         /// </summary>
-        private void WriteGradebookFile()
+        public void WriteGradebookFile()
         {
             string file = grader.GradebookFile();
 
