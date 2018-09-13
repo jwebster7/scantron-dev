@@ -36,8 +36,8 @@ namespace Scantron
         private NumericUpDown uxNumberOfVersions;
         private NumericUpDown uxAllQuestionPoints;
         private CheckBox uxAllPartialCredit;
-        private Button uxPreviousStudent;
-        private Button uxNextStudent;
+        private Button uxPreviousStudentButton;
+        private Button uxNextStudentButton;
         private Label uxVersionLabel;
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
@@ -49,6 +49,7 @@ namespace Scantron
         private TabPage uxScanTab;
         private TabPage uxGradeTab;
         private TabPage uxCreateFileTab;
+        private TextBox uxStartInstructionTextBox;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
@@ -75,8 +76,8 @@ namespace Scantron
             uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
             uxAllQuestionPoints = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
             uxAllPartialCredit = (CheckBox) scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
-            uxPreviousStudent = (Button) scantron_form.Controls.Find("uxPreviousStudent", true)[0];
-            uxNextStudent = (Button) scantron_form.Controls.Find("uxNextStudent", true)[0];
+            uxPreviousStudentButton = (Button) scantron_form.Controls.Find("uxPreviousStudentButton", true)[0];
+            uxNextStudentButton = (Button) scantron_form.Controls.Find("uxNextStudentButton", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
@@ -88,6 +89,7 @@ namespace Scantron
             uxScanTab = (TabPage) scantron_form.Controls.Find("uxScanTab", true)[0];
             uxGradeTab = (TabPage) scantron_form.Controls.Find("uxGradeTab", true)[0];
             uxCreateFileTab = (TabPage) scantron_form.Controls.Find("uxCreateFileTab", true)[0];
+            uxStartInstructionTextBox = (TextBox) scantron_form.Controls.Find("uxStartInstructionTextBox", true)[0];
 
             InsertText();
         }
@@ -103,26 +105,47 @@ namespace Scantron
 
         public void InsertText()
         {
-            uxStartInstructionTextBox.Text = "yup";
+            uxStartInstructionTextBox.Text = "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine +
+                "A" + Environment.NewLine;
 
-            uxAnswerKeyInstructionLabel.Text = "1. Click Restart to ensure no data is leftover from the last person to use this program.\n" +
+            uxAnswerKeyInstructionLabel.Text =  "1. Click Reset to ensure no data is leftover from the last person to use this program.\n" +
                                                 "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +
-                                                "3. Specify the number of versions and questions the exam has.\n" +
-                                                "4. Specify how many points each questions it worth, and if it has multiple correct answers specify if students will be given partial credit.\n" +
+                                                "3. Specify the number of versions and questions the exam has, even if you are not grading with this program.\n" +
+                                                "4. Specify how many points each questions is worth, and if a question has multiple correct answers, specify if students will be given partial credit.\n" +
                                                 "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
                                                 "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
                                                 "7. Click Create Answer Key, then go to the Scan tab.";
 
-            uxScanInstructionLabel.Text = "1. Load the Scantron hopper and use the guider to make sure they are straight. If your exam has multiple cards per student, try to keep each student's cards grouped together to make correcting errors easier.\n" +
-                                                "2. Click Start within this Window.\n" +
-                                                "3. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
-                                                "4. Cards highlighted as red have an incomplete WID. Cards highlighted as orange have a test version higher than the number of versions you entered in the answer key.\n" +
-                                                "5. Once you have made corrections, click Save Changes, then click create Students to group each student's cards together for grading (most exams only use one card).\n" +
-                                                "6. After the students have been created, go to the Grade tab.\n\n" +
+            uxScanInstructionLabel.Text =       "1. Click Start within this Window.\n" +
+                                                "2. After your cards have finished scanning, all of them will show up in the Scanned Cards panel in the order they were scanned in. You may edit any incorrect WIDs, test versions, or sheet numbers.\n" +
+                                                "3. Once you have made corrections, click Save Changes, then click Create Students.\n" +
+                                                "4. If you are grading here, click on the Grade tab. If you are using the Canvas Scantron Tool, click on the Create File tab.\n\n" +
                                                 "You may click Pause to halt the Scantron if necessary and click Resume to continue scanning.\n" +
                                                 "The Stop button is for aborting the entire card scanning process.";
 
-            uxGradeInstructionLabel.Text = "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
+            uxGradeInstructionLabel.Text =      "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
                                                 "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
                                                 "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
         }
@@ -203,8 +226,8 @@ namespace Scantron
             uxVersionLabel.Text = "Version: ";
             uxScoreLabel.Text = "Score: ";
             uxCouldNotBeGradedLabel.Visible = false;
-            uxNextStudent.Enabled = false;
-            uxPreviousStudent.Enabled = false;
+            uxNextStudentButton.Enabled = false;
+            uxPreviousStudentButton.Enabled = false;
 
             DisplayMessage("Successfully refreshed!");
         }
@@ -2614,24 +2637,23 @@ namespace Scantron
             }
 
             grader.GradeStudents(uxExamName.Text);
-            WriteFile();
             uxStudentSelector.Items.Clear();
             foreach (Student student in grader.Students)
             {
                 uxStudentSelector.Items.Add(student.WID);
             }
 
-            uxNextStudent.Enabled = true;
-            uxPreviousStudent.Enabled = true;
+            uxNextStudentButton.Enabled = true;
+            uxPreviousStudentButton.Enabled = true;
             NextStudent(); // Displays the first student in the index
         }
 
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
         /// </summary>
-        private void WriteFile()
+        private void WriteGradebookFile()
         {
-            string file = grader.ToString();
+            string file = grader.GradebookFile();
 
             // Then we have to start a file dialog to save the string to a file.
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog
@@ -2761,20 +2783,20 @@ namespace Scantron
         {
             if (uxStudentSelector.SelectedIndex == 0)
             {
-                uxPreviousStudent.Enabled = false;
+                uxPreviousStudentButton.Enabled = false;
             }
             else
             {
-                uxPreviousStudent.Enabled = true;
+                uxPreviousStudentButton.Enabled = true;
             }
 
             if (uxStudentSelector.SelectedIndex == uxStudentSelector.Items.Count -1)
             {
-                uxNextStudent.Enabled = false;
+                uxNextStudentButton.Enabled = false;
             }
             else
             {
-                uxNextStudent.Enabled = true;
+                uxNextStudentButton.Enabled = true;
             }
 
             int test_version = student.TestVersion;
