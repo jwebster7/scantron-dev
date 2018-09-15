@@ -231,6 +231,7 @@
             // 
             // uxStartInstructionTextBox
             // 
+            this.uxStartInstructionTextBox.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.uxStartInstructionTextBox.Location = new System.Drawing.Point(3, 3);
             this.uxStartInstructionTextBox.Multiline = true;
             this.uxStartInstructionTextBox.Name = "uxStartInstructionTextBox";

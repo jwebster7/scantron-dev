@@ -28,8 +28,7 @@ namespace Scantron
                 TabPage tabpage = uxAnswerKeyTabControl.TabPages[i];
                 gui.InstantiateAnswerKeyForm(tabpage);
             }
-
-            gui.InstantiateCardList();
+            
             gui.InstantiateStudentDisplay();
         }
 
