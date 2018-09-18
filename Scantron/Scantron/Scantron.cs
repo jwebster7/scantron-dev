@@ -132,5 +132,10 @@ namespace Scantron
         {
             gui.WriteFile(false);
         }
+
+        private void uxFinishButton_Click(object sender, EventArgs e)
+        {
+            gui.Finish();
+        }
     }
 }

@@ -78,6 +78,7 @@
             this.uxCreateFileTab = new System.Windows.Forms.TabPage();
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolButton = new System.Windows.Forms.Button();
+            this.uxFinishButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTab.SuspendLayout();
@@ -231,6 +232,7 @@
             // 
             // uxStartInstructionTextBox
             // 
+            this.uxStartInstructionTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.uxStartInstructionTextBox.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.uxStartInstructionTextBox.Location = new System.Drawing.Point(3, 3);
             this.uxStartInstructionTextBox.Multiline = true;
@@ -565,6 +567,7 @@
             this.uxTestDataButton.TabStop = false;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
+            this.uxTestDataButton.Visible = false;
             this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxCreateStudentsButton
@@ -705,6 +708,7 @@
             // uxCreateFileTab
             // 
             this.uxCreateFileTab.BackColor = System.Drawing.Color.Gray;
+            this.uxCreateFileTab.Controls.Add(this.uxFinishButton);
             this.uxCreateFileTab.Controls.Add(this.uxGradebookButton);
             this.uxCreateFileTab.Controls.Add(this.uxScantronToolButton);
             this.uxCreateFileTab.Controls.Add(this.uxCreateFileInstructionLabel);
@@ -721,7 +725,7 @@
             this.uxGradebookButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradebookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradebookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradebookButton.Location = new System.Drawing.Point(50, 242);
+            this.uxGradebookButton.Location = new System.Drawing.Point(168, 244);
             this.uxGradebookButton.Name = "uxGradebookButton";
             this.uxGradebookButton.Size = new System.Drawing.Size(152, 98);
             this.uxGradebookButton.TabIndex = 46;
@@ -738,7 +742,7 @@
             this.uxScantronToolButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxScantronToolButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxScantronToolButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScantronToolButton.Location = new System.Drawing.Point(491, 242);
+            this.uxScantronToolButton.Location = new System.Drawing.Point(384, 244);
             this.uxScantronToolButton.Name = "uxScantronToolButton";
             this.uxScantronToolButton.Size = new System.Drawing.Size(160, 100);
             this.uxScantronToolButton.TabIndex = 45;
@@ -747,6 +751,23 @@
             this.uxScantronToolButton.Text = "Scantron Tool";
             this.uxScantronToolButton.UseVisualStyleBackColor = false;
             this.uxScantronToolButton.Click += new System.EventHandler(this.uxScantronToolButton_Click);
+            // 
+            // uxFinishButton
+            // 
+            this.uxFinishButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxFinishButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxFinishButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxFinishButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxFinishButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxFinishButton.Location = new System.Drawing.Point(291, 390);
+            this.uxFinishButton.Name = "uxFinishButton";
+            this.uxFinishButton.Size = new System.Drawing.Size(120, 70);
+            this.uxFinishButton.TabIndex = 47;
+            this.uxFinishButton.TabStop = false;
+            this.uxFinishButton.Tag = "";
+            this.uxFinishButton.Text = "Finish";
+            this.uxFinishButton.UseVisualStyleBackColor = false;
+            this.uxFinishButton.Click += new System.EventHandler(this.uxFinishButton_Click);
             // 
             // uxCreateFileInstructionLabel
             // 
@@ -839,7 +860,6 @@
         private System.Windows.Forms.TextBox uxErrorTextbox;
         private System.Windows.Forms.TabPage uxStartTab;
         private System.Windows.Forms.TabPage uxCreateFileTab;
-        private System.Windows.Forms.Label uxCreateFileInstructionLabel;
         private System.Windows.Forms.TextBox uxStartInstructionTextBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox4;
@@ -847,6 +867,8 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button uxGradebookButton;
         private System.Windows.Forms.Button uxScantronToolButton;
+        private System.Windows.Forms.Button uxFinishButton;
+        private System.Windows.Forms.Label uxCreateFileInstructionLabel;
     }
 }
 

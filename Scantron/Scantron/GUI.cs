@@ -51,14 +51,15 @@ namespace Scantron
         private TabPage uxCreateFileTab;
         private TextBox uxStartInstructionTextBox;
         private Label uxCreateFileInstructionLabel;
+        private Button uxFinishButton;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
-        private bool toAbort = true;
 
-        Task<List<string>> cr;
-
+        // Scanner communication fields
         private ScannerCom scannerCom;
+        private bool toAbort = true;
+        Task<List<string>> cr;
 
         public GUI(Form scantron_form)
         {
@@ -92,6 +93,7 @@ namespace Scantron
             uxCreateFileTab = (TabPage) scantron_form.Controls.Find("uxCreateFileTab", true)[0];
             uxStartInstructionTextBox = (TextBox) scantron_form.Controls.Find("uxStartInstructionTextBox", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
+            uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
 
             InsertInstructionText();
         }
@@ -137,8 +139,13 @@ namespace Scantron
 
             uxGradeInstructionLabel.Text =      "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
                                                 "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. orange questions with NaN as the points likely had no answer filled in.";
-            uxCreateFileInstructionLabel.Text = "pres buton";
+                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. Orange questions with NaN as the points likely had no answer filled in." +
+                                                "4. Once you are done reviewing the student responses, click the Create File tab.";
+
+            uxCreateFileInstructionLabel.Text = "1. Click the Gradebook button if you have graded within this program, otherwise click the Scantron Tool button.\n" +
+                                                "2. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it.\n" +
+                                                "3. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + ".\n" +
+                                                "4. Once you are confident your file is saved, click the Finish button to put the program back at the beginning.";
         }
 
         /// <summary>
@@ -220,7 +227,7 @@ namespace Scantron
             uxNextButton.Enabled = false;
             uxPreviousButton.Enabled = false;
 
-            DisplayMessage("Data has been reset.");
+            DisplayMessage("Data has been reset!");
         }
 
         /// <summary>
@@ -897,6 +904,12 @@ namespace Scantron
 
                 question_panel.Controls[5].Text = "Points: " + student.Response[i].Points.ToString("0.00");
             }
+        }
+
+        public void Finish()
+        {
+            uxMainTabControl.SelectTab(uxStartTab);
+            Reset();
         }
     }
 }
