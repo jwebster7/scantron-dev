@@ -93,7 +93,7 @@ namespace Scantron
                 
                 points = ((1 / total_answers) * correct_answers - (1 /total_answers) * incorrect_answers ) * answer_key.points;
 
-                if (points < 0)
+                if (points < 0 || float.IsNaN(points))
                 {
                     points = 0;
                 }

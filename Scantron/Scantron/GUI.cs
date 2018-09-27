@@ -42,7 +42,7 @@ namespace Scantron
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
         private TextBox uxCardList;
-        private TextBox uxErrorTextbox;
+        private TextBox uxStatusTextbox;
         private TabControl uxMainTabControl;
         private TabPage uxStartTab;
         private TabPage uxAnswerKeyTab;
@@ -84,7 +84,7 @@ namespace Scantron
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
             uxCardList = (TextBox) scantron_form.Controls.Find("uxCardList", true)[0];
-            uxErrorTextbox = (TextBox) scantron_form.Controls.Find("uxErrorTextbox", true)[0];
+            uxStatusTextbox = (TextBox) scantron_form.Controls.Find("uxStatusTextbox", true)[0];
             uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
             uxStartTab = (TabPage) scantron_form.Controls.Find("uxStartTab", true)[0];
             uxAnswerKeyTab = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTab", true)[0];
@@ -139,13 +139,14 @@ namespace Scantron
 
             uxGradeInstructionLabel.Text =      "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
                                                 "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, questions highlighted in red were given 0 points. Orange questions with NaN as the points likely had no answer filled in." +
+                                                "3. Questions highlighted in green were given full points, questions highlighted in orange were given partial credit, and questions highlighted in red were given 0 points.\n" +
                                                 "4. Once you are done reviewing the student responses, click the Create File tab.";
 
-            uxCreateFileInstructionLabel.Text = "1. Click the Gradebook button if you have graded within this program, otherwise click the Scantron Tool button.\n" +
-                                                "2. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it.\n" +
-                                                "3. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + ".\n" +
-                                                "4. Once you are confident your file is saved, click the Finish button to put the program back at the beginning.";
+            uxCreateFileInstructionLabel.Text = "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool buttons.\n" +
+                                                "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Andwer button will make a file with only one line per card.\n" +
+                                                "3. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it.\n" +
+                                                "4. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + ".\n" +
+                                                "5. Once you are confident your file is saved, click the Finish button to put the program back at the beginning.";
         }
 
         /// <summary>
@@ -154,10 +155,17 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
+            if (grader.AnswerKey.Count < 1)
+            {
+                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
+                return;
+            }
+
             ScannerCom.ToAbort.Set();
             scannerCom.Start();
             cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
             cr.Start();
+            cr.Wait();
 
             grader.CreateCards(raw_cards);
             UpdateCardList();
@@ -219,6 +227,8 @@ namespace Scantron
             uxNumberOfQuestions.Value = 0;
             uxAllQuestionPoints.Value = 0;
             uxAllPartialCredit.Checked = false;
+            uxCardList.Text = "";
+            uxStatusTextbox.Text = "";
             uxStudentSelector.Items.Clear();
             uxStudentSelector.Text = "";
             uxVersionLabel.Text = "Version: ";
@@ -294,51 +304,9 @@ namespace Scantron
 
             uxCardList.Text = cards;
 
-            if (bad_wids == "" && bad_test_versions == "" && bad_answers == "")
-            {
-                uxErrorTextbox.Text = "No bad cards!";
-            }
-            else
-            {
-                uxErrorTextbox.Text =   "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
+            uxStatusTextbox.Text = "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
                                         "Invalid Test Versions: " + bad_test_versions + Environment.NewLine + Environment.NewLine +
                                         "Empty Answers: " + bad_answers;
-            }
-
-            /*
-            Panel card_panel;
-            TextBox wid_textbox;
-            NumericUpDown test_version_updown;
-            NumericUpDown sheet_number_updown;
-
-            foreach (Panel panel in uxCardList.Controls)
-            {
-                panel.Visible = false;
-            }
-
-            for (int i = 0; i < Math.Min(grader.Cards.Count, 750); i++)
-            {
-                card_panel = (Panel) uxCardList.Controls[i];
-                wid_textbox = (TextBox) card_panel.Controls[2];
-                test_version_updown = (NumericUpDown) card_panel.Controls[4];
-                sheet_number_updown = (NumericUpDown) card_panel.Controls[6];
-
-                card_panel.Visible = true;
-                wid_textbox.Text = grader.Cards[i].WID;
-                test_version_updown.Value = grader.Cards[i].TestVersion;
-                sheet_number_updown.Value = grader.Cards[i].SheetNumber;
-
-                if (test_version_updown.Value > grader.AnswerKey.Count)
-                {
-                    card_panel.BackColor = Color.Orange;
-                }
-
-                if (wid_textbox.Text.Contains("-"))
-                {
-                    card_panel.BackColor = Color.Red;
-                }
-            }
-            */
         }
 
         /// <summary>
@@ -346,6 +314,12 @@ namespace Scantron
         /// </summary>
         public void SaveChanges()
         {
+            if (grader.Cards.Count == 0)
+            {
+                DisplayMessage("No cards found. Follow the instructions on this page from the beginning.");
+                return;
+            }
+
             int wid_index;
             int version_index;
             int sheet_number_index;
@@ -402,24 +376,7 @@ namespace Scantron
                 }
             }
 
-            /*
-            TextBox wid_textbox;
-            NumericUpDown version_updown;
-            NumericUpDown sheet_number_updown;
-
-            for (int i = 0; i < uxCardList.Controls.Count; i++)
-            {
-                wid_textbox = (TextBox) uxCardList.Controls[i].Controls[1];
-                grader.Cards[i].WID = wid_textbox.Text;
-
-                version_updown = (NumericUpDown) uxCardList.Controls[i].Controls[3];
-                grader.Cards[i].TestVersion = (int) version_updown.Value;
-
-                sheet_number_updown = (NumericUpDown) uxCardList.Controls[i].Controls[5];
-                grader.Cards[i].SheetNumber = (int) sheet_number_updown.Value;
-            }
-            */
-
+            DisplayMessage("Changes saved!");
             UpdateCardList();
         }
 
@@ -615,7 +572,7 @@ namespace Scantron
                         checkbox = (CheckBox) question_panel.Controls[k];
                         if (checkbox.Checked)
                         {
-                            answer += (char)(65 + k);
+                            answer += k + 1;
                         }
                         else
                         {
@@ -654,13 +611,13 @@ namespace Scantron
         /// </summary>
         public void GradeStudents()
         {
-            if (grader.AnswerKey.Count == 0)
+            if (grader.AnswerKey.Count < 1)
             {
-                DisplayMessage("You have not created an answer key. Got back to the Answer Key tab and follow the instructions.");
+                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
                 return;
             }
 
-            if (grader.Cards.Count == 0)
+            if (grader.Students.Count < 1)
             {
                 DisplayMessage("No students found. Go back to the Scan tab and follow the instructions.");
                 return;
@@ -681,21 +638,23 @@ namespace Scantron
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
         /// </summary>
-        public void WriteFile(bool gradebook)
+        public void WriteFile(string type)
         {
             string file = "";
-            string filter = "";
+            string filter = "txt files (*.txt)|*.txt";
 
-            if (gradebook)
+            if (type == "gradebook")
             {
                 file = grader.GradebookFile();
                 filter = "csv files (*.csv)|*.csv";
             }
-            else
+            if (type == "single")
             {
-                file = grader.ScantronToolFile();
-                filter = "txt files (*.txt)|*.txt";
-
+                file = grader.ScantronToolSingleAnswerFile();
+            }
+            if (type == "multiple")
+            {
+                file = grader.ScantronToolMultipleAnswerFile();
             }
 
             // Then we have to start a file dialog to save the string to a file.
@@ -730,6 +689,7 @@ namespace Scantron
                     MessageBox.Show("Student responses have been successfully recorded!");
                 }
             }
+            /*
             else
             {
                 MessageBox.Show("An error occured while trying to save,\n" +
@@ -740,6 +700,7 @@ namespace Scantron
                                 "or reversed. ");
                 //throw new IOException();
             }
+            */
         }
 
         /// <summary>

@@ -58,8 +58,8 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTab = new System.Windows.Forms.TabPage();
-            this.uxErrorsLabel = new System.Windows.Forms.Label();
-            this.uxErrorTextbox = new System.Windows.Forms.TextBox();
+            this.uxStatusLabel = new System.Windows.Forms.Label();
+            this.uxStatusTextbox = new System.Windows.Forms.TextBox();
             this.uxCardList = new System.Windows.Forms.TextBox();
             this.uxScanneCardsLabel = new System.Windows.Forms.Label();
             this.uxResumeButton = new System.Windows.Forms.Button();
@@ -76,9 +76,10 @@
             this.uxPreviousButton = new System.Windows.Forms.Button();
             this.uxNextButton = new System.Windows.Forms.Button();
             this.uxCreateFileTab = new System.Windows.Forms.TabPage();
-            this.uxGradebookButton = new System.Windows.Forms.Button();
-            this.uxScantronToolButton = new System.Windows.Forms.Button();
+            this.uxScantronToolSingleAnswerButton = new System.Windows.Forms.Button();
             this.uxFinishButton = new System.Windows.Forms.Button();
+            this.uxGradebookButton = new System.Windows.Forms.Button();
+            this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTab.SuspendLayout();
@@ -238,9 +239,9 @@
             this.uxStartInstructionTextBox.Multiline = true;
             this.uxStartInstructionTextBox.Name = "uxStartInstructionTextBox";
             this.uxStartInstructionTextBox.ReadOnly = true;
-            this.uxStartInstructionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.uxStartInstructionTextBox.Size = new System.Drawing.Size(474, 601);
             this.uxStartInstructionTextBox.TabIndex = 0;
+            this.uxStartInstructionTextBox.TabStop = false;
             // 
             // uxAnswerKeyTab
             // 
@@ -460,8 +461,8 @@
             // uxScanTab
             // 
             this.uxScanTab.BackColor = System.Drawing.Color.Gray;
-            this.uxScanTab.Controls.Add(this.uxErrorsLabel);
-            this.uxScanTab.Controls.Add(this.uxErrorTextbox);
+            this.uxScanTab.Controls.Add(this.uxStatusLabel);
+            this.uxScanTab.Controls.Add(this.uxStatusTextbox);
             this.uxScanTab.Controls.Add(this.uxCardList);
             this.uxScanTab.Controls.Add(this.uxScanneCardsLabel);
             this.uxScanTab.Controls.Add(this.uxResumeButton);
@@ -480,25 +481,26 @@
             this.uxScanTab.TabIndex = 0;
             this.uxScanTab.Text = "Scan";
             // 
-            // uxErrorsLabel
+            // uxStatusLabel
             // 
-            this.uxErrorsLabel.AutoSize = true;
-            this.uxErrorsLabel.BackColor = System.Drawing.Color.Transparent;
-            this.uxErrorsLabel.Location = new System.Drawing.Point(564, 204);
-            this.uxErrorsLabel.Name = "uxErrorsLabel";
-            this.uxErrorsLabel.Size = new System.Drawing.Size(67, 24);
-            this.uxErrorsLabel.TabIndex = 41;
-            this.uxErrorsLabel.Text = "Errors";
+            this.uxStatusLabel.AutoSize = true;
+            this.uxStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.uxStatusLabel.Location = new System.Drawing.Point(564, 204);
+            this.uxStatusLabel.Name = "uxStatusLabel";
+            this.uxStatusLabel.Size = new System.Drawing.Size(66, 24);
+            this.uxStatusLabel.TabIndex = 41;
+            this.uxStatusLabel.Text = "Status";
             // 
-            // uxErrorTextbox
+            // uxStatusTextbox
             // 
-            this.uxErrorTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uxErrorTextbox.Location = new System.Drawing.Point(483, 231);
-            this.uxErrorTextbox.Multiline = true;
-            this.uxErrorTextbox.Name = "uxErrorTextbox";
-            this.uxErrorTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxErrorTextbox.Size = new System.Drawing.Size(240, 365);
-            this.uxErrorTextbox.TabIndex = 40;
+            this.uxStatusTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.uxStatusTextbox.Location = new System.Drawing.Point(483, 231);
+            this.uxStatusTextbox.Multiline = true;
+            this.uxStatusTextbox.Name = "uxStatusTextbox";
+            this.uxStatusTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.uxStatusTextbox.Size = new System.Drawing.Size(240, 365);
+            this.uxStatusTextbox.TabIndex = 40;
+            this.uxStatusTextbox.TabStop = false;
             // 
             // uxCardList
             // 
@@ -567,7 +569,6 @@
             this.uxTestDataButton.TabStop = false;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
-            this.uxTestDataButton.Visible = false;
             this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxCreateStudentsButton
@@ -708,9 +709,10 @@
             // uxCreateFileTab
             // 
             this.uxCreateFileTab.BackColor = System.Drawing.Color.Gray;
+            this.uxCreateFileTab.Controls.Add(this.uxScantronToolSingleAnswerButton);
             this.uxCreateFileTab.Controls.Add(this.uxFinishButton);
             this.uxCreateFileTab.Controls.Add(this.uxGradebookButton);
-            this.uxCreateFileTab.Controls.Add(this.uxScantronToolButton);
+            this.uxCreateFileTab.Controls.Add(this.uxScantronToolMultipleAnswerButton);
             this.uxCreateFileTab.Controls.Add(this.uxCreateFileInstructionLabel);
             this.uxCreateFileTab.Location = new System.Drawing.Point(4, 34);
             this.uxCreateFileTab.Name = "uxCreateFileTab";
@@ -718,39 +720,22 @@
             this.uxCreateFileTab.TabIndex = 4;
             this.uxCreateFileTab.Text = "Create File";
             // 
-            // uxGradebookButton
+            // uxScantronToolSingleAnswerButton
             // 
-            this.uxGradebookButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxGradebookButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxGradebookButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxGradebookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxGradebookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradebookButton.Location = new System.Drawing.Point(168, 244);
-            this.uxGradebookButton.Name = "uxGradebookButton";
-            this.uxGradebookButton.Size = new System.Drawing.Size(152, 98);
-            this.uxGradebookButton.TabIndex = 46;
-            this.uxGradebookButton.TabStop = false;
-            this.uxGradebookButton.Tag = "";
-            this.uxGradebookButton.Text = "Gradebook";
-            this.uxGradebookButton.UseVisualStyleBackColor = false;
-            this.uxGradebookButton.Click += new System.EventHandler(this.uxGradebookButton_Click);
-            // 
-            // uxScantronToolButton
-            // 
-            this.uxScantronToolButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxScantronToolButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxScantronToolButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxScantronToolButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxScantronToolButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScantronToolButton.Location = new System.Drawing.Point(384, 244);
-            this.uxScantronToolButton.Name = "uxScantronToolButton";
-            this.uxScantronToolButton.Size = new System.Drawing.Size(160, 100);
-            this.uxScantronToolButton.TabIndex = 45;
-            this.uxScantronToolButton.TabStop = false;
-            this.uxScantronToolButton.Tag = "";
-            this.uxScantronToolButton.Text = "Scantron Tool";
-            this.uxScantronToolButton.UseVisualStyleBackColor = false;
-            this.uxScantronToolButton.Click += new System.EventHandler(this.uxScantronToolButton_Click);
+            this.uxScantronToolSingleAnswerButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxScantronToolSingleAnswerButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxScantronToolSingleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScantronToolSingleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxScantronToolSingleAnswerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxScantronToolSingleAnswerButton.Location = new System.Drawing.Point(275, 243);
+            this.uxScantronToolSingleAnswerButton.Name = "uxScantronToolSingleAnswerButton";
+            this.uxScantronToolSingleAnswerButton.Size = new System.Drawing.Size(175, 100);
+            this.uxScantronToolSingleAnswerButton.TabIndex = 48;
+            this.uxScantronToolSingleAnswerButton.TabStop = false;
+            this.uxScantronToolSingleAnswerButton.Tag = "";
+            this.uxScantronToolSingleAnswerButton.Text = "Scantron Tool Single Answer";
+            this.uxScantronToolSingleAnswerButton.UseVisualStyleBackColor = false;
+            this.uxScantronToolSingleAnswerButton.Click += new System.EventHandler(this.uxScantronToolSingleAnswerButton_Click);
             // 
             // uxFinishButton
             // 
@@ -768,6 +753,40 @@
             this.uxFinishButton.Text = "Finish";
             this.uxFinishButton.UseVisualStyleBackColor = false;
             this.uxFinishButton.Click += new System.EventHandler(this.uxFinishButton_Click);
+            // 
+            // uxGradebookButton
+            // 
+            this.uxGradebookButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxGradebookButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxGradebookButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradebookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxGradebookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradebookButton.Location = new System.Drawing.Point(47, 244);
+            this.uxGradebookButton.Name = "uxGradebookButton";
+            this.uxGradebookButton.Size = new System.Drawing.Size(152, 98);
+            this.uxGradebookButton.TabIndex = 46;
+            this.uxGradebookButton.TabStop = false;
+            this.uxGradebookButton.Tag = "";
+            this.uxGradebookButton.Text = "Gradebook";
+            this.uxGradebookButton.UseVisualStyleBackColor = false;
+            this.uxGradebookButton.Click += new System.EventHandler(this.uxGradebookButton_Click);
+            // 
+            // uxScantronToolMultipleAnswerButton
+            // 
+            this.uxScantronToolMultipleAnswerButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxScantronToolMultipleAnswerButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxScantronToolMultipleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScantronToolMultipleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxScantronToolMultipleAnswerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxScantronToolMultipleAnswerButton.Location = new System.Drawing.Point(516, 244);
+            this.uxScantronToolMultipleAnswerButton.Name = "uxScantronToolMultipleAnswerButton";
+            this.uxScantronToolMultipleAnswerButton.Size = new System.Drawing.Size(175, 100);
+            this.uxScantronToolMultipleAnswerButton.TabIndex = 45;
+            this.uxScantronToolMultipleAnswerButton.TabStop = false;
+            this.uxScantronToolMultipleAnswerButton.Tag = "";
+            this.uxScantronToolMultipleAnswerButton.Text = "Scantron Tool Multiple Answer";
+            this.uxScantronToolMultipleAnswerButton.UseVisualStyleBackColor = false;
+            this.uxScantronToolMultipleAnswerButton.Click += new System.EventHandler(this.uxScantronToolMultipleAnswerButton_Click);
             // 
             // uxCreateFileInstructionLabel
             // 
@@ -856,8 +875,8 @@
         private System.Windows.Forms.Button uxResetButton;
         private System.Windows.Forms.Button uxTestDataButton;
         private System.Windows.Forms.TextBox uxCardList;
-        private System.Windows.Forms.Label uxErrorsLabel;
-        private System.Windows.Forms.TextBox uxErrorTextbox;
+        private System.Windows.Forms.Label uxStatusLabel;
+        private System.Windows.Forms.TextBox uxStatusTextbox;
         private System.Windows.Forms.TabPage uxStartTab;
         private System.Windows.Forms.TabPage uxCreateFileTab;
         private System.Windows.Forms.TextBox uxStartInstructionTextBox;
@@ -866,9 +885,10 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button uxGradebookButton;
-        private System.Windows.Forms.Button uxScantronToolButton;
+        private System.Windows.Forms.Button uxScantronToolMultipleAnswerButton;
         private System.Windows.Forms.Button uxFinishButton;
         private System.Windows.Forms.Label uxCreateFileInstructionLabel;
+        private System.Windows.Forms.Button uxScantronToolSingleAnswerButton;
     }
 }
 

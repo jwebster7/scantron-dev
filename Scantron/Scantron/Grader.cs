@@ -161,7 +161,16 @@ namespace Scantron
         /// <returns></returns>
         public string GradebookFile()
         {
-            float points_possible = answer_key[0].Sum(question => question.Points);
+            float points_possible;
+
+            if (answer_key.Count < 1)
+            {
+                points_possible = 0;
+            }
+            else
+            {
+               points_possible = answer_key[0].Sum(question => question.Points);
+            }
 
             string info = "Student,ID,SIS User ID,SIS Login ID,Section," + exam_name + Environment.NewLine +
                             "Points Possible,,,,," + points_possible + Environment.NewLine;
@@ -174,13 +183,25 @@ namespace Scantron
             return info;
         }
 
-        public string ScantronToolFile()
+        public string ScantronToolSingleAnswerFile()
         {
             string info = "";
 
             foreach (Card card in cards)
             {
-                info += card.ToString();
+                info += card.ToSingleAnswerString();
+            }
+
+            return info;
+        }
+
+        public string ScantronToolMultipleAnswerFile()
+        {
+            string info = "";
+
+            foreach (Card card in cards)
+            {
+                info += card.ToMultipleAnswerString();
             }
 
             return info;

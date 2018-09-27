@@ -241,11 +241,11 @@ namespace Scantron
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer += (char)(k + 65);
+                                answer += k + 1;
                             }
                             else
                             {
-                                answer += " ";
+                                answer += ' ';
                             }
                         }
 
@@ -263,7 +263,7 @@ namespace Scantron
                         {
                             if (card_lines[i + k][j] > 54)
                             {
-                                answer += (char)(k + 65);
+                                answer += k + 1;
                             }
                             else
                             {
@@ -307,7 +307,7 @@ namespace Scantron
         /// <param name="c">Third bubble's darkness.</param>
         /// <param name="d">Fourth bubble's darkness.</param>
         /// <param name="e">Fifth bubble's darkness.</param>
-        /// <returns>Which bubble is darkest. Defaults to 1.</returns>
+        /// <returns>Which bubble is darkest. Defaults to 0.</returns>
         private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
             if (a > b && a > c && a > d && a > e)
@@ -334,16 +334,47 @@ namespace Scantron
             return 0;
         }
 
+        public string ToSingleAnswerString()
+        {
+            string card_info = "";
+            string answer = "";
+
+            card_info = wid + ", " + test_version + sheet_number + grant_permission + "--,   '";
+
+            for (int i = 0; i < response.Count; i++)
+            {
+                answer = response[i].Answer;
+                answer = answer.Trim();
+
+                if (answer.Length == 1)
+                {
+                    card_info += answer;
+                }
+                else if (answer.Length == 0)
+                {
+                    card_info += "-";
+                }
+                else
+                {
+                    card_info += "*";
+                }
+            }
+
+            card_info += "'\r\n";
+
+            return card_info;
+        }
+
         /// <summary>
         /// Translates the student's data to a string for use with the Canvas Scantron tool, not for uploading to the gradebook as a .csv.
         /// </summary>
         /// <returns>Student's data as a string.</returns>
-        public override string ToString()
+        public string ToMultipleAnswerString()
         {
             string card_info = "";
 
             // Row 5
-            card_info += wid + ", " + test_version + sheet_number + grant_permission + "--,E, '";
+            card_info += wid + ", " + test_version + sheet_number + grant_permission + "--,5, '";
 
             for (int j = 0; j < response.Count; j++)
             {
@@ -355,7 +386,7 @@ namespace Scantron
             // Rows 4, 3, 2, 1
             for (int i = 3; i >= 0; i--)
             {
-                card_info += "         ,      " + ',' + (char)(65 + i) + ", '" ;
+                card_info += "         ,      " + ',' + (i + 1) + ", '" ;
 
                 for (int j = 0; j < response.Count; j++)
                 {
