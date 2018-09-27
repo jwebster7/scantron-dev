@@ -55,7 +55,7 @@ namespace Scantron
         //public static List<string> Run()
         public List<string> Run(List<string> raw_cards)
         {
-            
+            raw_cards.Clear();
             Thread.Sleep(1000);
             Thread.BeginCriticalRegion();
 

@@ -323,8 +323,10 @@ namespace Scantron
             int wid_index;
             int version_index;
             int sheet_number_index;
-            string s;
-            int j;
+            string wid;
+            int version;
+            int sheet_number;
+            string card_line;
 
             List<string> card_list = new List<string>();
             char[] splitter = new char[] { '\n' };
@@ -332,20 +334,24 @@ namespace Scantron
 
             for (int i = 0; i < card_list.Count; i++)
             {
-                if (card_list[i].Length < 50)
+                card_line = card_list[i];
+
+                // Make sure the user didn't delete things.
+                if (!(card_line.Contains(" WID: ") && card_line.Contains(" Version: ") && card_line.Contains(" Sheet Number: ")))
                 {
+                    DisplayMessage("Be sure to only edit the numbers. The card list is sensitive.");
                     UpdateCardList();
                     return;
                 }
 
-                wid_index = card_list[i].IndexOf("WID:") + 5;
-                version_index = card_list[i].IndexOf("Version:") + 9;
-                sheet_number_index = card_list[i].IndexOf("Sheet Number:") + 14;
+                wid_index = card_line.IndexOf("WID:") + 5;
+                version_index = card_line.IndexOf("Version:") + 9;
+                sheet_number_index = card_line.IndexOf("Sheet Number:") + 14;
                 
-                s = card_list[i].Substring(wid_index, 9);
-                if (s.Length == 9 && s.All(c => c >= '0' && c <= '9'))
+                wid = card_line.Substring(wid_index, 9);
+                if (wid.Length == 9 && wid.All(c => c >= '0' && c <= '9'))
                 {
-                    grader.Cards[i].WID = s;
+                    grader.Cards[i].WID = wid;
                 }
                 else
                 {
@@ -353,10 +359,10 @@ namespace Scantron
                     return;
                 }
 
-                j = (int)Char.GetNumericValue(card_list[i][version_index]);
-                if (j > 0 && j < 4)
+                version = (int)Char.GetNumericValue(card_list[i][version_index]);
+                if (version > 0 && version < 4)
                 {
-                    grader.Cards[i].TestVersion = j;
+                    grader.Cards[i].TestVersion = version;
                 }
                 else
                 {
@@ -364,10 +370,10 @@ namespace Scantron
                     return;
                 }
 
-                j = (int)Char.GetNumericValue(card_list[i][sheet_number_index]);
-                if (j > 0 && j < 5)
+                sheet_number = (int)Char.GetNumericValue(card_list[i][sheet_number_index]);
+                if (sheet_number > 0 && sheet_number < 5)
                 {
-                    grader.Cards[i].SheetNumber = j;
+                    grader.Cards[i].SheetNumber = sheet_number;
                 }
                 else
                 {
