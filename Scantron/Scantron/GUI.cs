@@ -314,7 +314,7 @@ namespace Scantron
         /// </summary>
         public void SaveChanges()
         {
-            if (grader.Cards.Count == 0)
+            if (grader.Cards.Count < 1)
             {
                 DisplayMessage("No cards found. Follow the instructions on this page from the beginning.");
                 return;
@@ -339,7 +339,7 @@ namespace Scantron
                 // Make sure the user didn't delete things.
                 if (!(card_line.Contains(" WID: ") && card_line.Contains(" Version: ") && card_line.Contains(" Sheet Number: ")))
                 {
-                    DisplayMessage("Be sure to only edit the numbers. The card list is sensitive.");
+                    DisplayMessage("Be sure to only edit the numbers.");
                     UpdateCardList();
                     return;
                 }
@@ -347,40 +347,17 @@ namespace Scantron
                 wid_index = card_line.IndexOf("WID:") + 5;
                 version_index = card_line.IndexOf("Version:") + 9;
                 sheet_number_index = card_line.IndexOf("Sheet Number:") + 14;
-                
+
                 wid = card_line.Substring(wid_index, 9);
-                if (wid.Length == 9 && wid.All(c => c >= '0' && c <= '9'))
-                {
-                    grader.Cards[i].WID = wid;
-                }
-                else
-                {
-                    UpdateCardList();
-                    return;
-                }
+                grader.Cards[i].WID = wid;
 
-                version = (int)Char.GetNumericValue(card_list[i][version_index]);
-                if (version > 0 && version < 4)
-                {
-                    grader.Cards[i].TestVersion = version;
-                }
-                else
-                {
-                    UpdateCardList();
-                    return;
-                }
+                version = (int)Char.GetNumericValue(card_line[version_index]);
+                grader.Cards[i].TestVersion = version;
 
-                sheet_number = (int)Char.GetNumericValue(card_list[i][sheet_number_index]);
-                if (sheet_number > 0 && sheet_number < 5)
-                {
-                    grader.Cards[i].SheetNumber = sheet_number;
-                }
-                else
-                {
-                    UpdateCardList();
-                    return;
-                }
+                sheet_number = (int)Char.GetNumericValue(card_line[sheet_number_index]);
+                grader.Cards[i].SheetNumber = sheet_number;
             }
+
 
             DisplayMessage("Changes saved!");
             UpdateCardList();
