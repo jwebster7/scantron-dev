@@ -38,7 +38,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.uxSetupImage1 = new System.Windows.Forms.PictureBox();
             this.uxStartInstructionTextBox = new System.Windows.Forms.TextBox();
             this.uxAnswerKeyTab = new System.Windows.Forms.TabPage();
             this.uxResetButton = new System.Windows.Forms.Button();
@@ -86,7 +86,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1)).BeginInit();
             this.uxAnswerKeyTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestions)).BeginInit();
@@ -187,7 +187,7 @@
             this.uxStartTab.Controls.Add(this.pictureBox4);
             this.uxStartTab.Controls.Add(this.pictureBox3);
             this.uxStartTab.Controls.Add(this.pictureBox2);
-            this.uxStartTab.Controls.Add(this.pictureBox1);
+            this.uxStartTab.Controls.Add(this.uxSetupImage1);
             this.uxStartTab.Controls.Add(this.uxStartInstructionTextBox);
             this.uxStartTab.Location = new System.Drawing.Point(4, 34);
             this.uxStartTab.Name = "uxStartTab";
@@ -222,14 +222,15 @@
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
-            // pictureBox1
+            // uxSetupImage1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox1.Location = new System.Drawing.Point(483, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(252, 141);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.uxSetupImage1.BackColor = System.Drawing.Color.Maroon;
+            this.uxSetupImage1.Image = global::Scantron.Properties.Resources.SetupImage11;
+            this.uxSetupImage1.Location = new System.Drawing.Point(483, 3);
+            this.uxSetupImage1.Name = "uxSetupImage1";
+            this.uxSetupImage1.Size = new System.Drawing.Size(252, 141);
+            this.uxSetupImage1.TabIndex = 1;
+            this.uxSetupImage1.TabStop = false;
             // 
             // uxStartInstructionTextBox
             // 
@@ -817,7 +818,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1)).EndInit();
             this.uxAnswerKeyTab.ResumeLayout(false);
             this.uxAnswerKeyTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPoints)).EndInit();
@@ -880,7 +881,7 @@
         private System.Windows.Forms.TabPage uxStartTab;
         private System.Windows.Forms.TabPage uxCreateFileTab;
         private System.Windows.Forms.TextBox uxStartInstructionTextBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox uxSetupImage1;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
