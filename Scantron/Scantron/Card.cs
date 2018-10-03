@@ -310,10 +310,6 @@ namespace Scantron
         /// <returns>Which bubble is darkest. Defaults to 0.</returns>
         private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
-            if (a > b && a > c && a > d && a > e)
-            {
-                return 1;
-            }
             if (b > a && b > c && b > d && b > e)
             {
                 return 2;
@@ -331,7 +327,7 @@ namespace Scantron
                 return 5;
             }
 
-            return 0;
+            return 1;
         }
         
         public string ToSingleAnswerString()
