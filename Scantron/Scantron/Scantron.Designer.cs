@@ -569,6 +569,7 @@
             this.uxTestDataButton.TabStop = false;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
+            this.uxTestDataButton.Visible = false;
             this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxCreateStudentsButton
