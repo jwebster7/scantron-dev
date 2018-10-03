@@ -225,7 +225,6 @@
             // uxSetupImage1
             // 
             this.uxSetupImage1.BackColor = System.Drawing.Color.Maroon;
-            this.uxSetupImage1.Image = global::Scantron.Properties.Resources.SetupImage11;
             this.uxSetupImage1.Location = new System.Drawing.Point(483, 3);
             this.uxSetupImage1.Name = "uxSetupImage1";
             this.uxSetupImage1.Size = new System.Drawing.Size(252, 141);
