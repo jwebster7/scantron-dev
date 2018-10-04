@@ -74,71 +74,85 @@ namespace Scantron
             gui.CreateAnswerKey();
         }
 
+        // Event handler for when Reset button is clicked.
         private void uxResetButton_click(object sender, EventArgs e)
         {
             gui.Reset();
         }
 
+        // Event handler for when Start button is clicked.
         private void uxStartButton_Click(object sender, EventArgs e)
         {
             gui.Start();
         }
 
+        // Event handler for when Save Changes button is clicked.
         private void uxSaveChangesButton_Click(object sender, EventArgs e)
         {
             gui.SaveChanges();
         }
 
+        // Event handler for when Create Students button is clicked.
         private void uxCreateStudentsButton_Click(object sender, EventArgs e)
         {
             gui.CreateStudents();
         }
 
+        // Event handler for hen Test Data button is clicked.
         private void uxTestDataButton_Click(object sender, EventArgs e)
         {
             gui.TestData();
         }
 
+        // Event handler for when Pause button is clicked.
         private void uxPauseButton_Click(object sender, EventArgs e)
         {
             gui.Pause();
         }
 
+        // Event handler for when Resume button is clicked.
         private void uxResumeButton_Click(object sender, EventArgs e)
         {
             gui.Resume();
         }
 
+        // Event handler for when Stop button is clicked.
         private void uxStopButton_Click(object sender, EventArgs e)
         {
             gui.Stop();
         }
 
+        // Event handler for when Grade Students button is clicked.
         private void uxGradeStudentsButton_Click(object sender, EventArgs e)
         {
             gui.GradeStudents();
         }
 
+        // Event handler for when Next button is clicked.
         private void uxNextButton_Click(object sender, EventArgs e)
         {
             gui.NextStudent();
         }
 
+        // Event handler for when Previous button is clicked.
         private void uxPreviousButton_Click(object sender, EventArgs e)
         {
             gui.PreviousStudent();
         }
 
+        // Event handler for when Finish button is clicked.
         private void uxFinishButton_Click(object sender, EventArgs e)
         {
             gui.Finish();
         }
 
+        // Event handler for when Scantron Tool Single Answer button is clicked.
         private void uxScantronToolSingleAnswerButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("single");
         }
 
+        // Event handler for when Scantron Tool Multiple Answer button is clicked.
         private void uxScantronToolMultipleAnswerButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("multiple");
