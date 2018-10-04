@@ -594,11 +594,6 @@ namespace Scantron
             DisplayMessage("Answer Key successfully created!");
         }
 
-        public void NoAnswerKey()
-        {
-
-        }
-
         /// <summary>
         /// Grade the students.
         /// </summary>

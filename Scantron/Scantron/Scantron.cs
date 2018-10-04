@@ -32,48 +32,46 @@ namespace Scantron
             gui.InstantiateStudentDisplay();
         }
 
-        // Event handler for selecting student answers to view.
+        // Event handler for selecting students in ComboBox.
         private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             gui.SelectStudent();
         }
 
-        // Event handler for the All Partial Credit checkbox.
+        // Event handler for the All Partial Credit CheckBox.
         private void uxAllPartialCredit_CheckedChanged(object sender, EventArgs e)
         {
             gui.UpdateAllPartialCredit();
         }
 
-        // Event handler for All Question Points numericupdown.
+        // Event handler for All Question Points NumericUpDown.
         private void uxAllQuestionPoints_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAllQuestionPoints();
         }
 
-        // Event handlerfor Number of Questions numericupdown.
+        // Event handler for Number of Questions NumericUpDown.
         private void uxNumberOfQuestions_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAnswerForm();
         }
 
+        // Event handler for Number of Versions NumericUpDown.
         private void uxNumberOfVersions_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAnswerForm();
         }
 
+        // Event handler for when Gradebook button is clicked.
         private void uxGradebookButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("gradebook");
         }
 
+        // Event handler for when Create Answer Key button is clicked.
         private void uxCreateAnswerKeyButton_Click(object sender, EventArgs e)
         {
             gui.CreateAnswerKey();
-        }
-
-        private void uxNoAnswerKeyButton_Click(object sender, EventArgs e)
-        {
-            gui.NoAnswerKey();
         }
 
         private void uxResetButton_click(object sender, EventArgs e)
