@@ -16,7 +16,7 @@ namespace Scantron
 {
     class Grader
     {
-        GUI gui;
+        private GUI gui;
 
         string exam_name = "";
         // Holds the cards used to create the students.

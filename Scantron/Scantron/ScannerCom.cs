@@ -23,8 +23,8 @@ namespace Scantron
 {
     public class ScannerCom
     {
-        private  SerialPort serial_port;
-        private  ScannerConfig config;
+        private SerialPort serial_port;
+        private ScannerConfig config;
 
         public static ManualResetEvent ToAbort = new ManualResetEvent(false);
         

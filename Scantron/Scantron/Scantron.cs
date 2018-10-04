@@ -38,16 +38,19 @@ namespace Scantron
             gui.SelectStudent();
         }
 
+        // Event handler for the All Partial Credit checkbox.
         private void uxAllPartialCredit_CheckedChanged(object sender, EventArgs e)
         {
             gui.UpdateAllPartialCredit();
         }
 
+        // Event handler for All Question Points numericupdown.
         private void uxAllQuestionPoints_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAllQuestionPoints();
         }
 
+        // Event handlerfor Number of Questions numericupdown.
         private void uxNumberOfQuestions_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAnswerForm();

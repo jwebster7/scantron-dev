@@ -31,24 +31,24 @@ namespace Scantron
         private Panel uxStudentResponsePanel;
         private ComboBox uxStudentSelector;
         private TabControl uxAnswerKeyTabControl;
-        private TextBox uxExamName;
-        private NumericUpDown uxNumberOfQuestions;
-        private NumericUpDown uxNumberOfVersions;
-        private NumericUpDown uxAllQuestionPoints;
-        private CheckBox uxAllPartialCredit;
+        private TextBox uxExamNameTextBox;
+        private NumericUpDown uxNumberOfQuestionsNumericUpDown;
+        private NumericUpDown uxNumberOfVersionsNumericUpDown;
+        private NumericUpDown uxAllQuestionPointsNumericUpDown;
+        private CheckBox uxAllPartialCreditCheckBox;
         private Button uxPreviousButton;
         private Button uxNextButton;
         private Label uxVersionLabel;
         private Label uxScoreLabel;
         private Label uxCouldNotBeGradedLabel;
-        private TextBox uxCardList;
-        private TextBox uxStatusTextbox;
+        private TextBox uxCardListTextBox;
+        private TextBox uxStatusTextBox;
         private TabControl uxMainTabControl;
-        private TabPage uxStartTab;
-        private TabPage uxAnswerKeyTab;
-        private TabPage uxScanTab;
-        private TabPage uxGradeTab;
-        private TabPage uxCreateFileTab;
+        private TabPage uxStartTabPage;
+        private TabPage uxAnswerKeyTabPage;
+        private TabPage uxScanTabPage;
+        private TabPage uxGradeTabPage;
+        private TabPage uxCreateFileTabPage;
         private TextBox uxStartInstructionTextBox;
         private Label uxCreateFileInstructionLabel;
         private Button uxFinishButton;
@@ -59,7 +59,7 @@ namespace Scantron
         // Scanner communication fields
         private ScannerCom scannerCom;
         private bool toAbort = true;
-        Task<List<string>> cr;
+        Task<List<string>> task;
 
         public GUI(Form scantron_form)
         {
@@ -71,26 +71,26 @@ namespace Scantron
             uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
             uxGradeInstructionLabel = (Label) scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
             uxStudentResponsePanel = (Panel) scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
-            uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelector",true)[0];
+            uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelectorComboBox",true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
-            uxExamName = (TextBox) scantron_form.Controls.Find("uxExamName", true)[0];
-            uxNumberOfQuestions = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestions", true)[0];
-            uxNumberOfVersions = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersions", true)[0];
-            uxAllQuestionPoints = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPoints", true)[0];
-            uxAllPartialCredit = (CheckBox) scantron_form.Controls.Find("uxAllPartialCredit", true)[0];
+            uxExamNameTextBox = (TextBox) scantron_form.Controls.Find("uxExamNameTextBox", true)[0];
+            uxNumberOfQuestionsNumericUpDown = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestionsNumericUpDown", true)[0];
+            uxNumberOfVersionsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersionsNumericUpDown", true)[0];
+            uxAllQuestionPointsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPointsNumericUpDown", true)[0];
+            uxAllPartialCreditCheckBox = (CheckBox) scantron_form.Controls.Find("uxAllPartialCreditCheckBox", true)[0];
             uxPreviousButton = (Button) scantron_form.Controls.Find("uxPreviousButton", true)[0];
             uxNextButton = (Button) scantron_form.Controls.Find("uxNextButton", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
             uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
-            uxCardList = (TextBox) scantron_form.Controls.Find("uxCardList", true)[0];
-            uxStatusTextbox = (TextBox) scantron_form.Controls.Find("uxStatusTextbox", true)[0];
+            uxCardListTextBox = (TextBox) scantron_form.Controls.Find("uxCardListTextBox", true)[0];
+            uxStatusTextBox = (TextBox) scantron_form.Controls.Find("uxStatusTextBox", true)[0];
             uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
-            uxStartTab = (TabPage) scantron_form.Controls.Find("uxStartTab", true)[0];
-            uxAnswerKeyTab = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTab", true)[0];
-            uxScanTab = (TabPage) scantron_form.Controls.Find("uxScanTab", true)[0];
-            uxGradeTab = (TabPage) scantron_form.Controls.Find("uxGradeTab", true)[0];
-            uxCreateFileTab = (TabPage) scantron_form.Controls.Find("uxCreateFileTab", true)[0];
+            uxStartTabPage = (TabPage) scantron_form.Controls.Find("uxStartTabPage", true)[0];
+            uxAnswerKeyTabPage = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTabPage", true)[0];
+            uxScanTabPage = (TabPage) scantron_form.Controls.Find("uxScanTabPage", true)[0];
+            uxGradeTabPage = (TabPage) scantron_form.Controls.Find("uxGradeTabPage", true)[0];
+            uxCreateFileTabPage = (TabPage) scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
             uxStartInstructionTextBox = (TextBox) scantron_form.Controls.Find("uxStartInstructionTextBox", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
             uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
@@ -162,10 +162,20 @@ namespace Scantron
             }
 
             ScannerCom.ToAbort.Set();
-            scannerCom.Start();
-            cr = new Task<List<string>>(() => scannerCom.Run(raw_cards));
-            cr.Start();
-            cr.Wait();
+
+            try
+            {
+                scannerCom.Start();
+            }
+            catch(IOException)
+            {
+                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
+                return;
+            }
+
+            task = new Task<List<string>>(() => scannerCom.Run(raw_cards));
+            task.Start();
+            task.Wait();
 
             grader.CreateCards(raw_cards);
             UpdateCardList();
@@ -222,13 +232,13 @@ namespace Scantron
                 panel.Visible = false;
             }
 
-            uxExamName.Text = "";
-            uxNumberOfVersions.Value = 0;
-            uxNumberOfQuestions.Value = 0;
-            uxAllQuestionPoints.Value = 0;
-            uxAllPartialCredit.Checked = false;
-            uxCardList.Text = "";
-            uxStatusTextbox.Text = "";
+            uxExamNameTextBox.Text = "";
+            uxNumberOfVersionsNumericUpDown.Value = 0;
+            uxNumberOfQuestionsNumericUpDown.Value = 0;
+            uxAllQuestionPointsNumericUpDown.Value = 0;
+            uxAllPartialCreditCheckBox.Checked = false;
+            uxCardListTextBox.Text = "";
+            uxStatusTextBox.Text = "";
             uxStudentSelector.Items.Clear();
             uxStudentSelector.Text = "";
             uxVersionLabel.Text = "Version: ";
@@ -265,7 +275,7 @@ namespace Scantron
         private void UpdateCardList()
         {
             Card card;
-            uxCardList.Text = "";
+            uxCardListTextBox.Text = "";
             string cards = "";
             string wid = "";
             int test_version = 1;
@@ -281,8 +291,8 @@ namespace Scantron
                 test_version = card.TestVersion;
 
                 cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + card.SheetNumber + Environment.NewLine;
-
-                if (wid.Contains("-"))
+                
+                if (wid.Contains("-") || wid[0] != '8')
                 {
                     bad_wids += (i + 1) + " ";
                 }
@@ -302,11 +312,11 @@ namespace Scantron
                 }
             }
 
-            uxCardList.Text = cards;
+            uxCardListTextBox.Text = cards;
 
-            uxStatusTextbox.Text = "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
-                                        "Invalid Test Versions: " + bad_test_versions + Environment.NewLine + Environment.NewLine +
-                                        "Empty Answers: " + bad_answers;
+            uxStatusTextBox.Text =  "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
+                                    "Invalid Test Versions: " + bad_test_versions + Environment.NewLine + Environment.NewLine +
+                                    "Empty Answers: " + bad_answers;
         }
 
         /// <summary>
@@ -330,7 +340,7 @@ namespace Scantron
 
             List<string> card_list = new List<string>();
             char[] splitter = new char[] { '\n' };
-            card_list = uxCardList.Text.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList();
+            card_list = uxCardListTextBox.Text.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             for (int i = 0; i < card_list.Count; i++)
             {
@@ -401,11 +411,11 @@ namespace Scantron
                 }
             }
 
-            uxAllQuestionPoints.Value = 1;
-            uxAllPartialCredit.Checked = false;
+            uxAllQuestionPointsNumericUpDown.Value = 1;
+            uxAllPartialCreditCheckBox.Checked = false;
 
-            int number_of_versions = (int) uxNumberOfVersions.Value;
-            int number_of_questions = (int) uxNumberOfQuestions.Value;
+            int number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
+            int number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
 
             TabPage answer_key_tabpage;
 
@@ -430,7 +440,7 @@ namespace Scantron
                 foreach (Control control in tabpage.Controls)
                 {
                     NumericUpDown updown = (NumericUpDown)control.Controls[5];
-                    updown.Value = uxAllQuestionPoints.Value;
+                    updown.Value = uxAllQuestionPointsNumericUpDown.Value;
                 }
             }
         }
@@ -445,7 +455,7 @@ namespace Scantron
                 foreach (Control control in tabpage.Controls)
                 {
                     CheckBox checkbox = (CheckBox)control.Controls[6];
-                    checkbox.Checked = uxAllPartialCredit.Checked;
+                    checkbox.Checked = uxAllPartialCreditCheckBox.Checked;
                 }
             }
         }
@@ -513,10 +523,10 @@ namespace Scantron
         /// <returns>True if successful.</returns>
         public void CreateAnswerKey()
         {
-            int number_of_versions = (int)uxNumberOfVersions.Value;
-            int number_of_questions = (int)uxNumberOfQuestions.Value;
+            int number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
+            int number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
 
-            if (uxExamName.Text == "")
+            if (uxExamNameTextBox.Text == "")
             {
                 DisplayMessage("Enter a name for the exam.");
                 return;
@@ -606,7 +616,7 @@ namespace Scantron
                 return;
             }
 
-            grader.GradeStudents(uxExamName.Text);
+            grader.GradeStudents(uxExamNameTextBox.Text);
             uxStudentSelector.Items.Clear();
             foreach (Student student in grader.Students)
             {
@@ -852,7 +862,7 @@ namespace Scantron
 
         public void Finish()
         {
-            uxMainTabControl.SelectTab(uxStartTab);
+            uxMainTabControl.SelectTab(uxStartTabPage);
             Reset();
         }
     }
