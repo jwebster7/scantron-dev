@@ -360,7 +360,7 @@ namespace Scantron
             }
             else
             {
-                sheet = (char)sheet_number;
+                sheet = (char) sheet_number;
             }
 
             card_info = wid + ", " + version + sheet + grant_permission + "--,   '";
@@ -414,7 +414,7 @@ namespace Scantron
             }
             else
             {
-                sheet = (char)sheet_number;
+                sheet = (char) sheet_number;
             }
 
             // Row 5

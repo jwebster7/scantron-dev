@@ -117,9 +117,11 @@ namespace Scantron
                                                 "This program is intended to have the same functionality as CanConvert and the previous Scantron program all in one location." + Environment.NewLine +
                                                 "If you used CanConvert, follow the steps for grading within this program. If you are going to use the Canvas Scantron tool that utilizes Quizzes, there will be notes throughout telling you which steps you may skip." + Environment.NewLine + Environment.NewLine +
                                                 "If you have any feedback regarding the appearance or workflow of the Scantron progam, please email schweer@ksu.edu and we will attempt to incorporate it within the semester if it is feasible. We need intructors to use and test the program to see if it suits their needs, so all feedback is welcome." + Environment.NewLine + Environment.NewLine +
-                                                "To begin, set your Scantron cards in the tray by following the pictures to the right." + Environment.NewLine +
-                                                "Ensure the guider is lined up against the stack of cards as straight as possible." + Environment.NewLine +
-                                                "Click on the Answer Key tab along the top and follow the instructions carefully to continue.";
+                                                "To begin, set your Scantron cards in the tray by following the pictures to the right:" + Environment.NewLine +
+                                                "1. Blow out any dust that could be on the scanner." + Environment.NewLine +
+                                                "2. Set the cards in the scanner flush against the wall." + Environment.NewLine +
+                                                "3. Place the guider lined up against the stack of cards as straight as possible." + Environment.NewLine + Environment.NewLine +
+                                                "Click on the Answer Key tab along the top and follow the instructions to continue.";
 
             uxAnswerKeyInstructionLabel.Text =  "1. Click Reset to ensure no data is leftover from the last person to use this program.\n" +
                                                 "2. Enter the name for the exam as you want it to appear in the Canvas gradebook.\n" +

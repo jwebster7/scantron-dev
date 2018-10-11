@@ -124,10 +124,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SetupImage1.jpg" />
+    <None Include="Resources\SetupImage2.jpg" />
+    <None Include="Resources\SetupImage3.jpg" />
     <Content Include="scantron.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
