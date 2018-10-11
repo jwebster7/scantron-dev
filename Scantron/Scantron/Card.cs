@@ -343,6 +343,7 @@ namespace Scantron
             string card_info = "";
             string answer = "";
             char version;
+            char sheet;
 
             if (test_version == 0)
             {
@@ -352,8 +353,17 @@ namespace Scantron
             {
                 version = (char) test_version;
             }
-            
-            card_info = wid + ", " + version + sheet_number + grant_permission + "--,   '";
+
+            if (sheet_number == 0)
+            {
+                sheet = '-';
+            }
+            else
+            {
+                sheet = (char)sheet_number;
+            }
+
+            card_info = wid + ", " + version + sheet + grant_permission + "--,   '";
 
             for (int i = 0; i < response.Count; i++)
             {
@@ -387,6 +397,7 @@ namespace Scantron
         {
             string card_info = "";
             char version;
+            char sheet;
 
             if (test_version == 0)
             {
@@ -397,8 +408,17 @@ namespace Scantron
                 version = (char) test_version;
             }
 
+            if (sheet_number == 0)
+            {
+                sheet = '-';
+            }
+            else
+            {
+                sheet = (char)sheet_number;
+            }
+
             // Row 5
-            card_info += wid + ", " + version + sheet_number + grant_permission + "--,5, '";
+            card_info += wid + ", " + version + sheet + grant_permission + "--,5, '";
 
             for (int j = 0; j < response.Count; j++)
             {
