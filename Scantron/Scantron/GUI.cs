@@ -279,6 +279,7 @@ namespace Scantron
         private void UpdateCardList()
         {
             Card card;
+            Question question;
             uxCardListTextBox.Text = "";
             string cards = "";
             string wid = "";
@@ -306,8 +307,10 @@ namespace Scantron
                     bad_test_versions += (i + 1) + " ";
                 }
 
-                foreach(Question question in card.Response)
+                for(int j = 0; j < grader.AnswerKey[0].Count; j++)
                 {
+                    question = card.Response[j];
+
                     if (question.Answer == "     ")
                     {
                         bad_answers += (i + 1) + " ";
