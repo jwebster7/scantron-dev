@@ -272,7 +272,7 @@
             this.uxResetButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResetButton.Location = new System.Drawing.Point(14, 460);
+            this.uxResetButton.Location = new System.Drawing.Point(14, 526);
             this.uxResetButton.Name = "uxResetButton";
             this.uxResetButton.Size = new System.Drawing.Size(163, 70);
             this.uxResetButton.TabIndex = 45;
@@ -286,7 +286,7 @@
             this.uxCreateAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.uxCreateAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxCreateAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(14, 369);
+            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(14, 435);
             this.uxCreateAnswerKeyButton.Name = "uxCreateAnswerKeyButton";
             this.uxCreateAnswerKeyButton.Size = new System.Drawing.Size(163, 85);
             this.uxCreateAnswerKeyButton.TabIndex = 44;

@@ -284,9 +284,13 @@ namespace Scantron
         /// <param name="a">First bubble's darkness.</param>
         /// <param name="b">Second bubble's darkness.</param>
         /// <param name="c">Third bubble's darkness.</param>
-        /// <returns>Which bubble is darkest. Defaults to 1.</returns>
+        /// <returns>Which bubble is darkest. Defaults to 0.</returns>
         private int GetDarkestBubble(int a, int b, int c)
         {
+            if (a > b && a >c)
+            {
+                return 1;
+            }
             if (b > a && b > c)
             {
                 return 2;
@@ -296,7 +300,7 @@ namespace Scantron
                 return 3;
             }
 
-            return 1;
+            return 0;
         }
 
         /// <summary>
@@ -310,6 +314,10 @@ namespace Scantron
         /// <returns>Which bubble is darkest. Defaults to 0.</returns>
         private int GetDarkestBubble(int a, int b, int c, int d, int e)
         {
+            if (a > b && a > c && a > d && a > e)
+            {
+                return 1;
+            }
             if (b > a && b > c && b > d && b > e)
             {
                 return 2;
@@ -327,15 +335,25 @@ namespace Scantron
                 return 5;
             }
 
-            return 1;
+            return 0;
         }
         
         public string ToSingleAnswerString()
         {
             string card_info = "";
             string answer = "";
+            char version;
 
-            card_info = wid + ", " + test_version + sheet_number + grant_permission + "--,   '";
+            if (test_version == 0)
+            {
+                version = '-';
+            }
+            else
+            {
+                version = (char) test_version;
+            }
+            
+            card_info = wid + ", " + version + sheet_number + grant_permission + "--,   '";
 
             for (int i = 0; i < response.Count; i++)
             {
@@ -368,9 +386,19 @@ namespace Scantron
         public string ToMultipleAnswerString()
         {
             string card_info = "";
+            char version;
+
+            if (test_version == 0)
+            {
+                version = '-';
+            }
+            else
+            {
+                version = (char) test_version;
+            }
 
             // Row 5
-            card_info += wid + ", " + test_version + sheet_number + grant_permission + "--,5, '";
+            card_info += wid + ", " + version + sheet_number + grant_permission + "--,5, '";
 
             for (int j = 0; j < response.Count; j++)
             {

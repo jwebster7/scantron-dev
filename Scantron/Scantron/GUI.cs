@@ -60,6 +60,7 @@ namespace Scantron
         private ScannerCom scannerCom;
         private bool toAbort = true;
         Task<List<string>> task;
+        private bool ScantronCardAnswerKey = false;
 
         public GUI(Form scantron_form)
         {
@@ -155,7 +156,7 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-            if (grader.AnswerKey.Count < 1)
+            if (grader.AnswerKey.Count < 1 && ScantronCardAnswerKey == false)
             {
                 DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
                 return;
@@ -235,6 +236,7 @@ namespace Scantron
             uxExamNameTextBox.Text = "";
             uxNumberOfVersionsNumericUpDown.Value = 0;
             uxNumberOfQuestionsNumericUpDown.Value = 0;
+            uxAnswerKeyTabControl.Enabled = true;
             uxAllQuestionPointsNumericUpDown.Value = 0;
             uxAllPartialCreditCheckBox.Checked = false;
             uxCardListTextBox.Text = "";
@@ -385,6 +387,11 @@ namespace Scantron
             }
 
             grader.CreateStudents();
+        }
+
+        public void UseScantronCardAnswerKey()
+        {
+            // Use a button on first page
         }
 
         /// <summary>

@@ -138,7 +138,7 @@ namespace Scantron
                         student.Response[i].Grade(answer_key[test_version - 1][i]);
                     }
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (ArgumentOutOfRangeException)
                 {
                     gui.DisplayMessage( "Student " + student.WID + " has " + student.Response.Count + " questions associated with them.\n\n" +
                                         "If this is the correct number, you may have entered too many questions on the answer key.\n\n" +
@@ -146,7 +146,7 @@ namespace Scantron
                                         "You can correct this, re-scan the student, and add the student's score, by itself, to the gradebook later.\n\n"+
                                         "The student will still be graded on the questions available.");
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     gui.DisplayMessage( "Student " + student.WID + " wrote down Test Version " + test_version + ".\n\n" +
                                         "You did not create this many versions. Student cannot be graded correctly.\n\n" +
