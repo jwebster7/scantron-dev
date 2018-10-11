@@ -301,7 +301,7 @@ namespace Scantron
                     bad_wids += (i + 1) + " ";
                 }
 
-                if (test_version > grader.AnswerKey.Count)
+                if (test_version > grader.AnswerKey.Count || test_version <= 0)
                 {
                     bad_test_versions += (i + 1) + " ";
                 }
@@ -810,7 +810,8 @@ namespace Scantron
             {
                 control.Visible = false;
             }
-            if (grader.AnswerKey[0].Count > student.Response.Count || test_version > grader.AnswerKey.Keys.Count || test_version < 0)
+
+            if (grader.AnswerKey[0].Count > student.Response.Count || test_version > grader.AnswerKey.Keys.Count || test_version <= 0)
             {
                 uxCouldNotBeGradedLabel.Visible = true;
                 return;
