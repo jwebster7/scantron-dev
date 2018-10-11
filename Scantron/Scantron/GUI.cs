@@ -810,16 +810,10 @@ namespace Scantron
             {
                 control.Visible = false;
             }
-
-            if (test_version > grader.AnswerKey.Keys.Count)
+            if (grader.AnswerKey[0].Count > student.Response.Count || test_version > grader.AnswerKey.Keys.Count || test_version < 0)
             {
                 uxCouldNotBeGradedLabel.Visible = true;
-
                 return;
-            }
-            if (grader.AnswerKey[0].Count > student.Response.Count)
-            {
-                uxCouldNotBeGradedLabel.Visible = true;
             }
             else
             {

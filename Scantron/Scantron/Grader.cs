@@ -140,17 +140,16 @@ namespace Scantron
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    gui.DisplayMessage( "Student " + student.WID + " has " + student.Response.Count + " questions associated with them.\n\n" +
-                                        "If this is the correct number, you may have entered too many questions on the answer key.\n\n" +
-                                        "If this is too few, the student filled out the WID on one or more of their cards incorrectly.\n\n" +
-                                        "You can correct this, re-scan the student, and add the student's score, by itself, to the gradebook later.\n\n"+
-                                        "The student will still be graded on the questions available.");
+                    //                    "If this is the correct number, you may have entered too many questions on the answer key.\n\n" +
+                    //                    "If this is too few, the student filled out the WID on one or more of their cards incorrectly.\n\n" +
+                    //                    "You can correct this, re-scan the student, and add the student's score, by itself, to the gradebook later.\n\n"+
+                    //                    "The student will still be graded on the questions available.");
                 }
                 catch (KeyNotFoundException)
                 {
-                    gui.DisplayMessage( "Student " + student.WID + " wrote down Test Version " + test_version + ".\n\n" +
-                                        "You did not create this many versions. Student cannot be graded correctly.\n\n" +
-                                        "You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
+                    //gui.DisplayMessage( "Student " + student.WID + " wrote down Test Version " + test_version + ".\n\n" +
+                    //                    "You did not create this many versions. Student cannot be graded correctly.\n\n" +
+                    //                    "You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
                 }
             }
         }
