@@ -126,11 +126,24 @@ namespace Scantron
         public void GradeStudents(string exam_name)
         {
             this.exam_name = exam_name;
+            string ungraded_students = "";
 
             foreach (Student student in students)
             {
                 int test_version = student.TestVersion;
 
+                for (int i = 0; i < answer_key[0].Count; i++)
+                {
+                    if (student.TestVersion > 0 && student.TestVersion <= answer_key.Count && student.Response.Count >= answer_key[0].Count)
+                    {
+                        student.Response[i].Grade(answer_key[test_version - 1][i]);
+                    }
+                    else
+                    {
+                        ungraded_students += student.WID + "\n";
+                    }
+                }
+                /*
                 try
                 {
                     for (int i = 0; i < answer_key[0].Count; i++)
@@ -151,6 +164,13 @@ namespace Scantron
                     //                    "You did not create this many versions. Student cannot be graded correctly.\n\n" +
                     //                    "You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
                 }
+                */
+            }
+
+            if (ungraded_students != "")
+            {
+                gui.DisplayMessage( "The following students wrote down an invalid test version " +
+                                    "or one of their sheets has their WID written incorrectly:\n" + ungraded_students);
             }
         }
 

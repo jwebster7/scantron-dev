@@ -342,25 +342,25 @@ namespace Scantron
         {
             string card_info = "";
             string answer = "";
-            char version;
-            char sheet;
+            string version;
+            string sheet;
 
             if (test_version == 0)
             {
-                version = '-';
+                version = "-";
             }
             else
             {
-                version = (char) test_version;
+                version = test_version.ToString();
             }
 
             if (sheet_number == 0)
             {
-                sheet = '-';
+                sheet = "-";
             }
             else
             {
-                sheet = (char) sheet_number;
+                sheet = sheet_number.ToString();
             }
 
             card_info = wid + ", " + version + sheet + grant_permission + "--,   '";
@@ -396,25 +396,25 @@ namespace Scantron
         public string ToMultipleAnswerString()
         {
             string card_info = "";
-            char version;
-            char sheet;
+            string version;
+            string sheet;
 
             if (test_version == 0)
             {
-                version = '-';
+                version = "-";
             }
             else
             {
-                version = (char) test_version;
+                version = test_version.ToString();
             }
 
             if (sheet_number == 0)
             {
-                sheet = '-';
+                sheet = "-";
             }
             else
             {
-                sheet = (char) sheet_number;
+                sheet = sheet_number.ToString();
             }
 
             // Row 5

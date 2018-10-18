@@ -279,14 +279,12 @@ namespace Scantron
         private void UpdateCardList()
         {
             Card card;
-            Question question;
             uxCardListTextBox.Text = "";
             string cards = "";
             string wid = "";
             int test_version = 1;
             string bad_wids = "";
             string bad_test_versions = "";
-            string bad_answers = "";
 
             for (int i = 0; i < grader.Cards.Count; i++)
             {
@@ -306,28 +304,16 @@ namespace Scantron
                 {
                     bad_test_versions += (i + 1) + " ";
                 }
-
-                for(int j = 0; j < grader.AnswerKey[0].Count; j++)
-                {
-                    question = card.Response[j];
-
-                    if (question.Answer == "     ")
-                    {
-                        bad_answers += (i + 1) + " ";
-                        break;
-                    }
-                }
             }
 
             uxCardListTextBox.Text = cards;
 
             uxStatusTextBox.Text =  "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
-                                    "Invalid Test Versions: " + bad_test_versions + Environment.NewLine + Environment.NewLine +
-                                    "Empty Answers: " + bad_answers;
+                                    "Invalid Test Versions: " + bad_test_versions;
         }
 
         /// <summary>
-        /// Save changes made to WIDss, test version,and sheet numbers on cards list.
+        /// Save changes made to WIDs, test versions, and sheet numbers on cards list.
         /// </summary>
         public void SaveChanges()
         {
