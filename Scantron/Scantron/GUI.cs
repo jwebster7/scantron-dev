@@ -297,12 +297,12 @@ namespace Scantron
                 
                 if (wid.Contains("-") || wid[0] != '8')
                 {
-                    bad_wids += (i + 1) + " ";
+                    bad_wids += "#" + (i + 1) + " ";
                 }
 
                 if (test_version > grader.AnswerKey.Count || test_version <= 0)
                 {
-                    bad_test_versions += (i + 1) + " ";
+                    bad_test_versions += "#" + (i + 1) + " ";
                 }
             }
 
