@@ -141,6 +141,7 @@ namespace Scantron
                     else
                     {
                         ungraded_students += student.WID + "\n";
+                        break;
                     }
                 }
                 /*
