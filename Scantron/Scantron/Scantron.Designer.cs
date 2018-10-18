@@ -35,6 +35,10 @@
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxStartTabPage = new System.Windows.Forms.TabPage();
+            this.uxSetupImage4PictureBox = new System.Windows.Forms.PictureBox();
+            this.uxSetupImage3PictureBox = new System.Windows.Forms.PictureBox();
+            this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
+            this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxStartInstructionTextBox = new System.Windows.Forms.TextBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
             this.uxResetButton = new System.Windows.Forms.Button();
@@ -77,12 +81,12 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.uxSetupImage4PictureBox = new System.Windows.Forms.PictureBox();
-            this.uxSetupImage3PictureBox = new System.Windows.Forms.PictureBox();
-            this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
-            this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1PictureBox)).BeginInit();
             this.uxAnswerKeyTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPointsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -91,10 +95,6 @@
             this.uxScanTabPage.SuspendLayout();
             this.uxGradeTabPage.SuspendLayout();
             this.uxCreateFileTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // uxStartButton
@@ -134,19 +134,19 @@
             // 
             this.uxStudentResponsePanel.AutoScroll = true;
             this.uxStudentResponsePanel.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStudentResponsePanel.Location = new System.Drawing.Point(228, 230);
+            this.uxStudentResponsePanel.Location = new System.Drawing.Point(228, 204);
             this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
-            this.uxStudentResponsePanel.Size = new System.Drawing.Size(478, 366);
+            this.uxStudentResponsePanel.Size = new System.Drawing.Size(478, 392);
             this.uxStudentResponsePanel.TabIndex = 15;
             // 
             // uxCouldNotBeGradedLabel
             // 
             this.uxCouldNotBeGradedLabel.AutoSize = true;
             this.uxCouldNotBeGradedLabel.BackColor = System.Drawing.Color.Red;
-            this.uxCouldNotBeGradedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(298, 200);
+            this.uxCouldNotBeGradedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(14, 421);
             this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
-            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(322, 24);
+            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(199, 13);
             this.uxCouldNotBeGradedLabel.TabIndex = 0;
             this.uxCouldNotBeGradedLabel.Text = "Student was not graded correctly.";
             this.uxCouldNotBeGradedLabel.Visible = false;
@@ -156,7 +156,7 @@
             this.uxStudentSelectorComboBox.DisplayMember = "Student";
             this.uxStudentSelectorComboBox.FormattingEnabled = true;
             this.uxStudentSelectorComboBox.ItemHeight = 13;
-            this.uxStudentSelectorComboBox.Location = new System.Drawing.Point(14, 342);
+            this.uxStudentSelectorComboBox.Location = new System.Drawing.Point(14, 316);
             this.uxStudentSelectorComboBox.Name = "uxStudentSelectorComboBox";
             this.uxStudentSelectorComboBox.Size = new System.Drawing.Size(193, 21);
             this.uxStudentSelectorComboBox.TabIndex = 16;
@@ -194,6 +194,45 @@
             this.uxStartTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxStartTabPage.TabIndex = 3;
             this.uxStartTabPage.Text = "Start";
+            // 
+            // uxSetupImage4PictureBox
+            // 
+            this.uxSetupImage4PictureBox.BackColor = System.Drawing.Color.Maroon;
+            this.uxSetupImage4PictureBox.Location = new System.Drawing.Point(480, 444);
+            this.uxSetupImage4PictureBox.Name = "uxSetupImage4PictureBox";
+            this.uxSetupImage4PictureBox.Size = new System.Drawing.Size(252, 141);
+            this.uxSetupImage4PictureBox.TabIndex = 4;
+            this.uxSetupImage4PictureBox.TabStop = false;
+            // 
+            // uxSetupImage3PictureBox
+            // 
+            this.uxSetupImage3PictureBox.BackColor = System.Drawing.Color.Maroon;
+            this.uxSetupImage3PictureBox.Image = global::Scantron.Properties.Resources.SetupImage3;
+            this.uxSetupImage3PictureBox.Location = new System.Drawing.Point(480, 297);
+            this.uxSetupImage3PictureBox.Name = "uxSetupImage3PictureBox";
+            this.uxSetupImage3PictureBox.Size = new System.Drawing.Size(252, 141);
+            this.uxSetupImage3PictureBox.TabIndex = 3;
+            this.uxSetupImage3PictureBox.TabStop = false;
+            // 
+            // uxSetupImage2PictureBox
+            // 
+            this.uxSetupImage2PictureBox.BackColor = System.Drawing.Color.Maroon;
+            this.uxSetupImage2PictureBox.Image = global::Scantron.Properties.Resources.SetupImage2;
+            this.uxSetupImage2PictureBox.Location = new System.Drawing.Point(480, 150);
+            this.uxSetupImage2PictureBox.Name = "uxSetupImage2PictureBox";
+            this.uxSetupImage2PictureBox.Size = new System.Drawing.Size(252, 141);
+            this.uxSetupImage2PictureBox.TabIndex = 2;
+            this.uxSetupImage2PictureBox.TabStop = false;
+            // 
+            // uxSetupImage1PictureBox
+            // 
+            this.uxSetupImage1PictureBox.BackColor = System.Drawing.Color.Maroon;
+            this.uxSetupImage1PictureBox.Image = global::Scantron.Properties.Resources.SetupImage1;
+            this.uxSetupImage1PictureBox.Location = new System.Drawing.Point(480, 3);
+            this.uxSetupImage1PictureBox.Name = "uxSetupImage1PictureBox";
+            this.uxSetupImage1PictureBox.Size = new System.Drawing.Size(252, 141);
+            this.uxSetupImage1PictureBox.TabIndex = 1;
+            this.uxSetupImage1PictureBox.TabStop = false;
             // 
             // uxStartInstructionTextBox
             // 
@@ -601,7 +640,7 @@
             this.uxGradeStudentsButton.BackColor = System.Drawing.SystemColors.Control;
             this.uxGradeStudentsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradeStudentsButton.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradeStudentsButton.Location = new System.Drawing.Point(14, 230);
+            this.uxGradeStudentsButton.Location = new System.Drawing.Point(14, 204);
             this.uxGradeStudentsButton.Name = "uxGradeStudentsButton";
             this.uxGradeStudentsButton.Size = new System.Drawing.Size(193, 70);
             this.uxGradeStudentsButton.TabIndex = 0;
@@ -614,7 +653,7 @@
             this.uxScoreLabel.AutoSize = true;
             this.uxScoreLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxScoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScoreLabel.Location = new System.Drawing.Point(14, 399);
+            this.uxScoreLabel.Location = new System.Drawing.Point(14, 384);
             this.uxScoreLabel.Name = "uxScoreLabel";
             this.uxScoreLabel.Size = new System.Drawing.Size(77, 24);
             this.uxScoreLabel.TabIndex = 33;
@@ -635,7 +674,7 @@
             this.uxVersionLabel.AutoSize = true;
             this.uxVersionLabel.BackColor = System.Drawing.SystemColors.Control;
             this.uxVersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxVersionLabel.Location = new System.Drawing.Point(14, 370);
+            this.uxVersionLabel.Location = new System.Drawing.Point(14, 349);
             this.uxVersionLabel.Name = "uxVersionLabel";
             this.uxVersionLabel.Size = new System.Drawing.Size(94, 24);
             this.uxVersionLabel.TabIndex = 25;
@@ -648,7 +687,7 @@
             this.uxPreviousButton.Enabled = false;
             this.uxPreviousButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxPreviousButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxPreviousButton.Location = new System.Drawing.Point(14, 306);
+            this.uxPreviousButton.Location = new System.Drawing.Point(14, 280);
             this.uxPreviousButton.Name = "uxPreviousButton";
             this.uxPreviousButton.Size = new System.Drawing.Size(90, 30);
             this.uxPreviousButton.TabIndex = 21;
@@ -662,7 +701,7 @@
             this.uxNextButton.Enabled = false;
             this.uxNextButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxNextButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNextButton.Location = new System.Drawing.Point(117, 306);
+            this.uxNextButton.Location = new System.Drawing.Point(117, 280);
             this.uxNextButton.Name = "uxNextButton";
             this.uxNextButton.Size = new System.Drawing.Size(90, 30);
             this.uxNextButton.TabIndex = 10;
@@ -761,45 +800,6 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
-            // uxSetupImage4PictureBox
-            // 
-            this.uxSetupImage4PictureBox.BackColor = System.Drawing.Color.Maroon;
-            this.uxSetupImage4PictureBox.Location = new System.Drawing.Point(480, 444);
-            this.uxSetupImage4PictureBox.Name = "uxSetupImage4PictureBox";
-            this.uxSetupImage4PictureBox.Size = new System.Drawing.Size(252, 141);
-            this.uxSetupImage4PictureBox.TabIndex = 4;
-            this.uxSetupImage4PictureBox.TabStop = false;
-            // 
-            // uxSetupImage3PictureBox
-            // 
-            this.uxSetupImage3PictureBox.BackColor = System.Drawing.Color.Maroon;
-            this.uxSetupImage3PictureBox.Image = global::Scantron.Properties.Resources.SetupImage3;
-            this.uxSetupImage3PictureBox.Location = new System.Drawing.Point(480, 297);
-            this.uxSetupImage3PictureBox.Name = "uxSetupImage3PictureBox";
-            this.uxSetupImage3PictureBox.Size = new System.Drawing.Size(252, 141);
-            this.uxSetupImage3PictureBox.TabIndex = 3;
-            this.uxSetupImage3PictureBox.TabStop = false;
-            // 
-            // uxSetupImage2PictureBox
-            // 
-            this.uxSetupImage2PictureBox.BackColor = System.Drawing.Color.Maroon;
-            this.uxSetupImage2PictureBox.Image = global::Scantron.Properties.Resources.SetupImage2;
-            this.uxSetupImage2PictureBox.Location = new System.Drawing.Point(480, 150);
-            this.uxSetupImage2PictureBox.Name = "uxSetupImage2PictureBox";
-            this.uxSetupImage2PictureBox.Size = new System.Drawing.Size(252, 141);
-            this.uxSetupImage2PictureBox.TabIndex = 2;
-            this.uxSetupImage2PictureBox.TabStop = false;
-            // 
-            // uxSetupImage1PictureBox
-            // 
-            this.uxSetupImage1PictureBox.BackColor = System.Drawing.Color.Maroon;
-            this.uxSetupImage1PictureBox.Image = global::Scantron.Properties.Resources.SetupImage1;
-            this.uxSetupImage1PictureBox.Location = new System.Drawing.Point(480, 3);
-            this.uxSetupImage1PictureBox.Name = "uxSetupImage1PictureBox";
-            this.uxSetupImage1PictureBox.Size = new System.Drawing.Size(252, 141);
-            this.uxSetupImage1PictureBox.TabIndex = 1;
-            this.uxSetupImage1PictureBox.TabStop = false;
-            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -817,6 +817,10 @@
             this.uxMainTabControl.ResumeLayout(false);
             this.uxStartTabPage.ResumeLayout(false);
             this.uxStartTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1PictureBox)).EndInit();
             this.uxAnswerKeyTabPage.ResumeLayout(false);
             this.uxAnswerKeyTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPointsNumericUpDown)).EndInit();
@@ -828,10 +832,6 @@
             this.uxGradeTabPage.ResumeLayout(false);
             this.uxGradeTabPage.PerformLayout();
             this.uxCreateFileTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage1PictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
