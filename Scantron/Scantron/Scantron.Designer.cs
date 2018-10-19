@@ -561,7 +561,6 @@
             // uxTestDataButton
             // 
             this.uxTestDataButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxTestDataButton.Enabled = false;
             this.uxTestDataButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.uxTestDataButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxTestDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
