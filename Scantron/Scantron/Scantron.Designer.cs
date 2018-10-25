@@ -120,7 +120,7 @@
             this.uxStopButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStopButton.Location = new System.Drawing.Point(14, 348);
+            this.uxStopButton.Location = new System.Drawing.Point(14, 282);
             this.uxStopButton.Name = "uxStopButton";
             this.uxStopButton.Size = new System.Drawing.Size(125, 45);
             this.uxStopButton.TabIndex = 4;
@@ -508,7 +508,7 @@
             this.uxSaveChangesButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxSaveChangesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxSaveChangesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxSaveChangesButton.Location = new System.Drawing.Point(14, 282);
+            this.uxSaveChangesButton.Location = new System.Drawing.Point(14, 333);
             this.uxSaveChangesButton.Name = "uxSaveChangesButton";
             this.uxSaveChangesButton.Size = new System.Drawing.Size(125, 60);
             this.uxSaveChangesButton.TabIndex = 33;

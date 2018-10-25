@@ -64,11 +64,13 @@ namespace Scantron
         private int number_of_versions = 0;
         private int number_of_questions = 0;
 
+        // Used to determine workflow.
+        private bool grading_here = true;
+
         // Scanner communication fields.
         private Scanner scanner;
         private bool toAbort = true;
         Task<List<string>> task;
-        private bool ScantronCardAnswerKey = false;
 
         public GUI(Form scantron_form)
         {
@@ -171,10 +173,20 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-            if (grader.AnswerKey.Count < 1 && ScantronCardAnswerKey == false)
+            if (grading_here)
             {
-                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
-                return;
+                if (uxExamNameTextBox.Text == "" || number_of_versions < 1 || number_of_questions < 1)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (grader.AnswerKey.Count < 1)
+                {
+                    DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
+                    return;
+                }
             }
 
             Scanner.ToAbort.Set();
@@ -635,6 +647,9 @@ namespace Scantron
             uxPreviousButton.Enabled = true;
             NextStudent(); // Displays the first student in the index
         }
+
+
+        // v--- add something to account for grading_here
 
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
