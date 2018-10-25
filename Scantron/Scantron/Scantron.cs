@@ -157,11 +157,5 @@ namespace Scantron
         {
             gui.WriteFile("multiple");
         }
-
-        // Event handler for Scantron Card Answer Key CheckBox is checked.
-        private void uxScantronCardAnswerKeyCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            gui.UseScantronCardAnswerKey();
-        }
     }
 }

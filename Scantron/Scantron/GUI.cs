@@ -118,7 +118,8 @@ namespace Scantron
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
                                                     "2. Click Reset.\n" +
                                                     "3. Enter the the exam name and number of versions.\n" + 
-                                                    "4. Click on the Answer Key tab along the top";
+                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, grade with this program." +
+                                                    "5. Click on the Answer Key tab along the top";
 
             uxAnswerKeyInstructionLabel.Text =      "1. Enter the number of questions.\n" +
                                                     "2. If you are using the grader in this program, click Create Answer Key and go to the Scan tab.\n" +
@@ -170,7 +171,6 @@ namespace Scantron
 
             task = new Task<List<string>>(() => scanner.Run(raw_cards));
             task.Start();
-            task.Wait();
 
             grader.CreateCards(raw_cards);
             UpdateCardList();
@@ -311,7 +311,7 @@ namespace Scantron
         {
             if (grader.Cards.Count < 1)
             {
-                DisplayMessage("No cards found. Follow the instructions on this page from the beginning.");
+                DisplayMessage("No cards found. Please follow the instructions on this page from the beginning.");
                 return;
             }
 
@@ -372,10 +372,6 @@ namespace Scantron
             grader.CreateStudents();
         }
         */
-        public void UseScantronCardAnswerKey()
-        {
-            // Use a button on first page
-        }
 
         /// <summary>
         /// Create the answer key form with the specified number of questions and versions.
