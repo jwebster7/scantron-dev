@@ -56,6 +56,7 @@ namespace Scantron
         private Button uxAnswerKeyContinueButton;
         private Button uxScanContinueButton;
         private Button uxGradeContinueButton;
+        private CheckBox uxGradingWithThisProgramCheckbox;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
@@ -97,37 +98,38 @@ namespace Scantron
         /// </summary>
         private void InitializeControls()
         {
-            uxAnswerKeyInstructionLabel = (Label)scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
-            uxScanInstructionLabel = (Label)scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
-            uxGradeInstructionLabel = (Label)scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
-            uxStudentResponsePanel = (Panel)scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
-            uxStudentSelector = (ComboBox)scantron_form.Controls.Find("uxStudentSelectorComboBox", true)[0];
-            uxAnswerKeyTabControl = (TabControl)scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
-            uxExamNameTextBox = (TextBox)scantron_form.Controls.Find("uxExamNameTextBox", true)[0];
-            uxNumberOfQuestionsNumericUpDown = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestionsNumericUpDown", true)[0];
-            uxNumberOfVersionsNumericUpDown = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfVersionsNumericUpDown", true)[0];
-            uxAllQuestionPointsNumericUpDown = (NumericUpDown)scantron_form.Controls.Find("uxAllQuestionPointsNumericUpDown", true)[0];
-            uxAllPartialCreditCheckBox = (CheckBox)scantron_form.Controls.Find("uxAllPartialCreditCheckBox", true)[0];
-            uxPreviousButton = (Button)scantron_form.Controls.Find("uxPreviousButton", true)[0];
-            uxNextButton = (Button)scantron_form.Controls.Find("uxNextButton", true)[0];
-            uxVersionLabel = (Label)scantron_form.Controls.Find("uxVersionLabel", true)[0];
-            uxScoreLabel = (Label)scantron_form.Controls.Find("uxScoreLabel", true)[0];
-            uxCouldNotBeGradedLabel = (Label)scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
-            uxCardListTextBox = (TextBox)scantron_form.Controls.Find("uxCardListTextBox", true)[0];
-            uxStatusTextBox = (TextBox)scantron_form.Controls.Find("uxStatusTextBox", true)[0];
-            uxMainTabControl = (TabControl)scantron_form.Controls.Find("uxMainTabControl", true)[0];
-            uxStartTabPage = (TabPage)scantron_form.Controls.Find("uxStartTabPage", true)[0];
-            uxAnswerKeyTabPage = (TabPage)scantron_form.Controls.Find("uxAnswerKeyTabPage", true)[0];
-            uxScanTabPage = (TabPage)scantron_form.Controls.Find("uxScanTabPage", true)[0];
-            uxGradeTabPage = (TabPage)scantron_form.Controls.Find("uxGradeTabPage", true)[0];
-            uxCreateFileTabPage = (TabPage)scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
-            uxStartInstructionLabel = (Label)scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
-            uxCreateFileInstructionLabel = (Label)scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
-            uxFinishButton = (Button)scantron_form.Controls.Find("uxFinishButton", true)[0];
-            uxStartContinueButton = (Button)scantron_form.Controls.Find("uxStartContinuebutton", true)[0];
-            uxAnswerKeyContinueButton = (Button)scantron_form.Controls.Find("uxStartAnswerKeybutton", true)[0];
-            uxScanContinueButton = (Button)scantron_form.Controls.Find("uxScanContinuebutton", true)[0];
-            uxGradeContinueButton = (Button)scantron_form.Controls.Find("uxGradeContinuebutton", true)[0];
+            uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
+            uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
+            uxGradeInstructionLabel = (Label) scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
+            uxStudentResponsePanel = (Panel) scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
+            uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelectorComboBox", true)[0];
+            uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
+            uxExamNameTextBox = (TextBox) scantron_form.Controls.Find("uxExamNameTextBox", true)[0];
+            uxNumberOfQuestionsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfQuestionsNumericUpDown", true)[0];
+            uxNumberOfVersionsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersionsNumericUpDown", true)[0];
+            uxAllQuestionPointsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPointsNumericUpDown", true)[0];
+            uxAllPartialCreditCheckBox = (CheckBox) scantron_form.Controls.Find("uxAllPartialCreditCheckBox", true)[0];
+            uxPreviousButton = (Button) scantron_form.Controls.Find("uxPreviousButton", true)[0];
+            uxNextButton = (Button) scantron_form.Controls.Find("uxNextButton", true)[0];
+            uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
+            uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
+            uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
+            uxCardListTextBox = (TextBox) scantron_form.Controls.Find("uxCardListTextBox", true)[0];
+            uxStatusTextBox = (TextBox) scantron_form.Controls.Find("uxStatusTextBox", true)[0];
+            uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
+            uxStartTabPage = (TabPage) scantron_form.Controls.Find("uxStartTabPage", true)[0];
+            uxAnswerKeyTabPage = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTabPage", true)[0];
+            uxScanTabPage = (TabPage) scantron_form.Controls.Find("uxScanTabPage", true)[0];
+            uxGradeTabPage = (TabPage) scantron_form.Controls.Find("uxGradeTabPage", true)[0];
+            uxCreateFileTabPage = (TabPage) scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
+            uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
+            uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
+            uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
+            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinuebutton", true)[0];
+            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxStartAnswerKeybutton", true)[0];
+            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinuebutton", true)[0];
+            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinuebutton", true)[0];
+            uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
         }
 
         /// <summary>

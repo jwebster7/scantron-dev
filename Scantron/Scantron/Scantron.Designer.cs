@@ -81,6 +81,7 @@
             this.uxAnswerKeyContinueButton = new System.Windows.Forms.Button();
             this.uxScanContinueButton = new System.Windows.Forms.Button();
             this.uxGradeContinueButton = new System.Windows.Forms.Button();
+            this.uxGradingWithThisProgramCheckBox = new System.Windows.Forms.CheckBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
@@ -183,6 +184,7 @@
             // 
             this.uxStartTabPage.AutoScroll = true;
             this.uxStartTabPage.BackColor = System.Drawing.Color.Gray;
+            this.uxStartTabPage.Controls.Add(this.uxGradingWithThisProgramCheckBox);
             this.uxStartTabPage.Controls.Add(this.uxStartContinueButton);
             this.uxStartTabPage.Controls.Add(this.uxNumberOfQuestionsLabel);
             this.uxStartTabPage.Controls.Add(this.uxNumberOfQuestionsNumericUpDown);
@@ -345,7 +347,7 @@
             this.uxAllPartialCreditCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxAllPartialCreditCheckBox.Location = new System.Drawing.Point(14, 275);
             this.uxAllPartialCreditCheckBox.Name = "uxAllPartialCreditCheckBox";
-            this.uxAllPartialCreditCheckBox.Size = new System.Drawing.Size(225, 17);
+            this.uxAllPartialCreditCheckBox.Size = new System.Drawing.Size(163, 17);
             this.uxAllPartialCreditCheckBox.TabIndex = 33;
             this.uxAllPartialCreditCheckBox.Text = "All Partial Credit:";
             this.uxAllPartialCreditCheckBox.UseVisualStyleBackColor = false;
@@ -367,7 +369,7 @@
             // 
             this.uxAllQuestionPointsNumericUpDown.DecimalPlaces = 2;
             this.uxAllQuestionPointsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPointsNumericUpDown.Location = new System.Drawing.Point(189, 246);
+            this.uxAllQuestionPointsNumericUpDown.Location = new System.Drawing.Point(127, 246);
             this.uxAllQuestionPointsNumericUpDown.Name = "uxAllQuestionPointsNumericUpDown";
             this.uxAllQuestionPointsNumericUpDown.Size = new System.Drawing.Size(50, 20);
             this.uxAllQuestionPointsNumericUpDown.TabIndex = 39;
@@ -794,6 +796,19 @@
             this.uxGradeContinueButton.Text = "Continue";
             this.uxGradeContinueButton.UseVisualStyleBackColor = false;
             // 
+            // uxGradingWithThisProgramCheckBox
+            // 
+            this.uxGradingWithThisProgramCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(14, 500);
+            this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
+            this.uxGradingWithThisProgramCheckBox.Size = new System.Drawing.Size(185, 17);
+            this.uxGradingWithThisProgramCheckBox.TabIndex = 55;
+            this.uxGradingWithThisProgramCheckBox.Text = "Grading with this program: ";
+            this.uxGradingWithThisProgramCheckBox.UseMnemonic = false;
+            this.uxGradingWithThisProgramCheckBox.UseVisualStyleBackColor = false;
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -885,6 +900,7 @@
         private System.Windows.Forms.Button uxAnswerKeyContinueButton;
         private System.Windows.Forms.Button uxScanContinueButton;
         private System.Windows.Forms.Button uxGradeContinueButton;
+        private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
     }
 }
 
