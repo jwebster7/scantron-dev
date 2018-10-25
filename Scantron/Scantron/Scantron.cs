@@ -95,7 +95,7 @@ namespace Scantron
         // Event handler for when Create Students button is clicked.
         private void uxCreateStudentsButton_Click(object sender, EventArgs e)
         {
-            gui.CreateStudents();
+            //gui.CreateStudents();
         }
 
         // Event handler for hen Test Data button is clicked.

@@ -116,7 +116,7 @@ namespace Scantron
                 student.CreateResponse();
             }
 
-            gui.DisplayMessage(students.Count + " students successfully created!");
+            //gui.DisplayMessage(students.Count + " students successfully created!");
         }
 
         /// <summary>

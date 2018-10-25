@@ -35,6 +35,7 @@
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxStartTabPage = new System.Windows.Forms.TabPage();
+            this.uxStartInstructionLabel = new System.Windows.Forms.Label();
             this.uxResetButton = new System.Windows.Forms.Button();
             this.uxExamNameLabel = new System.Windows.Forms.Label();
             this.uxExamNameTextBox = new System.Windows.Forms.TextBox();
@@ -61,6 +62,7 @@
             this.uxStatusTextBox = new System.Windows.Forms.TextBox();
             this.uxCardListTextBox = new System.Windows.Forms.TextBox();
             this.uxScanneCardsLabel = new System.Windows.Forms.Label();
+            this.uxResumeButton = new System.Windows.Forms.Button();
             this.uxPauseButton = new System.Windows.Forms.Button();
             this.uxTestDataButton = new System.Windows.Forms.Button();
             this.uxCreateStudentsButton = new System.Windows.Forms.Button();
@@ -79,8 +81,6 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.uxStartInstructionLabel = new System.Windows.Forms.Label();
-            this.uxResumeButton = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
@@ -199,6 +199,15 @@
             this.uxStartTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxStartTabPage.TabIndex = 3;
             this.uxStartTabPage.Text = "Start";
+            // 
+            // uxStartInstructionLabel
+            // 
+            this.uxStartInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxStartInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.uxStartInstructionLabel.Location = new System.Drawing.Point(3, 3);
+            this.uxStartInstructionLabel.Name = "uxStartInstructionLabel";
+            this.uxStartInstructionLabel.Size = new System.Drawing.Size(471, 413);
+            this.uxStartInstructionLabel.TabIndex = 51;
             // 
             // uxResetButton
             // 
@@ -512,6 +521,23 @@
             this.uxScanneCardsLabel.TabIndex = 38;
             this.uxScanneCardsLabel.Text = "Scanned Cards";
             // 
+            // uxResumeButton
+            // 
+            this.uxResumeButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxResumeButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxResumeButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxResumeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxResumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxResumeButton.Location = new System.Drawing.Point(14, 500);
+            this.uxResumeButton.Name = "uxResumeButton";
+            this.uxResumeButton.Size = new System.Drawing.Size(125, 45);
+            this.uxResumeButton.TabIndex = 37;
+            this.uxResumeButton.TabStop = false;
+            this.uxResumeButton.Text = "Resume";
+            this.uxResumeButton.UseVisualStyleBackColor = false;
+            this.uxResumeButton.Visible = false;
+            this.uxResumeButton.Click += new System.EventHandler(this.uxResumeButton_Click);
+            // 
             // uxPauseButton
             // 
             this.uxPauseButton.BackColor = System.Drawing.SystemColors.Control;
@@ -526,6 +552,7 @@
             this.uxPauseButton.TabStop = false;
             this.uxPauseButton.Text = "Pause";
             this.uxPauseButton.UseVisualStyleBackColor = false;
+            this.uxPauseButton.Visible = false;
             this.uxPauseButton.Click += new System.EventHandler(this.uxPauseButton_Click);
             // 
             // uxTestDataButton
@@ -558,6 +585,7 @@
             this.uxCreateStudentsButton.TabStop = false;
             this.uxCreateStudentsButton.Text = "Create Students";
             this.uxCreateStudentsButton.UseVisualStyleBackColor = false;
+            this.uxCreateStudentsButton.Visible = false;
             this.uxCreateStudentsButton.Click += new System.EventHandler(this.uxCreateStudentsButton_Click);
             // 
             // uxSaveChangesButton
@@ -769,31 +797,6 @@
             this.uxCreateFileInstructionLabel.Name = "uxCreateFileInstructionLabel";
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
-            // 
-            // uxStartInstructionLabel
-            // 
-            this.uxStartInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxStartInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
-            this.uxStartInstructionLabel.Location = new System.Drawing.Point(3, 3);
-            this.uxStartInstructionLabel.Name = "uxStartInstructionLabel";
-            this.uxStartInstructionLabel.Size = new System.Drawing.Size(471, 413);
-            this.uxStartInstructionLabel.TabIndex = 51;
-            // 
-            // uxResumeButton
-            // 
-            this.uxResumeButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxResumeButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxResumeButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxResumeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxResumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResumeButton.Location = new System.Drawing.Point(14, 500);
-            this.uxResumeButton.Name = "uxResumeButton";
-            this.uxResumeButton.Size = new System.Drawing.Size(125, 45);
-            this.uxResumeButton.TabIndex = 37;
-            this.uxResumeButton.TabStop = false;
-            this.uxResumeButton.Text = "Resume";
-            this.uxResumeButton.UseVisualStyleBackColor = false;
-            this.uxResumeButton.Click += new System.EventHandler(this.uxResumeButton_Click);
             // 
             // Scantron
             // 

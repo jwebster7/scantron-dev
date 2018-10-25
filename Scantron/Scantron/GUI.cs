@@ -353,11 +353,11 @@ namespace Scantron
                 grader.Cards[i].SheetNumber = sheet_number;
             }
 
-
-            DisplayMessage("Changes saved!");
             UpdateCardList();
+            grader.CreateStudents();
+            DisplayMessage("Changes saved!");
         }
-
+        /*
         /// <summary>
         /// Merges all cards with the same WIDs into one student.
         /// </summary>
@@ -371,7 +371,7 @@ namespace Scantron
 
             grader.CreateStudents();
         }
-
+        */
         public void UseScantronCardAnswerKey()
         {
             // Use a button on first page
