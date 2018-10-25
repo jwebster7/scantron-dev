@@ -82,6 +82,7 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
+            this.uxUseScantronCardButton = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -358,6 +359,7 @@
             // uxAnswerKeyTabPage
             // 
             this.uxAnswerKeyTabPage.BackColor = System.Drawing.Color.Gray;
+            this.uxAnswerKeyTabPage.Controls.Add(this.uxUseScantronCardButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxAnswerKeyContinueButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxCreateAnswerKeyButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxAnswerKeyInstructionLabel);
@@ -378,7 +380,7 @@
             this.uxAnswerKeyContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxAnswerKeyContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxAnswerKeyContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAnswerKeyContinueButton.Location = new System.Drawing.Point(14, 389);
+            this.uxAnswerKeyContinueButton.Location = new System.Drawing.Point(9, 526);
             this.uxAnswerKeyContinueButton.Name = "uxAnswerKeyContinueButton";
             this.uxAnswerKeyContinueButton.Size = new System.Drawing.Size(163, 70);
             this.uxAnswerKeyContinueButton.TabIndex = 55;
@@ -392,7 +394,7 @@
             this.uxCreateAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.uxCreateAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxCreateAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(14, 298);
+            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(9, 435);
             this.uxCreateAnswerKeyButton.Name = "uxCreateAnswerKeyButton";
             this.uxCreateAnswerKeyButton.Size = new System.Drawing.Size(163, 85);
             this.uxCreateAnswerKeyButton.TabIndex = 44;
@@ -414,7 +416,7 @@
             this.uxAllPartialCreditCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.uxAllPartialCreditCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.uxAllPartialCreditCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllPartialCreditCheckBox.Location = new System.Drawing.Point(14, 275);
+            this.uxAllPartialCreditCheckBox.Location = new System.Drawing.Point(9, 412);
             this.uxAllPartialCreditCheckBox.Name = "uxAllPartialCreditCheckBox";
             this.uxAllPartialCreditCheckBox.Size = new System.Drawing.Size(163, 17);
             this.uxAllPartialCreditCheckBox.TabIndex = 33;
@@ -427,7 +429,7 @@
             this.uxAllQuestionPointsLabel.AutoSize = true;
             this.uxAllQuestionPointsLabel.BackColor = System.Drawing.Color.Transparent;
             this.uxAllQuestionPointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(14, 248);
+            this.uxAllQuestionPointsLabel.Location = new System.Drawing.Point(9, 391);
             this.uxAllQuestionPointsLabel.Name = "uxAllQuestionPointsLabel";
             this.uxAllQuestionPointsLabel.Size = new System.Drawing.Size(85, 13);
             this.uxAllQuestionPointsLabel.TabIndex = 40;
@@ -438,7 +440,7 @@
             // 
             this.uxAllQuestionPointsNumericUpDown.DecimalPlaces = 2;
             this.uxAllQuestionPointsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAllQuestionPointsNumericUpDown.Location = new System.Drawing.Point(127, 246);
+            this.uxAllQuestionPointsNumericUpDown.Location = new System.Drawing.Point(122, 389);
             this.uxAllQuestionPointsNumericUpDown.Name = "uxAllQuestionPointsNumericUpDown";
             this.uxAllQuestionPointsNumericUpDown.Size = new System.Drawing.Size(50, 20);
             this.uxAllQuestionPointsNumericUpDown.TabIndex = 39;
@@ -813,6 +815,20 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
+            // uxUseScantronCardButton
+            // 
+            this.uxUseScantronCardButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxUseScantronCardButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxUseScantronCardButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxUseScantronCardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxUseScantronCardButton.Location = new System.Drawing.Point(9, 204);
+            this.uxUseScantronCardButton.Name = "uxUseScantronCardButton";
+            this.uxUseScantronCardButton.Size = new System.Drawing.Size(163, 85);
+            this.uxUseScantronCardButton.TabIndex = 56;
+            this.uxUseScantronCardButton.Text = "Use Scantron Card";
+            this.uxUseScantronCardButton.UseVisualStyleBackColor = false;
+            this.uxUseScantronCardButton.Click += new System.EventHandler(this.uxUseScantronCardButton_Click);
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -905,6 +921,7 @@
         private System.Windows.Forms.Button uxScanContinueButton;
         private System.Windows.Forms.Button uxGradeContinueButton;
         private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
+        private System.Windows.Forms.Button uxUseScantronCardButton;
     }
 }
 

@@ -187,5 +187,10 @@ namespace Scantron
         {
             gui.GradeContinue();
         }
+
+        private void uxUseScantronCardButton_Click(object sender, EventArgs e)
+        {
+            gui.UseScantronCard();
+        }
     }
 }
