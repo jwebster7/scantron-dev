@@ -171,7 +171,7 @@ namespace Scantron
 
             task = new Task<List<string>>(() => scanner.Run(raw_cards));
             task.Start();
-
+            
             grader.CreateCards(raw_cards);
             UpdateCardList();
         }
