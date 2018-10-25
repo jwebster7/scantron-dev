@@ -49,7 +49,7 @@ namespace Scantron
         private TabPage uxScanTabPage;
         private TabPage uxGradeTabPage;
         private TabPage uxCreateFileTabPage;
-        private TextBox uxStartInstructionTextBox;
+        private Label uxStartInstructionLabel;
         private Label uxCreateFileInstructionLabel;
         private Button uxFinishButton;
 
@@ -92,7 +92,7 @@ namespace Scantron
             uxScanTabPage = (TabPage) scantron_form.Controls.Find("uxScanTabPage", true)[0];
             uxGradeTabPage = (TabPage) scantron_form.Controls.Find("uxGradeTabPage", true)[0];
             uxCreateFileTabPage = (TabPage) scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
-            uxStartInstructionTextBox = (TextBox) scantron_form.Controls.Find("uxStartInstructionTextBox", true)[0];
+            uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
             uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
 
@@ -113,41 +113,35 @@ namespace Scantron
         /// </summary>
         public void InsertInstructionText()
         {
-            uxStartInstructionTextBox.Text = "Welcome to the new Scantron program!" + Environment.NewLine + Environment.NewLine +
-"This program is intended to combine the functionality of CanConvert and the previous Scantron program." + Environment.NewLine +
-"If you used CanConvert, follow the steps for grading within this program. <b>If you are going to use the Canvas Scantron tool that utilizes Quizzes, there will be notes letting you know which steps you may skip.</b>" + Environment.NewLine + Environment.NewLine +
-"If you have any feedback regarding the appearance or workflow of the Scantron progam, please email scantron@ksu.edu and we will attempt to incorporate it. All feedback are welcome." + Environment.NewLine + Environment.NewLine +
-"To begin, set your Scantron cards in the tray by following the pictures to the right." + Environment.NewLine +
-"Ensure the guider is lined up against the stack of cards as straight as possible." + Environment.NewLine +
-"Click on the Answer Key tab along the top and follow the instructions carefully to continue.";
+            uxStartInstructionLabel.Text =          "Welcome to the new Scantron program!\n" +
+                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it. All feedback is welcome.\n" +
+                                                    "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
+                                                    "2. Click Reset.\n" +
+                                                    "3. Enter the the exam name and number of versions.\n" + 
+                                                    "4. Click on the Answer Key tab along the top";
 
-            uxAnswerKeyInstructionLabel.Text =      "1. Click Reset to clear past data.\n" +
-                                                    "2. Enter the name for the exam.\n" +
-                                                    "3. Specify the number of versions and questions the exam has. <b>If you are using the Canvas Scantron tool</b>, skip to step 7 after this step.\n" +
-                                                    "4. Specify how many points each questions is worth, and if a question has multiple correct answers, specify if students will be given partial credit.\n" +
+            uxAnswerKeyInstructionLabel.Text =      "1. Enter the number of questions.\n" +
+                                                    "2. If you are using the grader in this program, click Create Answer Key and go to the Scan tab.\n" +
+                                                    "3. Enter how many points each questions is worth.\n" +
                                                     "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
                                                     "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
                                                     "7. Click Create Answer Key, then go to the Scan tab.";
 
-            uxScanInstructionLabel.Text =           "1. Click Start.\n" +
-                                                    "2. After your cards have finished scanning, they will appear in the Scanned Cards panel.\n" +
-                                                    "3. The Errors panel will tell you which cards have incorrect WIDs or test versions.\n" +
-                                                    "4. (Optional) You can correct anything in the Scanned Cards panel by erasing and typing like you would any normal text.\n" +
+            uxScanInstructionLabel.Text =           "1. Click Start to scan your cards.\n" +
+                                                    "4. (Optional) You can correct WIDs, test versions, and sheet numbers in the Scanned Cards panel\n" +
                                                     "5. Once you have made corrections, click Save Changes, then click Create Students.\n" +
-                                                    "6. If you are grading here, click on the Grade tab. <b>If you are using the Canvas Scantron Tool</b>, click on the Create File tab.\n\n" +
-                                                    "You may click Pause to halt the Scantron at any time and click Resume to continue scanning.\n" +
-                                                    "The Stop button is for aborting the entire card scanning process.";
+                                                    "6. If you are grading here, click on the Grade tab. If you are using the Canvas Scantron Tool, click on the Create File tab.\n\n";
 
-            uxGradeInstructionLabel.Text =          "1. Click Grade Students. You will be asked to give a name to the .csv file you will upload to the Canvas Gradebook.\n" +
+            uxGradeInstructionLabel.Text =          "1. Click Grade Students.\n" +
                                                     "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
                                                     "3. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
                                                     "4. Once you are done reviewing the student responses, click the Create File tab.";
 
-            uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool buttons.\n" +
+            uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool options.\n" +
                                                     "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Answer option can only handle 1 answer per question.\n" +
                                                     "3. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it.\n" +
                                                     "4. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + ".\n" +
-                                                    "5. Once you have your file is saved, click the Finish button to clear all scanned data.";
+                                                    "5. Once you have your file saved, click the Finish button to clear all your data for the next person.";
         }
 
         /// <summary>

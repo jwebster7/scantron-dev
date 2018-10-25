@@ -35,11 +35,15 @@
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxStartTabPage = new System.Windows.Forms.TabPage();
+            this.uxResetButton = new System.Windows.Forms.Button();
+            this.uxExamNameLabel = new System.Windows.Forms.Label();
+            this.uxExamNameTextBox = new System.Windows.Forms.TextBox();
+            this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
+            this.uxNumberOfVersionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.uxSetupImage4PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage3PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
-            this.uxStartInstructionTextBox = new System.Windows.Forms.TextBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
             this.uxCreateAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
@@ -76,13 +80,10 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.uxResetButton = new System.Windows.Forms.Button();
-            this.uxExamNameLabel = new System.Windows.Forms.Label();
-            this.uxExamNameTextBox = new System.Windows.Forms.TextBox();
-            this.uxNumberOfVersionsLabel = new System.Windows.Forms.Label();
-            this.uxNumberOfVersionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.uxStartInstructionLabel = new System.Windows.Forms.Label();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).BeginInit();
@@ -94,7 +95,6 @@
             this.uxScanTabPage.SuspendLayout();
             this.uxGradeTabPage.SuspendLayout();
             this.uxCreateFileTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // uxStartButton
@@ -184,6 +184,7 @@
             // 
             this.uxStartTabPage.AutoScroll = true;
             this.uxStartTabPage.BackColor = System.Drawing.Color.Gray;
+            this.uxStartTabPage.Controls.Add(this.uxStartInstructionLabel);
             this.uxStartTabPage.Controls.Add(this.uxResetButton);
             this.uxStartTabPage.Controls.Add(this.uxExamNameLabel);
             this.uxStartTabPage.Controls.Add(this.uxExamNameTextBox);
@@ -193,12 +194,69 @@
             this.uxStartTabPage.Controls.Add(this.uxSetupImage3PictureBox);
             this.uxStartTabPage.Controls.Add(this.uxSetupImage2PictureBox);
             this.uxStartTabPage.Controls.Add(this.uxSetupImage1PictureBox);
-            this.uxStartTabPage.Controls.Add(this.uxStartInstructionTextBox);
             this.uxStartTabPage.Location = new System.Drawing.Point(4, 34);
             this.uxStartTabPage.Name = "uxStartTabPage";
             this.uxStartTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxStartTabPage.TabIndex = 3;
             this.uxStartTabPage.Text = "Start";
+            // 
+            // uxResetButton
+            // 
+            this.uxResetButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxResetButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxResetButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxResetButton.Location = new System.Drawing.Point(288, 419);
+            this.uxResetButton.Name = "uxResetButton";
+            this.uxResetButton.Size = new System.Drawing.Size(163, 70);
+            this.uxResetButton.TabIndex = 50;
+            this.uxResetButton.Text = "Reset";
+            this.uxResetButton.UseVisualStyleBackColor = false;
+            // 
+            // uxExamNameLabel
+            // 
+            this.uxExamNameLabel.AutoSize = true;
+            this.uxExamNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxExamNameLabel.Location = new System.Drawing.Point(13, 425);
+            this.uxExamNameLabel.Name = "uxExamNameLabel";
+            this.uxExamNameLabel.Size = new System.Drawing.Size(77, 13);
+            this.uxExamNameLabel.TabIndex = 49;
+            this.uxExamNameLabel.Text = "Exam Name:";
+            this.uxExamNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uxExamNameTextBox
+            // 
+            this.uxExamNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxExamNameTextBox.Location = new System.Drawing.Point(140, 422);
+            this.uxExamNameTextBox.Name = "uxExamNameTextBox";
+            this.uxExamNameTextBox.Size = new System.Drawing.Size(142, 20);
+            this.uxExamNameTextBox.TabIndex = 48;
+            // 
+            // uxNumberOfVersionsLabel
+            // 
+            this.uxNumberOfVersionsLabel.AutoSize = true;
+            this.uxNumberOfVersionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(13, 450);
+            this.uxNumberOfVersionsLabel.Name = "uxNumberOfVersionsLabel";
+            this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(121, 13);
+            this.uxNumberOfVersionsLabel.TabIndex = 46;
+            this.uxNumberOfVersionsLabel.Text = "Number of Versions:";
+            this.uxNumberOfVersionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uxNumberOfVersionsNumericUpDown
+            // 
+            this.uxNumberOfVersionsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxNumberOfVersionsNumericUpDown.Location = new System.Drawing.Point(140, 448);
+            this.uxNumberOfVersionsNumericUpDown.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.uxNumberOfVersionsNumericUpDown.Name = "uxNumberOfVersionsNumericUpDown";
+            this.uxNumberOfVersionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
+            this.uxNumberOfVersionsNumericUpDown.TabIndex = 47;
+            this.uxNumberOfVersionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // uxSetupImage4PictureBox
             // 
@@ -238,18 +296,6 @@
             this.uxSetupImage1PictureBox.Size = new System.Drawing.Size(252, 141);
             this.uxSetupImage1PictureBox.TabIndex = 1;
             this.uxSetupImage1PictureBox.TabStop = false;
-            // 
-            // uxStartInstructionTextBox
-            // 
-            this.uxStartInstructionTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.uxStartInstructionTextBox.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
-            this.uxStartInstructionTextBox.Location = new System.Drawing.Point(3, 3);
-            this.uxStartInstructionTextBox.Multiline = true;
-            this.uxStartInstructionTextBox.Name = "uxStartInstructionTextBox";
-            this.uxStartInstructionTextBox.ReadOnly = true;
-            this.uxStartInstructionTextBox.Size = new System.Drawing.Size(474, 299);
-            this.uxStartInstructionTextBox.TabIndex = 0;
-            this.uxStartInstructionTextBox.TabStop = false;
             // 
             // uxAnswerKeyTabPage
             // 
@@ -740,63 +786,14 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
-            // uxResetButton
+            // uxStartInstructionLabel
             // 
-            this.uxResetButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxResetButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxResetButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResetButton.Location = new System.Drawing.Point(3, 534);
-            this.uxResetButton.Name = "uxResetButton";
-            this.uxResetButton.Size = new System.Drawing.Size(163, 70);
-            this.uxResetButton.TabIndex = 50;
-            this.uxResetButton.Text = "Reset";
-            this.uxResetButton.UseVisualStyleBackColor = false;
-            // 
-            // uxExamNameLabel
-            // 
-            this.uxExamNameLabel.AutoSize = true;
-            this.uxExamNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxExamNameLabel.Location = new System.Drawing.Point(13, 473);
-            this.uxExamNameLabel.Name = "uxExamNameLabel";
-            this.uxExamNameLabel.Size = new System.Drawing.Size(77, 13);
-            this.uxExamNameLabel.TabIndex = 49;
-            this.uxExamNameLabel.Text = "Exam Name:";
-            this.uxExamNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uxExamNameTextBox
-            // 
-            this.uxExamNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxExamNameTextBox.Location = new System.Drawing.Point(96, 470);
-            this.uxExamNameTextBox.Name = "uxExamNameTextBox";
-            this.uxExamNameTextBox.Size = new System.Drawing.Size(142, 20);
-            this.uxExamNameTextBox.TabIndex = 48;
-            // 
-            // uxNumberOfVersionsLabel
-            // 
-            this.uxNumberOfVersionsLabel.AutoSize = true;
-            this.uxNumberOfVersionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfVersionsLabel.Location = new System.Drawing.Point(13, 508);
-            this.uxNumberOfVersionsLabel.Name = "uxNumberOfVersionsLabel";
-            this.uxNumberOfVersionsLabel.Size = new System.Drawing.Size(121, 13);
-            this.uxNumberOfVersionsLabel.TabIndex = 46;
-            this.uxNumberOfVersionsLabel.Text = "Number of Versions:";
-            this.uxNumberOfVersionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uxNumberOfVersionsNumericUpDown
-            // 
-            this.uxNumberOfVersionsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxNumberOfVersionsNumericUpDown.Location = new System.Drawing.Point(188, 506);
-            this.uxNumberOfVersionsNumericUpDown.Maximum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.uxNumberOfVersionsNumericUpDown.Name = "uxNumberOfVersionsNumericUpDown";
-            this.uxNumberOfVersionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
-            this.uxNumberOfVersionsNumericUpDown.TabIndex = 47;
-            this.uxNumberOfVersionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxStartInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxStartInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
+            this.uxStartInstructionLabel.Location = new System.Drawing.Point(3, 3);
+            this.uxStartInstructionLabel.Name = "uxStartInstructionLabel";
+            this.uxStartInstructionLabel.Size = new System.Drawing.Size(471, 413);
+            this.uxStartInstructionLabel.TabIndex = 51;
             // 
             // Scantron
             // 
@@ -815,6 +812,7 @@
             this.uxMainTabControl.ResumeLayout(false);
             this.uxStartTabPage.ResumeLayout(false);
             this.uxStartTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage4PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).EndInit();
@@ -829,7 +827,6 @@
             this.uxGradeTabPage.ResumeLayout(false);
             this.uxGradeTabPage.PerformLayout();
             this.uxCreateFileTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -875,7 +872,6 @@
         private System.Windows.Forms.TextBox uxStatusTextBox;
         private System.Windows.Forms.TabPage uxStartTabPage;
         private System.Windows.Forms.TabPage uxCreateFileTabPage;
-        private System.Windows.Forms.TextBox uxStartInstructionTextBox;
         private System.Windows.Forms.PictureBox uxSetupImage1PictureBox;
         private System.Windows.Forms.PictureBox uxSetupImage4PictureBox;
         private System.Windows.Forms.PictureBox uxSetupImage3PictureBox;
@@ -890,6 +886,7 @@
         private System.Windows.Forms.TextBox uxExamNameTextBox;
         private System.Windows.Forms.Label uxNumberOfVersionsLabel;
         private System.Windows.Forms.NumericUpDown uxNumberOfVersionsNumericUpDown;
+        private System.Windows.Forms.Label uxStartInstructionLabel;
     }
 }
 
