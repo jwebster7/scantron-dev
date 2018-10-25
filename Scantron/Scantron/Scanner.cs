@@ -21,7 +21,7 @@ using System.Threading;
 
 namespace Scantron
 {
-    public class ScannerCom
+    public class Scanner
     {
         private SerialPort serial_port;
         private ScannerConfig config;
@@ -29,7 +29,7 @@ namespace Scantron
         public static ManualResetEvent ToAbort = new ManualResetEvent(false);
         
                
-        public ScannerCom()
+        public Scanner()
         {
             config = ScannerConfig.Deserialize();
 
@@ -55,7 +55,6 @@ namespace Scantron
         //public static List<string> Run()
         public List<string> Run(List<string> raw_cards)
         {
-            raw_cards.Clear();
             Thread.Sleep(1000);
             Thread.BeginCriticalRegion();
 

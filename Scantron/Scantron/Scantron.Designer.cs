@@ -61,7 +61,6 @@
             this.uxStatusTextBox = new System.Windows.Forms.TextBox();
             this.uxCardListTextBox = new System.Windows.Forms.TextBox();
             this.uxScanneCardsLabel = new System.Windows.Forms.Label();
-            this.uxResumeButton = new System.Windows.Forms.Button();
             this.uxPauseButton = new System.Windows.Forms.Button();
             this.uxTestDataButton = new System.Windows.Forms.Button();
             this.uxCreateStudentsButton = new System.Windows.Forms.Button();
@@ -81,6 +80,7 @@
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
             this.uxStartInstructionLabel = new System.Windows.Forms.Label();
+            this.uxResumeButton = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
@@ -512,22 +512,6 @@
             this.uxScanneCardsLabel.TabIndex = 38;
             this.uxScanneCardsLabel.Text = "Scanned Cards";
             // 
-            // uxResumeButton
-            // 
-            this.uxResumeButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxResumeButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxResumeButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxResumeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxResumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxResumeButton.Location = new System.Drawing.Point(14, 500);
-            this.uxResumeButton.Name = "uxResumeButton";
-            this.uxResumeButton.Size = new System.Drawing.Size(125, 45);
-            this.uxResumeButton.TabIndex = 37;
-            this.uxResumeButton.TabStop = false;
-            this.uxResumeButton.Text = "Resume";
-            this.uxResumeButton.UseVisualStyleBackColor = false;
-            this.uxResumeButton.Click += new System.EventHandler(this.uxResumeButton_Click);
-            // 
             // uxPauseButton
             // 
             this.uxPauseButton.BackColor = System.Drawing.SystemColors.Control;
@@ -795,6 +779,22 @@
             this.uxStartInstructionLabel.Size = new System.Drawing.Size(471, 413);
             this.uxStartInstructionLabel.TabIndex = 51;
             // 
+            // uxResumeButton
+            // 
+            this.uxResumeButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxResumeButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxResumeButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxResumeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxResumeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxResumeButton.Location = new System.Drawing.Point(14, 500);
+            this.uxResumeButton.Name = "uxResumeButton";
+            this.uxResumeButton.Size = new System.Drawing.Size(125, 45);
+            this.uxResumeButton.TabIndex = 37;
+            this.uxResumeButton.TabStop = false;
+            this.uxResumeButton.Text = "Resume";
+            this.uxResumeButton.UseVisualStyleBackColor = false;
+            this.uxResumeButton.Click += new System.EventHandler(this.uxResumeButton_Click);
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -863,7 +863,6 @@
         private System.Windows.Forms.Button uxSaveChangesButton;
         private System.Windows.Forms.Button uxCreateStudentsButton;
         private System.Windows.Forms.Button uxCreateAnswerKeyButton;
-        private System.Windows.Forms.Button uxResumeButton;
         private System.Windows.Forms.Button uxPauseButton;
         private System.Windows.Forms.Label uxScanneCardsLabel;
         private System.Windows.Forms.Button uxTestDataButton;
@@ -887,6 +886,7 @@
         private System.Windows.Forms.Label uxNumberOfVersionsLabel;
         private System.Windows.Forms.NumericUpDown uxNumberOfVersionsNumericUpDown;
         private System.Windows.Forms.Label uxStartInstructionLabel;
+        private System.Windows.Forms.Button uxResumeButton;
     }
 }
 

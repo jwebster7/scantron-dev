@@ -107,13 +107,13 @@ namespace Scantron
         // Event handler for when Pause button is clicked.
         private void uxPauseButton_Click(object sender, EventArgs e)
         {
-            gui.Pause();
+            //gui.Pause();
         }
 
         // Event handler for when Resume button is clicked.
         private void uxResumeButton_Click(object sender, EventArgs e)
         {
-            gui.Resume();
+            //gui.Resume();
         }
 
         // Event handler for when Stop button is clicked.

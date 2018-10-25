@@ -57,7 +57,7 @@ namespace Scantron
         private List<string> raw_cards = new List<string>();
 
         // Scanner communication fields
-        private ScannerCom scannerCom;
+        private Scanner scanner;
         private bool toAbort = true;
         Task<List<string>> task;
         private bool ScantronCardAnswerKey = false;
@@ -65,7 +65,7 @@ namespace Scantron
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            scannerCom = new ScannerCom();
+            scanner = new Scanner();
             grader = new Grader(this);
 
             uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
@@ -156,11 +156,11 @@ namespace Scantron
                 return;
             }
 
-            ScannerCom.ToAbort.Set();
+            Scanner.ToAbort.Set();
 
             try
             {
-                scannerCom.Start();
+                scanner.Start();
             }
             catch(IOException)
             {
@@ -168,7 +168,7 @@ namespace Scantron
                 return;
             }
 
-            task = new Task<List<string>>(() => scannerCom.Run(raw_cards));
+            task = new Task<List<string>>(() => scanner.Run(raw_cards));
             task.Start();
             task.Wait();
 
@@ -181,9 +181,9 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            scannerCom.Stop();
+            scanner.Stop();
         }
-
+        /*
         /// <summary>
         /// Pauses the scantron.
         /// </summary>
@@ -201,7 +201,7 @@ namespace Scantron
             ScannerCom.ToAbort.Set(); // Does NOT Abort & Stop
             toAbort = true;
         }
-
+        */
         /// <summary>
         /// Reset program to initial state.
         /// </summary>
