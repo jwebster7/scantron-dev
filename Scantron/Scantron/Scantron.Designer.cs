@@ -35,6 +35,10 @@
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxStartTabPage = new System.Windows.Forms.TabPage();
+            this.uxGradingWithThisProgramCheckBox = new System.Windows.Forms.CheckBox();
+            this.uxStartContinueButton = new System.Windows.Forms.Button();
+            this.uxNumberOfQuestionsLabel = new System.Windows.Forms.Label();
+            this.uxNumberOfQuestionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.uxStartInstructionLabel = new System.Windows.Forms.Label();
             this.uxResetButton = new System.Windows.Forms.Button();
             this.uxExamNameLabel = new System.Windows.Forms.Label();
@@ -45,6 +49,7 @@
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
+            this.uxAnswerKeyContinueButton = new System.Windows.Forms.Button();
             this.uxCreateAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
             this.uxAllPartialCreditCheckBox = new System.Windows.Forms.CheckBox();
@@ -55,6 +60,7 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTabPage = new System.Windows.Forms.TabPage();
+            this.uxScanContinueButton = new System.Windows.Forms.Button();
             this.uxStatusLabel = new System.Windows.Forms.Label();
             this.uxStatusTextBox = new System.Windows.Forms.TextBox();
             this.uxCardListTextBox = new System.Windows.Forms.TextBox();
@@ -63,6 +69,7 @@
             this.uxSaveChangesButton = new System.Windows.Forms.Button();
             this.uxScanInstructionLabel = new System.Windows.Forms.Label();
             this.uxGradeTabPage = new System.Windows.Forms.TabPage();
+            this.uxGradeContinueButton = new System.Windows.Forms.Button();
             this.uxGradeStudentsButton = new System.Windows.Forms.Button();
             this.uxScoreLabel = new System.Windows.Forms.Label();
             this.uxGradeInstructionLabel = new System.Windows.Forms.Label();
@@ -75,15 +82,9 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.uxNumberOfQuestionsLabel = new System.Windows.Forms.Label();
-            this.uxNumberOfQuestionsNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.uxStartContinueButton = new System.Windows.Forms.Button();
-            this.uxAnswerKeyContinueButton = new System.Windows.Forms.Button();
-            this.uxScanContinueButton = new System.Windows.Forms.Button();
-            this.uxGradeContinueButton = new System.Windows.Forms.Button();
-            this.uxGradingWithThisProgramCheckBox = new System.Windows.Forms.CheckBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).BeginInit();
@@ -94,7 +95,6 @@
             this.uxScanTabPage.SuspendLayout();
             this.uxGradeTabPage.SuspendLayout();
             this.uxCreateFileTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // uxStartButton
@@ -202,6 +202,60 @@
             this.uxStartTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxStartTabPage.TabIndex = 3;
             this.uxStartTabPage.Text = "Start";
+            // 
+            // uxGradingWithThisProgramCheckBox
+            // 
+            this.uxGradingWithThisProgramCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(14, 500);
+            this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
+            this.uxGradingWithThisProgramCheckBox.Size = new System.Drawing.Size(185, 17);
+            this.uxGradingWithThisProgramCheckBox.TabIndex = 55;
+            this.uxGradingWithThisProgramCheckBox.Text = "Grading with this program: ";
+            this.uxGradingWithThisProgramCheckBox.UseMnemonic = false;
+            this.uxGradingWithThisProgramCheckBox.UseVisualStyleBackColor = false;
+            // 
+            // uxStartContinueButton
+            // 
+            this.uxStartContinueButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxStartContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxStartContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxStartContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxStartContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxStartContinueButton.Location = new System.Drawing.Point(297, 424);
+            this.uxStartContinueButton.Name = "uxStartContinueButton";
+            this.uxStartContinueButton.Size = new System.Drawing.Size(163, 70);
+            this.uxStartContinueButton.TabIndex = 54;
+            this.uxStartContinueButton.Text = "Continue";
+            this.uxStartContinueButton.UseVisualStyleBackColor = false;
+            this.uxStartContinueButton.Click += new System.EventHandler(this.uxStartContinueButton_Click);
+            // 
+            // uxNumberOfQuestionsLabel
+            // 
+            this.uxNumberOfQuestionsLabel.AutoSize = true;
+            this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(13, 476);
+            this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
+            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(129, 13);
+            this.uxNumberOfQuestionsLabel.TabIndex = 52;
+            this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
+            this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uxNumberOfQuestionsNumericUpDown
+            // 
+            this.uxNumberOfQuestionsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxNumberOfQuestionsNumericUpDown.Location = new System.Drawing.Point(149, 474);
+            this.uxNumberOfQuestionsNumericUpDown.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.uxNumberOfQuestionsNumericUpDown.Name = "uxNumberOfQuestionsNumericUpDown";
+            this.uxNumberOfQuestionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
+            this.uxNumberOfQuestionsNumericUpDown.TabIndex = 53;
+            this.uxNumberOfQuestionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfQuestionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfQuestionsNumericUpDown_ValueChanged);
             // 
             // uxStartInstructionLabel
             // 
@@ -316,6 +370,21 @@
             this.uxAnswerKeyTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxAnswerKeyTabPage.TabIndex = 2;
             this.uxAnswerKeyTabPage.Text = "Answer Key";
+            // 
+            // uxAnswerKeyContinueButton
+            // 
+            this.uxAnswerKeyContinueButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxAnswerKeyContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxAnswerKeyContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxAnswerKeyContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxAnswerKeyContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxAnswerKeyContinueButton.Location = new System.Drawing.Point(14, 389);
+            this.uxAnswerKeyContinueButton.Name = "uxAnswerKeyContinueButton";
+            this.uxAnswerKeyContinueButton.Size = new System.Drawing.Size(163, 70);
+            this.uxAnswerKeyContinueButton.TabIndex = 55;
+            this.uxAnswerKeyContinueButton.Text = "Continue";
+            this.uxAnswerKeyContinueButton.UseVisualStyleBackColor = false;
+            this.uxAnswerKeyContinueButton.Click += new System.EventHandler(this.uxAnswerKeyContinueButton_Click);
             // 
             // uxCreateAnswerKeyButton
             // 
@@ -445,6 +514,21 @@
             this.uxScanTabPage.TabIndex = 0;
             this.uxScanTabPage.Text = "Scan";
             // 
+            // uxScanContinueButton
+            // 
+            this.uxScanContinueButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxScanContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxScanContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScanContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxScanContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxScanContinueButton.Location = new System.Drawing.Point(14, 435);
+            this.uxScanContinueButton.Name = "uxScanContinueButton";
+            this.uxScanContinueButton.Size = new System.Drawing.Size(125, 70);
+            this.uxScanContinueButton.TabIndex = 55;
+            this.uxScanContinueButton.Text = "Continue";
+            this.uxScanContinueButton.UseVisualStyleBackColor = false;
+            this.uxScanContinueButton.Click += new System.EventHandler(this.uxScanContinueButton_Click);
+            // 
             // uxStatusLabel
             // 
             this.uxStatusLabel.AutoSize = true;
@@ -548,6 +632,21 @@
             this.uxGradeTabPage.Size = new System.Drawing.Size(738, 607);
             this.uxGradeTabPage.TabIndex = 1;
             this.uxGradeTabPage.Text = "Grade";
+            // 
+            // uxGradeContinueButton
+            // 
+            this.uxGradeContinueButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxGradeContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxGradeContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxGradeContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradeContinueButton.Location = new System.Drawing.Point(14, 448);
+            this.uxGradeContinueButton.Name = "uxGradeContinueButton";
+            this.uxGradeContinueButton.Size = new System.Drawing.Size(163, 70);
+            this.uxGradeContinueButton.TabIndex = 55;
+            this.uxGradeContinueButton.Text = "Continue";
+            this.uxGradeContinueButton.UseVisualStyleBackColor = false;
+            this.uxGradeContinueButton.Click += new System.EventHandler(this.uxGradeContinueButton_Click);
             // 
             // uxGradeStudentsButton
             // 
@@ -714,101 +813,6 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 189);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
-            // uxNumberOfQuestionsLabel
-            // 
-            this.uxNumberOfQuestionsLabel.AutoSize = true;
-            this.uxNumberOfQuestionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.uxNumberOfQuestionsLabel.Location = new System.Drawing.Point(13, 476);
-            this.uxNumberOfQuestionsLabel.Name = "uxNumberOfQuestionsLabel";
-            this.uxNumberOfQuestionsLabel.Size = new System.Drawing.Size(129, 13);
-            this.uxNumberOfQuestionsLabel.TabIndex = 52;
-            this.uxNumberOfQuestionsLabel.Text = "Number of Questions:";
-            this.uxNumberOfQuestionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uxNumberOfQuestionsNumericUpDown
-            // 
-            this.uxNumberOfQuestionsNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxNumberOfQuestionsNumericUpDown.Location = new System.Drawing.Point(149, 474);
-            this.uxNumberOfQuestionsNumericUpDown.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.uxNumberOfQuestionsNumericUpDown.Name = "uxNumberOfQuestionsNumericUpDown";
-            this.uxNumberOfQuestionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
-            this.uxNumberOfQuestionsNumericUpDown.TabIndex = 53;
-            this.uxNumberOfQuestionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.uxNumberOfQuestionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfQuestionsNumericUpDown_ValueChanged);
-            // 
-            // uxStartContinueButton
-            // 
-            this.uxStartContinueButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStartContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxStartContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxStartContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxStartContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStartContinueButton.Location = new System.Drawing.Point(297, 424);
-            this.uxStartContinueButton.Name = "uxStartContinueButton";
-            this.uxStartContinueButton.Size = new System.Drawing.Size(163, 70);
-            this.uxStartContinueButton.TabIndex = 54;
-            this.uxStartContinueButton.Text = "Continue";
-            this.uxStartContinueButton.UseVisualStyleBackColor = false;
-            // 
-            // uxAnswerKeyContinueButton
-            // 
-            this.uxAnswerKeyContinueButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxAnswerKeyContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxAnswerKeyContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxAnswerKeyContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxAnswerKeyContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxAnswerKeyContinueButton.Location = new System.Drawing.Point(14, 389);
-            this.uxAnswerKeyContinueButton.Name = "uxAnswerKeyContinueButton";
-            this.uxAnswerKeyContinueButton.Size = new System.Drawing.Size(163, 70);
-            this.uxAnswerKeyContinueButton.TabIndex = 55;
-            this.uxAnswerKeyContinueButton.Text = "Continue";
-            this.uxAnswerKeyContinueButton.UseVisualStyleBackColor = false;
-            // 
-            // uxScanContinueButton
-            // 
-            this.uxScanContinueButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxScanContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxScanContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxScanContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxScanContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScanContinueButton.Location = new System.Drawing.Point(14, 435);
-            this.uxScanContinueButton.Name = "uxScanContinueButton";
-            this.uxScanContinueButton.Size = new System.Drawing.Size(125, 70);
-            this.uxScanContinueButton.TabIndex = 55;
-            this.uxScanContinueButton.Text = "Continue";
-            this.uxScanContinueButton.UseVisualStyleBackColor = false;
-            // 
-            // uxGradeContinueButton
-            // 
-            this.uxGradeContinueButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxGradeContinueButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxGradeContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxGradeContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxGradeContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradeContinueButton.Location = new System.Drawing.Point(14, 448);
-            this.uxGradeContinueButton.Name = "uxGradeContinueButton";
-            this.uxGradeContinueButton.Size = new System.Drawing.Size(163, 70);
-            this.uxGradeContinueButton.TabIndex = 55;
-            this.uxGradeContinueButton.Text = "Continue";
-            this.uxGradeContinueButton.UseVisualStyleBackColor = false;
-            // 
-            // uxGradingWithThisProgramCheckBox
-            // 
-            this.uxGradingWithThisProgramCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(14, 500);
-            this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
-            this.uxGradingWithThisProgramCheckBox.Size = new System.Drawing.Size(185, 17);
-            this.uxGradingWithThisProgramCheckBox.TabIndex = 55;
-            this.uxGradingWithThisProgramCheckBox.Text = "Grading with this program: ";
-            this.uxGradingWithThisProgramCheckBox.UseMnemonic = false;
-            this.uxGradingWithThisProgramCheckBox.UseVisualStyleBackColor = false;
-            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -826,6 +830,7 @@
             this.uxMainTabControl.ResumeLayout(false);
             this.uxStartTabPage.ResumeLayout(false);
             this.uxStartTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfVersionsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage3PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uxSetupImage2PictureBox)).EndInit();
@@ -839,7 +844,6 @@
             this.uxGradeTabPage.ResumeLayout(false);
             this.uxGradeTabPage.PerformLayout();
             this.uxCreateFileTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }

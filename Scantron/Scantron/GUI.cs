@@ -65,9 +65,6 @@ namespace Scantron
         private int number_of_versions = 0;
         private int number_of_questions = 0;
 
-        // Used to determine workflow.
-        private bool grading_here = true;
-
         // Scanner communication fields.
         private Scanner scanner;
         private bool toAbort = true;
@@ -125,10 +122,10 @@ namespace Scantron
             uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
             uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
-            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinuebutton", true)[0];
-            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxStartAnswerKeybutton", true)[0];
-            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinuebutton", true)[0];
-            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinuebutton", true)[0];
+            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinueButton", true)[0];
+            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxAnswerKeyContinueButton", true)[0];
+            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinueButton", true)[0];
+            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinueButton", true)[0];
             uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
         }
 
@@ -175,7 +172,7 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-            if (grading_here)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
                 if (uxExamNameTextBox.Text == "" || number_of_versions < 1 || number_of_questions < 1)
                 {
@@ -278,6 +275,40 @@ namespace Scantron
             uxPreviousButton.Enabled = false;
 
             DisplayMessage("Data has been reset!");
+        }
+
+        public void StartContinue()
+        {
+            if (!uxGradingWithThisProgramCheckbox.Checked)
+            {
+                uxMainTabControl.SelectTab("uxAnswerKeyTabPage");
+            }
+            else
+            {
+                AnswerKeyContinue();
+            }
+        }
+
+        public void AnswerKeyContinue()
+        {
+            uxMainTabControl.SelectTab("uxScanTabPage");
+        }
+
+        public void ScanContinue()
+        {
+            if (!uxGradingWithThisProgramCheckbox.Checked)
+            {
+                uxMainTabControl.SelectTab("uxGradeTabPage");
+            }
+            else
+            {
+                GradeContinue();
+            }
+        }
+
+        public void GradeContinue()
+        {
+            uxMainTabControl.SelectTab("uxCreateFileTabPage");
         }
 
         /// <summary>
@@ -651,7 +682,7 @@ namespace Scantron
         }
 
 
-        // v--- add something to account for grading_here
+        // v--- add something to account for grade_here
 
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.
