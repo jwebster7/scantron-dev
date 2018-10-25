@@ -56,7 +56,11 @@ namespace Scantron
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
 
-        // Scanner communication fields
+        // Answer key variables.
+        private int number_of_versions = 0;
+        private int number_of_questions = 0;
+
+        // Scanner communication fields.
         private Scanner scanner;
         private bool toAbort = true;
         Task<List<string>> task;
@@ -503,15 +507,22 @@ namespace Scantron
             }
         }
 
+        public void UpdateNumberOfVersions()
+        {
+            number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
+        }
+
+        public void UpdateNumberOfQuestions()
+        {
+            number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
+        }
+
         /// <summary>
         /// Create the answer key from the filled out form.
         /// </summary>
         /// <returns>True if successful.</returns>
         public void CreateAnswerKey()
         {
-            int number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
-            int number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
-
             if (uxExamNameTextBox.Text == "")
             {
                 DisplayMessage("Enter a name for the exam.");

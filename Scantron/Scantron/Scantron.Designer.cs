@@ -268,6 +268,7 @@
             this.uxNumberOfVersionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfVersionsNumericUpDown.TabIndex = 47;
             this.uxNumberOfVersionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfVersionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfVersionsNumericUpDown_ValueChanged);
             // 
             // uxSetupImage4PictureBox
             // 
@@ -796,6 +797,7 @@
             this.uxNumberOfQuestionsNumericUpDown.Size = new System.Drawing.Size(50, 20);
             this.uxNumberOfQuestionsNumericUpDown.TabIndex = 53;
             this.uxNumberOfQuestionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfQuestionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfQuestionsNumericUpDown_ValueChanged);
             // 
             // Scantron
             // 

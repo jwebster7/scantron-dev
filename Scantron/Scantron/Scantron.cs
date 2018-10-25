@@ -157,5 +157,15 @@ namespace Scantron
         {
             gui.WriteFile("multiple");
         }
+
+        private void uxNumberOfVersionsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateNumberOfVersions();
+        }
+
+        private void uxNumberOfQuestionsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateNumberOfQuestions();
+        }
     }
 }
