@@ -57,7 +57,7 @@ namespace Scantron
         private List<string> raw_cards = new List<string>();
 
         // Scanner communication fields
-        private Scanner scanner;
+        private ScannerNew scanner;
         private bool toAbort = true;
         Task<List<string>> task;
         private bool ScantronCardAnswerKey = false;
@@ -65,8 +65,11 @@ namespace Scantron
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            scanner = new Scanner();
+            this.scanner = new ScannerNew();
             grader = new Grader(this);
+
+            //scanner.Completed += new ScannerHandler(Scanner_Completed);
+
 
             uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
             uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
@@ -157,8 +160,6 @@ namespace Scantron
                 return;
             }
 
-            Scanner.ToAbort.Set();
-
             try
             {
                 scanner.Start();
@@ -169,12 +170,16 @@ namespace Scantron
                 return;
             }
 
-            task = new Task<List<string>>(() => scanner.Run(raw_cards));
-            task.Start();
             
-            grader.CreateCards(raw_cards);
-            UpdateCardList();
+
         }
+
+        ////////public void Scanner_Completed(object source, EventArgs e)
+        ////////{
+        ////////    raw_cards = scanner.RawCards;
+        ////////    grader.CreateCards(raw_cards);
+        ////////    UpdateCardList();
+        ////////}
 
         /// <summary>
         /// Close the serial port.
