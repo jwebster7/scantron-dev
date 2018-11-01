@@ -281,7 +281,7 @@ namespace Scantron
 
         public void StartContinue()
         {
-            if (!uxGradingWithThisProgramCheckbox.Checked)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
                 uxMainTabControl.SelectTab("uxAnswerKeyTabPage");
             }
@@ -298,7 +298,7 @@ namespace Scantron
 
         public void ScanContinue()
         {
-            if (!uxGradingWithThisProgramCheckbox.Checked)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
                 uxMainTabControl.SelectTab("uxGradeTabPage");
             }
@@ -331,7 +331,7 @@ namespace Scantron
         }
 
         public void UseScantronCard()
-        {/*
+        {
             Scanner.ToAbort.Set();
 
             try
@@ -347,7 +347,7 @@ namespace Scantron
             task = new Task<List<string>>(() => scanner.Run(raw_cards));
             task.Start();
 
-            grader.CreateCards(raw_cards);*/
+            grader.CreateCards(raw_cards);
 
             TabPage tabpage;
             Panel panel;
