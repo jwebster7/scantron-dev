@@ -52,33 +52,58 @@ namespace Scantron
         private Label uxStartInstructionLabel;
         private Label uxCreateFileInstructionLabel;
         private Button uxFinishButton;
+        private Button uxStartContinueButton;
+        private Button uxAnswerKeyContinueButton;
+        private Button uxScanContinueButton;
+        private Button uxGradeContinueButton;
+        private CheckBox uxGradingWithThisProgramCheckbox;
+        private Button uxUseScantronCardButton;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
 
-        // Scanner communication fields
-        private ScannerNew scanner;
+        // Answer key variables.
+        private int number_of_versions = 0;
+        private int number_of_questions = 0;
+
+        // Scanner communication fields.
+        private Scanner scanner;
         private bool toAbort = true;
         Task<List<string>> task;
-        private bool ScantronCardAnswerKey = false;
 
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            this.scanner = new ScannerNew();
+            scanner = new Scanner();
             grader = new Grader(this);
 
-            //scanner.Completed += new ScannerHandler(Scanner_Completed);
+            InitializeControls();
 
+            InitializeInstructionText();
+        }
 
+        /// <summary>
+        /// Displays messages via Message Box.
+        /// </summary>
+        /// <param name="message">Message to be displayed.</param>
+        public void DisplayMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        /// <summary>
+        /// Finds all controls used in GUI.cs and initializes them.
+        /// </summary>
+        private void InitializeControls()
+        {
             uxAnswerKeyInstructionLabel = (Label) scantron_form.Controls.Find("uxAnswerKeyInstructionLabel", true)[0];
             uxScanInstructionLabel = (Label) scantron_form.Controls.Find("uxScanInstructionLabel", true)[0];
             uxGradeInstructionLabel = (Label) scantron_form.Controls.Find("uxGradeInstructionLabel", true)[0];
             uxStudentResponsePanel = (Panel) scantron_form.Controls.Find("uxStudentResponsePanel", true)[0];
-            uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelectorComboBox",true)[0];
+            uxStudentSelector = (ComboBox) scantron_form.Controls.Find("uxStudentSelectorComboBox", true)[0];
             uxAnswerKeyTabControl = (TabControl) scantron_form.Controls.Find("uxAnswerKeyTabControl", true)[0];
             uxExamNameTextBox = (TextBox) scantron_form.Controls.Find("uxExamNameTextBox", true)[0];
-            uxNumberOfQuestionsNumericUpDown = (NumericUpDown)scantron_form.Controls.Find("uxNumberOfQuestionsNumericUpDown", true)[0];
+            uxNumberOfQuestionsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfQuestionsNumericUpDown", true)[0];
             uxNumberOfVersionsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxNumberOfVersionsNumericUpDown", true)[0];
             uxAllQuestionPointsNumericUpDown = (NumericUpDown) scantron_form.Controls.Find("uxAllQuestionPointsNumericUpDown", true)[0];
             uxAllPartialCreditCheckBox = (CheckBox) scantron_form.Controls.Find("uxAllPartialCreditCheckBox", true)[0];
@@ -98,23 +123,18 @@ namespace Scantron
             uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
             uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
-
-            InsertInstructionText();
-        }
-
-        /// <summary>
-        /// Displays messages via Message Box.
-        /// </summary>
-        /// <param name="message">Message to be displayed.</param>
-        public void DisplayMessage(string message)
-        {
-            MessageBox.Show(message);
+            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinueButton", true)[0];
+            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxAnswerKeyContinueButton", true)[0];
+            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinueButton", true)[0];
+            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinueButton", true)[0];
+            uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
+            uxUseScantronCardButton = (Button) scantron_form.Controls.Find("uxUseScantronCardButton", true)[0];
         }
 
         /// <summary>
         /// Updates main instruction boxes with text.
         /// </summary>
-        public void InsertInstructionText()
+        private void InitializeInstructionText()
         {
             uxStartInstructionLabel.Text =          "Welcome to the new Scantron program!\n" +
                                                     "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it. All feedback is welcome.\n" +
@@ -154,11 +174,23 @@ namespace Scantron
         /// </summary>
         public void Start()
         {
-            if (grader.AnswerKey.Count < 1 && ScantronCardAnswerKey == false)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
-                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
-                return;
+                if (uxExamNameTextBox.Text == "" || number_of_versions < 1 || number_of_questions < 1)
+                {
+                    return;
+                }
             }
+            else
+            {
+                if (grader.AnswerKey.Count < 1)
+                {
+                    DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
+                    return;
+                }
+            }
+
+            Scanner.ToAbort.Set();
 
             try
             {
@@ -170,16 +202,12 @@ namespace Scantron
                 return;
             }
 
+            task = new Task<List<string>>(() => scanner.Run(raw_cards));
+            task.Start();
             
-
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
-
-        ////////public void Scanner_Completed(object source, EventArgs e)
-        ////////{
-        ////////    raw_cards = scanner.RawCards;
-        ////////    grader.CreateCards(raw_cards);
-        ////////    UpdateCardList();
-        ////////}
 
         /// <summary>
         /// Close the serial port.
@@ -251,13 +279,47 @@ namespace Scantron
             DisplayMessage("Data has been reset!");
         }
 
+        public void StartContinue()
+        {
+            if (!uxGradingWithThisProgramCheckbox.Checked)
+            {
+                uxMainTabControl.SelectTab("uxAnswerKeyTabPage");
+            }
+            else
+            {
+                AnswerKeyContinue();
+            }
+        }
+
+        public void AnswerKeyContinue()
+        {
+            uxMainTabControl.SelectTab("uxScanTabPage");
+        }
+
+        public void ScanContinue()
+        {
+            if (!uxGradingWithThisProgramCheckbox.Checked)
+            {
+                uxMainTabControl.SelectTab("uxGradeTabPage");
+            }
+            else
+            {
+                GradeContinue();
+            }
+        }
+
+        public void GradeContinue()
+        {
+            uxMainTabControl.SelectTab("uxCreateFileTabPage");
+        }
+
         /// <summary>
         /// Fill raw cards list with test data.
         /// </summary>
         public void TestData()
         {
             raw_cards = new List<string>();
-            // Test Data. Has two students for a 150 question exam. One has blank answers.
+            // Test Data.
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$");
             raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$");
@@ -266,6 +328,11 @@ namespace Scantron
             
             grader.CreateCards(raw_cards);
             UpdateCardList();
+        }
+
+        public void UseScantronCard()
+        {
+
         }
 
         private static void ThreadAbort()
@@ -508,15 +575,22 @@ namespace Scantron
             }
         }
 
+        public void UpdateNumberOfVersions()
+        {
+            number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
+        }
+
+        public void UpdateNumberOfQuestions()
+        {
+            number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
+        }
+
         /// <summary>
         /// Create the answer key from the filled out form.
         /// </summary>
         /// <returns>True if successful.</returns>
         public void CreateAnswerKey()
         {
-            int number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
-            int number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
-
             if (uxExamNameTextBox.Text == "")
             {
                 DisplayMessage("Enter a name for the exam.");
@@ -613,6 +687,9 @@ namespace Scantron
             uxPreviousButton.Enabled = true;
             NextStudent(); // Displays the first student in the index
         }
+
+
+        // v--- add something to account for grade_here
 
         /// <summary>
         /// Write the file to be uploaded to the Canvas gradebook.

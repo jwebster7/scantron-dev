@@ -157,5 +157,40 @@ namespace Scantron
         {
             gui.WriteFile("multiple");
         }
+
+        private void uxNumberOfVersionsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateNumberOfVersions();
+        }
+
+        private void uxNumberOfQuestionsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            gui.UpdateNumberOfQuestions();
+        }
+
+        private void uxStartContinueButton_Click(object sender, EventArgs e)
+        {
+            gui.StartContinue();
+        }
+
+        private void uxAnswerKeyContinueButton_Click(object sender, EventArgs e)
+        {
+            gui.AnswerKeyContinue();
+        }
+
+        private void uxScanContinueButton_Click(object sender, EventArgs e)
+        {
+            gui.ScanContinue();
+        }
+
+        private void uxGradeContinueButton_Click(object sender, EventArgs e)
+        {
+            gui.GradeContinue();
+        }
+
+        private void uxUseScantronCardButton_Click(object sender, EventArgs e)
+        {
+            gui.UseScantronCard();
+        }
     }
 }
