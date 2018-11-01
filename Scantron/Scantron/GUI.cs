@@ -141,7 +141,7 @@ namespace Scantron
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
                                                     "2. Click Reset.\n" +
                                                     "3. Enter the the exam name and number of versions.\n" + 
-                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, grade with this program." +
+                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, grade with this program.\n" +
                                                     "5. Click on the Answer Key tab along the top";
 
             uxAnswerKeyInstructionLabel.Text =      "1. Enter the number of questions.\n" +
@@ -281,7 +281,7 @@ namespace Scantron
 
         public void StartContinue()
         {
-            if (!uxGradingWithThisProgramCheckbox.Checked)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
                 uxMainTabControl.SelectTab("uxAnswerKeyTabPage");
             }
@@ -298,7 +298,7 @@ namespace Scantron
 
         public void ScanContinue()
         {
-            if (!uxGradingWithThisProgramCheckbox.Checked)
+            if (uxGradingWithThisProgramCheckbox.Checked)
             {
                 uxMainTabControl.SelectTab("uxGradeTabPage");
             }
@@ -332,7 +332,51 @@ namespace Scantron
 
         public void UseScantronCard()
         {
+            Scanner.ToAbort.Set();
 
+            try
+            {
+                scanner.Start();
+            }
+            catch (IOException)
+            {
+                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
+                return;
+            }
+
+            task = new Task<List<string>>(() => scanner.Run(raw_cards));
+            task.Start();
+
+            grader.CreateCards(raw_cards);
+
+            TabPage tabpage;
+            Panel panel;
+            CheckBox checkbox;
+            int start_index;
+
+            foreach (Card card in grader.Cards)
+            {
+                tabpage = uxAnswerKeyTabControl.TabPages[card.TestVersion - 1];
+                start_index = card.Response.Count * (card.SheetNumber - 1);
+
+                for (int i = 0; i < card.Response.Count; i++)
+                {
+                    panel = (Panel) tabpage.Controls[i + start_index];
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        checkbox = (CheckBox) panel.Controls[j];
+                        if (card.Response[i].Answer[j] != ' ')
+                        {
+                            checkbox.Checked = true;
+                        }
+                        else
+                        {
+                            checkbox.Checked = false;
+                        }
+                    }
+                }
+            }
         }
 
         private static void ThreadAbort()
@@ -578,11 +622,13 @@ namespace Scantron
         public void UpdateNumberOfVersions()
         {
             number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
+            UpdateAnswerForm();
         }
 
         public void UpdateNumberOfQuestions()
         {
             number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
+            UpdateAnswerForm();
         }
 
         /// <summary>
