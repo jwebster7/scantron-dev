@@ -91,6 +91,10 @@ namespace Scantron
             return score;
         }
 
+        /// <summary>
+        /// Format the student as a string.
+        /// </summary>
+        /// <returns>The student formatted as a string.</returns>
         public override string ToString()
         {
             return wid + ",," + wid + ",,," + Score() + "\r\n";

@@ -52,7 +52,6 @@ namespace Scantron
             }
         }
         
-        // WID property.
         public string WID
         {
             get
@@ -64,8 +63,7 @@ namespace Scantron
                 wid = value;
             }
         }
-
-        // Sheet number property.
+        
         public int SheetNumber
         {
             get
@@ -77,8 +75,7 @@ namespace Scantron
                 sheet_number = value;
             }
         }
-
-        // Answers property.
+        
         public List<Question> Response
         {
             get
@@ -87,8 +84,10 @@ namespace Scantron
             }
         }
 
-        // Both sides of a scantron card are scanned. This removes the useless back side data, each line of which is 
-        // denoted by a "b" in the raw data. An "a" denotes a front side line.
+        /// <summary>
+        /// Both sides of a scantron card are scanned. This removes the useless back side data, each line of which is 
+        /// denoted by a "b" in the raw data. An "a" denotes a front side line.
+        /// </summary>
         private void RemoveBackSide()
         {
             int start;
@@ -113,8 +112,10 @@ namespace Scantron
             }
         }
 
-        // Looks for the compression character, "#", and uncompresses the characer after it. For more information on 
-        // scantron compress, refer to the github repository.
+        /// <summary>
+        /// Looks for the compression character, "#", and uncompresses the characer after it. For more information on 
+        /// scantron compress, refer to the github repository.
+        /// </summary>
         private void Uncompress()
         {
             int hashtag_location;
@@ -138,9 +139,11 @@ namespace Scantron
             }
         }
 
-        // The empty space that a scantron card does not occupy when it goes beneath the scanner is read in as black
-        // marks. This method removes that data and trims down the parts of the scantron card that do not contain 
-        // bubbles. This turns it into an array of strings that directly correspond to the scantron card itself.
+        /// <summary>
+        /// The empty space that a scantron card does not occupy when it goes beneath the scanner is read in as black
+        /// marks. This method removes that data and trims down the parts of the scantron card that do not contain 
+        /// bubbles. This turns it into an array of strings that directly correspond to the scantron card itself.
+        /// </summary>
         private void Format()
         {
             int i;
@@ -174,7 +177,9 @@ namespace Scantron
             raw_card_data = string.Join(",", card_lines);
         }
 
-        // This method takes the uncompressed, formatted data and assigns the appropriate data to each student field.
+        /// <summary>
+        /// This method takes the uncompressed, formatted data and assigns the appropriate data to each student field.
+        /// </summary>
         private void TranslateData()
         {
             // This list splits up each line of bubbles on the scantron card.
@@ -338,6 +343,10 @@ namespace Scantron
             return 0;
         }
         
+        /// <summary>
+        /// Format the card as a string for us in a single answer only file.
+        /// </summary>
+        /// <returns>The card's data as a string.</returns>
         public string ToSingleAnswerString()
         {
             string card_info = "";
@@ -390,9 +399,9 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Translates the student's data to a string for use with the Canvas Scantron tool, not for uploading to the gradebook as a .csv.
+        /// Format the card as a string for use in a multiple answer compatible file.
         /// </summary>
-        /// <returns>Student's data as a string.</returns>
+        /// <returns>Card's data as a string.</returns>
         public string ToMultipleAnswerString()
         {
             string card_info = "";

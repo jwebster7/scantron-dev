@@ -203,6 +203,10 @@ namespace Scantron
             return info;
         }
 
+        /// <summary>
+        /// Create a string to print to a file for only single answer questions.
+        /// </summary>
+        /// <returns>File string.</returns>
         public string ScantronToolSingleAnswerFile()
         {
             string info = "";
@@ -215,6 +219,10 @@ namespace Scantron
             return info;
         }
 
+        /// <summary>
+        /// Create a string to print to a file that can handle multiple answer questions.
+        /// </summary>
+        /// <returns>File string.</returns>
         public string ScantronToolMultipleAnswerFile()
         {
             string info = "";
