@@ -32,13 +32,15 @@ namespace Scantron
         public Scanner()
         {
             config = ScannerConfig.Deserialize();
-
+            
             serial_port = new SerialPort(config.port_name, config.baud_rate, (Parity)Enum.Parse(typeof(Parity), config.parity_bit), config.bit_length, (StopBits)Enum.Parse(typeof(StopBits), config.stop_bits));
             serial_port.NewLine = config.end_of_record;
         }
 
         public void Start()
         {
+            serial_port.Dispose();
+
             if (!serial_port.IsOpen)
             {
                 serial_port.Open();

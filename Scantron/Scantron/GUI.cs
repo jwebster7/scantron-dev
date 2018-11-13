@@ -67,14 +67,14 @@ namespace Scantron
         private int number_of_questions = 0;
 
         // Scanner communication fields.
-        private Scanner scanner;
+        private ScannerNew scanner_new;
         private bool toAbort = true;
         Task<List<string>> task;
 
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            scanner = new Scanner();
+            scanner_new = new ScannerNew();
             grader = new Grader(this);
 
             InitializeControls();
@@ -194,16 +194,13 @@ namespace Scantron
 
             try
             {
-                scanner.Start();
+                scanner_new.Start();
             }
             catch(IOException)
             {
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
-
-            task = new Task<List<string>>(() => scanner.Run(raw_cards));
-            task.Start();
             
             grader.CreateCards(raw_cards);
             UpdateCardList();
@@ -214,7 +211,7 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            scanner.Stop();
+            scanner_new.Stop();
         }
         /*
         /// <summary>
@@ -279,6 +276,9 @@ namespace Scantron
             DisplayMessage("Data has been reset!");
         }
 
+        /// <summary>
+        /// Change the current tab to the Answer Key tab or the Scan tab based on workflow.
+        /// </summary>
         public void StartContinue()
         {
             if (uxGradingWithThisProgramCheckbox.Checked)
@@ -291,11 +291,17 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Change the current tab to the Scan tab.
+        /// </summary>
         public void AnswerKeyContinue()
         {
             uxMainTabControl.SelectTab("uxScanTabPage");
         }
 
+        /// <summary>
+        /// Change the current tab to the Grade tab or the Create File tab based on workflow.
+        /// </summary>
         public void ScanContinue()
         {
             if (uxGradingWithThisProgramCheckbox.Checked)
@@ -308,6 +314,9 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Change the current tab to the Create File tab.
+        /// </summary>
         public void GradeContinue()
         {
             uxMainTabControl.SelectTab("uxCreateFileTabPage");
@@ -330,22 +339,22 @@ namespace Scantron
             UpdateCardList();
         }
 
+        /// <summary>
+        /// Use a Scantron Card for the answer key.
+        /// </summary>
         public void UseScantronCard()
         {
             Scanner.ToAbort.Set();
 
             try
             {
-                scanner.Start();
+                scanner_new.Start();
             }
             catch (IOException)
             {
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
-
-            task = new Task<List<string>>(() => scanner.Run(raw_cards));
-            task.Start();
 
             grader.CreateCards(raw_cards);
 
@@ -384,6 +393,9 @@ namespace Scantron
             //This is an empty method for the dummy thread
         }
 
+        /// <summary>
+        /// Update the Card List display.
+        /// </summary>
         private void UpdateCardList()
         {
             Card card;
@@ -619,12 +631,18 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Update the number of test version from the NumericUpDown.
+        /// </summary>
         public void UpdateNumberOfVersions()
         {
             number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
             UpdateAnswerForm();
         }
 
+        /// <summary>
+        /// Update the number of questions from the NumericUpDown.
+        /// </summary>
         public void UpdateNumberOfQuestions()
         {
             number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
@@ -832,7 +850,7 @@ namespace Scantron
         }
 
         /// <summary>
-        /// 
+        /// Create the controls for displaing a chosen student's answers and make them invisible.
         /// </summary>
         public void InstantiateStudentDisplay()
         {
@@ -964,6 +982,9 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Change current tab to Start tab and reset data.
+        /// </summary>
         public void Finish()
         {
             uxMainTabControl.SelectTab(uxStartTabPage);
