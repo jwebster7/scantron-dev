@@ -51,13 +51,13 @@ namespace Scantron
         private TabPage uxCreateFileTabPage;
         private Label uxStartInstructionLabel;
         private Label uxCreateFileInstructionLabel;
-        private Button uxFinishButton;
-        private Button uxStartContinueButton;
-        private Button uxAnswerKeyContinueButton;
-        private Button uxScanContinueButton;
-        private Button uxGradeContinueButton;
+        //private Button uxFinishButton;
+        //private Button uxStartContinueButton;
+        //private Button uxAnswerKeyContinueButton;
+        //private Button uxScanContinueButton;
+        //private Button uxGradeContinueButton;
         private CheckBox uxGradingWithThisProgramCheckbox;
-        private Button uxUseScantronCardButton;
+        //private Button uxUseScantronCardButton;
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
@@ -123,13 +123,13 @@ namespace Scantron
             uxCreateFileTabPage = (TabPage) scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
             uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
-            uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
-            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinueButton", true)[0];
-            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxAnswerKeyContinueButton", true)[0];
-            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinueButton", true)[0];
-            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinueButton", true)[0];
+            //uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
+            //uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinueButton", true)[0];
+            //uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxAnswerKeyContinueButton", true)[0];
+            //uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinueButton", true)[0];
+            //uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinueButton", true)[0];
             uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
-            uxUseScantronCardButton = (Button) scantron_form.Controls.Find("uxUseScantronCardButton", true)[0];
+            //uxScanAnswerKeyButton = (Button) scantron_form.Controls.Find("uxScanAnswerKeyButton", true)[0];
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Scantron
             catch (Exception)
             {
                 DisplayMessage("Something went wrong. Do not click Done while the machine is running. " +
-                                "Stop the machine, click Start, and begin scanning again");
+                                "Stop the machine, click Ready, and begin scanning again.");
             }
         }
         /*
@@ -267,8 +267,9 @@ namespace Scantron
             uxExamNameTextBox.Text = "";
             uxNumberOfVersionsNumericUpDown.Value = 0;
             uxNumberOfQuestionsNumericUpDown.Value = 0;
+            uxGradingWithThisProgramCheckbox.Checked = false;
             uxAnswerKeyTabControl.Enabled = true;
-            uxAllQuestionPointsNumericUpDown.Value = 0;
+            uxAllQuestionPointsNumericUpDown.Value = 1;
             uxAllPartialCreditCheckBox.Checked = false;
             uxCardListTextBox.Text = "";
             uxStatusTextBox.Text = "";
@@ -351,8 +352,6 @@ namespace Scantron
         /// </summary>
         public void UseScantronCard()
         {
-            Scanner.ToAbort.Set();
-
             try
             {
                 simple_scanner.Scan();
@@ -362,36 +361,49 @@ namespace Scantron
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
+        }
 
-            grader.CreateCards(raw_cards);
-
-            TabPage tabpage;
-            Panel panel;
-            CheckBox checkbox;
-            int start_index;
-
-            foreach (Card card in grader.Cards)
+        public void DoneScanning()
+        {
+            try
             {
-                tabpage = uxAnswerKeyTabControl.TabPages[card.TestVersion - 1];
-                start_index = card.Response.Count * (card.SheetNumber - 1);
+                simple_scanner.Stop();
+                raw_cards = simple_scanner.RawCards;
+                grader.CreateCards(raw_cards);
 
-                for (int i = 0; i < card.Response.Count; i++)
+                TabPage tabpage;
+                Panel panel;
+                CheckBox checkbox;
+                int start_index;
+
+                foreach (Card card in grader.Cards)
                 {
-                    panel = (Panel) tabpage.Controls[i + start_index];
+                    tabpage = uxAnswerKeyTabControl.TabPages[card.TestVersion - 1];
+                    start_index = card.Response.Count * (card.SheetNumber - 1);
 
-                    for (int j = 0; j < 5; j++)
+                    for (int i = 0; i < card.Response.Count; i++)
                     {
-                        checkbox = (CheckBox) panel.Controls[j];
-                        if (card.Response[i].Answer[j] != ' ')
+                        panel = (Panel)tabpage.Controls[i + start_index];
+
+                        for (int j = 0; j < 5; j++)
                         {
-                            checkbox.Checked = true;
-                        }
-                        else
-                        {
-                            checkbox.Checked = false;
+                            checkbox = (CheckBox)panel.Controls[j];
+                            if (card.Response[i].Answer[j] != ' ')
+                            {
+                                checkbox.Checked = true;
+                            }
+                            else
+                            {
+                                checkbox.Checked = false;
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                DisplayMessage("Something went wrong. Do not click Done Scanning while the machine is running. " +
+                                "Stop the machine, click Scan Answer Key, and begin scanning again.");
             }
         }
 

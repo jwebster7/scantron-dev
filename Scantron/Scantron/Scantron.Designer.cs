@@ -49,7 +49,7 @@
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
-            this.uxUseScantronCardButton = new System.Windows.Forms.Button();
+            this.uxScanAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyContinueButton = new System.Windows.Forms.Button();
             this.uxCreateAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyInstructionLabel = new System.Windows.Forms.Label();
@@ -83,6 +83,7 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
+            this.uxDoneScanningButton = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -280,6 +281,7 @@
             this.uxResetButton.TabIndex = 50;
             this.uxResetButton.Text = "Reset";
             this.uxResetButton.UseVisualStyleBackColor = false;
+            this.uxResetButton.Click += new System.EventHandler(this.uxResetButton_Click);
             // 
             // uxExamNameLabel
             // 
@@ -359,7 +361,8 @@
             // uxAnswerKeyTabPage
             // 
             this.uxAnswerKeyTabPage.BackColor = System.Drawing.Color.Gray;
-            this.uxAnswerKeyTabPage.Controls.Add(this.uxUseScantronCardButton);
+            this.uxAnswerKeyTabPage.Controls.Add(this.uxDoneScanningButton);
+            this.uxAnswerKeyTabPage.Controls.Add(this.uxScanAnswerKeyButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxAnswerKeyContinueButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxCreateAnswerKeyButton);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxAnswerKeyInstructionLabel);
@@ -373,19 +376,19 @@
             this.uxAnswerKeyTabPage.TabIndex = 2;
             this.uxAnswerKeyTabPage.Text = "Answer Key";
             // 
-            // uxUseScantronCardButton
+            // uxScanAnswerKeyButton
             // 
-            this.uxUseScantronCardButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxUseScantronCardButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxUseScantronCardButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxUseScantronCardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxUseScantronCardButton.Location = new System.Drawing.Point(9, 314);
-            this.uxUseScantronCardButton.Name = "uxUseScantronCardButton";
-            this.uxUseScantronCardButton.Size = new System.Drawing.Size(163, 85);
-            this.uxUseScantronCardButton.TabIndex = 56;
-            this.uxUseScantronCardButton.Text = "Use Scantron Card";
-            this.uxUseScantronCardButton.UseVisualStyleBackColor = false;
-            this.uxUseScantronCardButton.Click += new System.EventHandler(this.uxUseScantronCardButton_Click);
+            this.uxScanAnswerKeyButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxScanAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxScanAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScanAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxScanAnswerKeyButton.Location = new System.Drawing.Point(9, 221);
+            this.uxScanAnswerKeyButton.Name = "uxScanAnswerKeyButton";
+            this.uxScanAnswerKeyButton.Size = new System.Drawing.Size(163, 85);
+            this.uxScanAnswerKeyButton.TabIndex = 56;
+            this.uxScanAnswerKeyButton.Text = "Scan Answer Key";
+            this.uxScanAnswerKeyButton.UseVisualStyleBackColor = false;
+            this.uxScanAnswerKeyButton.Click += new System.EventHandler(this.uxScanAnswerKeyButton_Click);
             // 
             // uxAnswerKeyContinueButton
             // 
@@ -408,7 +411,7 @@
             this.uxCreateAnswerKeyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.uxCreateAnswerKeyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxCreateAnswerKeyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(9, 180);
+            this.uxCreateAnswerKeyButton.Location = new System.Drawing.Point(9, 435);
             this.uxCreateAnswerKeyButton.Name = "uxCreateAnswerKeyButton";
             this.uxCreateAnswerKeyButton.Size = new System.Drawing.Size(163, 85);
             this.uxCreateAnswerKeyButton.TabIndex = 44;
@@ -829,6 +832,20 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(723, 131);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
+            // uxDoneScanningButton
+            // 
+            this.uxDoneScanningButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxDoneScanningButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxDoneScanningButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxDoneScanningButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxDoneScanningButton.Location = new System.Drawing.Point(9, 312);
+            this.uxDoneScanningButton.Name = "uxDoneScanningButton";
+            this.uxDoneScanningButton.Size = new System.Drawing.Size(163, 85);
+            this.uxDoneScanningButton.TabIndex = 57;
+            this.uxDoneScanningButton.Text = "Done Scanning";
+            this.uxDoneScanningButton.UseVisualStyleBackColor = false;
+            this.uxDoneScanningButton.Click += new System.EventHandler(this.uxDoneScanningButton_Click);
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -921,7 +938,8 @@
         private System.Windows.Forms.Button uxScanContinueButton;
         private System.Windows.Forms.Button uxGradeContinueButton;
         private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
-        private System.Windows.Forms.Button uxUseScantronCardButton;
+        private System.Windows.Forms.Button uxScanAnswerKeyButton;
+        private System.Windows.Forms.Button uxDoneScanningButton;
     }
 }
 

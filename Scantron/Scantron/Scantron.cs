@@ -107,7 +107,7 @@ namespace Scantron
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uxResetButton_click(object sender, EventArgs e)
+        private void uxResetButton_Click(object sender, EventArgs e)
         {
             gui.Reset();
         }
@@ -277,9 +277,14 @@ namespace Scantron
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uxUseScantronCardButton_Click(object sender, EventArgs e)
+        private void uxScanAnswerKeyButton_Click(object sender, EventArgs e)
         {
             gui.UseScantronCard();
+        }
+
+        private void uxDoneScanningButton_Click(object sender, EventArgs e)
+        {
+            gui.DoneScanning();
         }
     }
 }
