@@ -209,11 +209,18 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            simple_scanner.Stop();
-            DisplayMessage(simple_scanner.Raw);
-            raw_cards = simple_scanner.RawCards;
-            grader.CreateCards(raw_cards);
-            UpdateCardList();
+            try
+            {
+                simple_scanner.Stop();
+                raw_cards = simple_scanner.RawCards;
+                grader.CreateCards(raw_cards);
+                UpdateCardList();
+            }
+            catch (Exception)
+            {
+                DisplayMessage("Something went wrong. Do not click Stop while the machine is running. " +
+                                "Stop the machine, click Start, and begin scanning again");
+            }
         }
         /*
         /// <summary>
