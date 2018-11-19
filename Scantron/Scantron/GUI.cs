@@ -137,30 +137,25 @@ namespace Scantron
         /// </summary>
         private void InitializeInstructionText()
         {
-            uxStartInstructionLabel.Text =          "Welcome to the new Scantron program!\n" +
-                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it. All feedback is welcome.\n" +
+            uxStartInstructionLabel.Text = "Welcome to the new Scantron program!\n\n" +
+                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it.\n\n" +
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
                                                     "2. Click Reset.\n" +
-                                                    "3. Enter the the exam name and number of versions.\n" + 
-                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, grade with this program.\n" +
-                                                    "5. Click on the Answer Key tab along the top";
+                                                    "3. Enter the the exam name, number of versions, and number of questions.\n" +
+                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, check \"Grading within this program\".\n";
 
-            uxAnswerKeyInstructionLabel.Text =      "1. Enter the number of questions.\n" +
-                                                    "2. If you are using the grader in this program, click Create Answer Key and go to the Scan tab.\n" +
-                                                    "3. Enter how many points each questions is worth.\n" +
-                                                    "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
-                                                    "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
-                                                    "7. Click Create Answer Key, then go to the Scan tab.";
+            uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit.\n" +
+                                                    "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form.\n" +
+                                                    "3. Click Create Answer Key, then click Continue.";
 
-            uxScanInstructionLabel.Text =           "1. Click Start to scan your cards.\n" +
-                                                    "4. (Optional) You can correct WIDs, test versions, and sheet numbers in the Scanned Cards panel\n" +
-                                                    "5. Once you have made corrections, click Save Changes, then click Create Students.\n" +
-                                                    "6. If you are grading here, click on the Grade tab. If you are using the Canvas Scantron Tool, click on the Create File tab.\n\n";
+            uxScanInstructionLabel.Text =           "1. Click Ready, then press the Start button on the Scantron machine.\n" +
+                                                    "2. Once the machine is done scanning, click Done.\n" +
+                                                    "3. You can edits WIDs, test versions, and sheet numbers.\n" +
+                                                    "4. Click Save Changes, then click Continue.\n";
 
             uxGradeInstructionLabel.Text =          "1. Click Grade Students.\n" +
-                                                    "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                    "3. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
-                                                    "4. Once you are done reviewing the student responses, click the Create File tab.";
+                                                    "2. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
+                                                    "3. When you are done reviewing, click Continue.";
 
             uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool options.\n" +
                                                     "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Answer option can only handle 1 answer per question.\n" +
