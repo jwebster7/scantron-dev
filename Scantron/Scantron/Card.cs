@@ -44,7 +44,14 @@ namespace Scantron
         {
             get
             {
-                return test_version;
+                if (test_version == 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return test_version;
+                }
             }
             set
             {
@@ -68,7 +75,14 @@ namespace Scantron
         {
             get
             {
-                return sheet_number;
+                if (sheet_number == 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return sheet_number;
+                }
             }
             set
             {

@@ -67,14 +67,15 @@ namespace Scantron
         private int number_of_questions = 0;
 
         // Scanner communication fields.
-        private ScannerNew scanner_new;
+        //private ScannerNew scanner_new;
+        private SimpleScanner simple_scanner;
         private bool toAbort = true;
         Task<List<string>> task;
 
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            scanner_new = new ScannerNew();
+            simple_scanner = new SimpleScanner();
             grader = new Grader(this);
 
             InitializeControls();
@@ -194,16 +195,13 @@ namespace Scantron
 
             try
             {
-                scanner_new.Start();
+                simple_scanner.Scan();
             }
             catch(IOException)
             {
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
-            
-            grader.CreateCards(raw_cards);
-            UpdateCardList();
         }
 
         /// <summary>
@@ -211,7 +209,11 @@ namespace Scantron
         /// </summary>
         public void Stop()
         {
-            scanner_new.Stop();
+            simple_scanner.Stop();
+            DisplayMessage(simple_scanner.Raw);
+            raw_cards = simple_scanner.RawCards;
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
         /*
         /// <summary>
@@ -348,7 +350,7 @@ namespace Scantron
 
             try
             {
-                scanner_new.Start();
+                simple_scanner.Scan();
             }
             catch (IOException)
             {

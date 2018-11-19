@@ -213,6 +213,8 @@ namespace Scantron
                 
                 
             }
+
+            serial_port.Write(config.stop);
         }
 
         public void Display(string s)
