@@ -417,8 +417,8 @@ namespace Scantron
             string cards = "";
             string wid = "";
             int test_version = 1;
-            string bad_wids = "";
-            string bad_test_versions = "";
+            string bad_wids = "\n";
+            string bad_test_versions = "\n";
 
             for (int i = 0; i < grader.Cards.Count; i++)
             {
