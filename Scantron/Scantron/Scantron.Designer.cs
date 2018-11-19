@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.uxStartButton = new System.Windows.Forms.Button();
-            this.uxStopButton = new System.Windows.Forms.Button();
+            this.uxReadyButton = new System.Windows.Forms.Button();
+            this.uxDoneButton = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
             this.uxCouldNotBeGradedLabel = new System.Windows.Forms.Label();
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
@@ -98,38 +98,38 @@
             this.uxCreateFileTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
-            // uxStartButton
+            // uxReadyButton
             // 
-            this.uxStartButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStartButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxStartButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxStartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxStartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStartButton.Location = new System.Drawing.Point(14, 151);
-            this.uxStartButton.Name = "uxStartButton";
-            this.uxStartButton.Size = new System.Drawing.Size(125, 45);
-            this.uxStartButton.TabIndex = 0;
-            this.uxStartButton.TabStop = false;
-            this.uxStartButton.Tag = "";
-            this.uxStartButton.Text = "Start";
-            this.uxStartButton.UseVisualStyleBackColor = false;
-            this.uxStartButton.Click += new System.EventHandler(this.uxStartButton_Click);
+            this.uxReadyButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxReadyButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxReadyButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxReadyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxReadyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxReadyButton.Location = new System.Drawing.Point(14, 151);
+            this.uxReadyButton.Name = "uxReadyButton";
+            this.uxReadyButton.Size = new System.Drawing.Size(125, 45);
+            this.uxReadyButton.TabIndex = 0;
+            this.uxReadyButton.TabStop = false;
+            this.uxReadyButton.Tag = "";
+            this.uxReadyButton.Text = "Ready";
+            this.uxReadyButton.UseVisualStyleBackColor = false;
+            this.uxReadyButton.Click += new System.EventHandler(this.uxReadyButton_Click);
             // 
-            // uxStopButton
+            // uxDoneButton
             // 
-            this.uxStopButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxStopButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxStopButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStopButton.Location = new System.Drawing.Point(145, 154);
-            this.uxStopButton.Name = "uxStopButton";
-            this.uxStopButton.Size = new System.Drawing.Size(125, 45);
-            this.uxStopButton.TabIndex = 4;
-            this.uxStopButton.TabStop = false;
-            this.uxStopButton.Text = "Stop";
-            this.uxStopButton.UseVisualStyleBackColor = false;
-            this.uxStopButton.Click += new System.EventHandler(this.uxStopButton_Click);
+            this.uxDoneButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxDoneButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxDoneButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxDoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxDoneButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxDoneButton.Location = new System.Drawing.Point(145, 154);
+            this.uxDoneButton.Name = "uxDoneButton";
+            this.uxDoneButton.Size = new System.Drawing.Size(125, 45);
+            this.uxDoneButton.TabIndex = 4;
+            this.uxDoneButton.TabStop = false;
+            this.uxDoneButton.Text = "Done";
+            this.uxDoneButton.UseVisualStyleBackColor = false;
+            this.uxDoneButton.Click += new System.EventHandler(this.uxDoneButton_Click);
             // 
             // uxStudentResponsePanel
             // 
@@ -520,8 +520,8 @@
             this.uxScanTabPage.Controls.Add(this.uxTestDataButton);
             this.uxScanTabPage.Controls.Add(this.uxSaveChangesButton);
             this.uxScanTabPage.Controls.Add(this.uxScanInstructionLabel);
-            this.uxScanTabPage.Controls.Add(this.uxStartButton);
-            this.uxScanTabPage.Controls.Add(this.uxStopButton);
+            this.uxScanTabPage.Controls.Add(this.uxReadyButton);
+            this.uxScanTabPage.Controls.Add(this.uxDoneButton);
             this.uxScanTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxScanTabPage.Location = new System.Drawing.Point(4, 34);
             this.uxScanTabPage.Name = "uxScanTabPage";
@@ -866,8 +866,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button uxStartButton;
-        private System.Windows.Forms.Button uxStopButton;
+        private System.Windows.Forms.Button uxReadyButton;
+        private System.Windows.Forms.Button uxDoneButton;
         private System.Windows.Forms.Panel uxStudentResponsePanel;
         private System.Windows.Forms.ComboBox uxStudentSelectorComboBox;
         private System.Windows.Forms.TabControl uxMainTabControl;

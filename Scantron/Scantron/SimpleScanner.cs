@@ -11,6 +11,7 @@ namespace Scantron
         private SerialPort serial_port = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         private string raw_scantron_output;
         private List<string> raw_cards;
+        private GUI gui;
 
         public List<string> RawCards
         {
@@ -28,9 +29,9 @@ namespace Scantron
             }
         }
 
-        public SimpleScanner()
+        public SimpleScanner(GUI gui)
         {
-
+            this.gui = gui;
         }
 
         public void Scan()
@@ -40,6 +41,10 @@ namespace Scantron
             if (!serial_port.IsOpen)
             {
                 serial_port.Open();
+            }
+            else
+            {
+                gui.DisplayMessage("Machine is ready to scan!");
             }
             serial_port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
         }

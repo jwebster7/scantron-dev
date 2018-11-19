@@ -113,13 +113,13 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Event handler for when Reset button is clicked.
+        /// Event handler for when Ready button is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uxStartButton_Click(object sender, EventArgs e)
+        private void uxReadyButton_Click(object sender, EventArgs e)
         {
-            gui.Start();
+            gui.Ready();
         }
 
         /// <summary>
@@ -143,13 +143,13 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Event handler for when Stop button is clicked.
+        /// Event handler for when Done button is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uxStopButton_Click(object sender, EventArgs e)
+        private void uxDoneButton_Click(object sender, EventArgs e)
         {
-            gui.Stop();
+            gui.Done();
         }
 
         /// <summary>

@@ -75,7 +75,7 @@ namespace Scantron
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            simple_scanner = new SimpleScanner();
+            simple_scanner = new SimpleScanner(this);
             grader = new Grader(this);
 
             InitializeControls();
@@ -173,7 +173,7 @@ namespace Scantron
         /// Opens the serial port; begins scanning the cards.
         /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
         /// </summary>
-        public void Start()
+        public void Ready()
         {
             if (uxGradingWithThisProgramCheckbox.Checked)
             {
@@ -191,8 +191,6 @@ namespace Scantron
                 }
             }
 
-            Scanner.ToAbort.Set();
-
             try
             {
                 simple_scanner.Scan();
@@ -207,7 +205,7 @@ namespace Scantron
         /// <summary>
         /// Close the serial port.
         /// </summary>
-        public void Stop()
+        public void Done()
         {
             try
             {
@@ -218,7 +216,7 @@ namespace Scantron
             }
             catch (Exception)
             {
-                DisplayMessage("Something went wrong. Do not click Stop while the machine is running. " +
+                DisplayMessage("Something went wrong. Do not click Done while the machine is running. " +
                                 "Stop the machine, click Start, and begin scanning again");
             }
         }
