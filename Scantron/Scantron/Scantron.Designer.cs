@@ -263,9 +263,9 @@
             // 
             this.uxStartInstructionLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.uxStartInstructionLabel.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
-            this.uxStartInstructionLabel.Location = new System.Drawing.Point(-7, 3);
+            this.uxStartInstructionLabel.Location = new System.Drawing.Point(6, 3);
             this.uxStartInstructionLabel.Name = "uxStartInstructionLabel";
-            this.uxStartInstructionLabel.Size = new System.Drawing.Size(411, 335);
+            this.uxStartInstructionLabel.Size = new System.Drawing.Size(401, 335);
             this.uxStartInstructionLabel.TabIndex = 51;
             // 
             // uxResetButton

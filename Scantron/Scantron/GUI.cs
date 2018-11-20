@@ -68,14 +68,14 @@ namespace Scantron
 
         // Scanner communication fields.
         //private ScannerNew scanner_new;
-        private SimpleScanner simple_scanner;
+        private Scanner scanner;
         private bool toAbort = true;
         Task<List<string>> task;
 
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            simple_scanner = new SimpleScanner(this);
+            scanner = new Scanner(this);
             grader = new Grader(this);
 
             InitializeControls();
@@ -188,7 +188,7 @@ namespace Scantron
 
             try
             {
-                simple_scanner.Scan();
+                scanner.Scan();
             }
             catch(IOException)
             {
@@ -204,8 +204,8 @@ namespace Scantron
         {
             try
             {
-                simple_scanner.Stop();
-                raw_cards = simple_scanner.RawCards;
+                scanner.Stop();
+                raw_cards = scanner.RawCards;
                 grader.CreateCards(raw_cards);
                 UpdateCardList();
             }
@@ -349,7 +349,7 @@ namespace Scantron
         {
             try
             {
-                simple_scanner.Scan();
+                scanner.Scan();
             }
             catch (IOException)
             {
@@ -362,8 +362,8 @@ namespace Scantron
         {
             try
             {
-                simple_scanner.Stop();
-                raw_cards = simple_scanner.RawCards;
+                scanner.Stop();
+                raw_cards = scanner.RawCards;
                 grader.CreateCards(raw_cards);
 
                 TabPage tabpage;
