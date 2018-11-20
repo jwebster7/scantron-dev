@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class is used for creating card objects from the raw scantron data.
+// https://github.com/prometheus1994/scantron-dev/wiki/Card.cs
 
 using System;
 using System.Collections.Generic;
@@ -30,21 +31,16 @@ namespace Scantron
         // to the github repository.
         private List<Question> response = new List<Question>();
 
-        // Card constructor. Translates the raw data and assigns it to the appropriate fields.
-        public Card(string raw_card_data)
-        {
-            this.raw_card_data = raw_card_data;
-            RemoveBackSide();
-            Uncompress();
-            Format();
-            TranslateData();
-        }
-
+        // Symbols selected in the Scantron machine's configuration.
+        string front_of_card_symbol = "a";
+        string back_of_card_symbol = "b";
+        string compression_symbol = "#";
+        
         public int TestVersion
         {
             get
             {
-                if (test_version == 0)
+                if (test_version == 0) // Student did not fill out a test version.
                 {
                     return 1;
                 }
@@ -75,7 +71,7 @@ namespace Scantron
         {
             get
             {
-                if (sheet_number == 0)
+                if (sheet_number == 0) // Student did not fill out a sheet number.
                 {
                     return 1;
                 }
@@ -98,6 +94,16 @@ namespace Scantron
             }
         }
 
+        // Card constructor. Translates the raw data and assigns it to the appropriate fields.
+        public Card(string raw_card_data)
+        {
+            this.raw_card_data = raw_card_data;
+            RemoveBackSide();
+            Uncompress();
+            Format();
+            TranslateData();
+        }
+
         /// <summary>
         /// Both sides of a scantron card are scanned. This removes the useless back side data, each line of which is 
         /// denoted by a "b" in the raw data. An "a" denotes a front side line.
@@ -109,13 +115,13 @@ namespace Scantron
 
             // As long as any b's are in the raw data, this loop removes any data from and including that b until it 
             // hits an a.
-            while (raw_card_data.Contains("b"))
+            while (raw_card_data.Contains(back_of_card_symbol))
             {
-                start = raw_card_data.IndexOf("b");
+                start = raw_card_data.IndexOf(back_of_card_symbol);
 
-                if (raw_card_data.IndexOf("a", start) != -1)
+                if (raw_card_data.IndexOf(front_of_card_symbol, start) != -1)
                 {
-                    length = raw_card_data.IndexOf("a", start) - start;
+                    length = raw_card_data.IndexOf(front_of_card_symbol, start) - start;
                 }
                 else
                 {
@@ -139,17 +145,18 @@ namespace Scantron
             string uncompressed_string;
 
             // As long as there is a # in the raw data, this loop replaces the data with its uncompressed form.
-            while (raw_card_data.Contains("#"))
+            while (raw_card_data.Contains(compression_symbol))
             {
                 uncompressed_string = "";
-                hashtag_location = raw_card_data.IndexOf("#");
+                hashtag_location = raw_card_data.IndexOf(compression_symbol);
                 amount_character = raw_card_data[hashtag_location + 1];
                 character = raw_card_data[hashtag_location + 2];
                 amount = (int)amount_character - 64;
 
                 uncompressed_string = uncompressed_string.PadRight(amount, character);
 
-                raw_card_data = raw_card_data.Replace("#" + amount_character + character, uncompressed_string);
+                raw_card_data = raw_card_data.Replace(compression_symbol + amount_character + 
+                                                        character, uncompressed_string);
             }
         }
 
@@ -162,7 +169,7 @@ namespace Scantron
         {
             int i;
             List<string> card_lines = new List<string>();
-            char[] splitter = new char[] {'a'};
+            char[] splitter = new char[] {front_of_card_symbol[0]};
             card_lines = raw_card_data.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
             // The first two lines read are above the bubbles on the scantron card. This removes them.

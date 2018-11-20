@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class is used to create student objects for grading.
+// https://github.com/prometheus1994/scantron-dev/wiki/Student.cs
 
 using System.Collections.Generic;
 

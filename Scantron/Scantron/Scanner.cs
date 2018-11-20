@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class read the data stream from the Scantron machine.
+// https://github.com/prometheus1994/scantron-dev/wiki/Scanner.cs
 
 using System;
 using System.Collections.Generic;
