@@ -18,7 +18,7 @@ namespace Scantron
     class Grader
     {
         private GUI gui;
-
+        // Holds the exam name to be used in the output file.
         string exam_name = "";
         // Holds the cards used to create the students.
         private List<Card> cards = new List<Card>();
@@ -28,11 +28,6 @@ namespace Scantron
         private Dictionary<int, List<Question>> answer_key = new Dictionary<int, List<Question>>();
         // Holds the partial misread WID's
         private List<string> partial_wids = new List<string>();
-
-        public Grader(GUI gui)
-        {
-            this.gui = gui;
-        }
         
         public List<Card> Cards
         {
@@ -41,6 +36,7 @@ namespace Scantron
                 return cards;
             }
         }
+
         public List<Student> Students
         {
             get
@@ -61,12 +57,17 @@ namespace Scantron
             }
         }
 
-        public List<string> PartialWids
+        public List<string> PartialWIDs
         {
             get
             {
                 return partial_wids;
             }
+        }
+
+        public Grader(GUI gui)
+        {
+            this.gui = gui;
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Scantron
         /// Create a string to print to a file for only single answer questions.
         /// </summary>
         /// <returns>File string.</returns>
-        public string ScantronToolSingleAnswerFile()
+        public string SingleAnswerFile()
         {
             string info = "";
 
@@ -200,7 +201,7 @@ namespace Scantron
         /// Create a string to print to a file that can handle multiple answer questions.
         /// </summary>
         /// <returns>File string.</returns>
-        public string ScantronToolMultipleAnswerFile()
+        public string MultipleAnswerFile()
         {
             string info = "";
 

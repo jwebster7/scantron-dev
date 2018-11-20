@@ -20,13 +20,6 @@ namespace Scantron
         // Holds if this questions can be graded for partial credit on multiple answer questions.
         private bool partial_credit;
         
-        public Question(string answer, float points, bool partial_credit)
-        {
-            this.answer = answer;
-            this.points = points;
-            this.partial_credit = partial_credit;
-        }
-        
         public string Answer
         {
             get
@@ -49,6 +42,13 @@ namespace Scantron
             {
                 return partial_credit;
             }
+        }
+
+        public Question(string answer, float points, bool partial_credit)
+        {
+            this.answer = answer;
+            this.points = points;
+            this.partial_credit = partial_credit;
         }
 
         /// <summary>

@@ -28,19 +28,19 @@ namespace Scantron
 
         private GUI gui;
 
-        public List<string> RawCards
-        {
-            get
-            {
-                return raw_cards;
-            }
-        }
-
         public string Raw
         {
             get
             {
                 return raw_scantron_output;
+            }
+        }
+
+        public List<string> RawCards
+        {
+            get
+            {
+                return raw_cards;
             }
         }
 

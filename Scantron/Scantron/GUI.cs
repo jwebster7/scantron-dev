@@ -162,7 +162,7 @@ namespace Scantron
             raw_cards.Clear();
             grader.Cards.Clear();
             grader.Students.Clear();
-            grader.PartialWids.Clear();
+            grader.PartialWIDs.Clear();
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 250; j++)
@@ -892,11 +892,11 @@ namespace Scantron
             }
             if (type == "single")
             {
-                file = grader.ScantronToolSingleAnswerFile();
+                file = grader.SingleAnswerFile();
             }
             if (type == "multiple")
             {
-                file = grader.ScantronToolMultipleAnswerFile();
+                file = grader.MultipleAnswerFile();
             }
 
             // Then we have to start a file dialog to save the string to a file.
