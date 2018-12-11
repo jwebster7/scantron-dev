@@ -49,6 +49,7 @@
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
+            this.uxDoneScanningButton = new System.Windows.Forms.Button();
             this.uxScanAnswerKeyButton = new System.Windows.Forms.Button();
             this.uxAnswerKeyContinueButton = new System.Windows.Forms.Button();
             this.uxCreateAnswerKeyButton = new System.Windows.Forms.Button();
@@ -83,7 +84,6 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.uxDoneScanningButton = new System.Windows.Forms.Button();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -376,6 +376,20 @@
             this.uxAnswerKeyTabPage.TabIndex = 2;
             this.uxAnswerKeyTabPage.Text = "Answer Key";
             // 
+            // uxDoneScanningButton
+            // 
+            this.uxDoneScanningButton.BackColor = System.Drawing.SystemColors.Control;
+            this.uxDoneScanningButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.uxDoneScanningButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxDoneScanningButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uxDoneScanningButton.Location = new System.Drawing.Point(9, 271);
+            this.uxDoneScanningButton.Name = "uxDoneScanningButton";
+            this.uxDoneScanningButton.Size = new System.Drawing.Size(163, 85);
+            this.uxDoneScanningButton.TabIndex = 57;
+            this.uxDoneScanningButton.Text = "Done Scanning";
+            this.uxDoneScanningButton.UseVisualStyleBackColor = false;
+            this.uxDoneScanningButton.Click += new System.EventHandler(this.uxDoneScanningButton_Click);
+            // 
             // uxScanAnswerKeyButton
             // 
             this.uxScanAnswerKeyButton.BackColor = System.Drawing.SystemColors.Control;
@@ -498,7 +512,7 @@
             this.uxVersion2Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion2Tab.Name = "uxVersion2Tab";
             this.uxVersion2Tab.Padding = new System.Windows.Forms.Padding(3);
-            this.uxVersion2Tab.Size = new System.Drawing.Size(432, 439);
+            this.uxVersion2Tab.Size = new System.Drawing.Size(432, 366);
             this.uxVersion2Tab.TabIndex = 1;
             this.uxVersion2Tab.Text = "Version 2";
             // 
@@ -508,7 +522,7 @@
             this.uxVersion3Tab.BackColor = System.Drawing.SystemColors.Control;
             this.uxVersion3Tab.Location = new System.Drawing.Point(4, 22);
             this.uxVersion3Tab.Name = "uxVersion3Tab";
-            this.uxVersion3Tab.Size = new System.Drawing.Size(432, 439);
+            this.uxVersion3Tab.Size = new System.Drawing.Size(432, 366);
             this.uxVersion3Tab.TabIndex = 2;
             this.uxVersion3Tab.Text = "Version 3";
             // 
@@ -603,6 +617,7 @@
             this.uxTestDataButton.TabIndex = 35;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
+            this.uxTestDataButton.Visible = false;
             this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxSaveChangesButton
@@ -830,20 +845,6 @@
             this.uxCreateFileInstructionLabel.Name = "uxCreateFileInstructionLabel";
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(655, 131);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
-            // 
-            // uxDoneScanningButton
-            // 
-            this.uxDoneScanningButton.BackColor = System.Drawing.SystemColors.Control;
-            this.uxDoneScanningButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.uxDoneScanningButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
-            this.uxDoneScanningButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uxDoneScanningButton.Location = new System.Drawing.Point(9, 271);
-            this.uxDoneScanningButton.Name = "uxDoneScanningButton";
-            this.uxDoneScanningButton.Size = new System.Drawing.Size(163, 85);
-            this.uxDoneScanningButton.TabIndex = 57;
-            this.uxDoneScanningButton.Text = "Done Scanning";
-            this.uxDoneScanningButton.UseVisualStyleBackColor = false;
-            this.uxDoneScanningButton.Click += new System.EventHandler(this.uxDoneScanningButton_Click);
             // 
             // Scantron
             // 
