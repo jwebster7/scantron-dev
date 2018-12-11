@@ -208,6 +208,7 @@ namespace Scantron
             }
             else
             {
+                CreateAnswerKey();
                 AnswerKeyContinue();
             }
         }
