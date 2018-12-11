@@ -75,7 +75,7 @@ namespace Scantron
                 response.AddRange(card.Response);
             }
         }
-
+        
         /// <summary>
         /// Get the student's score.
         /// </summary>
