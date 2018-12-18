@@ -604,7 +604,7 @@ namespace Scantron
                 card = grader.Cards[i];
                 uxCardListDataGridView.Rows.Add(i, card.WID, card.TestVersion, card.SheetNumber);
 
-                if(card.WID.Length != 9 || !card.WID.Contains("8"))
+                if(card.WID.Length != 9 || card.WID[0] != '8')
                 {
                     uxCardListDataGridView.Rows[i].Cells[1].Style.BackColor = Color.Red;
                 }
