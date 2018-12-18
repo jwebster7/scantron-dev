@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.uxReadyButton = new System.Windows.Forms.Button();
             this.uxDoneButton = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
-            this.uxCouldNotBeGradedLabel = new System.Windows.Forms.Label();
             this.uxStudentSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.uxMainTabControl = new System.Windows.Forms.TabControl();
             this.uxStartTabPage = new System.Windows.Forms.TabPage();
@@ -62,10 +62,8 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTabPage = new System.Windows.Forms.TabPage();
+            this.uxCardListDataGridView = new System.Windows.Forms.DataGridView();
             this.uxScanContinueButton = new System.Windows.Forms.Button();
-            this.uxStatusLabel = new System.Windows.Forms.Label();
-            this.uxStatusTextBox = new System.Windows.Forms.TextBox();
-            this.uxCardListTextBox = new System.Windows.Forms.TextBox();
             this.uxScanneCardsLabel = new System.Windows.Forms.Label();
             this.uxTestDataButton = new System.Windows.Forms.Button();
             this.uxSaveChangesButton = new System.Windows.Forms.Button();
@@ -84,6 +82,10 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
+            this.CardNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxWIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxTestVersionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxSheetNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -95,6 +97,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPointsNumericUpDown)).BeginInit();
             this.uxAnswerKeyTabControl.SuspendLayout();
             this.uxScanTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxCardListDataGridView)).BeginInit();
             this.uxGradeTabPage.SuspendLayout();
             this.uxCreateFileTabPage.SuspendLayout();
             this.SuspendLayout();
@@ -140,18 +143,6 @@
             this.uxStudentResponsePanel.Name = "uxStudentResponsePanel";
             this.uxStudentResponsePanel.Size = new System.Drawing.Size(478, 384);
             this.uxStudentResponsePanel.TabIndex = 15;
-            // 
-            // uxCouldNotBeGradedLabel
-            // 
-            this.uxCouldNotBeGradedLabel.AutoSize = true;
-            this.uxCouldNotBeGradedLabel.BackColor = System.Drawing.Color.Red;
-            this.uxCouldNotBeGradedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.uxCouldNotBeGradedLabel.Location = new System.Drawing.Point(14, 365);
-            this.uxCouldNotBeGradedLabel.Name = "uxCouldNotBeGradedLabel";
-            this.uxCouldNotBeGradedLabel.Size = new System.Drawing.Size(122, 13);
-            this.uxCouldNotBeGradedLabel.TabIndex = 0;
-            this.uxCouldNotBeGradedLabel.Text = "Could not be graded";
-            this.uxCouldNotBeGradedLabel.Visible = false;
             // 
             // uxStudentSelectorComboBox
             // 
@@ -209,6 +200,8 @@
             // 
             this.uxGradingWithThisProgramCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.uxGradingWithThisProgramCheckBox.Checked = true;
+            this.uxGradingWithThisProgramCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(15, 430);
             this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
@@ -299,7 +292,7 @@
             this.uxExamNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxExamNameTextBox.Location = new System.Drawing.Point(150, 352);
             this.uxExamNameTextBox.Name = "uxExamNameTextBox";
-            this.uxExamNameTextBox.Size = new System.Drawing.Size(142, 20);
+            this.uxExamNameTextBox.Size = new System.Drawing.Size(156, 20);
             this.uxExamNameTextBox.TabIndex = 48;
             // 
             // uxNumberOfVersionsLabel
@@ -529,10 +522,8 @@
             // uxScanTabPage
             // 
             this.uxScanTabPage.BackColor = System.Drawing.Color.Gray;
+            this.uxScanTabPage.Controls.Add(this.uxCardListDataGridView);
             this.uxScanTabPage.Controls.Add(this.uxScanContinueButton);
-            this.uxScanTabPage.Controls.Add(this.uxStatusLabel);
-            this.uxScanTabPage.Controls.Add(this.uxStatusTextBox);
-            this.uxScanTabPage.Controls.Add(this.uxCardListTextBox);
             this.uxScanTabPage.Controls.Add(this.uxScanneCardsLabel);
             this.uxScanTabPage.Controls.Add(this.uxTestDataButton);
             this.uxScanTabPage.Controls.Add(this.uxSaveChangesButton);
@@ -546,6 +537,33 @@
             this.uxScanTabPage.Size = new System.Drawing.Size(673, 542);
             this.uxScanTabPage.TabIndex = 0;
             this.uxScanTabPage.Text = "Scan";
+            // 
+            // uxCardListDataGridView
+            // 
+            this.uxCardListDataGridView.AllowUserToAddRows = false;
+            this.uxCardListDataGridView.AllowUserToDeleteRows = false;
+            this.uxCardListDataGridView.AllowUserToResizeColumns = false;
+            this.uxCardListDataGridView.AllowUserToResizeRows = false;
+            this.uxCardListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.uxCardListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CardNumberColumn,
+            this.uxWIDColumn,
+            this.uxTestVersionColumn,
+            this.uxSheetNumberColumn});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            this.uxCardListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.uxCardListDataGridView.Location = new System.Drawing.Point(6, 209);
+            this.uxCardListDataGridView.Name = "uxCardListDataGridView";
+            this.uxCardListDataGridView.RowHeadersVisible = false;
+            this.uxCardListDataGridView.Size = new System.Drawing.Size(652, 320);
+            this.uxCardListDataGridView.TabIndex = 56;
             // 
             // uxScanContinueButton
             // 
@@ -562,43 +580,11 @@
             this.uxScanContinueButton.UseVisualStyleBackColor = false;
             this.uxScanContinueButton.Click += new System.EventHandler(this.uxScanContinueButton_Click);
             // 
-            // uxStatusLabel
-            // 
-            this.uxStatusLabel.AutoSize = true;
-            this.uxStatusLabel.BackColor = System.Drawing.Color.Transparent;
-            this.uxStatusLabel.Location = new System.Drawing.Point(508, 182);
-            this.uxStatusLabel.Name = "uxStatusLabel";
-            this.uxStatusLabel.Size = new System.Drawing.Size(66, 24);
-            this.uxStatusLabel.TabIndex = 41;
-            this.uxStatusLabel.Text = "Status";
-            // 
-            // uxStatusTextBox
-            // 
-            this.uxStatusTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxStatusTextBox.Location = new System.Drawing.Point(424, 209);
-            this.uxStatusTextBox.Multiline = true;
-            this.uxStatusTextBox.Name = "uxStatusTextBox";
-            this.uxStatusTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxStatusTextBox.Size = new System.Drawing.Size(237, 320);
-            this.uxStatusTextBox.TabIndex = 40;
-            this.uxStatusTextBox.TabStop = false;
-            // 
-            // uxCardListTextBox
-            // 
-            this.uxCardListTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxCardListTextBox.Location = new System.Drawing.Point(14, 209);
-            this.uxCardListTextBox.MaxLength = 2147483647;
-            this.uxCardListTextBox.Multiline = true;
-            this.uxCardListTextBox.Name = "uxCardListTextBox";
-            this.uxCardListTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.uxCardListTextBox.Size = new System.Drawing.Size(404, 320);
-            this.uxCardListTextBox.TabIndex = 39;
-            // 
             // uxScanneCardsLabel
             // 
             this.uxScanneCardsLabel.AutoSize = true;
             this.uxScanneCardsLabel.BackColor = System.Drawing.Color.Transparent;
-            this.uxScanneCardsLabel.Location = new System.Drawing.Point(151, 182);
+            this.uxScanneCardsLabel.Location = new System.Drawing.Point(6, 182);
             this.uxScanneCardsLabel.Name = "uxScanneCardsLabel";
             this.uxScanneCardsLabel.Size = new System.Drawing.Size(153, 24);
             this.uxScanneCardsLabel.TabIndex = 38;
@@ -617,7 +603,6 @@
             this.uxTestDataButton.TabIndex = 35;
             this.uxTestDataButton.Text = "Test Data";
             this.uxTestDataButton.UseVisualStyleBackColor = false;
-            this.uxTestDataButton.Visible = false;
             this.uxTestDataButton.Click += new System.EventHandler(this.uxTestDataButton_Click);
             // 
             // uxSaveChangesButton
@@ -651,7 +636,6 @@
             this.uxGradeTabPage.Controls.Add(this.uxGradeContinueButton);
             this.uxGradeTabPage.Controls.Add(this.uxGradeStudentsButton);
             this.uxGradeTabPage.Controls.Add(this.uxScoreLabel);
-            this.uxGradeTabPage.Controls.Add(this.uxCouldNotBeGradedLabel);
             this.uxGradeTabPage.Controls.Add(this.uxGradeInstructionLabel);
             this.uxGradeTabPage.Controls.Add(this.uxVersionLabel);
             this.uxGradeTabPage.Controls.Add(this.uxPreviousButton);
@@ -673,7 +657,7 @@
             this.uxGradeContinueButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradeContinueButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradeContinueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradeContinueButton.Location = new System.Drawing.Point(14, 392);
+            this.uxGradeContinueButton.Location = new System.Drawing.Point(14, 364);
             this.uxGradeContinueButton.Name = "uxGradeContinueButton";
             this.uxGradeContinueButton.Size = new System.Drawing.Size(163, 70);
             this.uxGradeContinueButton.TabIndex = 55;
@@ -776,9 +760,9 @@
             this.uxScantronToolSingleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxScantronToolSingleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxScantronToolSingleAnswerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScantronToolSingleAnswerButton.Location = new System.Drawing.Point(256, 153);
+            this.uxScantronToolSingleAnswerButton.Location = new System.Drawing.Point(156, 137);
             this.uxScantronToolSingleAnswerButton.Name = "uxScantronToolSingleAnswerButton";
-            this.uxScantronToolSingleAnswerButton.Size = new System.Drawing.Size(175, 100);
+            this.uxScantronToolSingleAnswerButton.Size = new System.Drawing.Size(162, 71);
             this.uxScantronToolSingleAnswerButton.TabIndex = 48;
             this.uxScantronToolSingleAnswerButton.TabStop = false;
             this.uxScantronToolSingleAnswerButton.Tag = "";
@@ -793,9 +777,9 @@
             this.uxFinishButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxFinishButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxFinishButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxFinishButton.Location = new System.Drawing.Point(289, 306);
+            this.uxFinishButton.Location = new System.Drawing.Point(502, 138);
             this.uxFinishButton.Name = "uxFinishButton";
-            this.uxFinishButton.Size = new System.Drawing.Size(120, 70);
+            this.uxFinishButton.Size = new System.Drawing.Size(159, 70);
             this.uxFinishButton.TabIndex = 47;
             this.uxFinishButton.TabStop = false;
             this.uxFinishButton.Tag = "";
@@ -810,9 +794,9 @@
             this.uxGradebookButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradebookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradebookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxGradebookButton.Location = new System.Drawing.Point(14, 153);
+            this.uxGradebookButton.Location = new System.Drawing.Point(9, 137);
             this.uxGradebookButton.Name = "uxGradebookButton";
-            this.uxGradebookButton.Size = new System.Drawing.Size(152, 98);
+            this.uxGradebookButton.Size = new System.Drawing.Size(141, 71);
             this.uxGradebookButton.TabIndex = 46;
             this.uxGradebookButton.TabStop = false;
             this.uxGradebookButton.Tag = "";
@@ -827,9 +811,9 @@
             this.uxScantronToolMultipleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxScantronToolMultipleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxScantronToolMultipleAnswerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uxScantronToolMultipleAnswerButton.Location = new System.Drawing.Point(486, 151);
+            this.uxScantronToolMultipleAnswerButton.Location = new System.Drawing.Point(324, 137);
             this.uxScantronToolMultipleAnswerButton.Name = "uxScantronToolMultipleAnswerButton";
-            this.uxScantronToolMultipleAnswerButton.Size = new System.Drawing.Size(175, 100);
+            this.uxScantronToolMultipleAnswerButton.Size = new System.Drawing.Size(172, 71);
             this.uxScantronToolMultipleAnswerButton.TabIndex = 45;
             this.uxScantronToolMultipleAnswerButton.TabStop = false;
             this.uxScantronToolMultipleAnswerButton.Tag = "";
@@ -845,6 +829,38 @@
             this.uxCreateFileInstructionLabel.Name = "uxCreateFileInstructionLabel";
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(655, 131);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
+            // 
+            // CardNumberColumn
+            // 
+            this.CardNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CardNumberColumn.HeaderText = "Card Number";
+            this.CardNumberColumn.MaxInputLength = 1;
+            this.CardNumberColumn.Name = "CardNumberColumn";
+            this.CardNumberColumn.ReadOnly = true;
+            this.CardNumberColumn.Width = 160;
+            // 
+            // uxWIDColumn
+            // 
+            this.uxWIDColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.uxWIDColumn.HeaderText = "WID";
+            this.uxWIDColumn.MaxInputLength = 9;
+            this.uxWIDColumn.Name = "uxWIDColumn";
+            this.uxWIDColumn.Width = 73;
+            // 
+            // uxTestVersionColumn
+            // 
+            this.uxTestVersionColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.uxTestVersionColumn.HeaderText = "Test Version";
+            this.uxTestVersionColumn.MaxInputLength = 1;
+            this.uxTestVersionColumn.Name = "uxTestVersionColumn";
+            this.uxTestVersionColumn.Width = 153;
+            // 
+            // uxSheetNumberColumn
+            // 
+            this.uxSheetNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.uxSheetNumberColumn.HeaderText = "Sheet Number";
+            this.uxSheetNumberColumn.MaxInputLength = 1;
+            this.uxSheetNumberColumn.Name = "uxSheetNumberColumn";
             // 
             // Scantron
             // 
@@ -874,6 +890,7 @@
             this.uxAnswerKeyTabControl.ResumeLayout(false);
             this.uxScanTabPage.ResumeLayout(false);
             this.uxScanTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uxCardListDataGridView)).EndInit();
             this.uxGradeTabPage.ResumeLayout(false);
             this.uxGradeTabPage.PerformLayout();
             this.uxCreateFileTabPage.ResumeLayout(false);
@@ -896,7 +913,6 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Label uxGradeInstructionLabel;
         private System.Windows.Forms.Label uxScanInstructionLabel;
-        private System.Windows.Forms.Label uxCouldNotBeGradedLabel;
         private System.Windows.Forms.Label uxScoreLabel;
         private System.Windows.Forms.TabPage uxAnswerKeyTabPage;
         private System.Windows.Forms.CheckBox uxAllPartialCreditCheckBox;
@@ -912,9 +928,6 @@
         private System.Windows.Forms.Button uxCreateAnswerKeyButton;
         private System.Windows.Forms.Label uxScanneCardsLabel;
         private System.Windows.Forms.Button uxTestDataButton;
-        private System.Windows.Forms.TextBox uxCardListTextBox;
-        private System.Windows.Forms.Label uxStatusLabel;
-        private System.Windows.Forms.TextBox uxStatusTextBox;
         private System.Windows.Forms.TabPage uxStartTabPage;
         private System.Windows.Forms.TabPage uxCreateFileTabPage;
         private System.Windows.Forms.PictureBox uxSetupImage1PictureBox;
@@ -940,6 +953,11 @@
         private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
         private System.Windows.Forms.Button uxScanAnswerKeyButton;
         private System.Windows.Forms.Button uxDoneScanningButton;
+        private System.Windows.Forms.DataGridView uxCardListDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CardNumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxWIDColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
     }
 }
 

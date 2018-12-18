@@ -148,8 +148,10 @@ namespace Scantron
 
             if (ungraded_students != "")
             {
-                gui.DisplayMessage( "The following students wrote down an invalid test version " +
-                                    "or one of their sheets has their WID written incorrectly:\n" + ungraded_students);
+                gui.DisplayMessage( "The following students could not be graded. " + 
+                                    "Either they wrote down a test version that doesn't exist, " +
+                                    "or (if the test has more than 50 questions) one of their cards has their WID written incorrectly:\n" + 
+                                    ungraded_students);
             }
         }
 

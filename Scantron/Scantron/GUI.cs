@@ -42,8 +42,7 @@ namespace Scantron
         private Button uxNextButton;
         private Label uxVersionLabel;
         private Label uxScoreLabel;
-        private Label uxCouldNotBeGradedLabel;
-        private TextBox uxCardListTextBox;
+        private DataGridView uxCardListDataGridView;
         private TextBox uxStatusTextBox;
         private TabControl uxMainTabControl;
         private TabPage uxStartTabPage;
@@ -106,9 +105,7 @@ namespace Scantron
             uxNextButton = (Button) scantron_form.Controls.Find("uxNextButton", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
-            uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
-            uxCardListTextBox = (TextBox) scantron_form.Controls.Find("uxCardListTextBox", true)[0];
-            uxStatusTextBox = (TextBox) scantron_form.Controls.Find("uxStatusTextBox", true)[0];
+            uxCardListDataGridView = (DataGridView) scantron_form.Controls.Find("uxCardListDataGridView", true)[0];
             uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
             uxStartTabPage = (TabPage) scantron_form.Controls.Find("uxStartTabPage", true)[0];
             uxAnswerKeyTabPage = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTabPage", true)[0];
@@ -130,7 +127,7 @@ namespace Scantron
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
                                                     "2. Click Reset.\n" +
                                                     "3. Enter the the exam name, number of versions, and number of questions.\n" +
-                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, check \"Grading within this program\".\n";
+                                                    "4. If you want your students to see their responses online, uncheck \"Grading within this program\".\n";
 
             uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit.\n" +
                                                     "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form.\n" +
@@ -168,29 +165,27 @@ namespace Scantron
                 for (int j = 0; j < 250; j++)
                 {
                     panel = (Panel)uxAnswerKeyTabControl.TabPages[i].Controls[j];
-                    panel.Visible = false;
+                    panel.Hide();
                 }
             }
             for (int i = 0; i < 250; i++)
             {
                 panel = (Panel)uxStudentResponsePanel.Controls[i];
-                panel.Visible = false;
+                panel.Hide();
             }
 
             uxExamNameTextBox.Text = "";
             uxNumberOfVersionsNumericUpDown.Value = 0;
             uxNumberOfQuestionsNumericUpDown.Value = 0;
-            uxGradingWithThisProgramCheckbox.Checked = false;
+            uxGradingWithThisProgramCheckbox.Checked = true;
             uxAnswerKeyTabControl.Enabled = true;
             uxAllQuestionPointsNumericUpDown.Value = 1;
             uxAllPartialCreditCheckBox.Checked = false;
-            uxCardListTextBox.Text = "";
-            uxStatusTextBox.Text = "";
+            uxCardListDataGridView.Rows.Clear();
             uxStudentSelector.Items.Clear();
             uxStudentSelector.Text = "";
             uxVersionLabel.Text = "Version: ";
             uxScoreLabel.Text = "Score: ";
-            uxCouldNotBeGradedLabel.Visible = false;
             uxNextButton.Enabled = false;
             uxPreviousButton.Enabled = false;
 
@@ -208,7 +203,6 @@ namespace Scantron
             }
             else
             {
-                CreateAnswerKey();
                 AnswerKeyContinue();
             }
         }
@@ -329,7 +323,7 @@ namespace Scantron
             {
                 foreach (Panel panel in tabpage.Controls)
                 {
-                    panel.Visible = false;
+                    panel.Hide();
 
                     for (int i = 0; i < 5; i++)
                     {
@@ -356,7 +350,7 @@ namespace Scantron
 
                 for (int j = 0; j < number_of_questions; j++)
                 {
-                    answer_key_tabpage.Controls[j].Visible = true;
+                    answer_key_tabpage.Controls[j].Show();
                 }
             }
         }
@@ -432,14 +426,13 @@ namespace Scantron
         {
             if (uxExamNameTextBox.Text == "")
             {
-                DisplayMessage("Enter a name for the exam.");
+                DisplayMessage("Go to the Start tab and enter a name for the exam.");
                 return;
             }
 
             if (number_of_versions == 0 || number_of_questions == 0)
             {
-                DisplayMessage("You have not created an answer key. Select the number of questions and versions" +
-                                ", then fill out the answer key form.");
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
                 return;
             }
 
@@ -512,20 +505,16 @@ namespace Scantron
         /// </summary>
         public void Ready()
         {
-            if (uxGradingWithThisProgramCheckbox.Checked)
+            if(uxExamNameTextBox.Text == "")
             {
-                if (uxExamNameTextBox.Text == "" || number_of_versions < 1 || number_of_questions < 1)
-                {
-                    return;
-                }
+                DisplayMessage("Go to the Start Tab and enter a name for the exam.");
+                return;
             }
-            else
+
+            if(number_of_versions == 0 || number_of_questions == 0)
             {
-                if (grader.AnswerKey.Count < 1)
-                {
-                    DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
-                    return;
-                }
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
+                return;
             }
 
             try
@@ -569,42 +558,32 @@ namespace Scantron
                 return;
             }
 
-            int wid_index;
-            int version_index;
-            int sheet_number_index;
+            Card card;
             string wid;
-            int version;
+            int test_version;
             int sheet_number;
-            string card_line;
 
-            List<string> card_list = new List<string>();
-            char[] splitter = new char[] { '\n' };
-            card_list = uxCardListTextBox.Text.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-            for (int i = 0; i < card_list.Count; i++)
+            for(int i = 0; i < grader.Cards.Count; i++)
             {
-                card_line = card_list[i];
+                card = grader.Cards[i];
+                wid = (string)uxCardListDataGridView.Rows[i].Cells[1].Value;
+                test_version = Convert.ToInt32(uxCardListDataGridView.Rows[i].Cells[2].Value);
+                sheet_number = Convert.ToInt32(uxCardListDataGridView.Rows[i].Cells[3].Value);
 
-                // Make sure the user didn't delete things.
-                if (!(card_line.Contains(" WID: ") && card_line.Contains(" Version: ") && card_line.Contains(" Sheet Number: ")))
+                if(wid.Length == 9)
                 {
-                    DisplayMessage("Be sure to only edit the numbers.");
-                    UpdateCardList();
-                    return;
+                    card.WID = wid;
                 }
 
-                wid_index = card_line.IndexOf("WID:") + 5;
-                version_index = card_line.IndexOf("Version:") + 9;
-                sheet_number_index = card_line.IndexOf("Sheet Number:") + 14;
+                if(test_version > 0 && test_version < 4)
+                {
+                    card.TestVersion = test_version;
+                }
 
-                wid = card_line.Substring(wid_index, 9);
-                grader.Cards[i].WID = wid;
-
-                version = (int)Char.GetNumericValue(card_line[version_index]);
-                grader.Cards[i].TestVersion = version;
-
-                sheet_number = (int)Char.GetNumericValue(card_line[sheet_number_index]);
-                grader.Cards[i].SheetNumber = sheet_number;
+                if(sheet_number > 0 && sheet_number < 6)
+                {
+                    card.SheetNumber = sheet_number;
+                }
             }
 
             UpdateCardList();
@@ -613,42 +592,33 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Update the Card List display.
+        /// Update the Card List DataGridView.
         /// </summary>
         private void UpdateCardList()
         {
+            uxCardListDataGridView.Rows.Clear();
             Card card;
-            uxCardListTextBox.Text = "";
-            string cards = "";
-            string wid = "";
-            int test_version = 1;
-            string bad_wids = "\n";
-            string bad_test_versions = "\n";
 
-            for (int i = 0; i < grader.Cards.Count; i++)
+            for(int i = 0; i < grader.Cards.Count; i++)
             {
                 card = grader.Cards[i];
+                uxCardListDataGridView.Rows.Add(i, card.WID, card.TestVersion, card.SheetNumber);
 
-                wid = card.WID;
-                test_version = card.TestVersion;
-
-                cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + card.SheetNumber + Environment.NewLine;
-
-                if (wid.Contains("-") || wid[0] != '8')
+                if(card.WID.Length != 9 || !card.WID.Contains("8"))
                 {
-                    bad_wids += "#" + (i + 1) + " ";
+                    uxCardListDataGridView.Rows[i].Cells[1].Style.BackColor = Color.Red;
                 }
 
-                if (test_version > grader.AnswerKey.Count || test_version <= 0)
+                if(card.TestVersion < 1 || card.TestVersion > 3 || card.TestVersion > number_of_versions)
                 {
-                    bad_test_versions += "#" + (i + 1) + " ";
+                    uxCardListDataGridView.Rows[i].Cells[2].Style.BackColor = Color.Red;
+                }
+
+                if(card.SheetNumber < 1 || card.SheetNumber > 5)
+                {
+                    uxCardListDataGridView.Rows[i].Cells[3].Style.BackColor = Color.Red;
                 }
             }
-
-            uxCardListTextBox.Text = cards;
-
-            uxStatusTextBox.Text = "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
-                                    "Invalid Test Versions: " + bad_test_versions;
         }
 
         /// <summary>
@@ -736,15 +706,28 @@ namespace Scantron
         /// </summary>
         public void GradeStudents()
         {
-            if (grader.AnswerKey.Count < 1)
+            if(uxExamNameTextBox.Text == "")
             {
-                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
+                DisplayMessage("Go to the Start Tab and enter a name for the exam.");
                 return;
             }
 
-            if (grader.Students.Count < 1)
+            if(number_of_versions == 0 || number_of_questions == 0)
             {
-                DisplayMessage("No students found. Go back to the Scan tab and follow the instructions.");
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
+                return;
+            }
+
+            if(grader.Students.Count < 1)
+            {
+                DisplayMessage("No students found. You  need to save changes on the Scan tab.");
+                return;
+            }
+
+            if(uxGradingWithThisProgramCheckbox.Checked && grader.AnswerKey.Count < 1)
+            {
+                DisplayMessage("If you're grading with this program you need to make an answer key in the Answer Key tab." +
+                                "If you're not grading with this program, go back to the Start tab and uncheck the box.");
                 return;
             }
 
@@ -787,30 +770,26 @@ namespace Scantron
             int test_version = student.TestVersion;
             uxVersionLabel.Text = "Version: " + test_version;
             uxScoreLabel.Text = "Score: " + student.Score();
-            uxCouldNotBeGradedLabel.Visible = false;
             Panel question_panel;
             CheckBox response_checkbox;
             CheckBox answer_key_checkbox;
 
             foreach (Control control in uxStudentResponsePanel.Controls)
             {
-                control.Visible = false;
+                control.Hide();
             }
 
-            if (grader.AnswerKey[0].Count > student.Response.Count || test_version > grader.AnswerKey.Keys.Count || test_version <= 0)
+            if (test_version > grader.AnswerKey.Keys.Count || test_version <= 0)
             {
-                uxCouldNotBeGradedLabel.Visible = true;
+                // Stop the next for loop from throwing an error about the student's test version not existing.
+                // User is notified elsewhere.
                 return;
-            }
-            else
-            {
-                uxCouldNotBeGradedLabel.Visible = false;
             }
 
             for (int i = 0; i < Math.Min(grader.AnswerKey[test_version - 1].Count, student.Response.Count); i++)
             {
                 question_panel = (Panel)uxStudentResponsePanel.Controls[i];
-                question_panel.Visible = true;
+                question_panel.Show();
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
