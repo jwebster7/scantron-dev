@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class handles creation and grading of students.
+// https://github.com/prometheus1994/scantron-dev/wiki/Grader.cs
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Scantron
     class Grader
     {
         private GUI gui;
-
+        // Holds the exam name to be used in the output file.
         string exam_name = "";
         // Holds the cards used to create the students.
         private List<Card> cards = new List<Card>();
@@ -27,11 +28,6 @@ namespace Scantron
         private Dictionary<int, List<Question>> answer_key = new Dictionary<int, List<Question>>();
         // Holds the partial misread WID's
         private List<string> partial_wids = new List<string>();
-
-        public Grader(GUI gui)
-        {
-            this.gui = gui;
-        }
         
         public List<Card> Cards
         {
@@ -40,6 +36,7 @@ namespace Scantron
                 return cards;
             }
         }
+
         public List<Student> Students
         {
             get
@@ -60,12 +57,17 @@ namespace Scantron
             }
         }
 
-        public List<string> PartialWids
+        public List<string> PartialWIDs
         {
             get
             {
                 return partial_wids;
             }
+        }
+
+        public Grader(GUI gui)
+        {
+            this.gui = gui;
         }
 
         /// <summary>
@@ -115,8 +117,6 @@ namespace Scantron
             {
                 student.CreateResponse();
             }
-
-            //gui.DisplayMessage(students.Count + " students successfully created!");
         }
 
         /// <summary>
@@ -144,34 +144,14 @@ namespace Scantron
                         break;
                     }
                 }
-                /*
-                try
-                {
-                    for (int i = 0; i < answer_key[0].Count; i++)
-                    {
-                        student.Response[i].Grade(answer_key[test_version - 1][i]);
-                    }
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    //                    "If this is the correct number, you may have entered too many questions on the answer key.\n\n" +
-                    //                    "If this is too few, the student filled out the WID on one or more of their cards incorrectly.\n\n" +
-                    //                    "You can correct this, re-scan the student, and add the student's score, by itself, to the gradebook later.\n\n"+
-                    //                    "The student will still be graded on the questions available.");
-                }
-                catch (KeyNotFoundException)
-                {
-                    //gui.DisplayMessage( "Student " + student.WID + " wrote down Test Version " + test_version + ".\n\n" +
-                    //                    "You did not create this many versions. Student cannot be graded correctly.\n\n" +
-                    //                    "You can correct this, re-scan the student, and add the student's score to the gradebook by itself later.");
-                }
-                */
             }
 
             if (ungraded_students != "")
             {
-                gui.DisplayMessage( "The following students wrote down an invalid test version " +
-                                    "or one of their sheets has their WID written incorrectly:\n" + ungraded_students);
+                gui.DisplayMessage( "The following students could not be graded. " + 
+                                    "Either they wrote down a test version that doesn't exist, " +
+                                    "or (if the test has more than 50 questions) one of their cards has their WID written incorrectly:\n" + 
+                                    ungraded_students);
             }
         }
 
@@ -203,7 +183,11 @@ namespace Scantron
             return info;
         }
 
-        public string ScantronToolSingleAnswerFile()
+        /// <summary>
+        /// Create a string to print to a file for only single answer questions.
+        /// </summary>
+        /// <returns>File string.</returns>
+        public string SingleAnswerFile()
         {
             string info = "";
 
@@ -215,7 +199,11 @@ namespace Scantron
             return info;
         }
 
-        public string ScantronToolMultipleAnswerFile()
+        /// <summary>
+        /// Create a string to print to a file that can handle multiple answer questions.
+        /// </summary>
+        /// <returns>File string.</returns>
+        public string MultipleAnswerFile()
         {
             string info = "";
 

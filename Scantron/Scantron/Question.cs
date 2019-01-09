@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class is used to create Question objects for the student responses & exam key.
+// https://github.com/prometheus1994/scantron-dev/wiki/Question.cs
 
 namespace Scantron
 {
@@ -18,13 +19,6 @@ namespace Scantron
         private float points;
         // Holds if this questions can be graded for partial credit on multiple answer questions.
         private bool partial_credit;
-        
-        public Question(string answer, float points, bool partial_credit)
-        {
-            this.answer = answer;
-            this.points = points;
-            this.partial_credit = partial_credit;
-        }
         
         public string Answer
         {
@@ -48,6 +42,13 @@ namespace Scantron
             {
                 return partial_credit;
             }
+        }
+
+        public Question(string answer, float points, bool partial_credit)
+        {
+            this.answer = answer;
+            this.points = points;
+            this.partial_credit = partial_credit;
         }
 
         /// <summary>

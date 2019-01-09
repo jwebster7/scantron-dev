@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class is used to create student objects for grading.
+// https://github.com/prometheus1994/scantron-dev/wiki/Student.cs
 
 using System.Collections.Generic;
 
@@ -22,13 +23,6 @@ namespace Scantron
         private List<Card> cards = new List<Card>();
         // The student's responses compiled from the cards.
         private List<Question> response = new List<Question>();
-        
-        public Student(Card card)
-        {
-            this.wid = card.WID;
-            this.test_version = card.TestVersion;
-            cards.Add(card);
-        }
         
         public string WID
         {
@@ -62,6 +56,13 @@ namespace Scantron
             }
         }
 
+        public Student(Card card)
+        {
+            this.wid = card.WID;
+            this.test_version = card.TestVersion;
+            cards.Add(card);
+        }
+
         /// <summary>
         /// Convert the student's list of cards to a list of answers.
         /// </summary>
@@ -74,7 +75,7 @@ namespace Scantron
                 response.AddRange(card.Response);
             }
         }
-
+        
         /// <summary>
         /// Get the student's score.
         /// </summary>
@@ -91,6 +92,10 @@ namespace Scantron
             return score;
         }
 
+        /// <summary>
+        /// Format the student as a string.
+        /// </summary>
+        /// <returns>The student formatted as a string.</returns>
         public override string ToString()
         {
             return wid + ",," + wid + ",,," + Score() + "\r\n";

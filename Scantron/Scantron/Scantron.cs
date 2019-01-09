@@ -6,7 +6,8 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// This class handles button click events on the GUI.
+// This class handles control events on the GUI.
+// https://github.com/prometheus1994/scantron-dev/wiki/Scantron.cs
 
 using System;
 using System.Windows.Forms;
@@ -32,165 +33,212 @@ namespace Scantron
             gui.InstantiateStudentDisplay();
         }
 
-        // Event handler for selecting students in ComboBox.
+        /// <summary>
+        /// Event handler for selecting students in ComboBox.
+        /// </summary>
         private void uxStudentSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             gui.SelectStudent();
         }
 
-        // Event handler for the All Partial Credit CheckBox.
+        /// <summary>
+        /// Event handler for the All Partial Credit CheckBox.
+        /// </summary>
         private void uxAllPartialCredit_CheckedChanged(object sender, EventArgs e)
         {
             gui.UpdateAllPartialCredit();
         }
 
-        // Event handler for All Question Points NumericUpDown.
+        /// <summary>
+        /// Event handler for All Question Points NumericUpDown.
+        /// </summary>
         private void uxAllQuestionPoints_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAllQuestionPoints();
         }
 
-        // Event handler for Number of Questions NumericUpDown.
+        /// <summary>
+        /// Event handler for Number of Questions NumericUpDown.
+        /// </summary>
         private void uxNumberOfQuestions_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAnswerForm();
         }
 
-        // Event handler for Number of Versions NumericUpDown.
+        /// <summary>
+        /// Event handler for Number of Versions NumericUpDown.
+        /// </summary>
         private void uxNumberOfVersions_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateAnswerForm();
         }
 
-        // Event handler for when Gradebook button is clicked.
+        /// <summary>
+        /// Event handler for when Gradebook button is clicked.
+        /// </summary>
         private void uxGradebookButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("gradebook");
         }
 
-        // Event handler for when Create Answer Key button is clicked.
+        /// <summary>
+        /// Event handler for when Create Answer Key button is clicked.
+        /// </summary>
         private void uxCreateAnswerKeyButton_Click(object sender, EventArgs e)
         {
             gui.CreateAnswerKey();
         }
 
-        // Event handler for when Reset button is clicked.
-        private void uxResetButton_click(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for when Reset button is clicked.
+        /// </summary>
+        private void uxResetButton_Click(object sender, EventArgs e)
         {
             gui.Reset();
         }
 
-        // Event handler for when Start button is clicked.
-        private void uxStartButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for when Ready button is clicked.
+        /// </summary>
+        private void uxReadyButton_Click(object sender, EventArgs e)
         {
-            gui.Start();
+            gui.Ready();
         }
 
-        // Event handler for when Save Changes button is clicked.
+        /// <summary>
+        /// Event handler for when Save Changes button is clicked.
+        /// </summary>
         private void uxSaveChangesButton_Click(object sender, EventArgs e)
         {
             gui.SaveChanges();
         }
 
-        // Event handler for when Create Students button is clicked.
-        private void uxCreateStudentsButton_Click(object sender, EventArgs e)
-        {
-            //gui.CreateStudents();
-        }
-
-        // Event handler for hen Test Data button is clicked.
+        /// <summary>
+        /// Event handler for hen Test Data button is clicked.
+        /// </summary>
         private void uxTestDataButton_Click(object sender, EventArgs e)
         {
             gui.TestData();
         }
 
-        // Event handler for when Pause button is clicked.
-        private void uxPauseButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for when Done button is clicked.
+        /// </summary>
+        private void uxDoneButton_Click(object sender, EventArgs e)
         {
-            //gui.Pause();
+            gui.Done();
         }
 
-        // Event handler for when Resume button is clicked.
-        private void uxResumeButton_Click(object sender, EventArgs e)
-        {
-            //gui.Resume();
-        }
-
-        // Event handler for when Stop button is clicked.
-        private void uxStopButton_Click(object sender, EventArgs e)
-        {
-            gui.Stop();
-        }
-
-        // Event handler for when Grade Students button is clicked.
+        /// <summary>
+        /// Event handler for when Grade Students button is clicked.
+        /// </summary>
         private void uxGradeStudentsButton_Click(object sender, EventArgs e)
         {
             gui.GradeStudents();
         }
 
-        // Event handler for when Next button is clicked.
+        /// <summary>
+        /// Event handler for when Next button is clicked.
+        /// </summary>
         private void uxNextButton_Click(object sender, EventArgs e)
         {
             gui.NextStudent();
         }
 
-        // Event handler for when Previous button is clicked.
+        /// <summary>
+        /// Event handler for when Previous button is clicked.
+        /// </summary>
         private void uxPreviousButton_Click(object sender, EventArgs e)
         {
             gui.PreviousStudent();
         }
 
-        // Event handler for when Finish button is clicked.
+        /// <summary>
+        /// Event handler for when Finish button is clicked.
+        /// </summary>
         private void uxFinishButton_Click(object sender, EventArgs e)
         {
             gui.Finish();
         }
 
-        // Event handler for when Scantron Tool Single Answer button is clicked.
+        /// <summary>
+        /// Event handler for when Scantron Tool Single Answer button is clicked.
+        /// </summary>
         private void uxScantronToolSingleAnswerButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("single");
         }
 
-        // Event handler for when Scantron Tool Multiple Answer button is clicked.
+        /// <summary>
+        /// Event handler for when Scantron Tool Multiple Answer button is clicked.
+        /// </summary>
         private void uxScantronToolMultipleAnswerButton_Click(object sender, EventArgs e)
         {
             gui.WriteFile("multiple");
         }
 
+        /// <summary>
+        /// Event handler for when number of test versions is changed.
+        /// </summary>
         private void uxNumberOfVersionsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateNumberOfVersions();
         }
 
+        /// <summary>
+        /// Event handler for when numberof questionsis changed.
+        /// </summary>
         private void uxNumberOfQuestionsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             gui.UpdateNumberOfQuestions();
         }
 
+        /// <summary>
+        /// Event handler for when continue button on Start tab is clicked.
+        /// </summary>
         private void uxStartContinueButton_Click(object sender, EventArgs e)
         {
             gui.StartContinue();
         }
 
+        /// <summary>
+        /// Event handler for when continue button on Answer Key tab is clicked.
+        /// </summary>
         private void uxAnswerKeyContinueButton_Click(object sender, EventArgs e)
         {
             gui.AnswerKeyContinue();
         }
 
+        /// <summary>
+        /// Event handler for when continue button on Scan tab is clicked.
+        /// </summary>
         private void uxScanContinueButton_Click(object sender, EventArgs e)
         {
             gui.ScanContinue();
         }
 
+        /// <summary>
+        /// Event handler for when continue button on Grade tab is clicked.
+        /// </summary>
         private void uxGradeContinueButton_Click(object sender, EventArgs e)
         {
             gui.GradeContinue();
         }
 
-        private void uxUseScantronCardButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for when Use Scantron Card button is clicked.
+        /// </summary>
+        private void uxScanAnswerKeyButton_Click(object sender, EventArgs e)
         {
             gui.UseScantronCard();
+        }
+
+        /// <summary>
+        /// Event handler for when Done Scanning button is clicked.
+        /// </summary>
+        private void uxDoneScanningButton_Click(object sender, EventArgs e)
+        {
+            gui.DoneScanning();
         }
     }
 }

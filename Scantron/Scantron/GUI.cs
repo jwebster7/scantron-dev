@@ -7,6 +7,7 @@
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
 // This class handles GUI changing methods.
+// https://github.com/prometheus1994/scantron-dev/wiki/GUI.cs
 
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Scantron
     {
         private Grader grader;
 
+        # region Controls
         // GUI objects that we need data from.
         private Form scantron_form;
         private Label uxAnswerKeyInstructionLabel;
@@ -40,8 +42,7 @@ namespace Scantron
         private Button uxNextButton;
         private Label uxVersionLabel;
         private Label uxScoreLabel;
-        private Label uxCouldNotBeGradedLabel;
-        private TextBox uxCardListTextBox;
+        private DataGridView uxCardListDataGridView;
         private TextBox uxStatusTextBox;
         private TabControl uxMainTabControl;
         private TabPage uxStartTabPage;
@@ -51,13 +52,8 @@ namespace Scantron
         private TabPage uxCreateFileTabPage;
         private Label uxStartInstructionLabel;
         private Label uxCreateFileInstructionLabel;
-        private Button uxFinishButton;
-        private Button uxStartContinueButton;
-        private Button uxAnswerKeyContinueButton;
-        private Button uxScanContinueButton;
-        private Button uxGradeContinueButton;
         private CheckBox uxGradingWithThisProgramCheckbox;
-        private Button uxUseScantronCardButton;
+        #endregion
 
         // Holds the raw card data from the Scantron.
         private List<string> raw_cards = new List<string>();
@@ -66,15 +62,13 @@ namespace Scantron
         private int number_of_versions = 0;
         private int number_of_questions = 0;
 
-        // Scanner communication fields.
+        // Scanner communicator.
         private Scanner scanner;
-        private bool toAbort = true;
-        Task<List<string>> task;
 
         public GUI(Form scantron_form)
         {
             this.scantron_form = scantron_form;
-            scanner = new Scanner();
+            scanner = new Scanner(this);
             grader = new Grader(this);
 
             InitializeControls();
@@ -111,9 +105,7 @@ namespace Scantron
             uxNextButton = (Button) scantron_form.Controls.Find("uxNextButton", true)[0];
             uxVersionLabel = (Label) scantron_form.Controls.Find("uxVersionLabel", true)[0];
             uxScoreLabel = (Label) scantron_form.Controls.Find("uxScoreLabel", true)[0];
-            uxCouldNotBeGradedLabel = (Label) scantron_form.Controls.Find("uxCouldNotBeGradedLabel", true)[0];
-            uxCardListTextBox = (TextBox) scantron_form.Controls.Find("uxCardListTextBox", true)[0];
-            uxStatusTextBox = (TextBox) scantron_form.Controls.Find("uxStatusTextBox", true)[0];
+            uxCardListDataGridView = (DataGridView) scantron_form.Controls.Find("uxCardListDataGridView", true)[0];
             uxMainTabControl = (TabControl) scantron_form.Controls.Find("uxMainTabControl", true)[0];
             uxStartTabPage = (TabPage) scantron_form.Controls.Find("uxStartTabPage", true)[0];
             uxAnswerKeyTabPage = (TabPage) scantron_form.Controls.Find("uxAnswerKeyTabPage", true)[0];
@@ -122,13 +114,7 @@ namespace Scantron
             uxCreateFileTabPage = (TabPage) scantron_form.Controls.Find("uxCreateFileTabPage", true)[0];
             uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
-            uxFinishButton = (Button) scantron_form.Controls.Find("uxFinishButton", true)[0];
-            uxStartContinueButton = (Button) scantron_form.Controls.Find("uxStartContinueButton", true)[0];
-            uxAnswerKeyContinueButton = (Button) scantron_form.Controls.Find("uxAnswerKeyContinueButton", true)[0];
-            uxScanContinueButton = (Button) scantron_form.Controls.Find("uxScanContinueButton", true)[0];
-            uxGradeContinueButton = (Button) scantron_form.Controls.Find("uxGradeContinueButton", true)[0];
             uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
-            uxUseScantronCardButton = (Button) scantron_form.Controls.Find("uxUseScantronCardButton", true)[0];
         }
 
         /// <summary>
@@ -136,30 +122,25 @@ namespace Scantron
         /// </summary>
         private void InitializeInstructionText()
         {
-            uxStartInstructionLabel.Text =          "Welcome to the new Scantron program!\n" +
-                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it. All feedback is welcome.\n" +
+            uxStartInstructionLabel.Text = "Welcome to the new Scantron program!\n\n" +
+                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it.\n\n" +
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
                                                     "2. Click Reset.\n" +
-                                                    "3. Enter the the exam name and number of versions.\n" + 
-                                                    "4. If you want your students to see their responses online, follow the Scantron Tool method. Otherwise, grade with this program.\n" +
-                                                    "5. Click on the Answer Key tab along the top";
+                                                    "3. Enter the the exam name, number of versions, and number of questions.\n" +
+                                                    "4. If you want your students to see their responses online, uncheck \"Grading within this program\".\n";
 
-            uxAnswerKeyInstructionLabel.Text =      "1. Enter the number of questions.\n" +
-                                                    "2. If you are using the grader in this program, click Create Answer Key and go to the Scan tab.\n" +
-                                                    "3. Enter how many points each questions is worth.\n" +
-                                                    "5. There are options to change the points for all questions in the exam and to make them all partial credit.\n" +
-                                                    "6. Fill in the answer key by checking the correct answers for each question on all versions you have made.\n" +
-                                                    "7. Click Create Answer Key, then go to the Scan tab.";
+            uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit.\n" +
+                                                    "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form.\n" +
+                                                    "3. Click Create Answer Key, then click Continue.";
 
-            uxScanInstructionLabel.Text =           "1. Click Start to scan your cards.\n" +
-                                                    "4. (Optional) You can correct WIDs, test versions, and sheet numbers in the Scanned Cards panel\n" +
-                                                    "5. Once you have made corrections, click Save Changes, then click Create Students.\n" +
-                                                    "6. If you are grading here, click on the Grade tab. If you are using the Canvas Scantron Tool, click on the Create File tab.\n\n";
+            uxScanInstructionLabel.Text =           "1. Click Ready, then press the Start button on the Scantron machine.\n" +
+                                                    "2. Once the machine is done scanning, click Done.\n" +
+                                                    "3. You can edits WIDs, test versions, and sheet numbers.\n" +
+                                                    "4. Click Save Changes, then click Continue.\n";
 
             uxGradeInstructionLabel.Text =          "1. Click Grade Students.\n" +
-                                                    "2. The panel will populate with student responses. You can navigate them with the drop down box or with the Previous and Next buttons.\n" +
-                                                    "3. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
-                                                    "4. Once you are done reviewing the student responses, click the Create File tab.";
+                                                    "2. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
+                                                    "3. When you are done reviewing, click Continue.";
 
             uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool options.\n" +
                                                     "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Answer option can only handle 1 answer per question.\n" +
@@ -168,73 +149,6 @@ namespace Scantron
                                                     "5. Once you have your file saved, click the Finish button to clear all your data for the next person.";
         }
 
-        /// <summary>
-        /// Opens the serial port; begins scanning the cards.
-        /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
-        /// </summary>
-        public void Start()
-        {
-            if (uxGradingWithThisProgramCheckbox.Checked)
-            {
-                if (uxExamNameTextBox.Text == "" || number_of_versions < 1 || number_of_questions < 1)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                if (grader.AnswerKey.Count < 1)
-                {
-                    DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
-                    return;
-                }
-            }
-
-            Scanner.ToAbort.Set();
-
-            try
-            {
-                scanner.Start();
-            }
-            catch(IOException)
-            {
-                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
-                return;
-            }
-
-            task = new Task<List<string>>(() => scanner.Run(raw_cards));
-            task.Start();
-            
-            grader.CreateCards(raw_cards);
-            UpdateCardList();
-        }
-
-        /// <summary>
-        /// Close the serial port.
-        /// </summary>
-        public void Stop()
-        {
-            scanner.Stop();
-        }
-        /*
-        /// <summary>
-        /// Pauses the scantron.
-        /// </summary>
-        public void Pause()
-        {
-            ScannerCom.ToAbort.Reset(); //Aborts & Stops
-            toAbort = false;
-        }
-
-        /// <summary>
-        /// Resumes the scantron.
-        /// </summary>
-        public void Resume()
-        {
-            ScannerCom.ToAbort.Set(); // Does NOT Abort & Stop
-            toAbort = true;
-        }
-        */
         /// <summary>
         /// Reset program to initial state.
         /// </summary>
@@ -245,40 +159,42 @@ namespace Scantron
             raw_cards.Clear();
             grader.Cards.Clear();
             grader.Students.Clear();
-            grader.PartialWids.Clear();
+            grader.PartialWIDs.Clear();
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 250; j++)
                 {
-                    panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
-                    panel.Visible = false;
+                    panel = (Panel)uxAnswerKeyTabControl.TabPages[i].Controls[j];
+                    panel.Hide();
                 }
             }
             for (int i = 0; i < 250; i++)
             {
-                panel = (Panel) uxStudentResponsePanel.Controls[i];
-                panel.Visible = false;
+                panel = (Panel)uxStudentResponsePanel.Controls[i];
+                panel.Hide();
             }
 
             uxExamNameTextBox.Text = "";
             uxNumberOfVersionsNumericUpDown.Value = 0;
             uxNumberOfQuestionsNumericUpDown.Value = 0;
+            uxGradingWithThisProgramCheckbox.Checked = true;
             uxAnswerKeyTabControl.Enabled = true;
-            uxAllQuestionPointsNumericUpDown.Value = 0;
+            uxAllQuestionPointsNumericUpDown.Value = 1;
             uxAllPartialCreditCheckBox.Checked = false;
-            uxCardListTextBox.Text = "";
-            uxStatusTextBox.Text = "";
+            uxCardListDataGridView.Rows.Clear();
             uxStudentSelector.Items.Clear();
             uxStudentSelector.Text = "";
             uxVersionLabel.Text = "Version: ";
             uxScoreLabel.Text = "Score: ";
-            uxCouldNotBeGradedLabel.Visible = false;
             uxNextButton.Enabled = false;
             uxPreviousButton.Enabled = false;
 
             DisplayMessage("Data has been reset!");
         }
 
+        /// <summary>
+        /// Change the current tab to the Answer Key tab or the Scan tab based on workflow.
+        /// </summary>
         public void StartContinue()
         {
             if (uxGradingWithThisProgramCheckbox.Checked)
@@ -288,277 +204,6 @@ namespace Scantron
             else
             {
                 AnswerKeyContinue();
-            }
-        }
-
-        public void AnswerKeyContinue()
-        {
-            uxMainTabControl.SelectTab("uxScanTabPage");
-        }
-
-        public void ScanContinue()
-        {
-            if (uxGradingWithThisProgramCheckbox.Checked)
-            {
-                uxMainTabControl.SelectTab("uxGradeTabPage");
-            }
-            else
-            {
-                GradeContinue();
-            }
-        }
-
-        public void GradeContinue()
-        {
-            uxMainTabControl.SelectTab("uxCreateFileTabPage");
-        }
-
-        /// <summary>
-        /// Fill raw cards list with test data.
-        /// </summary>
-        public void TestData()
-        {
-            raw_cards = new List<string>();
-            // Test Data.
-            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
-            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$");
-            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$");
-            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$");
-            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
-            
-            grader.CreateCards(raw_cards);
-            UpdateCardList();
-        }
-
-        public void UseScantronCard()
-        {
-            Scanner.ToAbort.Set();
-
-            try
-            {
-                scanner.Start();
-            }
-            catch (IOException)
-            {
-                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
-                return;
-            }
-
-            task = new Task<List<string>>(() => scanner.Run(raw_cards));
-            task.Start();
-
-            grader.CreateCards(raw_cards);
-
-            TabPage tabpage;
-            Panel panel;
-            CheckBox checkbox;
-            int start_index;
-
-            foreach (Card card in grader.Cards)
-            {
-                tabpage = uxAnswerKeyTabControl.TabPages[card.TestVersion - 1];
-                start_index = card.Response.Count * (card.SheetNumber - 1);
-
-                for (int i = 0; i < card.Response.Count; i++)
-                {
-                    panel = (Panel) tabpage.Controls[i + start_index];
-
-                    for (int j = 0; j < 5; j++)
-                    {
-                        checkbox = (CheckBox) panel.Controls[j];
-                        if (card.Response[i].Answer[j] != ' ')
-                        {
-                            checkbox.Checked = true;
-                        }
-                        else
-                        {
-                            checkbox.Checked = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        private static void ThreadAbort()
-        {
-            //This is an empty method for the dummy thread
-        }
-
-        private void UpdateCardList()
-        {
-            Card card;
-            uxCardListTextBox.Text = "";
-            string cards = "";
-            string wid = "";
-            int test_version = 1;
-            string bad_wids = "";
-            string bad_test_versions = "";
-
-            for (int i = 0; i < grader.Cards.Count; i++)
-            {
-                card = grader.Cards[i];
-
-                wid = card.WID;
-                test_version = card.TestVersion;
-
-                cards += (i + 1) + ". WID: " + wid + " Test Version: " + test_version + " Sheet Number: " + card.SheetNumber + Environment.NewLine;
-                
-                if (wid.Contains("-") || wid[0] != '8')
-                {
-                    bad_wids += "#" + (i + 1) + " ";
-                }
-
-                if (test_version > grader.AnswerKey.Count || test_version <= 0)
-                {
-                    bad_test_versions += "#" + (i + 1) + " ";
-                }
-            }
-
-            uxCardListTextBox.Text = cards;
-
-            uxStatusTextBox.Text =  "Incomplete WIDs: " + bad_wids + Environment.NewLine + Environment.NewLine +
-                                    "Invalid Test Versions: " + bad_test_versions;
-        }
-
-        /// <summary>
-        /// Save changes made to WIDs, test versions, and sheet numbers on cards list.
-        /// </summary>
-        public void SaveChanges()
-        {
-            if (grader.Cards.Count < 1)
-            {
-                DisplayMessage("No cards found. Please follow the instructions on this page from the beginning.");
-                return;
-            }
-
-            int wid_index;
-            int version_index;
-            int sheet_number_index;
-            string wid;
-            int version;
-            int sheet_number;
-            string card_line;
-
-            List<string> card_list = new List<string>();
-            char[] splitter = new char[] { '\n' };
-            card_list = uxCardListTextBox.Text.Split(splitter, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-            for (int i = 0; i < card_list.Count; i++)
-            {
-                card_line = card_list[i];
-
-                // Make sure the user didn't delete things.
-                if (!(card_line.Contains(" WID: ") && card_line.Contains(" Version: ") && card_line.Contains(" Sheet Number: ")))
-                {
-                    DisplayMessage("Be sure to only edit the numbers.");
-                    UpdateCardList();
-                    return;
-                }
-
-                wid_index = card_line.IndexOf("WID:") + 5;
-                version_index = card_line.IndexOf("Version:") + 9;
-                sheet_number_index = card_line.IndexOf("Sheet Number:") + 14;
-
-                wid = card_line.Substring(wid_index, 9);
-                grader.Cards[i].WID = wid;
-
-                version = (int)Char.GetNumericValue(card_line[version_index]);
-                grader.Cards[i].TestVersion = version;
-
-                sheet_number = (int)Char.GetNumericValue(card_line[sheet_number_index]);
-                grader.Cards[i].SheetNumber = sheet_number;
-            }
-
-            UpdateCardList();
-            grader.CreateStudents();
-            DisplayMessage("Changes saved!");
-        }
-        /*
-        /// <summary>
-        /// Merges all cards with the same WIDs into one student.
-        /// </summary>
-        public void CreateStudents()
-        {
-            if (grader.Cards.Count == 0)
-            {
-                DisplayMessage("No cards found. Follow the instructions on this page from the beginning.");
-                return;
-            }
-
-            grader.CreateStudents();
-        }
-        */
-
-        /// <summary>
-        /// Create the answer key form with the specified number of questions and versions.
-        /// </summary>
-        public void UpdateAnswerForm()
-        {
-            CheckBox checkbox;
-
-            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
-            {
-                foreach (Panel panel in tabpage.Controls)
-                {
-                    panel.Visible = false;
-                    
-                    for (int i = 0; i < 5; i++)
-                    {
-                        checkbox = (CheckBox) panel.Controls[i];
-                        checkbox.Checked = false;
-                    }
-
-                    checkbox = (CheckBox)panel.Controls[6];
-                    checkbox.Checked = false;
-                }
-            }
-
-            uxAllQuestionPointsNumericUpDown.Value = 1;
-            uxAllPartialCreditCheckBox.Checked = false;
-
-            int number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
-            int number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
-
-            TabPage answer_key_tabpage;
-
-            for (int i = 0; i < number_of_versions; i++)
-            {
-                answer_key_tabpage = uxAnswerKeyTabControl.TabPages[i];
-
-                for (int j = 0; j < number_of_questions; j++)
-                {
-                    answer_key_tabpage.Controls[j].Visible = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates points for all questions in the exam.
-        /// </summary>
-        public void UpdateAllQuestionPoints()
-        {
-            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
-            {
-                foreach (Control control in tabpage.Controls)
-                {
-                    NumericUpDown updown = (NumericUpDown)control.Controls[5];
-                    updown.Value = uxAllQuestionPointsNumericUpDown.Value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Updates partial credit for all questions in the exam.
-        /// </summary>
-        public void UpdateAllPartialCredit()
-        {
-            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
-            {
-                foreach (Control control in tabpage.Controls)
-                {
-                    CheckBox checkbox = (CheckBox)control.Controls[6];
-                    checkbox.Checked = uxAllPartialCreditCheckBox.Checked;
-                }
             }
         }
 
@@ -619,34 +264,175 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Update the number of test version from the NumericUpDown.
+        /// </summary>
         public void UpdateNumberOfVersions()
         {
-            number_of_versions = (int) uxNumberOfVersionsNumericUpDown.Value;
-            UpdateAnswerForm();
-        }
-
-        public void UpdateNumberOfQuestions()
-        {
-            number_of_questions = (int) uxNumberOfQuestionsNumericUpDown.Value;
+            number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
             UpdateAnswerForm();
         }
 
         /// <summary>
-        /// Create the answer key from the filled out form.
+        /// Update the number of questions from the NumericUpDown.
+        /// </summary>
+        public void UpdateNumberOfQuestions()
+        {
+            number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
+            UpdateAnswerForm();
+        }
+
+        /// <summary>
+        /// Updates points for all questions in the exam.
+        /// </summary>
+        public void UpdateAllQuestionPoints()
+        {
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            {
+                foreach (Control control in tabpage.Controls)
+                {
+                    NumericUpDown updown = (NumericUpDown)control.Controls[5];
+                    updown.Value = uxAllQuestionPointsNumericUpDown.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates partial credit for all questions in the exam.
+        /// </summary>
+        public void UpdateAllPartialCredit()
+        {
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            {
+                foreach (Control control in tabpage.Controls)
+                {
+                    CheckBox checkbox = (CheckBox)control.Controls[6];
+                    checkbox.Checked = uxAllPartialCreditCheckBox.Checked;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create the answer key form with the specified number of questions and versions.
+        /// </summary>
+        public void UpdateAnswerForm()
+        {
+            CheckBox checkbox;
+
+            foreach (TabPage tabpage in uxAnswerKeyTabControl.TabPages)
+            {
+                foreach (Panel panel in tabpage.Controls)
+                {
+                    panel.Hide();
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        checkbox = (CheckBox)panel.Controls[i];
+                        checkbox.Checked = false;
+                    }
+
+                    checkbox = (CheckBox)panel.Controls[6];
+                    checkbox.Checked = false;
+                }
+            }
+
+            uxAllQuestionPointsNumericUpDown.Value = 1;
+            uxAllPartialCreditCheckBox.Checked = false;
+
+            int number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
+            int number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
+
+            TabPage answer_key_tabpage;
+
+            for (int i = 0; i < number_of_versions; i++)
+            {
+                answer_key_tabpage = uxAnswerKeyTabControl.TabPages[i];
+
+                for (int j = 0; j < number_of_questions; j++)
+                {
+                    answer_key_tabpage.Controls[j].Show();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Use a Scantron Card for the answer key.
+        /// </summary>
+        public void UseScantronCard()
+        {
+            try
+            {
+                scanner.Scan();
+            }
+            catch (IOException)
+            {
+                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Close serial port and fill out the answer key form based on scanned cards.
+        /// </summary>
+        public void DoneScanning()
+        {
+            try
+            {
+                scanner.Stop();
+                raw_cards = scanner.RawCards;
+                grader.CreateCards(raw_cards);
+
+                TabPage tabpage;
+                Panel panel;
+                CheckBox checkbox;
+                int start_index;
+
+                foreach (Card card in grader.Cards)
+                {
+                    tabpage = uxAnswerKeyTabControl.TabPages[card.TestVersion - 1];
+                    start_index = card.Response.Count * (card.SheetNumber - 1);
+
+                    for (int i = 0; i < card.Response.Count; i++)
+                    {
+                        panel = (Panel)tabpage.Controls[i + start_index];
+
+                        for (int j = 0; j < 5; j++)
+                        {
+                            checkbox = (CheckBox)panel.Controls[j];
+                            if (card.Response[i].Answer[j] != ' ')
+                            {
+                                checkbox.Checked = true;
+                            }
+                            else
+                            {
+                                checkbox.Checked = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                DisplayMessage("Something went wrong. Do not click Done Scanning while the machine is running. " +
+                                "Stop the machine, click Scan Answer Key, and begin scanning again.");
+            }
+        }
+
+        /// <summary>
+        /// Create the answer key from the filled out answer key form.
         /// </summary>
         /// <returns>True if successful.</returns>
         public void CreateAnswerKey()
         {
             if (uxExamNameTextBox.Text == "")
             {
-                DisplayMessage("Enter a name for the exam.");
+                DisplayMessage("Go to the Start tab and enter a name for the exam.");
                 return;
             }
 
             if (number_of_versions == 0 || number_of_questions == 0)
             {
-                DisplayMessage("You have not created an answer key. Select the number of questions and versions" +
-                                ", then fill out the answer key form.");
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
                 return;
             }
 
@@ -663,17 +449,17 @@ namespace Scantron
             for (int i = 0; i < number_of_versions; i++)
             {
                 grader.AnswerKey.Add(i, new List<Question>());
-                
+
                 for (int j = 0; j < number_of_questions; j++)
                 {
                     answer = "";
 
-                    question_panel = (Panel) uxAnswerKeyTabControl.TabPages[i].Controls[j];
+                    question_panel = (Panel)uxAnswerKeyTabControl.TabPages[i].Controls[j];
 
                     // This loop cycles through the first 5 controls in the current question panel, which are the checkboes for A-E.
                     for (int k = 0; k < 5; k++)
                     {
-                        checkbox = (CheckBox) question_panel.Controls[k];
+                        checkbox = (CheckBox)question_panel.Controls[k];
                         if (checkbox.Checked)
                         {
                             answer += k + 1;
@@ -683,12 +469,12 @@ namespace Scantron
                             answer += " ";
                         }
                     }
-                    
-                    points_updown = (NumericUpDown) question_panel.Controls[5];
-                    points = (float) points_updown.Value;
-                    
+
+                    points_updown = (NumericUpDown)question_panel.Controls[5];
+                    points = (float)points_updown.Value;
+
                     // Checks the current question panel's partial credit checkbox.
-                    checkbox = (CheckBox) question_panel.Controls[6];
+                    checkbox = (CheckBox)question_panel.Controls[6];
                     if (checkbox.Checked)
                     {
                         partial_credit = true;
@@ -697,7 +483,7 @@ namespace Scantron
                     {
                         partial_credit = false;
                     }
-                    
+
                     grader.AnswerKey[i].Add(new Question(answer, points, partial_credit));
                 }
             }
@@ -706,133 +492,169 @@ namespace Scantron
         }
 
         /// <summary>
-        /// Grade the students.
+        /// Change the current tab to the Scan tab.
         /// </summary>
-        public void GradeStudents()
+        public void AnswerKeyContinue()
         {
-            if (grader.AnswerKey.Count < 1)
-            {
-                DisplayMessage("You have not created an answer key. Go back to the Answer Key tab and follow the instructions.");
-                return;
-            }
-
-            if (grader.Students.Count < 1)
-            {
-                DisplayMessage("No students found. Go back to the Scan tab and follow the instructions.");
-                return;
-            }
-
-            grader.GradeStudents(uxExamNameTextBox.Text);
-            uxStudentSelector.Items.Clear();
-            foreach (Student student in grader.Students)
-            {
-                uxStudentSelector.Items.Add(student.WID);
-            }
-
-            uxNextButton.Enabled = true;
-            uxPreviousButton.Enabled = true;
-            NextStudent(); // Displays the first student in the index
+            uxMainTabControl.SelectTab("uxScanTabPage");
         }
 
+        /// <summary>
+        /// Opens the serial port and prepares to receive data from the Scantron machine.
+        /// Ref: https://msdn.microsoft.com/en-us/library/system.io.ports.serialport.open(v=vs.110).aspx
+        /// </summary>
+        public void Ready()
+        {
+            if(uxExamNameTextBox.Text == "")
+            {
+                DisplayMessage("Go to the Start Tab and enter a name for the exam.");
+                return;
+            }
 
-        // v--- add something to account for grade_here
+            if(number_of_versions == 0 || number_of_questions == 0)
+            {
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
+                return;
+            }
+
+            try
+            {
+                scanner.Scan();
+            }
+            catch(IOException)
+            {
+                DisplayMessage("Scantron machine is not connected to computer by port COM1.");
+                return;
+            }
+        }
 
         /// <summary>
-        /// Write the file to be uploaded to the Canvas gradebook.
+        /// Close the serial port and update the card list.
         /// </summary>
-        public void WriteFile(string type)
+        public void Done()
         {
-            string file = "";
-            string filter = "txt files (*.txt)|*.txt";
-
-            if (type == "gradebook")
+            try
             {
-                file = grader.GradebookFile();
-                filter = "csv files (*.csv)|*.csv";
+                scanner.Stop();
+                raw_cards = scanner.RawCards;
+                grader.CreateCards(raw_cards);
+                UpdateCardList();
             }
-            if (type == "single")
+            catch (Exception)
             {
-                file = grader.ScantronToolSingleAnswerFile();
+                DisplayMessage("Something went wrong. Do not click Done while the machine is running. " +
+                                "Stop the machine, click Ready, and begin scanning again.");
             }
-            if (type == "multiple")
+        }
+
+        /// <summary>
+        /// Save changes made to WIDs, test versions, and sheet numbers on cards list.
+        /// </summary>
+        public void SaveChanges()
+        {
+            if (grader.Cards.Count < 1)
             {
-                file = grader.ScantronToolMultipleAnswerFile();
+                DisplayMessage("No cards found. Please follow the instructions on this page from the beginning.");
+                return;
             }
 
-            // Then we have to start a file dialog to save the string to a file.
-            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
-            {
-                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
-                InitialDirectory = "c:\\desktop",
-                // Filter is the default file extensions seen by the user.
-                Filter = filter,
-                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
-                FilterIndex = 1
-            };
+            Card card;
+            string wid;
+            int test_version;
+            int sheet_number;
 
-            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            for(int i = 0; i < grader.Cards.Count; i++)
             {
-                string path = uxSaveFileDialog.FileName;
-                // Stores the location of the file we want to save; use filenames for multiple.
-                if (path.Equals(""))
+                card = grader.Cards[i];
+                wid = (string)uxCardListDataGridView.Rows[i].Cells[1].Value;
+                test_version = Convert.ToInt32(uxCardListDataGridView.Rows[i].Cells[2].Value);
+                sheet_number = Convert.ToInt32(uxCardListDataGridView.Rows[i].Cells[3].Value);
+
+                if(wid.Length == 9)
                 {
-                    MessageBox.Show("You must enter a filename and select\n" +
-                                    "a file path for the exam record!");
-                    throw new IOException();
+                    card.WID = wid;
                 }
-                else
+
+                if(test_version > 0 && test_version < 4)
                 {
-                    // "using" opens and close the StreamWriter.
-                    using (StreamWriter file_generator = new StreamWriter(path))
-                    {
-                        // Adds everything in the 'file' given to the streamwriter.
-                        file_generator.Write(file);
-                    }
-                    MessageBox.Show("Student responses have been successfully recorded!");
+                    card.TestVersion = test_version;
+                }
+
+                if(sheet_number > 0 && sheet_number < 6)
+                {
+                    card.SheetNumber = sheet_number;
                 }
             }
-            /*
+
+            UpdateCardList();
+            grader.CreateStudents();
+            DisplayMessage("Changes saved!");
+        }
+
+        /// <summary>
+        /// Update the Card List DataGridView.
+        /// </summary>
+        private void UpdateCardList()
+        {
+            uxCardListDataGridView.Rows.Clear();
+            Card card;
+
+            for(int i = 0; i < grader.Cards.Count; i++)
+            {
+                card = grader.Cards[i];
+                uxCardListDataGridView.Rows.Add(i, card.WID, card.TestVersion, card.SheetNumber);
+
+                if(card.WID.Length != 9 || card.WID[0] != '8')
+                {
+                    uxCardListDataGridView.Rows[i].Cells[1].Style.BackColor = Color.Red;
+                }
+
+                if(card.TestVersion < 1 || card.TestVersion > 3 || card.TestVersion > number_of_versions)
+                {
+                    uxCardListDataGridView.Rows[i].Cells[2].Style.BackColor = Color.Red;
+                }
+
+                if(card.SheetNumber < 1 || card.SheetNumber > 5)
+                {
+                    uxCardListDataGridView.Rows[i].Cells[3].Style.BackColor = Color.Red;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change the current tab to the Grade tab or the Create File tab based on workflow.
+        /// </summary>
+        public void ScanContinue()
+        {
+            if (uxGradingWithThisProgramCheckbox.Checked)
+            {
+                uxMainTabControl.SelectTab("uxGradeTabPage");
+            }
             else
             {
-                MessageBox.Show("An error occured while trying to save,\n" +
-                                "The format for filenames should not include\n" +
-                                "slashes, parentheticals, or symbols\n" +
-                                "Please reload the hopper and ensure the\n" +
-                                "cards are not stuck together, backwards,\n" +
-                                "or reversed. ");
-                //throw new IOException();
+                GradeContinue();
             }
-            */
         }
 
         /// <summary>
-        /// Populates the student answer panel with question panels that show the selected student's response.
+        /// Fill raw cards list with test data.
         /// </summary>
-        public void SelectStudent()
+        public void TestData()
         {
-            DisplayStudent(grader.Students.Find(student => student.WID == uxStudentSelector.Text));
+            raw_cards = new List<string>();
+            // Test Data.
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa00C#Q0#\\Fb#T0#\\Fa#D0D#O0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0C#J0#\\Fa#I0C#J0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#E0E#I0#\\Fb#T0#\\Fa000F000F#L0#\\Fb#T0#\\Fa00F#J0E#F0#\\Fb#T0#\\Fa0D#R0#\\FaD#S0#\\Fb#T0#\\Fb#T0#\\Fa#D0D#D0F#D0C#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E#G0#\\Fb#T0#\\Fa0E#D0F#D0C#H0#\\FaE#D0D#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0F#D0B#E0#\\Fb#T0#\\Fa000D#D0E#D0D#F0#\\Fb#T0#\\Fa00D#D0F#D0E#G0#\\Fb#T0#\\Fa0D#D0F#D0F#H0#\\FaD#D0F#D0F#I0#\\Fb#T0#\\Fb#T0#\\Fa#D0E#D0E#D0E#E0#\\Fb#T0#\\Fa000F#D0F#D0E#F0#\\Fb#T0#\\Fa00E#D0F#D0E0005000#\\Fb#T0#\\Fa0E#D0E#D0D#D06000#\\FaE#D0E#D0D#I0#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000F#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0F#M0#\\Fb#T0#\\Fa#I0E#J0#\\Fb#T0#\\FaE#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0E#J0#\\Fb#T0#\\FaD0F0F#E0F#I0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa0F#E0F#E0E#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa00D#G0F00D#F0#\\Fb#T0#\\FaD#D0C0F0E0D#H0#\\Fb#T0#\\Fa0D0D#D0E#K0#\\Fb#T0#\\Fb#T0#\\Fb#T0#\\Fa#F0F#G0D#E0#\\Fa#D0D#G0E#G0#\\Fb#T0#\\Fb#T0#\\Fa0F#G0D#J0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#E0F#F0C0C#E0#\\Fb#T0#\\Fa#D0F0C0D0D00C#F0#\\FaF0EF#G0C#H0#\\Fb#T0#\\Fb#T0#\\FaE#F0E#H07000#\\Fb#T0#\\Fa0C#D0D0D#E0C#E0#\\Fb#T0#\\Fa00D00C000D00F#G0#\\Fb#T0#\\Fa#D0C#E0E#I0#\\Fa000C#G0E0E004000#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0F#R0#\\Fb#T0#\\Fa000E#P0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#D0E#O0#\\Fb#T0#\\Fa#F0D#M0#\\Fb#T0#\\Fa#I0D#J0#\\Fb#T0#\\FaD#S0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#I0D#J0#\\Fb#T0#\\Fb#T0#\\FaFBFFF00F00E#I0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#M0F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0EEEFE#E0#\\Fb#T0#\\Fa#E0DFFFD#J0#\\Fb#T0#\\FaEEDEE#O0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#E0FFFEF#J0#\\Fb#T0#\\FaFFFDE#O0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#J0FEEFF#E0#\\Fb#T0#\\Fb#T0#\\Fa#P07000#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0DDFFC03000#\\Fb#T0#\\Fa#E0FFDFD#J0#\\FaF#DE#O0#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00E#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0F#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0D#J0#\\Fa#H0D#K0#\\Fb#T0#\\Fb#T0#\\Fa#G0E#L0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#J0F00F#F0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#Q0300#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#S03#\\F$");
+            raw_cards.Add("b0F00F0FF#F0#DF00#\\Fb#T0#\\Fa0F00F0FF#F0#DF00#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa0E#R0#\\Fb#T0#\\Fa00D#Q0#\\Fb#T0#\\Fa#F0E#M0#\\Fb#T0#\\Fa000D#P0#\\Fb#T0#\\Fa#E0D#N0#\\Fb#T0#\\FaB#S0#\\Fb#T0#\\Fa#G0F#L0#\\Fb#T0#\\Fa#I0E#J0#\\Fa#H0E#K0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#G0F00F00F#F0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\Fb#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fb#T0#\\Fa#T0#\\Fa#T0#\\F$");
+            
+            grader.CreateCards(raw_cards);
+            UpdateCardList();
         }
 
         /// <summary>
-        /// Displays the next student's responses in the uxStudentResponsePanel.
-        /// </summary>
-        public void NextStudent()
-        {
-            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex + 1];
-            uxStudentSelector.SelectedItem = wid;
-        }
-
-        /// <summary>
-        /// Displays the previous student's responses in the uxStudentResponsePanel.
-        /// </summary>
-        public void PreviousStudent()
-        {
-            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex - 1];
-            uxStudentSelector.SelectedItem = wid;
-        }
-
-        /// <summary>
-        /// 
+        /// Create the controls for displaing a chosen student's answers and make them invisible.
         /// </summary>
         public void InstantiateStudentDisplay()
         {
@@ -880,6 +702,48 @@ namespace Scantron
         }
 
         /// <summary>
+        /// Grade the students.
+        /// </summary>
+        public void GradeStudents()
+        {
+            if(uxExamNameTextBox.Text == "")
+            {
+                DisplayMessage("Go to the Start Tab and enter a name for the exam.");
+                return;
+            }
+
+            if(number_of_versions == 0 || number_of_questions == 0)
+            {
+                DisplayMessage("You have not specified the number of versions and questions. Go back to the Start tab and follow the instructions.");
+                return;
+            }
+
+            if(grader.Students.Count < 1)
+            {
+                DisplayMessage("No students found. You  need to save changes on the Scan tab.");
+                return;
+            }
+
+            if(uxGradingWithThisProgramCheckbox.Checked && grader.AnswerKey.Count < 1)
+            {
+                DisplayMessage("If you're grading with this program you need to make an answer key in the Answer Key tab." +
+                                "If you're not grading with this program, go back to the Start tab and uncheck the box.");
+                return;
+            }
+
+            grader.GradeStudents(uxExamNameTextBox.Text);
+            uxStudentSelector.Items.Clear();
+            foreach (Student student in grader.Students)
+            {
+                uxStudentSelector.Items.Add(student.WID);
+            }
+
+            uxNextButton.Enabled = true;
+            uxPreviousButton.Enabled = true;
+            NextStudent(); // Displays the first student in the index
+        }
+
+        /// <summary>
         /// Display the selected student's response in uxStudentResponsePanel.
         /// </summary>
         /// <param name="student">Selected student.</param>
@@ -894,7 +758,7 @@ namespace Scantron
                 uxPreviousButton.Enabled = true;
             }
 
-            if (uxStudentSelector.SelectedIndex == uxStudentSelector.Items.Count -1)
+            if (uxStudentSelector.SelectedIndex == uxStudentSelector.Items.Count - 1)
             {
                 uxNextButton.Enabled = false;
             }
@@ -906,37 +770,32 @@ namespace Scantron
             int test_version = student.TestVersion;
             uxVersionLabel.Text = "Version: " + test_version;
             uxScoreLabel.Text = "Score: " + student.Score();
-            uxCouldNotBeGradedLabel.Visible = false;
             Panel question_panel;
             CheckBox response_checkbox;
             CheckBox answer_key_checkbox;
 
             foreach (Control control in uxStudentResponsePanel.Controls)
             {
-                control.Visible = false;
+                control.Hide();
             }
 
-            if (grader.AnswerKey[0].Count > student.Response.Count || test_version > grader.AnswerKey.Keys.Count || test_version <= 0)
+            if (test_version > grader.AnswerKey.Keys.Count || test_version <= 0)
             {
-                uxCouldNotBeGradedLabel.Visible = true;
+                // Stop the next for loop from throwing an error about the student's test version not existing.
+                // User is notified elsewhere.
                 return;
-            }
-            else
-            {
-                // uxCouldNotBeGraded wasn't turning off on the students who were graded correctly
-                uxCouldNotBeGradedLabel.Visible = false;
             }
 
             for (int i = 0; i < Math.Min(grader.AnswerKey[test_version - 1].Count, student.Response.Count); i++)
             {
                 question_panel = (Panel)uxStudentResponsePanel.Controls[i];
-                question_panel.Visible = true;
+                question_panel.Show();
 
                 if (student.Response[i].Points == grader.AnswerKey[test_version - 1][i].Points)
                 {
                     question_panel.BackColor = Color.Green;
                 }
-                else if(student.Response[i].Points == 0)
+                else if (student.Response[i].Points == 0)
                 {
                     question_panel.BackColor = Color.Red;
                 }
@@ -964,6 +823,111 @@ namespace Scantron
             }
         }
 
+        /// <summary>
+        /// Populates the student answer panel with question panels that show the selected student's response.
+        /// </summary>
+        public void SelectStudent()
+        {
+            DisplayStudent(grader.Students.Find(student => student.WID == uxStudentSelector.Text));
+        }
+
+        /// <summary>
+        /// Displays the previous student's responses in the uxStudentResponsePanel.
+        /// </summary>
+        public void PreviousStudent()
+        {
+            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex - 1];
+            uxStudentSelector.SelectedItem = wid;
+        }
+
+        /// <summary>
+        /// Displays the next student's responses in the uxStudentResponsePanel.
+        /// </summary>
+        public void NextStudent()
+        {
+            string wid = (string)uxStudentSelector.Items[uxStudentSelector.SelectedIndex + 1];
+            uxStudentSelector.SelectedItem = wid;
+        }
+
+        /// <summary>
+        /// Change the current tab to the Create File tab.
+        /// </summary>
+        public void GradeContinue()
+        {
+            uxMainTabControl.SelectTab("uxCreateFileTabPage");
+        }
+
+        /// <summary>
+        /// Write the file to be uploaded to the Canvas gradebook.
+        /// </summary>
+        public void WriteFile(string type)
+        {
+            string file = "";
+            string filter = "txt files (*.txt)|*.txt";
+
+            if (type == "gradebook")
+            {
+                file = grader.GradebookFile();
+                filter = "csv files (*.csv)|*.csv";
+            }
+            if (type == "single")
+            {
+                file = grader.SingleAnswerFile();
+            }
+            if (type == "multiple")
+            {
+                file = grader.MultipleAnswerFile();
+            }
+
+            // Then we have to start a file dialog to save the string to a file.
+            SaveFileDialog uxSaveFileDialog = new SaveFileDialog
+            {
+                // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
+                InitialDirectory = "c:\\desktop",
+                // Filter is the default file extensions seen by the user.
+                Filter = filter,
+                // FilterIndex sets what the user initially sees ex: 2nd index of the filter is ".txt".
+                FilterIndex = 1
+            };
+
+            if (uxSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = uxSaveFileDialog.FileName;
+                // Stores the location of the file we want to save; use filenames for multiple.
+                if (path.Equals(""))
+                {
+                    MessageBox.Show("You must enter a filename and select\n" +
+                                    "a file path for the exam record!");
+                    throw new IOException();
+                }
+                else
+                {
+                    // "using" opens and close the StreamWriter.
+                    using (StreamWriter file_generator = new StreamWriter(path))
+                    {
+                        // Adds everything in the 'file' given to the streamwriter.
+                        file_generator.Write(file);
+                    }
+                    MessageBox.Show("Student responses have been successfully recorded!");
+                }
+            }
+            /*  //probably won't need this, but I have regretted deleting things before.
+            else
+            {
+                MessageBox.Show("An error occured while trying to save,\n" +
+                                "The format for filenames should not include\n" +
+                                "slashes, parentheticals, or symbols\n" +
+                                "Please reload the hopper and ensure the\n" +
+                                "cards are not stuck together, backwards,\n" +
+                                "or reversed. ");
+                //throw new IOException();
+            }
+            */
+        }
+
+        /// <summary>
+        /// Change current tab to Start tab and reset data.
+        /// </summary>
         public void Finish()
         {
             uxMainTabControl.SelectTab(uxStartTabPage);
