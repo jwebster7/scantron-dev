@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Property of the Kansas State University IT Help Desk -->
+<!-- Written by: William McCreight, Caleb Schweer, and Joseph Webster -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Scantron Scanner" Language="1033" Version="1.0.0.0" Manufacturer="Kansas State University Help Desk" UpgradeCode="bf957f22-f22e-4764-984d-d659300df205">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <!-- EmbedCab takes files and adds them to the MSI-->
+		<MediaTemplate EmbedCab ="yes"/>
+
+		<Feature Id="ProductFeature" Title="Scantron_Msi" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+   
+  
+	</Product>
+
+  <Fragment>
+    <Icon Id="scantron.ico" SourceFile="$(var.SolutionDir)\Media Files\scantron.ico"/>
+    <Property Id="ARPPrODUCTION" Value="scantron.ico" />
+  </Fragment>
+  
+	<Fragment>
+    <!-- Defines the Install Dir-->
+		<Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Will Install to the program x32 Folder-->
+			<Directory Id="ProgramFilesFolder">
+        <!-- Name of the Install Folder-->
+				<Directory Id="INSTALLFOLDER" Name="KSU Scanner" />
+			</Directory>
+    
+        <!--Defines the StarMenu shortcut Dir-->
+      <Directory Id="ProgramMenuFolder">
+         <Directory Id="StartMenuShortcutsDir" Name="KSU Scanner" />
+      </Directory>
+    
+      <!-- Defines the Desktop shortcut Dir-->
+      <Directory Id="DesktopFolder" SourceName="Desktop" />
+    
+		</Directory>
+    
+	</Fragment>
+
+  
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- Adds the Scanner exe to the install folder -->
+			<Component Id="CMP_ScannerEXE" Guid="*">
+				<File Id="FILE_ProgramDir_ScannerEXE" 
+              Name="$(var.Scantron.TargetFileName)" 
+              Source="$(var.Scantron.TargetPath)" 
+              KeyPath="yes" />
+			</Component>
+      <!-- Scanner.exe Startmenu Shortcut-->
+      <Component Id="CMP_ScannerEXE_STARTMENU" Guid="*">
+        <Shortcut Id="ScannerEXE_STARTMENU"
+                  Name="KSU Scanner"
+                  Description="Application to scan Scantroncards to upload on Canvas"
+                  Target="[INSTALLFOLDER]$(var.Scantron.TargetFileName)"
+                  Directory="StartMenuShortcutsDir" 
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="CleanUpStartMenu" Directory="StartMenuShortcutsDir" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\KSU HelpDesk\$(var.Scantron.TargetFileName)" Name="startmenu" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <!-- Scanner.exe Desktop Shortcut-->
+      <Component Id="CMP_ScannerEXE_DESKTOP" Guid="*">
+        <Shortcut Id="ScannerEXE_DESKTOP"
+                  Name="KSU Scanner"
+                  Description="Application to scan Scantroncards to upload on Canvas"
+                  Target="[INSTALLFOLDER]$(var.Scantron.TargetFileName)"
+                  Directory="DesktopFolder"
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RegistryValue Root="HKCU" Key="Software\KSU HelpDesk\$(var.Scantron.TargetFileName)" Name="desktop" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      
+      <!-- Adds the Config to the install folder -->
+      <Component Id="CMP_Config.JSON" Guid="*">
+        <File Id="FILE_ProgramDir_ConfigJSON" 
+              Source="$(var.Scantron.ProjectDir)\Config.json" 
+              KeyPath="yes" />
+      </Component>
+      <!-- Adds the JSON helper file to the install folder-->
+      <Component Id="CMP_Newtonsoft.dll" Guid="*">
+        <File Id="FILE_ProgramDir_NewtonsoftDLL"
+              Source="$(var.Scantron.TargetDir)\Newtonsoft.Json.dll"
+              KeyPath="yes" />
+      </Component>
+		</ComponentGroup>
+	</Fragment>
+
+</Wix>
