@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.uxReadyButton = new System.Windows.Forms.Button();
             this.uxDoneButton = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
@@ -63,6 +62,10 @@
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTabPage = new System.Windows.Forms.TabPage();
             this.uxCardListDataGridView = new System.Windows.Forms.DataGridView();
+            this.CardNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxWIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxTestVersionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uxSheetNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uxScanContinueButton = new System.Windows.Forms.Button();
             this.uxScanneCardsLabel = new System.Windows.Forms.Label();
             this.uxTestDataButton = new System.Windows.Forms.Button();
@@ -82,10 +85,6 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
-            this.CardNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uxWIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uxTestVersionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uxSheetNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -550,20 +549,44 @@
             this.uxWIDColumn,
             this.uxTestVersionColumn,
             this.uxSheetNumberColumn});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.uxCardListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.uxCardListDataGridView.Location = new System.Drawing.Point(6, 209);
             this.uxCardListDataGridView.Name = "uxCardListDataGridView";
             this.uxCardListDataGridView.RowHeadersVisible = false;
             this.uxCardListDataGridView.Size = new System.Drawing.Size(652, 320);
             this.uxCardListDataGridView.TabIndex = 56;
+            // 
+            // CardNumberColumn
+            // 
+            this.CardNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CardNumberColumn.HeaderText = "Card Number";
+            this.CardNumberColumn.MaxInputLength = 1;
+            this.CardNumberColumn.Name = "CardNumberColumn";
+            this.CardNumberColumn.ReadOnly = true;
+            this.CardNumberColumn.Width = 146;
+            // 
+            // uxWIDColumn
+            // 
+            this.uxWIDColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.uxWIDColumn.HeaderText = "WID";
+            this.uxWIDColumn.MaxInputLength = 9;
+            this.uxWIDColumn.Name = "uxWIDColumn";
+            this.uxWIDColumn.Width = 73;
+            // 
+            // uxTestVersionColumn
+            // 
+            this.uxTestVersionColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.uxTestVersionColumn.HeaderText = "Test Version";
+            this.uxTestVersionColumn.MaxInputLength = 1;
+            this.uxTestVersionColumn.Name = "uxTestVersionColumn";
+            this.uxTestVersionColumn.Width = 140;
+            // 
+            // uxSheetNumberColumn
+            // 
+            this.uxSheetNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.uxSheetNumberColumn.HeaderText = "Sheet Number";
+            this.uxSheetNumberColumn.MaxInputLength = 1;
+            this.uxSheetNumberColumn.Name = "uxSheetNumberColumn";
             // 
             // uxScanContinueButton
             // 
@@ -829,38 +852,6 @@
             this.uxCreateFileInstructionLabel.Name = "uxCreateFileInstructionLabel";
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(655, 131);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
-            // 
-            // CardNumberColumn
-            // 
-            this.CardNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.CardNumberColumn.HeaderText = "Card Number";
-            this.CardNumberColumn.MaxInputLength = 1;
-            this.CardNumberColumn.Name = "CardNumberColumn";
-            this.CardNumberColumn.ReadOnly = true;
-            this.CardNumberColumn.Width = 160;
-            // 
-            // uxWIDColumn
-            // 
-            this.uxWIDColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.uxWIDColumn.HeaderText = "WID";
-            this.uxWIDColumn.MaxInputLength = 9;
-            this.uxWIDColumn.Name = "uxWIDColumn";
-            this.uxWIDColumn.Width = 73;
-            // 
-            // uxTestVersionColumn
-            // 
-            this.uxTestVersionColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.uxTestVersionColumn.HeaderText = "Test Version";
-            this.uxTestVersionColumn.MaxInputLength = 1;
-            this.uxTestVersionColumn.Name = "uxTestVersionColumn";
-            this.uxTestVersionColumn.Width = 153;
-            // 
-            // uxSheetNumberColumn
-            // 
-            this.uxSheetNumberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.uxSheetNumberColumn.HeaderText = "Sheet Number";
-            this.uxSheetNumberColumn.MaxInputLength = 1;
-            this.uxSheetNumberColumn.Name = "uxSheetNumberColumn";
             // 
             // Scantron
             // 
