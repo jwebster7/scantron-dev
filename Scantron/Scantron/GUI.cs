@@ -123,11 +123,11 @@ namespace Scantron
         private void InitializeInstructionText()
         {
             uxStartInstructionLabel.Text = "Welcome to the new Scantron program!\n\n" +
-                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it.\n\n" +
-                                                    "1. Set your Scantron cards in the tray by following the pictures to the right.\n" +
-                                                    "2. Click Reset.\n" +
-                                                    "3. Enter the the exam name, number of versions, and number of questions.\n" +
-                                                    "4. If you want your students to see their responses online, uncheck \"Grading within this program\".\n";
+                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it." + Environment.NewLine + Environment.NewLine +
+                                                    "1. Set your Scantron cards in the tray by following the pictures to the right." + Environment.NewLine + Environment.NewLine +
+                                                    "2. Click Reset." + Environment.NewLine + Environment.NewLine +
+                                                    "3. Enter the the exam name, number of versions, and number of questions." + Environment.NewLine + Environment.NewLine +
+                                                    "4. If you want your students to see their responses online, uncheck \"Grading within this program\".";
 
             uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit.\n" +
                                                     "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form.\n" +
@@ -219,7 +219,7 @@ namespace Scantron
                 {
                     BackColor = Color.MediumPurple,
                     Location = new Point(3, 3 + 26 * j),
-                    Size = new Size(420, 22),
+                    Size = new Size(385, 22),
                     Visible = false
                 };
 
@@ -663,7 +663,7 @@ namespace Scantron
                 Panel question_panel = new Panel
                 {
                     Location = new Point(3, 3 + 26 * i),
-                    Size = new Size(350, 22),
+                    Size = new Size(386, 22),
                     Visible = false
                 };
 
@@ -683,15 +683,15 @@ namespace Scantron
                 Label points_label = new Label
                 {
                     Location = new Point(268, 3),
-                    Size = new Size(80, 13),
+                    Size = new Size(45, 13),
                     Text = "Points: 0"
                 };
 
                 Label question_label = new Label
                 {
                     Location = new Point(3, 3),
-                    Size = new Size(70, 13),
-                    Text = "Q." + (i + 1)
+                    Size = new Size(45, 13),
+                    Text = "Q. " + (i + 1)
                 };
 
                 question_panel.Controls.Add(points_label); // Index 5
