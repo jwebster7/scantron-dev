@@ -122,31 +122,32 @@ namespace Scantron
         /// </summary>
         private void InitializeInstructionText()
         {
-            uxStartInstructionLabel.Text = "Welcome to the new Scantron program!\n\n" +
-                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it." + Environment.NewLine + Environment.NewLine +
+            uxStartInstructionLabel.Text = "Welcome to the new Scantron program!"
+                                                     + Environment.NewLine + Environment.NewLine +
                                                     "1. Set your Scantron cards in the tray by following the pictures to the right." + Environment.NewLine + Environment.NewLine +
                                                     "2. Click Reset." + Environment.NewLine + Environment.NewLine +
                                                     "3. Enter the the exam name, number of versions, and number of questions." + Environment.NewLine + Environment.NewLine +
                                                     "4. If you want your students to see their responses online, uncheck \"Grading within this program\".";
 
-            uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit.\n" +
-                                                    "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form.\n" +
+            uxAnswerKeyInstructionLabel.Text =      "1. Enter how many points each question is worth and which ones are given partial credit." + Environment.NewLine + Environment.NewLine +
+                                                    "2. Create the answer key by scanning in cards with the correct answers for each version, or by checking boxes in the form." + Environment.NewLine + Environment.NewLine +
                                                     "3. Click Create Answer Key, then click Continue.";
 
-            uxScanInstructionLabel.Text =           "1. Click Ready, then press the Start button on the Scantron machine.\n" +
-                                                    "2. Once the machine is done scanning, click Done.\n" +
-                                                    "3. You can edits WIDs, test versions, and sheet numbers.\n" +
-                                                    "4. Click Save Changes, then click Continue.\n";
+            uxScanInstructionLabel.Text =           "1. Click Ready, then press the Start button on the Scantron machine." + Environment.NewLine + Environment.NewLine +
+                                                    "2. Once the machine is done scanning, click Done." + Environment.NewLine + Environment.NewLine +
+                                                    "3. You can edits WIDs, test versions, and sheet numbers." + Environment.NewLine + Environment.NewLine +
+                                                    "4. Click Save Changes, then click Continue.";
 
-            uxGradeInstructionLabel.Text =          "1. Click Grade Students.\n" +
-                                                    "2. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points.\n" +
+            uxGradeInstructionLabel.Text =          "1. Click Grade Students." + Environment.NewLine + Environment.NewLine +
+                                                    "2. Questions in green were given full points, questions in orange were given partial credit, and questions in red were given 0 points." + Environment.NewLine + Environment.NewLine +
                                                     "3. When you are done reviewing, click Continue.";
 
-            uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool options.\n" +
-                                                    "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Answer option can only handle 1 answer per question.\n" +
-                                                    "3. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it.\n" +
-                                                    "4. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + ".\n" +
-                                                    "5. Once you have your file saved, click the Finish button to clear all your data for the next person.";
+            uxCreateFileInstructionLabel.Text =     "1. Click the Gradebook button if you have graded within this program, otherwise click one of the Scantron Tool options." + Environment.NewLine + Environment.NewLine +
+                                                    "2. If your exam has questions that have more than one answer, click the Multiple Answer button. The Single Answer option can only handle 1 answer per question." + Environment.NewLine + Environment.NewLine +
+                                                    "3. The Gradebook method with give you a .csv file. Go to your course, go to Grades, then click import and select the file to upload it." + Environment.NewLine + Environment.NewLine +
+                                                    "4. The Canvas Scantron tool has a separate set of instructions here: https://public.online.k-state.edu/tools/scantron/index.html" + Environment.NewLine + Environment.NewLine +
+                                                    "5. Once you have your file saved, click the Finish button to clear all your data for the next person." + Environment.NewLine + Environment.NewLine +
+                                                    "If you have any feedback, please email scantron@ksu.edu and we will attempt to incorporate it.";
         }
 
         /// <summary>
