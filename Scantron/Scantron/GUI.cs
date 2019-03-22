@@ -227,7 +227,7 @@ namespace Scantron
                 {
                     CheckBox checkbox = new CheckBox
                     {
-                        Location = new Point(73 + 39 * k, 3),
+                        Location = new Point(38 + 39 * k, 3),
                         Size = new Size(33, 17),
                         Text = ((char)(k + 65)).ToString()
                     };
@@ -236,7 +236,7 @@ namespace Scantron
 
                 NumericUpDown points_updown = new NumericUpDown
                 {
-                    Location = new Point(268, 1),
+                    Location = new Point(228, 1),
                     DecimalPlaces = 2,
                     Size = new Size(58, 20),
                     Value = 1
@@ -244,16 +244,16 @@ namespace Scantron
 
                 CheckBox partial_credit_checkbox = new CheckBox
                 {
-                    Location = new Point(330, 3),
+                    Location = new Point(290, 3),
                     Size = new Size(100, 17),
                     Text = "Partial Credit"
                 };
-
+                // size(30, 13)
                 Label question_label = new Label
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
-                    Text = "Question " + (j + 1)
+                    Text = "Q. " + (j + 1)
                 };
 
                 question_panel.Controls.Add(points_updown); // Index 5
@@ -691,7 +691,7 @@ namespace Scantron
                 {
                     Location = new Point(3, 3),
                     Size = new Size(70, 13),
-                    Text = "Question " + (i + 1)
+                    Text = "Q." + (i + 1)
                 };
 
                 question_panel.Controls.Add(points_label); // Index 5
