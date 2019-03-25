@@ -280,6 +280,11 @@
             this.uxNumberOfQuestionsNumericUpDown.Size = new System.Drawing.Size(50, 27);
             this.uxNumberOfQuestionsNumericUpDown.TabIndex = 53;
             this.uxNumberOfQuestionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfQuestionsNumericUpDown.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.uxNumberOfQuestionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfQuestionsNumericUpDown_ValueChanged);
             // 
             // uxStartInstructionLabel
@@ -351,6 +356,11 @@
             this.uxNumberOfVersionsNumericUpDown.Size = new System.Drawing.Size(50, 27);
             this.uxNumberOfVersionsNumericUpDown.TabIndex = 47;
             this.uxNumberOfVersionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfVersionsNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.uxNumberOfVersionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfVersionsNumericUpDown_ValueChanged);
             // 
             // uxSetupImage3PictureBox
@@ -940,7 +950,7 @@
             this.uxCreateFileTabPage.Name = "uxCreateFileTabPage";
             this.uxCreateFileTabPage.Size = new System.Drawing.Size(844, 652);
             this.uxCreateFileTabPage.TabIndex = 4;
-            this.uxCreateFileTabPage.Text = "Completion";
+            this.uxCreateFileTabPage.Text = "Finish";
             // 
             // label7
             // 
@@ -1124,16 +1134,16 @@
         private System.Windows.Forms.Button uxDoneScanningButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView uxCardListDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CardNumberColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uxWIDColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CardNumberColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxWIDColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
     }
 }
 
