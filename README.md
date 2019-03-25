@@ -9,6 +9,6 @@ Handle blank Scantron cards (maybe)
 Display how many cards have been scanned
 
 ## Details
-The TS-SCAN folder contains all of the files from the original program written in 1987. Retrieved from Niel Erdwien.
+The OLDSCANTRON folder contains all of the files from the original program written in 1987. Retrieved from Niel Erdwien.
 
 Error fixing and detailed information on the architecture of the program and its methods are on the wiki page: https://github.com/prometheus1994/scantron-dev/wiki
