@@ -6,7 +6,7 @@
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
 //
-// === This class is depricated. Being left in for if someone wants to undertake controlling the Scantron machine 
+// === This class is orphaned. Being left in for if someone wants to undertake controlling the Scantron machine 
 // === entirely from the computer.
 
 using System;
