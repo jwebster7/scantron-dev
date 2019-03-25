@@ -664,7 +664,7 @@ namespace Scantron
                 Panel question_panel = new Panel
                 {
                     Location = new Point(3, 3 + 26 * i),
-                    Size = new Size(386, 22),
+                    Size = new Size(376, 22),
                     Visible = false
                 };
 
