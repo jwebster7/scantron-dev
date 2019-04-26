@@ -72,7 +72,7 @@ namespace Scantron
             grader = new Grader(this);
 
             InitializeControls();
-
+            InitializeDefaultValues();
             InitializeInstructionText();
         }
 
@@ -151,6 +151,31 @@ namespace Scantron
         }
 
         /// <summary>
+        /// Initializes all necessary values upon booting the program and resetting it. 
+        /// </summary>
+        private void InitializeDefaultValues()
+        {
+            number_of_versions = 1;
+            number_of_questions = 50;
+            uxExamNameTextBox.Text = "Exam 1";
+            uxNumberOfVersionsNumericUpDown.Value = 1;
+            uxNumberOfQuestionsNumericUpDown.Value = 50;
+            uxGradingWithThisProgramCheckbox.Checked = false;
+            uxAnswerKeyTabControl.Enabled = false;
+            uxAllQuestionPointsNumericUpDown.Value = 1;
+            uxAllPartialCreditCheckBox.Checked = false;
+            uxCardListDataGridView.Rows.Clear();
+            uxStudentSelector.Items.Clear();
+            uxStudentSelector.Text = "";
+            uxVersionLabel.Text = "Version: ";
+            uxScoreLabel.Text = "Score: ";
+            uxNextButton.Enabled = false;
+            uxPreviousButton.Enabled = false;
+            uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0].BackColor = SystemColors.Control;
+            uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0].BackColor = SystemColors.Control;
+        }
+
+        /// <summary>
         /// Reset program to initial state.
         /// </summary>
         public void Reset()
@@ -175,20 +200,7 @@ namespace Scantron
                 panel.Hide();
             }
 
-            uxExamNameTextBox.Text = "";
-            uxNumberOfVersionsNumericUpDown.Value = 0;
-            uxNumberOfQuestionsNumericUpDown.Value = 0;
-            uxGradingWithThisProgramCheckbox.Checked = true;
-            uxAnswerKeyTabControl.Enabled = true;
-            uxAllQuestionPointsNumericUpDown.Value = 1;
-            uxAllPartialCreditCheckBox.Checked = false;
-            uxCardListDataGridView.Rows.Clear();
-            uxStudentSelector.Items.Clear();
-            uxStudentSelector.Text = "";
-            uxVersionLabel.Text = "Version: ";
-            uxScoreLabel.Text = "Score: ";
-            uxNextButton.Enabled = false;
-            uxPreviousButton.Enabled = false;
+            InitializeDefaultValues();
 
             DisplayMessage("Data has been reset!");
         }
@@ -364,9 +376,11 @@ namespace Scantron
             try
             {
                 scanner.Scan();
+                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0], Color.Green);
             }
             catch (IOException)
             {
+                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0], Color.Red);
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
@@ -377,9 +391,11 @@ namespace Scantron
         /// </summary>
         public void DoneScanning()
         {
+            UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0], SystemColors.Control);
             try
             {
                 scanner.Stop();
+                
                 raw_cards = scanner.RawCards;
                 grader.CreateCards(raw_cards);
 
@@ -411,12 +427,19 @@ namespace Scantron
                         }
                     }
                 }
+                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0], Color.Green);
             }
             catch (Exception)
             {
+                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0], Color.Red);
                 DisplayMessage("Something went wrong. Do not click Done Scanning while the machine is running. " +
                                 "Stop the machine, click Scan Answer Key, and begin scanning again.");
             }
+        }
+
+        private void UpdateScanButtonColor(Button button, Color color)
+        {
+            button.BackColor = color;
         }
 
         /// <summary>
@@ -883,6 +906,9 @@ namespace Scantron
             // Then we have to start a file dialog to save the string to a file.
             SaveFileDialog uxSaveFileDialog = new SaveFileDialog
             {
+                // the name given by the user at the beginning.
+                FileName = uxExamNameTextBox.Text,
+
                 // Could be used to select the default directory ex. "C:\Users\Public\Desktop".
                 InitialDirectory = "c:\\desktop",
                 // Filter is the default file extensions seen by the user.
