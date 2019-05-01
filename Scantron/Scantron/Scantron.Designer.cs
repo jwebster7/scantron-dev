@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.uxReadyButton = new System.Windows.Forms.Button();
             this.uxDoneButton = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
@@ -231,12 +231,13 @@
             this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.uxGradingWithThisProgramCheckBox.Checked = true;
             this.uxGradingWithThisProgramCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradingWithThisProgramCheckBox.ForeColor = System.Drawing.Color.Indigo;
             this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(17, 555);
             this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
             this.uxGradingWithThisProgramCheckBox.Size = new System.Drawing.Size(212, 24);
             this.uxGradingWithThisProgramCheckBox.TabIndex = 55;
-            this.uxGradingWithThisProgramCheckBox.Text = "Grading with this program: ";
+            this.uxGradingWithThisProgramCheckBox.Text = "Grade with this program?";
             this.uxGradingWithThisProgramCheckBox.UseMnemonic = false;
             this.uxGradingWithThisProgramCheckBox.UseVisualStyleBackColor = false;
             // 
@@ -568,6 +569,7 @@
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion1Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion2Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion3Tab);
+            this.uxAnswerKeyTabControl.Cursor = System.Windows.Forms.Cursors.Default;
             this.uxAnswerKeyTabControl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxAnswerKeyTabControl.ItemSize = new System.Drawing.Size(133, 18);
             this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(433, 42);
@@ -659,41 +661,41 @@
             this.uxCardListDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.uxCardListDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.uxCardListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uxCardListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uxCardListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.uxCardListDataGridView.ColumnHeadersHeight = 30;
             this.uxCardListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CardNumberColumn,
             this.uxWIDColumn,
             this.uxTestVersionColumn,
             this.uxSheetNumberColumn});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
             this.uxCardListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.uxCardListDataGridView.EnableHeadersVisualStyles = false;
             this.uxCardListDataGridView.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.uxCardListDataGridView.Location = new System.Drawing.Point(433, 42);
             this.uxCardListDataGridView.Name = "uxCardListDataGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uxCardListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uxCardListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.uxCardListDataGridView.RowHeadersVisible = false;
             this.uxCardListDataGridView.Size = new System.Drawing.Size(402, 495);
             this.uxCardListDataGridView.TabIndex = 56;
@@ -1129,7 +1131,6 @@
         private System.Windows.Forms.Button uxAnswerKeyContinueButton;
         private System.Windows.Forms.Button uxScanContinueButton;
         private System.Windows.Forms.Button uxGradeContinueButton;
-        private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
         private System.Windows.Forms.Button uxScanAnswerKeyButton;
         private System.Windows.Forms.Button uxDoneScanningButton;
         private System.Windows.Forms.Label label1;
@@ -1144,6 +1145,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn uxWIDColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
+        private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
     }
 }
 

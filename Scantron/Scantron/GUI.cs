@@ -157,11 +157,11 @@ namespace Scantron
         {
             number_of_versions = 1;
             number_of_questions = 50;
-            uxExamNameTextBox.Text = "Exam 1";
+            uxExamNameTextBox.Text = "Exam";
             uxNumberOfVersionsNumericUpDown.Value = 1;
             uxNumberOfQuestionsNumericUpDown.Value = 50;
             uxGradingWithThisProgramCheckbox.Checked = false;
-            uxAnswerKeyTabControl.Enabled = false;
+            //uxAnswerKeyTabControl.Enabled = true;
             uxAllQuestionPointsNumericUpDown.Value = 1;
             uxAllPartialCreditCheckBox.Checked = false;
             uxCardListDataGridView.Rows.Clear();
@@ -173,6 +173,9 @@ namespace Scantron
             uxPreviousButton.Enabled = false;
             uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0].BackColor = SystemColors.Control;
             uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0].BackColor = SystemColors.Control;
+
+            uxScanTabPage.Controls.Find("uxReadyButton", true)[0].BackColor = SystemColors.Control;
+            uxScanTabPage.Controls.Find("uxDoneButton", true)[0].BackColor = SystemColors.Control;
         }
 
         /// <summary>
@@ -212,6 +215,7 @@ namespace Scantron
         {
             if (uxGradingWithThisProgramCheckbox.Checked)
             {
+                UpdateAnswerForm();
                 uxMainTabControl.SelectTab("uxAnswerKeyTabPage");
             }
             else
@@ -336,7 +340,7 @@ namespace Scantron
             {
                 foreach (Panel panel in tabpage.Controls)
                 {
-                    panel.Hide();
+                    //panel.Hide();
 
                     for (int i = 0; i < 5; i++)
                     {
@@ -354,7 +358,7 @@ namespace Scantron
 
             int number_of_versions = (int)uxNumberOfVersionsNumericUpDown.Value;
             int number_of_questions = (int)uxNumberOfQuestionsNumericUpDown.Value;
-
+            
             TabPage answer_key_tabpage;
 
             for (int i = 0; i < number_of_versions; i++)
@@ -544,9 +548,11 @@ namespace Scantron
             try
             {
                 scanner.Scan();
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxReadyButton", true)[0], Color.Green);
             }
             catch(IOException)
             {
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxReadyButton", true)[0], Color.Red);
                 DisplayMessage("Scantron machine is not connected to computer by port COM1.");
                 return;
             }
@@ -563,9 +569,12 @@ namespace Scantron
                 raw_cards = scanner.RawCards;
                 grader.CreateCards(raw_cards);
                 UpdateCardList();
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxReadyButton", true)[0], SystemColors.Control);
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxDoneButton", true)[0], Color.Green);
             }
             catch (Exception)
             {
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxDoneButton", true)[0], Color.Red);
                 DisplayMessage("Something went wrong. Do not click Done while the machine is running. " +
                                 "Stop the machine, click Ready, and begin scanning again.");
             }
@@ -581,7 +590,7 @@ namespace Scantron
                 DisplayMessage("No cards found. Please follow the instructions on this page from the beginning.");
                 return;
             }
-
+            UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxDoneButton", true)[0], SystemColors.Control);
             Card card;
             string wid;
             int test_version;
