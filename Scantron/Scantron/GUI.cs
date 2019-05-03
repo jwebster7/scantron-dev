@@ -2,7 +2,7 @@
 //
 // Property of the Kansas State University IT Help Desk
 // Written by: William McCreight, Caleb Schweer, and Joseph Webster
-// comment for pushing
+// comment for push
 // 
 // An extensive explanation of the reasoning behind the architecture of this program can be found on the github 
 // repository: https://github.com/prometheus1994/scantron-dev/wiki
