@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.uxReadyButton = new System.Windows.Forms.Button();
             this.uxDoneButton = new System.Windows.Forms.Button();
             this.uxStudentResponsePanel = new System.Windows.Forms.Panel();
@@ -52,6 +52,7 @@
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
+            this.uxKeyMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.uxDoneScanningButton = new System.Windows.Forms.Button();
@@ -67,6 +68,7 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTabPage = new System.Windows.Forms.TabPage();
+            this.uxScanMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.uxCardListDataGridView = new System.Windows.Forms.DataGridView();
             this.CardNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +81,7 @@
             this.uxSaveChangesButton = new System.Windows.Forms.Button();
             this.uxScanInstructionLabel = new System.Windows.Forms.Label();
             this.uxGradeTabPage = new System.Windows.Forms.TabPage();
+            this.uxGradeMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.uxGradeContinueButton = new System.Windows.Forms.Button();
@@ -231,12 +234,13 @@
             this.uxGradingWithThisProgramCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.uxGradingWithThisProgramCheckBox.Checked = true;
             this.uxGradingWithThisProgramCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.uxGradingWithThisProgramCheckBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uxGradingWithThisProgramCheckBox.ForeColor = System.Drawing.Color.Indigo;
             this.uxGradingWithThisProgramCheckBox.Location = new System.Drawing.Point(17, 555);
             this.uxGradingWithThisProgramCheckBox.Name = "uxGradingWithThisProgramCheckBox";
             this.uxGradingWithThisProgramCheckBox.Size = new System.Drawing.Size(212, 24);
             this.uxGradingWithThisProgramCheckBox.TabIndex = 55;
-            this.uxGradingWithThisProgramCheckBox.Text = "Grading with this program: ";
+            this.uxGradingWithThisProgramCheckBox.Text = "Grade with this program?";
             this.uxGradingWithThisProgramCheckBox.UseMnemonic = false;
             this.uxGradingWithThisProgramCheckBox.UseVisualStyleBackColor = false;
             // 
@@ -280,6 +284,11 @@
             this.uxNumberOfQuestionsNumericUpDown.Size = new System.Drawing.Size(50, 27);
             this.uxNumberOfQuestionsNumericUpDown.TabIndex = 53;
             this.uxNumberOfQuestionsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.uxNumberOfQuestionsNumericUpDown.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.uxNumberOfQuestionsNumericUpDown.ValueChanged += new System.EventHandler(this.uxNumberOfQuestionsNumericUpDown_ValueChanged);
             // 
             // uxStartInstructionLabel
@@ -394,6 +403,7 @@
             // uxAnswerKeyTabPage
             // 
             this.uxAnswerKeyTabPage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxAnswerKeyTabPage.Controls.Add(this.uxKeyMessageCenterTextBox);
             this.uxAnswerKeyTabPage.Controls.Add(this.label2);
             this.uxAnswerKeyTabPage.Controls.Add(this.label1);
             this.uxAnswerKeyTabPage.Controls.Add(this.uxDoneScanningButton);
@@ -410,6 +420,15 @@
             this.uxAnswerKeyTabPage.Size = new System.Drawing.Size(844, 652);
             this.uxAnswerKeyTabPage.TabIndex = 2;
             this.uxAnswerKeyTabPage.Text = "Answer Key";
+            // 
+            // uxKeyMessageCenterTextBox
+            // 
+            this.uxKeyMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxKeyMessageCenterTextBox.Location = new System.Drawing.Point(8, 543);
+            this.uxKeyMessageCenterTextBox.Multiline = true;
+            this.uxKeyMessageCenterTextBox.Name = "uxKeyMessageCenterTextBox";
+            this.uxKeyMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
+            this.uxKeyMessageCenterTextBox.TabIndex = 60;
             // 
             // label2
             // 
@@ -563,6 +582,7 @@
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion1Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion2Tab);
             this.uxAnswerKeyTabControl.Controls.Add(this.uxVersion3Tab);
+            this.uxAnswerKeyTabControl.Cursor = System.Windows.Forms.Cursors.Default;
             this.uxAnswerKeyTabControl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.uxAnswerKeyTabControl.ItemSize = new System.Drawing.Size(133, 18);
             this.uxAnswerKeyTabControl.Location = new System.Drawing.Point(433, 42);
@@ -613,6 +633,7 @@
             // uxScanTabPage
             // 
             this.uxScanTabPage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxScanTabPage.Controls.Add(this.uxScanMessageCenterTextBox);
             this.uxScanTabPage.Controls.Add(this.label4);
             this.uxScanTabPage.Controls.Add(this.uxCardListDataGridView);
             this.uxScanTabPage.Controls.Add(this.uxScanContinueButton);
@@ -629,6 +650,16 @@
             this.uxScanTabPage.Size = new System.Drawing.Size(844, 652);
             this.uxScanTabPage.TabIndex = 0;
             this.uxScanTabPage.Text = "Scan";
+            this.uxScanTabPage.Click += new System.EventHandler(this.uxScanTabPage_Click);
+            // 
+            // uxScanMessageCenterTextBox
+            // 
+            this.uxScanMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxScanMessageCenterTextBox.Location = new System.Drawing.Point(9, 543);
+            this.uxScanMessageCenterTextBox.Multiline = true;
+            this.uxScanMessageCenterTextBox.Name = "uxScanMessageCenterTextBox";
+            this.uxScanMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
+            this.uxScanMessageCenterTextBox.TabIndex = 61;
             // 
             // label4
             // 
@@ -654,41 +685,41 @@
             this.uxCardListDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.uxCardListDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.uxCardListDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uxCardListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uxCardListDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.uxCardListDataGridView.ColumnHeadersHeight = 30;
             this.uxCardListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CardNumberColumn,
             this.uxWIDColumn,
             this.uxTestVersionColumn,
             this.uxSheetNumberColumn});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uxCardListDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.uxCardListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.uxCardListDataGridView.EnableHeadersVisualStyles = false;
             this.uxCardListDataGridView.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.uxCardListDataGridView.Location = new System.Drawing.Point(433, 42);
             this.uxCardListDataGridView.Name = "uxCardListDataGridView";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uxCardListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uxCardListDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.uxCardListDataGridView.RowHeadersVisible = false;
             this.uxCardListDataGridView.Size = new System.Drawing.Size(402, 495);
             this.uxCardListDataGridView.TabIndex = 56;
@@ -797,6 +828,7 @@
             // uxGradeTabPage
             // 
             this.uxGradeTabPage.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uxGradeTabPage.Controls.Add(this.uxGradeMessageCenterTextBox);
             this.uxGradeTabPage.Controls.Add(this.label6);
             this.uxGradeTabPage.Controls.Add(this.label5);
             this.uxGradeTabPage.Controls.Add(this.uxGradeContinueButton);
@@ -815,6 +847,15 @@
             this.uxGradeTabPage.Size = new System.Drawing.Size(844, 652);
             this.uxGradeTabPage.TabIndex = 1;
             this.uxGradeTabPage.Text = "Grade";
+            // 
+            // uxGradeMessageCenterTextBox
+            // 
+            this.uxGradeMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxGradeMessageCenterTextBox.Location = new System.Drawing.Point(9, 543);
+            this.uxGradeMessageCenterTextBox.Multiline = true;
+            this.uxGradeMessageCenterTextBox.Name = "uxGradeMessageCenterTextBox";
+            this.uxGradeMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
+            this.uxGradeMessageCenterTextBox.TabIndex = 63;
             // 
             // label6
             // 
@@ -967,7 +1008,7 @@
             this.uxScantronToolSingleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxScantronToolSingleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxScantronToolSingleAnswerButton.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.uxScantronToolSingleAnswerButton.Location = new System.Drawing.Point(215, 591);
+            this.uxScantronToolSingleAnswerButton.Location = new System.Drawing.Point(215, 594);
             this.uxScantronToolSingleAnswerButton.Name = "uxScantronToolSingleAnswerButton";
             this.uxScantronToolSingleAnswerButton.Size = new System.Drawing.Size(175, 50);
             this.uxScantronToolSingleAnswerButton.TabIndex = 48;
@@ -984,7 +1025,7 @@
             this.uxFinishButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxFinishButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxFinishButton.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.uxFinishButton.Location = new System.Drawing.Point(689, 591);
+            this.uxFinishButton.Location = new System.Drawing.Point(691, 594);
             this.uxFinishButton.Name = "uxFinishButton";
             this.uxFinishButton.Size = new System.Drawing.Size(145, 50);
             this.uxFinishButton.TabIndex = 47;
@@ -1001,7 +1042,7 @@
             this.uxGradebookButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxGradebookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxGradebookButton.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.uxGradebookButton.Location = new System.Drawing.Point(8, 591);
+            this.uxGradebookButton.Location = new System.Drawing.Point(8, 594);
             this.uxGradebookButton.Name = "uxGradebookButton";
             this.uxGradebookButton.Size = new System.Drawing.Size(145, 50);
             this.uxGradebookButton.TabIndex = 46;
@@ -1018,7 +1059,7 @@
             this.uxScantronToolMultipleAnswerButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlDark;
             this.uxScantronToolMultipleAnswerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uxScantronToolMultipleAnswerButton.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.uxScantronToolMultipleAnswerButton.Location = new System.Drawing.Point(452, 591);
+            this.uxScantronToolMultipleAnswerButton.Location = new System.Drawing.Point(452, 594);
             this.uxScantronToolMultipleAnswerButton.Name = "uxScantronToolMultipleAnswerButton";
             this.uxScantronToolMultipleAnswerButton.Size = new System.Drawing.Size(175, 50);
             this.uxScantronToolMultipleAnswerButton.TabIndex = 45;
@@ -1065,8 +1106,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.uxAllQuestionPointsNumericUpDown)).EndInit();
             this.uxAnswerKeyTabControl.ResumeLayout(false);
             this.uxScanTabPage.ResumeLayout(false);
+            this.uxScanTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxCardListDataGridView)).EndInit();
             this.uxGradeTabPage.ResumeLayout(false);
+            this.uxGradeTabPage.PerformLayout();
             this.uxCreateFileTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1124,7 +1167,6 @@
         private System.Windows.Forms.Button uxAnswerKeyContinueButton;
         private System.Windows.Forms.Button uxScanContinueButton;
         private System.Windows.Forms.Button uxGradeContinueButton;
-        private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
         private System.Windows.Forms.Button uxScanAnswerKeyButton;
         private System.Windows.Forms.Button uxDoneScanningButton;
         private System.Windows.Forms.Label label1;
@@ -1139,6 +1181,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn uxWIDColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
+        private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
+        private System.Windows.Forms.TextBox uxScanMessageCenterTextBox;
+        private System.Windows.Forms.TextBox uxGradeMessageCenterTextBox;
+        private System.Windows.Forms.TextBox uxKeyMessageCenterTextBox;
     }
 }
 

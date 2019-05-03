@@ -28,7 +28,6 @@ namespace Scantron
         private ScannerConfig config;
 
         public static ManualResetEvent ToAbort = new ManualResetEvent(false);
-        
                
         public FancyScanner()
         {
@@ -127,7 +126,6 @@ namespace Scantron
 
     public delegate void ScannerHandler(object source, EventArgs e);
 
-
     public class ScannerNew
     {
         public event ScannerHandler Completed;
@@ -173,7 +171,6 @@ namespace Scantron
             }
         }
 
-
         public void Start()
         {
             if (!serial_port.IsOpen)
@@ -195,8 +192,6 @@ namespace Scantron
                 serial_port.Write(config.start);
                 scanner.Start();
             }
-
-            
         }
 
         public void Stop()
@@ -210,9 +205,6 @@ namespace Scantron
 
                 Interlocked.Exchange(ref _run, 0);
 
-                
-                
-                
             }
 
             serial_port.Write(config.stop);
@@ -228,10 +220,6 @@ namespace Scantron
             serial_port.Write("}");
             serial_port.Write(config.end_of_info);
         }
-
-
-
-
 
         private string StatusShort()
         {
@@ -258,9 +246,6 @@ namespace Scantron
                 Completed(this, new EventArgs());
             }
         }
-
-
-
 
         private void Run()
         {
@@ -304,11 +289,6 @@ namespace Scantron
             rawCards = l;
             completed();
         }
-
-        
-
-
-
     }
 
     public class ScannerConfig

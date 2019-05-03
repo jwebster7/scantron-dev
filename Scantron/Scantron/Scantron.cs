@@ -31,6 +31,10 @@ namespace Scantron
             }
             
             gui.InstantiateStudentDisplay();
+            uxTestDataButton.Visible = true;
+            uxTestDataButton.Visible = false;
+            //MessageBox.Show("Number of versions: " + uxNumberOfVersionsNumericUpDown.Value.ToString());
+            //MessageBox.Show("Number of questions: " + uxNumberOfQuestionsNumericUpDown.Value.ToString());
         }
 
         /// <summary>
@@ -239,6 +243,11 @@ namespace Scantron
         private void uxDoneScanningButton_Click(object sender, EventArgs e)
         {
             gui.DoneScanning();
+        }
+
+        private void uxScanTabPage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
