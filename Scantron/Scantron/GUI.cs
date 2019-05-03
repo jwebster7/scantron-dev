@@ -53,6 +53,9 @@ namespace Scantron
         private Label uxStartInstructionLabel;
         private Label uxCreateFileInstructionLabel;
         private CheckBox uxGradingWithThisProgramCheckbox;
+        private TextBox uxKeyMessageCenterTextBox;
+        private TextBox uxScanMessageCenterTextBox;
+        private TextBox uxGradeMessageCenterTextBox;
         #endregion
 
         // Holds the raw card data from the Scantron.
@@ -115,6 +118,9 @@ namespace Scantron
             uxStartInstructionLabel = (Label) scantron_form.Controls.Find("uxStartInstructionLabel", true)[0];
             uxCreateFileInstructionLabel = (Label) scantron_form.Controls.Find("uxCreateFileInstructionLabel", true)[0];
             uxGradingWithThisProgramCheckbox = (CheckBox) scantron_form.Controls.Find("uxGradingWithThisProgramCheckBox", true)[0];
+            uxKeyMessageCenterTextBox = (TextBox) scantron_form.Controls.Find("uxKeyMessageCenterTextBox", true)[0];
+            uxScanMessageCenterTextBox = (TextBox)scantron_form.Controls.Find("uxScanMessageCenterTextBox", true)[0];
+            uxGradeMessageCenterTextBox = (TextBox) scantron_form.Controls.Find("uxGradeMessageCenterTextBox", true)[0];        
         }
 
         /// <summary>
@@ -176,6 +182,10 @@ namespace Scantron
 
             uxScanTabPage.Controls.Find("uxReadyButton", true)[0].BackColor = SystemColors.Control;
             uxScanTabPage.Controls.Find("uxDoneButton", true)[0].BackColor = SystemColors.Control;
+
+            uxKeyMessageCenterTextBox.Hide();
+            uxScanMessageCenterTextBox.Hide();
+            uxGradeMessageCenterTextBox.Hide();
         }
 
         /// <summary>
@@ -395,7 +405,6 @@ namespace Scantron
         /// </summary>
         public void DoneScanning()
         {
-            UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0], SystemColors.Control);
             try
             {
                 scanner.Stop();
@@ -431,11 +440,11 @@ namespace Scantron
                         }
                     }
                 }
-                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0], Color.Green);
+                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0], SystemColors.Control);
             }
             catch (Exception)
             {
-                UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0], Color.Red);
+                //UpdateScanButtonColor((Button)uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0], Color.Red);
                 DisplayMessage("Something went wrong. Do not click Done Scanning while the machine is running. " +
                                 "Stop the machine, click Scan Answer Key, and begin scanning again.");
             }
@@ -570,11 +579,10 @@ namespace Scantron
                 grader.CreateCards(raw_cards);
                 UpdateCardList();
                 UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxReadyButton", true)[0], SystemColors.Control);
-                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxDoneButton", true)[0], Color.Green);
             }
             catch (Exception)
             {
-                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxDoneButton", true)[0], Color.Red);
+                UpdateScanButtonColor((Button)uxScanTabPage.Controls.Find("uxReadyButton", true)[0], Color.Red);
                 DisplayMessage("Something went wrong. Do not click Done while the machine is running. " +
                                 "Stop the machine, click Ready, and begin scanning again.");
             }

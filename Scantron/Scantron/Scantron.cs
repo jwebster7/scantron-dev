@@ -244,5 +244,10 @@ namespace Scantron
         {
             gui.DoneScanning();
         }
+
+        private void uxScanTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
