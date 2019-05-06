@@ -52,7 +52,6 @@
             this.uxSetupImage2PictureBox = new System.Windows.Forms.PictureBox();
             this.uxSetupImage1PictureBox = new System.Windows.Forms.PictureBox();
             this.uxAnswerKeyTabPage = new System.Windows.Forms.TabPage();
-            this.uxKeyMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.uxDoneScanningButton = new System.Windows.Forms.Button();
@@ -68,7 +67,6 @@
             this.uxVersion2Tab = new System.Windows.Forms.TabPage();
             this.uxVersion3Tab = new System.Windows.Forms.TabPage();
             this.uxScanTabPage = new System.Windows.Forms.TabPage();
-            this.uxScanMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.uxCardListDataGridView = new System.Windows.Forms.DataGridView();
             this.CardNumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,7 +79,6 @@
             this.uxSaveChangesButton = new System.Windows.Forms.Button();
             this.uxScanInstructionLabel = new System.Windows.Forms.Label();
             this.uxGradeTabPage = new System.Windows.Forms.TabPage();
-            this.uxGradeMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.uxGradeContinueButton = new System.Windows.Forms.Button();
@@ -98,6 +95,9 @@
             this.uxGradebookButton = new System.Windows.Forms.Button();
             this.uxScantronToolMultipleAnswerButton = new System.Windows.Forms.Button();
             this.uxCreateFileInstructionLabel = new System.Windows.Forms.Label();
+            this.uxScanMessageCenterTextBox = new System.Windows.Forms.TextBox();
+            this.uxKeyMessageCenterTextBox = new System.Windows.Forms.TextBox();
+            this.uxGradeMessageCenterTextBox = new System.Windows.Forms.TextBox();
             this.uxMainTabControl.SuspendLayout();
             this.uxStartTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uxNumberOfQuestionsNumericUpDown)).BeginInit();
@@ -421,15 +421,6 @@
             this.uxAnswerKeyTabPage.TabIndex = 2;
             this.uxAnswerKeyTabPage.Text = "Answer Key";
             // 
-            // uxKeyMessageCenterTextBox
-            // 
-            this.uxKeyMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uxKeyMessageCenterTextBox.Location = new System.Drawing.Point(8, 543);
-            this.uxKeyMessageCenterTextBox.Multiline = true;
-            this.uxKeyMessageCenterTextBox.Name = "uxKeyMessageCenterTextBox";
-            this.uxKeyMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
-            this.uxKeyMessageCenterTextBox.TabIndex = 60;
-            // 
             // label2
             // 
             this.label2.BackColor = System.Drawing.Color.Indigo;
@@ -652,15 +643,6 @@
             this.uxScanTabPage.Text = "Scan";
             this.uxScanTabPage.Click += new System.EventHandler(this.uxScanTabPage_Click);
             // 
-            // uxScanMessageCenterTextBox
-            // 
-            this.uxScanMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uxScanMessageCenterTextBox.Location = new System.Drawing.Point(9, 543);
-            this.uxScanMessageCenterTextBox.Multiline = true;
-            this.uxScanMessageCenterTextBox.Name = "uxScanMessageCenterTextBox";
-            this.uxScanMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
-            this.uxScanMessageCenterTextBox.TabIndex = 61;
-            // 
             // label4
             // 
             this.label4.BackColor = System.Drawing.Color.Indigo;
@@ -847,15 +829,6 @@
             this.uxGradeTabPage.Size = new System.Drawing.Size(844, 652);
             this.uxGradeTabPage.TabIndex = 1;
             this.uxGradeTabPage.Text = "Grade";
-            // 
-            // uxGradeMessageCenterTextBox
-            // 
-            this.uxGradeMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uxGradeMessageCenterTextBox.Location = new System.Drawing.Point(9, 543);
-            this.uxGradeMessageCenterTextBox.Multiline = true;
-            this.uxGradeMessageCenterTextBox.Name = "uxGradeMessageCenterTextBox";
-            this.uxGradeMessageCenterTextBox.Size = new System.Drawing.Size(415, 26);
-            this.uxGradeMessageCenterTextBox.TabIndex = 63;
             // 
             // label6
             // 
@@ -1079,6 +1052,42 @@
             this.uxCreateFileInstructionLabel.Size = new System.Drawing.Size(828, 484);
             this.uxCreateFileInstructionLabel.TabIndex = 44;
             // 
+            // uxScanMessageCenterTextBox
+            // 
+            this.uxScanMessageCenterTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxScanMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxScanMessageCenterTextBox.Location = new System.Drawing.Point(8, 540);
+            this.uxScanMessageCenterTextBox.Multiline = true;
+            this.uxScanMessageCenterTextBox.Name = "uxScanMessageCenterTextBox";
+            this.uxScanMessageCenterTextBox.ReadOnly = true;
+            this.uxScanMessageCenterTextBox.Size = new System.Drawing.Size(416, 26);
+            this.uxScanMessageCenterTextBox.TabIndex = 61;
+            this.uxScanMessageCenterTextBox.Visible = false;
+            // 
+            // uxKeyMessageCenterTextBox
+            // 
+            this.uxKeyMessageCenterTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxKeyMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxKeyMessageCenterTextBox.Location = new System.Drawing.Point(8, 540);
+            this.uxKeyMessageCenterTextBox.Multiline = true;
+            this.uxKeyMessageCenterTextBox.Name = "uxKeyMessageCenterTextBox";
+            this.uxKeyMessageCenterTextBox.ReadOnly = true;
+            this.uxKeyMessageCenterTextBox.Size = new System.Drawing.Size(416, 26);
+            this.uxKeyMessageCenterTextBox.TabIndex = 62;
+            this.uxKeyMessageCenterTextBox.Visible = false;
+            // 
+            // uxGradeMessageCenterTextBox
+            // 
+            this.uxGradeMessageCenterTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.uxGradeMessageCenterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uxGradeMessageCenterTextBox.Location = new System.Drawing.Point(8, 540);
+            this.uxGradeMessageCenterTextBox.Multiline = true;
+            this.uxGradeMessageCenterTextBox.Name = "uxGradeMessageCenterTextBox";
+            this.uxGradeMessageCenterTextBox.ReadOnly = true;
+            this.uxGradeMessageCenterTextBox.Size = new System.Drawing.Size(416, 26);
+            this.uxGradeMessageCenterTextBox.TabIndex = 63;
+            this.uxGradeMessageCenterTextBox.Visible = false;
+            // 
             // Scantron
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1182,9 +1191,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn uxTestVersionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn uxSheetNumberColumn;
         private System.Windows.Forms.CheckBox uxGradingWithThisProgramCheckBox;
+        private System.Windows.Forms.TextBox uxKeyMessageCenterTextBox;
         private System.Windows.Forms.TextBox uxScanMessageCenterTextBox;
         private System.Windows.Forms.TextBox uxGradeMessageCenterTextBox;
-        private System.Windows.Forms.TextBox uxKeyMessageCenterTextBox;
     }
 }
 
