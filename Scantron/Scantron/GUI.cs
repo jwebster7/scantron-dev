@@ -178,6 +178,7 @@ namespace Scantron
             uxScoreLabel.Text = "Score: ";
             uxNextButton.Enabled = false;
             uxPreviousButton.Enabled = false;
+
             uxAnswerKeyTabPage.Controls.Find("uxScanAnswerKeyButton", true)[0].BackColor = SystemColors.Control;
             uxAnswerKeyTabPage.Controls.Find("uxDoneScanningButton", true)[0].BackColor = SystemColors.Control;
 
@@ -187,6 +188,9 @@ namespace Scantron
             uxKeyMessageCenterTextBox.Hide();
             uxScanMessageCenterTextBox.Hide();
             uxGradeMessageCenterTextBox.Hide();
+            //uxKeyMessageCenterTextBox.Show();
+            //uxScanMessageCenterTextBox.Show();
+            //uxGradeMessageCenterTextBox.Show();
         }
 
         /// <summary>
