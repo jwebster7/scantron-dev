@@ -10,6 +10,9 @@ MessageCenter for notifying users about the status of the program.
 
 Making the Configuration editable via form fields.  
 
+## Potential Work  
+Implementing multi-threading so one thread can handle reading in the data from the buffer, and another can run the application. This would allow for complete control of the scanner from the application and account for unforeseen exceptions by allow the main application to run, even if an exception is thrown from the scan thread.  
+
 ## Details
 The OLDSCANTRON folder contains all of the files from the original program written in 1987. Retrieved from Niel Erdwien.
 
