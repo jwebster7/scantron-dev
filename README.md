@@ -17,7 +17,7 @@ Error fixing and detailed information on the architecture of the program and its
 
 ## Requirements
 
-### Framework & Dependencies
+## Framework & Dependencies
 **Framework:**  
 .NET Framework 4 or greater.  
 
