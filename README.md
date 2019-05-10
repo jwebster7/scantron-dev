@@ -23,5 +23,5 @@ Error fixing and detailed information on the architecture of the program and its
 **System.Collections.Generic:** This is used for using [C#'s Generic Data Structures](https://docs.microsoft.com/en-us/dotnet/standard/collections/).  
 **System.Linq:** This is used for using the [LINQ Libraries](https://docs.microsoft.com/en-us/dotnet/api/system.linq?view=netframework-4.8).  
 **System.Windows.Forms:** This is used for creating [Windows GUI Applications](https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms?view=netframework-4.8).  
-**System.Drawing:** This is used in tandem for creating Windows GUI Applications .  
+**System.Drawing:** This is used in tandem for creating Windows GUI Applications and for importing **Color** objects.  
 **System.Threading:** This is used for possible multi-threading.  
