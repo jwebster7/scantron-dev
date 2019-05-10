@@ -15,10 +15,10 @@ The OLDSCANTRON folder contains all of the files from the original program writt
 
 Error fixing and detailed information on the architecture of the program and its methods are on the wiki page: https://github.com/prometheus1994/scantron-dev/wiki
 
-## Framework
+## Framework  
 .NET Framework 4 or greater.  
 
-## Dependencies **
+## Dependencies  
 **System.IO.Ports:** This is used for importing the [SerialPort libraries](https://docs.microsoft.com/en-us/dotnet/api/system.io.ports?view=netframework-4.8).  
 **System.Collections.Generic:** This is used for using [C#'s Generic Data Structures](https://docs.microsoft.com/en-us/dotnet/standard/collections/).  
 **System.Linq:** This is used for using the [LINQ Libraries](https://docs.microsoft.com/en-us/dotnet/api/system.linq?view=netframework-4.8).  
