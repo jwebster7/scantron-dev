@@ -4,9 +4,9 @@
 This is a project for rewriting the Kansas State University Help Desk scantron program to be more legible and user-friendly. The original program requires users to navigate through the command prompt. This new version uses Windows Application Forms for a less confusing user experience.
 
 ## Current Work
-Handle blank Scantron cards (maybe)
+GUI reconfiguration for UX.  
 
-Display how many cards have been scanned
+MessageCenter for notifying users about the status of the program.  
 
 ## Details
 The OLDSCANTRON folder contains all of the files from the original program written in 1987. Retrieved from Niel Erdwien.
