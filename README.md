@@ -1,4 +1,4 @@
-# Scantron Dev
+# KSU iTAC Scantron Scanner Application
 
 ## Purpose
 This is a project for rewriting the Kansas State University Help Desk scantron program to be more legible and user-friendly. The original program requires users to navigate through the command prompt. This new version uses Windows Application Forms for a less confusing user experience.
@@ -12,6 +12,8 @@ Making the Configuration editable via form fields.
 
 ## Potential Work  
 Implementing multi-threading so one thread can handle reading in the data from the buffer, and another can run the application. This would allow for complete control of the scanner from the application and account for unforeseen exceptions by allow the main application to run, even if an exception is thrown from the scan thread.  
+
+If work is continued on the .NET framework, one could use the [System.Threading](https://docs.microsoft.com/en-us/dotnet/api/system.threading?view=netframework-4.8) Namespace. 
 
 ## Details
 The OLDSCANTRON folder contains all of the files from the original program written in 1987. Retrieved from Niel Erdwien.
