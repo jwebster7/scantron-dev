@@ -97,11 +97,18 @@ namespace Scantron
             return raw_cards;
         }
 
+        /// <summary>
+        /// Writes a stop command to the serial port to close the buffer.
+        /// </summary>
         public void Stop()
         {
             serial_port.Write(config.stop);
         }
 
+        /// <summary>
+        /// Gets the status of the serial port. 
+        /// </summary>
+        /// <returns>The status of the serial port.</returns>
         private string Status()
         {
             string status;
@@ -112,6 +119,10 @@ namespace Scantron
             return status;
         }
 
+        /// <summary>
+        /// Displays the current config.
+        /// </summary>
+        /// <param name="message">the message to write to the config.</param>
         private void Display(string message)
         {
             serial_port.Write(config.display_data);
