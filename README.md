@@ -1,6 +1,8 @@
 # KSU iTAC Scantron Scanner Application
 **Authors: Caleb Schweer, William McCreight, & Joseph Webster**
 
+To view a comprehensive list of our work with the most recent updates, [click here](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+
 ## Purpose
 This is a project for rewriting the Kansas State University Help Desk scantron program to be more legible and user-friendly. The original program requires users to navigate through the command prompt. This new version uses Windows Application Forms for a less confusing user experience.
 
